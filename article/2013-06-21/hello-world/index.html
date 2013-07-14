@@ -1,0 +1,224 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="chrome=1">
+  
+  <title>更换博客系统 | N神的研究所</title>
+  <meta name="author" content="Nshen">
+  
+  <meta name="description" content="陈新的个人站点，关注Flash平台相关技术，通常发布一些个人笔记和业余项目等。">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
+  <meta property="og:title" content="更换博客系统"/>
+  <meta property="og:site_name" content="N神的研究所"/>
+
+  <link rel="alternate" href="/atom.xml" title="N神的研究所" type="application/atom+xml">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <link rel="icon" type="image/x-icon" href="/favicon.ico">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8/jquery.min.js"></script>
+  
+  <script src="/js/swfobject.js"></script>
+
+</head>
+
+
+<body>
+  <div class="wrapper">
+    <header id="header"><div class="title">
+  <h1><a href="/">N神的研究所</a></h1>
+  <p><a href="/"></a></p>
+</div>
+<nav class="nav">
+  <ul>
+    
+      <li><a href="/categories/article/">笔记</a></li>
+    
+      <li><a href="/categories/project/">实验</a></li>
+    
+      <li><a href="/about/">关于我</a></li>
+    
+      <li><a href="/links/">友情链接</a></li>
+    
+  </ul>
+  <div class="clearfix"></div>
+</nav>
+<div class="clearfix"></div></header>
+    <div class="content"><article class="post">
+  <header>
+    
+      <div class="icon"></div>
+      <time datetime="2013-06-21T05:30:20.000Z"><a href="/article/2013-06-21/hello-world/">6月 21 2013</a></time>
+    
+    
+  
+    <h1 class="title">更换博客系统</h1>
+  
+
+  </header>
+  
+  <div class="entry">
+    
+      <h3>2013-06-21新站借<a href="http://zespia.tw/hexo/" title="Hexo">Hexo</a>,全静态重生，手动把老文全转成Markdown了。</h3>
+<a name="more"></a>
+
+<p><img src="/image/0001.jpg" alt=""> </p>
+<hr>
+<h3>2011-08-03 新站搬到github,网站暂时算是复活了</h3>
+<p>如果你是从搜索引擎跳转过来的，请到旧站备份中搜索你要的内容%  —&gt; <a href="http://www.riabook.cn/blog" target="_blank">[旧站的备份]</a></p>
+<p>之前的服务器由于各种原因不能访问了，而且之前blog太老旧了，正好把博客换新了。 </p>
+<p>前几天在<a href="http://junnan.org/blog/1350.htm" target="_blank">Bindiry的博客上</a>了解到可以在Github上用<a href="https://github.com/mojombo/jekyll" target="_blank">jekyll模板引擎</a>搭建自己的站点。
+于是我就开始了折腾。。重新仔细学习了一遍Git，装ruby、devkit、jekyll，弄了好几天就是不支持中文，之后放弃，过了几天想起来了又google发现是ruby 1.9.2的问题，又全卸载，全重装。由于是样式盲，直接clone了<a href="http://blog.leezhong.com" target="_blank">这个博客</a>，页面非常清爽，很满意。
+现在算是阶段性折腾完毕，所有东西对我都是新的，写日志都得用<a href="http://www.textism.com/tools/textile/index.php" target="_blank">Textile</a>，不知道这东西有没有本地的所见所得的编辑器，提交日志用git commit，正好可以练习git，现在还不知道能否习惯下来。
+感谢上边提到的各位让我省了空间的钱。</p>
+<p>自动语法高亮 ：</p>
+<pre><code><figure class="highlight"><pre><span class="keyword">package</span> net.nshen.blog
+{
+    <span class="keyword">import</span> flash.display.Sprite;
+
+    <span class="javadoc">/**
+     * 复活咯～
+     * <span class="javadoctag">@author</span>    Nshen
+     */</span>
+    <span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Post</span> <span class="keyword">extends</span> <span class="title">Sprite</span>
+    {</span>
+        <span class="comment">// This is a String</span>
+        <span class="keyword">private</span> var _str:String = <span class="string">"I'm the first post"</span>;
+
+        <span class="javadoc">/**
+         *  override this~
+         */</span>
+        <span class="keyword">public</span> function create():<span class="keyword">void</span>
+        {
+            trace(_str);
+        }
+    }
+}
+</pre></figure></code></pre>
+
+    
+  </div>
+  <footer>
+    
+      
+      
+    
+    <div class="clearfix"></div>
+  </footer>
+</article>
+
+
+<section id="comment">
+  <h1 class="title">留言</h1>
+  <div class="ds-thread" data-title="更换博客系统">
+  </div>
+</section>
+</div>
+  </div>
+  <div class="widget-wrapper">
+    <aside id="sidebar">
+  
+  
+    
+    
+
+<div class="widget tag first">
+  <h3 class="title">分类</h3>
+  <ul class="entry">
+  
+    <li><a href="/categories/article/">article</a><small>4</small></li>
+  
+    <li><a href="/categories/project/">project</a><small>6</small></li>
+  
+  </ul>
+</div>
+
+  
+    
+    
+
+<div class="widget tagcloud">
+  <h3 class="title">标签云</h3>
+  <div class="entry">
+    <a href="/tags/pdf2mag/" style="font-size: 14.00px;">pdf2mag</a><a href="/tags/stage3d/" style="font-size: 10.00px;">stage3d</a><a href="/tags/webgl/" style="font-size: 12.00px;">webgl</a><a href="/tags/游戏/" style="font-size: 18.00px;">游戏</a><a href="/tags/翻译/" style="font-size: 16.00px;">翻译</a>
+  </div>
+</div>
+
+  
+    
+    
+
+<div class="widget recent-posts">
+  <h3 class="title">最近的文章</h3>
+  <ul class="entry">
+    
+      <li>
+        <a href="/article/2013-06-21/hello-world/">更换博客系统</a>
+      </li>
+    
+      <li>
+        <a href="/article/2013-05-18/as3-to-typescript/">从 ActionScript3 到 TypeScript</a>
+      </li>
+    
+      <li>
+        <a href="/article/2012-04-09/howToMakeMoney/">笔记《黑客与画家》如何创造财富</a>
+      </li>
+    
+      <li>
+        <a href="/project/2011-10-05/go-to-hell/">跨IOS，Android的小游戏《阿鼻地狱》</a>
+      </li>
+    
+      <li>
+        <a href="/article/2011-08-25/as3-DataStructure/">AS3与数据结构</a>
+      </li>
+    
+  </ul>
+</div>
+
+  
+</aside>
+<div class="clearfix"></div>
+  </div>
+  <footer id="footer"><div class="copyright">
+  
+  &copy; 2013 <a href="/">Nshen</a>
+  
+</div>
+<div class="theme-copyright">
+  Theme by <a href="https://github.com/orderedlist" target="_blank">orderedlist</a>
+   | 
+  Redesign by <a href="http://heroicyang.com/" target="_blank">Heroic Yang</a>
+</div>
+<div class="clearfix"></div></footer>
+  <script src="/js/scale.fix.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+
+
+<script type="text/javascript">
+  var duoshuoQuery = { short_name: 'nshen' };
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';
+    ds.async = true;
+    ds.src = 'http://static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+</script>
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+  (function($){
+    $('.fancybox').fancybox();
+  })(jQuery);
+</script>
+
+</body>
+</html>

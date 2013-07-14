@@ -1,0 +1,590 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="chrome=1">
+  
+  <title>笔记《版本控制之道--使用Git》 | N神的研究所</title>
+  <meta name="author" content="Nshen">
+  
+  <meta name="description" content="陈新的个人站点，关注Flash平台相关技术，通常发布一些个人笔记和业余项目等。">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
+  <meta property="og:title" content="笔记《版本控制之道--使用Git》"/>
+  <meta property="og:site_name" content="N神的研究所"/>
+
+  <link rel="alternate" href="/atom.xml" title="N神的研究所" type="application/atom+xml">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <link rel="icon" type="image/x-icon" href="/favicon.ico">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8/jquery.min.js"></script>
+  
+  <script src="/js/swfobject.js"></script>
+
+</head>
+
+
+<body>
+  <div class="wrapper">
+    <header id="header"><div class="title">
+  <h1><a href="/">N神的研究所</a></h1>
+  <p><a href="/"></a></p>
+</div>
+<nav class="nav">
+  <ul>
+    
+      <li><a href="/categories/article/">笔记</a></li>
+    
+      <li><a href="/categories/project/">实验</a></li>
+    
+      <li><a href="/about/">关于我</a></li>
+    
+      <li><a href="/links/">友情链接</a></li>
+    
+  </ul>
+  <div class="clearfix"></div>
+</nav>
+<div class="clearfix"></div></header>
+    <div class="content"><article class="post">
+  <header>
+    
+      <div class="icon"></div>
+      <time datetime="2011-08-03T05:30:20.000Z"><a href="/article/2011-08-03/git-note/">8月 3 2011</a></time>
+    
+    
+  
+    <h1 class="title">笔记《版本控制之道--使用Git》</h1>
+  
+
+  </header>
+  
+  <div class="entry">
+    
+      <p>我认为每个学过Git的人都应该做过类似这种笔记，因为Git命令太多看着看着就把前边看过的忘了，之前我也看过Git，但是一直没用，现在一看几乎没有印象了，所以这次我要把我看到的命令记下来给我自己备忘。</p>
+<a name="more"></a> 
+
+<p>Git已经是最流行的版本控制系统了，网上相关的免费学习资源很多，我见过的中文书籍就有：</p>
+<ul>
+<li><a href="http://gitbook.liuhui998.com/index.html" target="_blank">Git Community Book 中文版</a></li>
+<li><a href="http://progit.org/book/zh/" target="_blank">Pro Git 中文版 </a></li>
+<li><a href="http://www-cs-students.stanford.edu/~blynn/gitmagic/intl/zh_cn/" target="_blank">Git Magic 中文版 </a></li>
+</ul>
+<p>但我是买的一本纸质书叫做《版本控制之道--使用Git》，下边是我记录的几乎是整本书讲过的所有命令：</p>
+<hr>
+<h3>设置</h3>
+<figure class="highlight lang-dos"><pre>
+git config --global user.name "Nshen" //必须
+git config --global user.email "nshen121@gmail.com"//必须
+git config --global color.ui "always"
+//或者"auto", always不仅Base环境是彩色，Dos里也是彩色的。
+
+git config --global core.editor notepad.exe//设为windows记事本
+git config --global alias.ci "commit"//别名缩写
+git config --global merge.tool//可以设置合并工具
+git config --global --list//查看设置
+
+</pre></figure>
+
+
+<p>其实最后这些设置都保存在</p>
+<figure class="highlight lang-dos"><pre>
+C:\Documents and Settings\用户名\.gitconfig 文件下（windows）
+</pre></figure>
+
+
+<hr>
+<p><strong>查看帮助：</strong> </p>
+<figure class="highlight lang-dos"><pre>git help command
+</pre></figure>
+
+
+<p><strong>初始化 :</strong></p>
+<figure class="highlight lang-dos"><pre>git init
+</pre></figure>
+
+
+<p><strong>纳入版本控制:</strong></p>
+<figure class="highlight lang-dos"><pre>
+git add *.txt   //添加所有txt文件
+git add README  //添加单个文件
+git add .        //添加所有文件包括子目录，但不包括空目录
+</pre></figure>
+
+
+<p>add命令是个多功能命令，根据目标文件的状态不同，此命令的效果也不同：可以用它开始跟踪新文件，或者把已跟踪的文件放到暂存区，还能用于合并时把有冲突的文件标记为已解决状态等）注意每次修改后都要重新add,不然就会提交之前add时的版本。</p>
+<figure class="highlight lang-dos"><pre>git add -i  //进入交互式add
+git add -p //直接进入补丁模式，可以暂存修改的一部分。
+</pre></figure>
+
+
+<p><strong>提交：</strong></p>
+<figure class="highlight lang-dos"><pre>git commit -m "initial project version"
+git commit -m "something" someFile  //提交指定文件
+git commit -C HEAD -a --amend  //复用HEAD留言，增补提交（修改小错误，而不增加提交记录，掩盖自己的小马虎）
+</pre></figure>
+
+
+
+<p><strong>参数:</strong></p>
+<figure class="highlight lang-dos"><pre>
+-m "提交的说明"
+-a 动把所有已经跟踪过的文件暂存,并提交.(工作目录中修改过的文件都提交到版本库，不需一个一个手动add了)
+--amend 增补提交
+-C 复用指定提交的提交留言
+-c 打开编辑器在已有的提交基础上编辑修改
+</pre></figure>
+
+
+<p>e.g 修改最后一次提交:</p>
+<figure class="highlight lang-dos"><pre>
+git commit -m 'initial commit'
+git add forgotten_file
+git commit --amend
+</pre></figure>
+
+
+<p>如果没有修改就相当于更改提交说明,上边3个命令得到一个提交.</p>
+<hr>
+<p><strong>忽略提交的文件：</strong></p>
+<p>所有人都需要忽略的文件要写在<strong>.gitignore</strong>文件里，而只有自己的个人偏好需要忽略的文件要写在.git/info/exclude文件中</p>
+<p><strong>语法：</strong></p>
+<figure class="highlight lang-dos"><pre>
+# 此为注释 – 将被 Git 忽略
+*.a       # 忽略所有 .a 结尾的文件
+!lib.a    # 但 lib.a 除外
+*.[oa]    #忽略以.o或.a结尾的文件
+*~        #忽略以~结尾的文件
+/TODO     # 仅仅忽略项目根目录下的 TODO 文件，不包括 subdir/TODO
+build/    # 忽略 build/ 目录下的所有文件
+doc/*.txt # 会忽略 doc/notes.txt 但不包括 doc/server/arch.txt
+</pre></figure>
+
+
+<h3>查看文件改动：</h3>
+<figure class="highlight lang-dos"><pre>git diff   // 比较工作目录与缓存区的区别
+git diff --cached 或者 git diff --staged  //缓存区与版本库里的区别
+git diff HEAD //三者的区别
+</pre></figure>
+
+
+<p>请注意，单单 git diff 不过是显示还没有暂存起来的改动，而不是这次工作和上次提交之间的差异。
+所以有时候你一下子暂存了所有更新过的文件后，运行 git diff 后却什么也没有，就是这个原因。</p>
+<figure class="highlight lang-dos"><pre>git diff <span class="number">18</span>f822e 	   //<span class="number">18</span>f822e这个版本与当前目录的区别
+git diff aaaaa..bbbbb //比较aaaaa与bbbbb之间差别
+git diff --stat 		  //可以统计数据，比较特别的命令
+</pre></figure>
+
+
+<h3>重命名，移动，删除文件：</h3>
+<figure class="highlight lang-dos"><pre>git mv file_from file_to  //改名或移动
+
+$ git mv README.txt README
+$ git status
+# On branch master
+# Your branch is ahead of 'origin/master' by <span class="number">1</span> commit.
+#
+# Changes to be committed:
+#   (use "git reset HEAD &lt;file&gt;..." to unstage)
+#
+#       renamed:    README.txt -&gt; README
+</pre></figure>
+
+
+<p>其实，运行 git mv 就相当于运行了下面三条命令：</p>
+<figure class="highlight lang-dos"><pre>$ mv README.txt README
+$ git rm README.txt
+$ git add README
+</pre></figure>
+
+
+<p>必须调用 &quot;git rm 文件名&quot;  ,从暂存区移除,并且文件也被删除</p>
+<p>如果只是手工删除了文件,运行git status时会出现</p>
+<figure class="highlight lang-dos"><pre># Changed but <span class="flow">not</span> updated:
+#   (use "git add/rm &lt;file&gt;..." to update what will be committed)
+#
+#       deleted:    grit.gemspec
+</pre></figure>
+
+
+<p>此时必须再运行 &quot;git rm 文件名&quot;,才会在提交时候不再纳入版本管理.
+如果删除之前修改过并且已经add到缓存区了的话,则必须强制删除 -f</p>
+<p>另外一种情况是，我们想把文件从Git仓库中删除（亦即从暂存区域移除），但仍然希望保留在当前工作目录中。换句话说，仅是从跟踪清单中删除。比如一些大型日志文件或者一堆.a编译文件，不小心纳入仓库后，要移除跟踪但不删除文件，以便稍后在 .gitignore 文件中补上，用 --cached 选项即可。</p>
+<hr>
+<h3>查看状态：</h3>
+<h4>查看当前状态:</h4>
+<p><strong>git status</strong></p>
+<figure class="highlight lang-dos"><pre>$ git status
+# On branch master
+# Changes to be committed:  //只要在这行后边的,说明放入暂存区了
+#   (use "git reset HEAD &lt;file&gt;..." to unstage) //想取消放入缓存 git reset HEAD README
+#
+#     new file:   README
+# Changed but <span class="flow">not</span> updated:  //跟踪文件内容改变,但还没有放到暂存区,需要git add 命令才会放到暂存区
+#   (use "git add &lt;file&gt;..." to update what will be committed)
+#   (use "git checkout -- &lt;file&gt;..." to discard changes <span class="flow">in</span> working directory)
+#    //删除修改,恢复到之前版本,有危险 (如果想保留并且回退版本用stashing 和分支来处理)
+#     modified:   benchmarks.rb
+</pre></figure>
+
+
+<hr>
+<h4>查看提交历史:</h4>
+<p><strong>git log</strong></p>
+<p>这时“j”向下浏览，“k”向上浏览，“q”退出</p>
+<figure class="highlight lang-dos"><pre>git log --pretty=oneline    //一行显示
+        --pretty="%h %s"   //以各种格式输出
+
+git log –p -<span class="number">2</span>    //-p显示每次提交的内容差异  -<span class="number">2</span>表示最近<span class="number">2</span>次更改
+
+	git log --since "<span class="number">5</span> hours"
+	 		--since "<span class="number">3</span> hours"
+			--since "<span class="number">1</span> minute"
+	 		--before ="<span class="number">2008</span>-<span class="number">10</span>.<span class="number">01</span>"
+
+git log <span class="number">27</span>j34j3j..<span class="number">03</span>u43u23  //最老版本..最新版本（不包括起点只包括终点）
+
+git log <span class="number">34</span>j4j4..HEAD
+git log fhfs8fh..           //省略HEAD
+
+git log "HEAD^^".."HEAD^"     //windows必须加引号表示回溯上一个提交
+
+git log -<span class="number">1</span> HEAD~<span class="number">1</span>  //相当于git log -<span class="number">1</span> HEAD^
+
+git log --graph //图形化显示分支
+
+git log --graph --pretty=oneline //一行图形化显示分支
+</pre></figure>
+
+
+
+<h3>问责：查明谁修改了代码</h3>
+<figure class="highlight lang-dos"><pre>git blame hello.html //你也可以用"-L"参数在命令(blame)中指定开始和结束行:
+git blame -L <span class="number">12</span>,+<span class="number">10</span> hello.html  //<span class="number">12</span>到<span class="number">22</span>行
+blame还可以跟踪内容复制，文件复制，略，见版本控制之道 <span class="number">79</span>页
+</pre></figure>
+
+
+<h3>撤销：</h3>
+<h4>撤销缓存区的修改（没有commit的）</h4>
+<figure class="highlight lang-dos"><pre>git checkout head 文件名 //撤销暂存区的修改  
+git checkout head readme.txt todo.txt
+git checkout head *.txt
+git checkout head .  //撤销所有
+</pre></figure>
+
+<h4>反转提交：</h4>
+<figure class="highlight lang-dos"><pre>git revert HEAD  //创建一个反向的新提交抵消原来的提交改动
+如果需要反转多个，必须从最后的开始反转, 加 -n可以不马上提交，之后一起提交。
+git revert -n HEAD
+git revert -n <span class="number">54</span>efhds
+git commit -m "revert head and <span class="number">54</span>efhds"
+</pre></figure>
+
+
+<h4>复位：还没有commit，让工作目录回到上次提交时的状态</h4>
+<figure class="highlight lang-dos"><pre>git reset --hard HEAD   //所有未提交的内容清空，这会让"git diff" 和"git diff --cached"命令的显示法都变为空
+git reset --soft HEAD  //复位版本库，暂存差异，便于提交中发现错误需要更改时有用（例如私人密码放到里边了）
+</pre></figure>
+
+
+<h3>分支：</h3>
+<h4>在当前分支末梢建立分支：</h4>
+<figure class="highlight lang-dos"><pre>git branch RB_1.<span class="number">0</span>（建立分支不会自动切换过去）
+</pre></figure>
+
+
+<h4>切换分支：</h4>
+<figure class="highlight lang-dos"><pre>git checkout RB_1.<span class="number">0</span>（切换到RB_1.<span class="number">0</span>分支）
+</pre></figure>
+
+
+<h4>创建并切换分支：</h4>
+<figure class="highlight lang-dos"><pre>git checkout -b RB_1.<span class="number">0</span>（简化上边<span class="number">2</span>步操作）
+</pre></figure>
+
+
+<h4>删除分支：</h4>
+<figure class="highlight lang-dos"><pre>git branch -d RB_1.<span class="number">0</span>
+</pre></figure>
+
+
+<h4>基于某次提交、分支或标签创建新分支:</h4>
+<figure class="highlight lang-dos"><pre>git branch RB_1.<span class="number">0</span> master
+git branch RB_1.<span class="number">0</span> <span class="number">6</span>fe57de0
+git branch Rb_1.<span class="number">01</span> <span class="number">1</span>.<span class="number">0</span>
+</pre></figure>
+
+
+<h4>查看分支：</h4>
+<figure class="highlight lang-dos"><pre>git branch //列出本地分支
+  iss53
+* master  //*号表示当前所在分支
+  testing
+
+
+git branch -r //显示远程分支
+git branch -a //列出所有分支
+</pre></figure>
+
+
+<h4>分支重命名：</h4>
+<figure class="highlight lang-dos"><pre>git branch -m master mymaster	
+		   -M 大写M会覆盖同名的分支
+</pre></figure>
+
+
+<h4>合并分支：</h4>
+<p>直接合并：</p>
+<figure class="highlight lang-dos"><pre>git merge 想合并到当前分支的源分支名
+git merge --no-commit 分支 //合并但不提交 
+</pre></figure>
+
+
+<p>压合合并：将分支压合成一条commit记录，并合并过来</p>
+<figure class="highlight lang-dos"><pre>git merge --squash 某bug分支
+git commit -m "修复某bug"
+</pre></figure>
+
+
+<p>拣选合并：只合并一个提交</p>
+<figure class="highlight lang-dos"><pre>git cherry-pick <span class="number">321</span>d76f
+</pre></figure>
+
+
+
+<p>如果需要连续拣选，就需要加 -n参数
+然后再git commit ，但不要加-m参数，编辑器就会使用刚拣选的提交留言作为现在的留言。</p>
+<h3>标签Tag:</h3>
+<h4>查看标签:</h4>
+<figure class="highlight lang-dos"><pre>git tag
+</pre></figure>
+
+
+<h4>创建标签：</h4>
+<figure class="highlight lang-dos"><pre>git tag <span class="number">1</span>.<span class="number">0</span>  //在当前分支最后一次提交创建标签
+git tag <span class="number">1</span>.<span class="number">0</span> RB_1.<span class="number">0</span> //基于RB_1.<span class="number">0</span>分支的最新踢脚创建标签
+git tag <span class="number">1</span>.<span class="number">0</span> ae468d8kt //为某次提交创建标签
+</pre></figure>
+
+
+<h4>检出标签：</h4>
+<figure class="highlight lang-dos"><pre>git checkout <span class="number">1</span>.<span class="number">0</span> //检出标签与检出分支一样操作，但检出标签后用git branch查看本地分支会发现你现在不再任何分支上
+这时你不应该修改，而应该立即基于此标签创建一个分支
+git checkout -b from-<span class="number">1</span>.<span class="number">0</span>
+</pre></figure>
+
+
+<h3>变基：</h3>
+<figure class="highlight lang-dos"><pre><span class="number">1</span>. git rebase RB_1.<span class="number">01</span> //也许修改过一个bug，希望新版本变基到RB_1.<span class="number">01</span>分支上
+<span class="number">2</span>. 手动解决冲突         //如果解决不了直接git rebase --skip或--abort来跳过特定提交或完全放弃变基
+<span class="number">3</span>. git add xxx.html //冲突解决
+<span class="number">4</span>. git rebase --continue
+
+
+git rebase --onto HEAD^^ HEAD^ HEAD 
+
+
+//--onto参数可以改写历史抹掉中间的参数，将倒数第一个参数变基到倒数第<span class="number">3</span>个参数，为防止出错建议在试验性分支上先试验。
+
+rebase -i 可以排序历史记录，多个提交合并为<span class="number">1</span>个，一个提交分解成多个提交 ，
+详见版本控制之道p86 ，需要编辑器支持，windows记事本不行
+</pre></figure>
+
+
+<h3>远程相关：</h3>
+<figure class="highlight lang-dos"><pre>git clone git://github.com/schacon/grit.git   //从现有仓库克隆
+git clone git://github.com/schacon/grit.git mygrit //换名,唯一区别就是新建的目录成了mygrit,其他都一样
+</pre></figure>
+
+
+<h4>添加远程仓库:</h4>
+<figure class="highlight lang-dos"><pre>
+git <span class="comment">remote add pb git://github.com/paulboone/ticgit.git</span>
+clone会默认添加origin仓库，如果原本用git init创建的版本库，后来又想提交到远程版本库，就可以用下边的办法
+git <span class="comment">remote add origin git@example.com:/xxxxxx</span>
+
+</pre></figure>
+
+
+<h4>查看远程分支：</h4>
+<figure class="highlight lang-dos"><pre>git <span class="comment">remote  -v //查看远程仓库,默认clone后,应该有一个origin仓库,-v显示对应的clone地址</span>
+git <span class="comment">remote show origin //查看远程仓库信息</span>
+</pre></figure>
+
+
+<h4>远程仓库重命名和删除:</h4>
+<figure class="highlight lang-dos"><pre>git <span class="comment">remote rename pb paul</span>
+git <span class="comment">remote rm paul</span>
+</pre></figure>
+
+
+<h4>获取数据：</h4>
+<figure class="highlight lang-dos"><pre>git fetch [<span class="comment">remote-name] 拉取远程仓库到本地远程仓库,不自动合并    //$ git fetch origin</span>
+$ git fetch pb
+<span class="comment">remote: Counting objects: 58, done.</span>
+<span class="comment">remote: Compressing objects: 100% (41/41), done.</span>
+<span class="comment">remote: Total 44 (delta 24), reused 1 (delta 0)</span>
+Unpacking objects: <span class="number">100</span>% (<span class="number">44</span>/<span class="number">44</span>), done.
+From git://github.com/paulboone/ticgit
+* [new branch]      master     -&gt; pb/master
+* [new branch]      ticgit     -&gt; pb/ticgit
+</pre></figure>
+
+
+<p>现在pb/master可以在本地访问了,你可以合并到自己的某个分支,或者切换到这个分支看看有什么有趣的更新</p>
+<p>git pull 抓取数据合并到工作目录中当前分支</p>
+<h4>推送数据：</h4>
+<figure class="highlight lang-dos"><pre>git push [<span class="comment">remote-name] [branch-name]  //默认为 git push origin master</span>
+
+git push origin serverfix   //推送分支，其实是下边一句的简化,提取我的 serverfix 并更新到远程仓库的 serverfix
+
+git push origin serverfix:serferfix
+
+git push origin :serverfix //这个语法用于删除,只要把分号前留空
+</pre></figure>
+
+
+<h3>其他：</h3>
+<figure class="highlight lang-dos"><pre>git gc  //垃圾回收，每隔一段时间例如一个月运行一次可以减少磁盘占用空间。
+git reflog //最后的保障,列出误删的东东
+git bisect //二分查找，版本控制之道p124页，略
+</pre></figure>
+
+
+<h4>归档版本库，导出压缩包:</h4>
+<figure class="highlight lang-dos"><pre>git archive --format=格式 --prefix=目录/ 版本&gt;压缩包.zip
+git archive --format=zip head&gt;test.zip
+git archive --format=tar --prefix=mysite-<span class="number">1</span>.<span class="number">0</span>/ <span class="number">1</span>.<span class="number">0</span> | gzip&gt;mysite-<span class="number">1</span>.<span class="number">0</span>.tar.gz
+git archive --format=zip --prefix=mysite-<span class="number">1</span>.<span class="number">0</span>/ <span class="number">1</span>.<span class="number">0</span> &gt;mysie-<span class="number">1</span>.<span class="number">0</span>.zip
+</pre></figure>
+
+    
+  </div>
+  <footer>
+    
+      
+  
+  <div class="categories">
+    <a href="/categories/article/">article</a>
+  </div>
+
+      
+    
+    <div class="clearfix"></div>
+  </footer>
+</article>
+
+
+<section id="comment">
+  <h1 class="title">留言</h1>
+  <div class="ds-thread" data-title="笔记《版本控制之道--使用Git》">
+  </div>
+</section>
+</div>
+  </div>
+  <div class="widget-wrapper">
+    <aside id="sidebar">
+  
+  
+    
+    
+
+<div class="widget tag first">
+  <h3 class="title">分类</h3>
+  <ul class="entry">
+  
+    <li><a href="/categories/article/">article</a><small>4</small></li>
+  
+    <li><a href="/categories/project/">project</a><small>6</small></li>
+  
+  </ul>
+</div>
+
+  
+    
+    
+
+<div class="widget tagcloud">
+  <h3 class="title">标签云</h3>
+  <div class="entry">
+    <a href="/tags/pdf2mag/" style="font-size: 14.00px;">pdf2mag</a><a href="/tags/stage3d/" style="font-size: 10.00px;">stage3d</a><a href="/tags/webgl/" style="font-size: 12.00px;">webgl</a><a href="/tags/游戏/" style="font-size: 18.00px;">游戏</a><a href="/tags/翻译/" style="font-size: 16.00px;">翻译</a>
+  </div>
+</div>
+
+  
+    
+    
+
+<div class="widget recent-posts">
+  <h3 class="title">最近的文章</h3>
+  <ul class="entry">
+    
+      <li>
+        <a href="/article/2013-06-21/hello-world/">更换博客系统</a>
+      </li>
+    
+      <li>
+        <a href="/article/2013-05-18/as3-to-typescript/">从 ActionScript3 到 TypeScript</a>
+      </li>
+    
+      <li>
+        <a href="/article/2012-04-09/howToMakeMoney/">笔记《黑客与画家》如何创造财富</a>
+      </li>
+    
+      <li>
+        <a href="/project/2011-10-05/go-to-hell/">跨IOS，Android的小游戏《阿鼻地狱》</a>
+      </li>
+    
+      <li>
+        <a href="/article/2011-08-25/as3-DataStructure/">AS3与数据结构</a>
+      </li>
+    
+  </ul>
+</div>
+
+  
+</aside>
+<div class="clearfix"></div>
+  </div>
+  <footer id="footer"><div class="copyright">
+  
+  &copy; 2013 <a href="/">Nshen</a>
+  
+</div>
+<div class="theme-copyright">
+  Theme by <a href="https://github.com/orderedlist" target="_blank">orderedlist</a>
+   | 
+  Redesign by <a href="http://heroicyang.com/" target="_blank">Heroic Yang</a>
+</div>
+<div class="clearfix"></div></footer>
+  <script src="/js/scale.fix.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+
+
+<script type="text/javascript">
+  var duoshuoQuery = { short_name: 'nshen' };
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';
+    ds.async = true;
+    ds.src = 'http://static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+</script>
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+  (function($){
+    $('.fancybox').fancybox();
+  })(jQuery);
+</script>
+
+</body>
+</html>
