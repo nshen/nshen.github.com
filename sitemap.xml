@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
+    <loc>http://nshen.net/article/2013-07-28/stage3d-game-programming-beginner/</loc>
+    <lastmod>2013-07-27T19:39:29.000Z</lastmod>
+  </url>
+  <url>
     <loc>http://nshen.net/404.html</loc>
     <lastmod>2013-07-14T09:29:57.000Z</lastmod>
   </url>

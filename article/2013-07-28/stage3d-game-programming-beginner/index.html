@@ -1,0 +1,1242 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="chrome=1">
+  
+  <title>Adobe Flash 11 Stage3D (Molehill) Game Programming Beginner 笔记 | N神的研究所</title>
+  <meta name="author" content="Nshen">
+  
+  <meta name="description" content="陈新的个人站点，关注Flash平台相关技术，通常发布一些个人笔记和业余项目等。">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
+  <meta property="og:title" content="Adobe Flash 11 Stage3D (Molehill) Game Programming Beginner 笔记"/>
+  <meta property="og:site_name" content="N神的研究所"/>
+
+  <link rel="alternate" href="http://feed.feedsky.com/nshen" title="N神的研究所" type="application/atom+xml">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <link rel="icon" type="image/x-icon" href="/favicon.ico">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8/jquery.min.js"></script>
+  
+<script type="text/javascript">
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'nshen121@gmail.com']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+</script>
+
+  <script src="/js/swfobject.js"></script>
+
+</head>
+
+
+<body>
+  <div class="wrapper">
+    <header id="header"><div class="title">
+  <h1><a href="/">N神的研究所</a></h1>
+  <p><a href="/"></a></p>
+</div>
+<nav class="nav">
+  <ul>
+    
+      <li><a href="/categories/article/">笔记</a></li>
+    
+      <li><a href="/categories/project/">实验</a></li>
+    
+      <li><a href="/about/">关于我</a></li>
+    
+      <li><a href="/links/">友情链接</a></li>
+    
+  </ul>
+  <div class="clearfix"></div>
+</nav>
+<div class="clearfix"></div></header>
+    <div class="content"><article class="post">
+  <header>
+    
+      <div class="icon"></div>
+      <time datetime="2013-07-27T18:30:31.000Z"><a href="/article/2013-07-28/stage3d-game-programming-beginner/">7月 28 2013</a></time>
+    
+    
+  
+    <h1 class="title">Adobe Flash 11 Stage3D (Molehill) Game Programming Beginner 笔记</h1>
+  
+
+  </header>
+  
+  <div class="entry">
+    
+      <p>这篇笔记一年半前读书时发到豆瓣上了，去豆瓣搜过书的应该都看见过，这是我入门3d看的第一本书，现在把原文复制过来简单排版和整理了一下。</p>
+<a name="more"></a>
+
+<h3>第一章，Let&#39;s Make a Game Using Molehill</h3>
+<hr>
+<p>介绍什么是molehil。。略 。此书面针对了解AS3，但不太了解3d的读者。</p>
+<h3>3d术语：</h3>
+<ul>
+<li><p>Mesh：3d游戏中的模型就叫一个mesh。模型一般用3d studiomax 等软件做的，一个场景可以有几百个mesh组成。</p>
+</li>
+<li><p>Polygon：mesh可以由成百上千的多边形组成，多边形可以是三角形，也可以是四边形，一个3d立方体由6个面片组成，每个面片叫做一个poly。</p>
+</li>
+<li><p>Vertex：每个poly有3个或以上角，每个角的顶点就是一个vertex。</p>
+</li>
+<li><p>Texture：想象成墙纸，可以是一个jpg或png的图片。</p>
+</li>
+<li><p>Shaders：shader是视觉风格的定义，它定义怎样渲染某物，在stage3d中，shaders存在Program3D类中。创建一个shader，需要创建一个vertex program，和一个fragment program 。</p>
+</li>
+<li><p>Fragment program：在molehill中是处理mesh视觉渲染的一系列命令。也叫像素着色器。fragment programs描述一个给定的表面材质和对光照的反应，不同的材质对光照有不同的反应方式取决于反射和透明度等，需要不同的代码来模拟。每个模型都需要一个fragment program，否则就不会渲染出来，它可以是一个简单的texture，也可以是复杂的2个texture混合外加灯光反射。</p>
+</li>
+<li><p>Vertex program：molehill常用 vertex program计算mesh的形状，影响每个vertex在3d世界中的位置。这样可以把mesh缩放，扭曲，做变形动画。也可以分配任意数量的数据到mesh中的每个vertex，不只是xyz坐标，可以是rgb颜色uv等。每个模型的渲染都需要个vertex program，可以是简单的在原始位置渲染或复杂到让mesh做变形动画。</p>
+</li>
+<li><p>Vectors：Vector3D描述空间中的位置，在geom包里</p>
+</li>
+</ul>
+<pre><code><figure class="highlight">
+import flash.geom.Vector3D;
+var putTheTreeHere:Vector3D = new Vector3D(0,0,0);
+var locationOfTreasure:Vector3D = new Vector3D(1000,0,-15000);
+</figure></code></pre>
+
+<ul>
+<li><p>Normals：仅用来指明方向，length等于1的单位向量，可以简单的用Vector3D类的normalize()方法获得。</p>
+<p>  var aNormalPointingUp:Vector3D = new Vector3D(0,1,0);</p>
+</li>
+<li><p>Matrices：是向量的集合，Matrix3D是4×4的矩阵，用来方便的移动，旋转，缩放对象。</p>
+</li>
+</ul>
+<p>第一章结束，总结</p>
+<ul>
+<li>Vector3D: containing an x, y, and z component</li>
+<li>Normal: a Vector3D that has a length of one</li>
+<li>Matrix: a 4x4 group of vectors with position, rotation,and scale</li>
+<li>Vertex: a point in space that is the corner of a polygon</li>
+<li>Polygon: a shape defined by multiple vertex coordinates</li>
+<li>Mesh: a group of polygons (polies) that make up a model</li>
+<li>Texture: a bitmap image that is like a wallpaper for a mesh</li>
+<li>Vertex program: commands affecting the shape of a mesh</li>
+<li>Fragment program: commands affecting the look of a mesh</li>
+</ul>
+<h3>第2章，Blueprint of a Molehill</h3>
+<hr>
+<p>原来为什么慢，因为之前DisplayList全部CPU，molehill为什么快，因为molehill是完全GPU加速的。</p>
+<blockquote>
+<p>Molehill will rely on DirectX 9 on Windows machines and OpenGL 1.3 on both Mac OS-X and Linux. On mobile devices such as tablets, televisions, and phones, Molehill will rely upon OpenGL ES2.</p>
+</blockquote>
+<p>DisplayList在stage3d之上，可以组合stage3d和原始的flash显示列表一起做东东.</p>
+<h3>Molehill程序结构</h3>
+<p>stage3d已不在显示列表里，不能addchild了.</p>
+<p><img src="/image/molehill_book01.jpg" alt=""></p>
+<ul>
+<li>Context3D：可以想象成&quot;引擎&quot;，所有3d数据都要传给他。</li>
+</ul>
+<blockquote>
+<p>This Context3D is the object that you send all your textures, vertex buffers, and 
+vertex/fragment programs to. The Context3D is the base class that holds all of your game 
+data and does all the work.</p>
+</blockquote>
+<ul>
+<li><p>VertexBuffer3D：VertexBuffer3D是一个numbers的数组，用来保存第一章提到的vertex坐标，但不限于顶点坐标，还可以保存rgb，uv等值。初始化游戏的时候要把这个vertexBuffer3D传给Contex3D，之后Contex3D会把这些数据直接传给显卡的RAM或VRAM，渲染时会用。</p>
+</li>
+<li><p>IndexBuffer3D：由于顶点数据是一大坨VertexBuffer3D，Molehill需要知道每组数据的起始和结束，所以有了index buffer做索引，如下图，表示3个顶点，每个有6个元素 。</p>
+</li>
+</ul>
+<p><img src="/image/molehill_book02.jpg" alt=""></p>
+<ul>
+<li>Program3D：Vertex programs和 fragment programs也叫shaders 与前边的buffer同样传给contex3d，他是从一种类似汇编语言编译成的，他们告诉gpu怎样根据上边提供的buffer画mesh。</li>
+</ul>
+<h3>一个stage3d程序的流程图</h3>
+<p>分2部分，setup 和 render loop</p>
+<p><strong>setup</strong>：
+所有buffers和programs被编译并发送到显卡。这只做1次。一旦setup，molehill可以在不同位置重复画meshes而不需要其他初始化。</p>
+<p>setup详细过程：</p>
+<ol>
+<li>Request a Context3D instance from Stage3D</li>
+<li>Set up the Context3D (telling it how big it is, and so on)</li>
+<li>Create a VertexBuffer (one for each mesh you intend to use)</li>
+<li>Create an IndexBuffer (each will correspond to a VertexBuffer)</li>
+<li>Upload this data to the Context3D (send it to your GPU)</li>
+<li>&quot;Compile&quot; a VertexProgram (turn your shader source code into bytes)</li>
+<li>&quot;Compile&quot; a FragmentProgram (turn your shader source code into bytes)</li>
+<li>Create a Program3D which will use the preceding shaders (can be used by more than one mesh)</li>
+</ol>
+<p>这8步一般只需要一次，偶尔由于3d环境丢失的关系需要重新来一次，例如因为计算机睡眠等原因。</p>
+<p><strong>render loop</strong>：一般是监听ENTER_FRAME事件重复执行的</p>
+<ol>
+<li>Clear the Context3D (erase the old view)</li>
+<li>Tell the Context3D which Program3D to use (for example, a shader that looks
+like steel)</li>
+<li>Tell the Context3D which VertexBuffer to use (for example, a spaceship)</li>
+<li>Setup data for you your shaders (variables, such as the new location of a spaceship)</li>
+<li>Draw some triangles (tell the Context3D to do some drawing)</li>
+<li>Update the screen with your drawn triangles (show the user the new scene)</li>
+</ol>
+<p>总结：这章讲了什么？</p>
+<ul>
+<li>The old fashioned way: 2D Flash using DisplayObjects</li>
+<li>The Molehill way: Stage3Ds containing Context3Ds</li>
+<li>Why Molehill is so fast: Hardware 3D, baby</li>
+<li>Combining 2D and 3D: You can use old and new Flash objects together</li>
+<li>Flowchart of a Molehill game: Setup first, then a render loop</li>
+</ul>
+<h3>第3章，Fire up the Engines</h3>
+<hr>
+<p>这章是前边两章内容的一个实例，直接看代码就行了，书里好像也么讲什么新内容，代码倒是注释的很详细
+除了shader代码要后边章节详细讲，其他的配合帮助文档应该都看懂了。</p>
+<p>详见 <a href="/image/Ch3_Stage3dGame.as" target="_blank">Stage3dGame.as</a>类</p>
+<p>本章总结：</p>
+<blockquote>
+<p>we learned how to obtain Flash 11 for our browser, we got all the tools ready 
+to compile Stage3D games, we learned how to initialize the Stage3D API, how to upload 
+mesh and texture data to the video card, and how to animate a simple 3D scene</p>
+</blockquote>
+<h3>第4章，Basic Shaders</h3>
+<hr>
+<p>AGAL: Adobe Graphics Assembly Language</p>
+<p>前边讲过shaders就是vertex program （vertex shaders）和 fragment program（pixel shaders）。
+由于他们在gpu中执行，所以很快，每帧可以数百万次，flash的一帧中，mesh中每个顶点都要执行一次vertex program！ fragment shade更厉害，每个像素都执行一次！。</p>
+<p>agal语句是什么样的</p>
+<pre><code><figure class="highlight"><pre><span class="tag">&lt;<span class="title">opcode</span>&gt;</span> <span class="tag">&lt;<span class="title">destination</span>&gt;</span> <span class="tag">&lt;<span class="title">source</span> <span class="attribute">1</span>&gt;</span> <span class="tag">&lt;<span class="title">source</span> <span class="attribute">2</span>&gt;</span>
+</pre></figure></code></pre>
+<p>agal只有30个opcodes，完整列表在Stage3D的文档里找.
+例如  mov v0, va1  把va1的值copy到v0.</p>
+<p>常见agal opcode:</p>
+<pre><code><figure class="highlight"><pre><span class="function"><span class="title">mov</span> <span class="params">(copies data from source1 to destination)</span>
+<span class="title">add</span> <span class="params">(destination = source1 plus source2)</span>
+<span class="title">sub</span> <span class="params">(destination = source1 minus source2)</span>
+<span class="title">mul</span> <span class="params">(destination = source1 multiplied by source2)</span>
+<span class="title">div</span> <span class="params">(destination = source1 divided by source2)</span>
+</pre></figure></code></pre>
+<p><strong>什么是寄存器 （register）</strong></p>
+<p>上边提到的&quot;source&quot; 和 &quot;destinations&quot;叫寄存器，你可以把它们当成变量，存储数据的地方。他们代表显存中的一小块，为速度而优化过的。寄存器都是包含4个128位的浮点数 ，用as3的话说就是4个Number。</p>
+<p><strong>寄存器的组成部分</strong>：</p>
+<p>4个值中的每一个都是一个组成部分，可以通过xyzw或者rgba访问
+va1.x和va1.r一样都是寄存器的第一个组成部分。
+一般在vertex里用xyzw，fragment里用rgba。
+opcode一般四个组件同时运算，例如以add opcode为例 source1是一个 Vector3D  (10,100,50,0) 然后source2 是 (5,1,3,0),结果会是(15,101,53,0).</p>
+<p><strong>不同的寄存器有不同的功用</strong>：</p>
+<p><img src="/image/molehill_book03.jpg" alt=""></p>
+<ul>
+<li><p>顶点属性寄存器 Vertex Attribute Registers：va0...va7
+有8个va寄存器，分别是va0, va1, va2, va3, va4, va5, va6 , va7
+只在vertex shader里可用，用来指定VertexBuffer中的位置。可以包含x,y,z,或uv坐标，rgb值等。
+用 Context3D:setVertexBufferAt() 来把VertexBuffer分段分配给属性寄存器。然后在shader里用语法 va<n>访问，n就是属性索引。
+记住一共有8个寄存器，每个保存4个浮点数，所以每个顶点可以保存32个数字。</p>
+</li>
+<li><p>常量寄存器 Constant registers: vc0..vc127 and fc0..fc27
+as中通过Context3D::setProgramConstants()系列函数来设置
+在vertex shader中用vc<n>访问，pixel shader中fc<n>访问
+vertex shaders里一共有128个常量寄存器，pixel shaders里有28个常量寄存器。</p>
+</li>
+<li><p>临时寄存器 Temporary registers: vt0..vt7 and ft0..ft7
+这些寄存器是用来在shader里临时计算用的，可以当成临时变量。 这样访问：
+vt<n> (vertex programs) ， ft<n> (fragment programs)
+vertex 和pixel shaders各8个临时寄存器。</p>
+</li>
+<li><p>输出寄存器 Output registers: op在vertex shader里用来输出位置，oc在pixel shader里用来输出颜色。 vertex shader的输出就是顶点的clip space 位置，pixel shader输出的就是就是像素颜色。</p>
+</li>
+<li><p>Varying registers: v0..v7  呃这个不知道中文名了
+这些寄存器是用来从vertex shaders向pixel shaders传递数据的。，典型应用是从vertex shader传递顶点颜色或纹理的uv坐标到pixel shader。一共有8个，用v<n>访问。</p>
+</li>
+<li><p>纹理采样寄存器Texture samplers: fs0..fs7
+这8个纹理采样寄存器，只可以用在fragment program里，是用来基于uv坐标从textures里提取颜色的。这个寄存器比较特殊，有它独有的规则
+，采样的纹理，需要提前在as中用Context3D::setTextureAt()指定.</p>
+</li>
+</ul>
+<p>shader里语法是这样</p>
+<pre><code><figure class="highlight"><pre>fs<span class="tag">&lt;<span class="title">n</span>&gt;</span> <span class="tag">&lt;<span class="title">flags</span>&gt;</span>
+</pre></figure></code></pre>
+<p>flags是逗号分隔的字符串，类似这样 </p>
+<pre><code><figure class="highlight"><pre>tex ft1, v0, fs0 <span class="tag">&lt;<span class="title">2d,linear,nomip</span>&gt;</span>
+</pre></figure></code></pre>
+<p>关于参数的解释：</p>
+<ol>
+<li><p>texture dimension: 2d, 3d, or cube. A 2D texture is the most commonly used format, a rectangular bitmap. A 3D texture has length, width, and depth, and takes up a lot of texture RAM but is great for 3D materials such as wood, grain, or marble. It is rarely used. A cube texture is a specially encoded group of six rectangular bitmaps and is usually used for reflections, as each of these six images maps to a particular direction like the sides on the inside of a box.</p>
+</li>
+<li><p>mip mapping: nomip, mipnone, mipnearest, or miplinear. If your texture has mip maps (successively smaller versions of itself, generated to avoid jaggies during rendering), then you can instruct Stage3D to smoothly interpolate the texture using them. Mip mapped textures are very useful to increase render quality and avoid the &quot;moiree effect&quot; (flickering) when viewed from far away.</p>
+</li>
+<li><p>texture filtering: nearest or linear. If you prefer a retro, then pixilated look you can use nearest here to tell Stage3D not to interpolate the values smoothly, resulting in blocky textures when viewed up close, for example. If you use linear, when zoomed into a texture it will be blurry and will have smoother edges.</p>
+</li>
+<li><p>texture repeat: repeat, wrap, or clamp. If you want the texture tile properly, then you use repeathere. If you are not tiling the texture and run into problems with edge pixels being the color of the opposite edge (which often happens in transparent billboard particles and when rendering bitmap fonts in 3d), then specify clampto force Stage3D not to blur adjacent edge pixels.</p>
+</li>
+</ol>
+<h3>下面开始实例</h3>
+<pre><code><figure class="highlight"><pre><span class="comment">// the simplest possible vertex program</span>
+m44 op, va0, vc0 <span class="comment">// pos to clipspace</span>
+mov v0, va1 <span class="comment">// copy uv</span>
+</pre></figure></code></pre>
+<p>m44是4×4矩阵相乘，顶点坐标存储在 va0 ，乘以mesh相对于camera的位置矩阵vc0
+第二行copy va1到v0.
+关于vc0后边章节会讲，现在知道他MVP矩阵，这个这本书里没有仔细讲，要看点其他数学书了：（</p>
+<p>最简单的fragment program</p>
+<pre><code><figure class="highlight"><pre>// a simple fragment program
+tex ft1, v0, fs0 <span class="tag">&lt;<span class="title">2d,linear,nomip</span>&gt;</span>
+mov oc, ft1
+</pre></figure></code></pre>
+<p>从fs0取样到ft1，v0是来自顶点shader的uv坐标
+把 ft1输出.</p>
+<p>编译 AGAL 代码</p>
+<pre><code><figure class="highlight"><pre>var vertexShaderAssembler:AGALMiniAssembler = new AGALMiniAssembler()<span class="comment">;</span>
+vertexShaderAssembler<span class="preprocessor">.assemble</span>(
+Context3DProgramType<span class="preprocessor">.VERTEX</span>,
+<span class="string">"m44 op, va0, vc0\n"</span> +
+<span class="string">"mov v0, va1"</span>
+)<span class="comment">;</span>
+var fragmentShaderAssembler:AGALMiniAssembler = new AGALMiniAssembler()<span class="comment">;</span>
+fragmentShaderAssembler<span class="preprocessor">.assemble</span>(
+Context3DProgramType<span class="preprocessor">.FRAGMENT</span>,
+<span class="string">"tex ft1, v0, fs0 &lt;2d,linear, nomip&gt;;\n"</span> +
+<span class="string">"mov oc, ft1"</span>
+)<span class="comment">;</span>
+var program:Program3D = context3D<span class="preprocessor">.createProgram</span>()<span class="comment">;</span>
+program<span class="preprocessor">.upload</span>(
+vertexShaderAssembler<span class="preprocessor">.agalcode</span>,
+fragmentShaderAssembler<span class="preprocessor">.agalcode</span>
+)<span class="comment">;</span>
+</pre></figure></code></pre>
+<p>渲染！</p>
+<ol>
+<li>Clear the Context3D, erasing the previous frame</li>
+<li>Select which vertex buffers to use</li>
+<li>Select which texture to use</li>
+<li>Set the current shader program</li>
+<li>Apply a matrix for use in your shaders to calculate the location</li>
+<li>Render the mesh</li>
+<li>Repeat steps 2 through 6 for every mesh</li>
+<li>Present the final image to the user</li>
+</ol>
+<p>实际代码来了：</p>
+<pre><code><figure class="highlight"><pre>// clear your viewport <span class="keyword">to</span> <span class="keyword">the</span> background color:
+context3D.clear ( <span class="number">1</span>, <span class="number">1</span>, <span class="number">1</span>, <span class="number">1</span> );
+// vertex position <span class="keyword">to</span> attribute register <span class="number">0</span> (va0)
+context3D.setVertexBufferAt (<span class="number">0</span>, vertexbuffer, <span class="number">0</span>,
+Context3DVertexBufferFormat.FLOAT_3);
+// uv coordinates <span class="keyword">to</span> attribute register <span class="number">1</span> (va1)
+context3D.setVertexBufferAt(<span class="number">1</span>, vertexbuffer, <span class="number">3</span>,
+Context3DVertexBufferFormat.FLOAT_2);
+// assign texture <span class="keyword">to</span> texture sampler <span class="number">0</span> (fs0)
+context3D.setTextureAt( <span class="number">0</span>, texture );
+// assign shader program
+context3D.setProgram( program );
+// Note how <span class="keyword">the</span> two vertex buffer streams,
+// vertex positions <span class="keyword">and</span> uv coordinates,
+// <span class="keyword">get</span> assigned <span class="keyword">to</span> two different attribute registers.
+// The texture <span class="keyword">is</span> assigned <span class="keyword">to</span> a specific texture sampler.
+// Pass <span class="function_start"><span class="keyword">on</span> <span class="title">your</span></span> transform matrix <span class="keyword">to</span> <span class="keyword">the</span> shader.
+var m:Matrix3D = new Matrix3D();
+m.appendRotation(getTimer()/<span class="number">50</span>, Vector3D.Z_AXIS);
+context3D.setProgramConstantsFromMatrix(
+Context3DProgramType.VERTEX, <span class="number">0</span>, m, <span class="constant">true</span>);
+// The matrix gets stored <span class="keyword">into</span> <span class="type">constant</span> register <span class="number">0</span> here,
+// <span class="keyword">for</span> <span class="keyword">the</span> Vertex Shader <span class="keyword">to</span> use.
+// To render, call drawTriangles passing <span class="keyword">in</span> <span class="keyword">the</span> index buffer.
+context3D.drawTriangles(indexBuffer);
+// You may do additional drawTriangle calls <span class="keyword">in</span> <span class="keyword">the</span> frame
+// one <span class="keyword">for</span> each mesh you want rendered.
+// You can use <span class="keyword">the</span> same <span class="keyword">or</span> different programs <span class="keyword">for</span> each meshes.
+// Once all meshes have been drawn, display them <span class="function_start"><span class="keyword">on</span> <span class="title">screen</span></span>:
+context3D.present();
+</pre></figure></code></pre>
+<p>后边全在分块的讲代码，有点晕，都不知道讲到哪了，其实直接看完整的代码就可以了，注释非常全。要费点精力了，我先略了。</p>
+<p>详见 <a href="/image/ch4_Stage3dGame.as" target="_blank">Stage3dGame.as</a>类</p>
+<h3>第5章，Making Stuff Happen!</h3>
+<hr>
+<p>面片真是太面了，这章要显示真正的模型了。</p>
+<p>.OBJ是模型文件，主流3d软件都应该可以导出这种格式。
+还有贴图可以photoshop做，具体怎么做的看不懂，等看完了这本书小弟就准备学习学习3d软件了。
+.obj文件格式类似这样</p>
+<pre><code><figure class="highlight"><pre><span class="title">v</span> -<span class="number">0.257</span> <span class="number">0.191</span> <span class="number">0.423</span>
+<span class="title">vt</span> <span class="number">0.623</span> <span class="number">0.227</span>
+<span class="title">f</span> <span class="number">1</span>/<span class="number">1</span> <span class="number">2</span>/<span class="number">2</span> <span class="number">3</span>/<span class="number">3</span>
+</pre></figure></code></pre>
+<p>第一行是顶点坐标，第2行是uv坐标，第3行是面的定义，用来产生index buffer，复杂的obj文件会有成百上千行。
+理论就在这些。</p>
+<p>下边开始主要讲解析obj文件<a href="/image/Stage3dObjParser.as" target="_blank">Stage3dObjParser.as</a>类</p>
+<p>第一步readClass把embed进来的obj文件转成字符串</p>
+<pre><code><figure class="highlight"><pre><span class="keyword">private</span> <span class="function"><span class="keyword">function</span> <span class="title">readClass</span><span class="params">(f:Class)</span><span class="type">:String</span>
+{</span>
+    <span class="keyword">var</span> bytes:ByteArray = <span class="keyword">new</span> f();
+    <span class="keyword">return</span> bytes.readUTFBytes(bytes.bytesAvailable);
+}
+</pre></figure></code></pre>
+<p>然后每行解析</p>
+<pre><code><figure class="highlight"><pre><span class="regexp">//</span> Split data <span class="keyword">in</span> to lines <span class="keyword">and</span> parse all lines.
+<span class="reserved">var</span> lines:Array = definition.split(LINE_FEED);
+<span class="reserved">var</span> <span class="keyword">loop</span>:uint = lines.length;
+<span class="keyword">for</span>(<span class="reserved">var</span> i:uint = <span class="number">0</span>; i &lt; <span class="keyword">loop</span>; ++i)
+    parseLine(lines[i]);
+</pre></figure></code></pre>
+<p>然后根据firstWord分别解析不同数据</p>
+<pre><code><figure class="highlight"><pre><span class="keyword">private</span> <span class="function"><span class="keyword">function</span> <span class="title">parseLine</span><span class="params">(line:String)</span><span class="type">:void</span>
+{</span>
+        <span class="comment">// Split line into words.</span>
+        <span class="keyword">var</span> words:Array = line.split(SPACE);
+
+        <span class="comment">// Prepare the data of the line.</span>
+        <span class="keyword">if</span> (words.length &gt; <span class="number">0</span>)
+            <span class="keyword">var</span> data:Array = words.slice(<span class="number">1</span>);
+        <span class="keyword">else</span>
+            <span class="keyword">return</span>;
+
+        <span class="comment">// Check first word and delegate remainder to proper parser.</span>
+        <span class="keyword">var</span> firstWord:String = words[<span class="number">0</span>];
+        <span class="keyword">switch</span> (firstWord)
+        {
+            <span class="keyword">case</span> VERTEX:
+                parseVertex(data);
+                <span class="keyword">break</span>;
+            <span class="keyword">case</span> NORMAL:
+                parseNormal(data);
+                <span class="keyword">break</span>;
+            <span class="keyword">case</span> UV:
+                parseUV(data);
+                <span class="keyword">break</span>;
+            <span class="keyword">case</span> INDEX_DATA:
+                parseIndex(data);
+                <span class="keyword">break</span>;
+        }
+}
+</pre></figure></code></pre>
+<p>难点在解析index，这里就略了。</p>
+<p>如果软件可以不导出normal，则可以大大减小文件体积，可以用下边函数计算出normal</p>
+<pre><code><figure class="highlight"><pre><span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">restoreNormals</span><span class="params">()</span><span class="type">:void</span>
+{</span>    <span class="comment">// utility function</span>
+    _rawNormalsBuffer = _cachedRawNormalsBuffer.concat();
+}
+
+<span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">get3PointNormal</span><span class="params">(
+    p0:Vector3D, p1:Vector3D, p2:Vector3D)</span><span class="type">:Vector3D</span>
+{</span>    <span class="comment">// utility function</span>
+    <span class="comment">// calculate the normal from three vectors</span>
+    <span class="keyword">var</span> p0p1:Vector3D = p1.subtract(p0);
+    <span class="keyword">var</span> p0p2:Vector3D = p2.subtract(p0);
+    <span class="keyword">var</span> normal:Vector3D = p0p1.crossProduct(p0p2);
+    normal.normalize();
+    <span class="keyword">return</span> normal;
+}
+
+<span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">forceNormals</span><span class="params">()</span><span class="type">:void</span>
+{</span>    <span class="comment">// utility function</span>
+    <span class="comment">// useful for when the OBJ file doesn't have normal data</span>
+    <span class="comment">// we can calculate it manually by calling this function</span>
+    _cachedRawNormalsBuffer = _rawNormalsBuffer.concat();
+    <span class="keyword">var</span> i:uint, index:uint;
+    <span class="comment">// Translate vertices to vector3d array.</span>
+    <span class="keyword">var</span> loop:uint = _rawPositionsBuffer.length/<span class="number">3</span>;
+    <span class="keyword">var</span> vertices:Vector.&lt;Vector3D&gt; = <span class="keyword">new</span> Vector.&lt;Vector3D&gt;();
+    <span class="keyword">var</span> vertex:Vector3D;
+    <span class="keyword">for</span>(i = <span class="number">0</span>; i &lt; loop; ++i)
+    {
+        index = <span class="number">3</span>*i;
+        vertex = <span class="keyword">new</span> Vector3D(_rawPositionsBuffer[index],
+            _rawPositionsBuffer[index + <span class="number">1</span>], 
+            _rawPositionsBuffer[index + <span class="number">2</span>]);
+        vertices.push(vertex);
+    }
+    <span class="comment">// Calculate normals.</span>
+    loop = vertices.length;
+    <span class="keyword">var</span> p0:Vector3D, p1:Vector3D, p2:Vector3D, normal:Vector3D;
+    _rawNormalsBuffer = <span class="keyword">new</span> Vector.&lt;Number&gt;();
+    <span class="keyword">for</span>(i = <span class="number">0</span>; i &lt; loop; i += <span class="number">3</span>)
+    {
+        p0 = vertices[i];
+        p1 = vertices[i + <span class="number">1</span>];
+        p2 = vertices[i + <span class="number">2</span>];
+        normal = get3PointNormal(p0, p1, p2);
+        _rawNormalsBuffer.push(normal.x, normal.y, normal.z);
+        _rawNormalsBuffer.push(normal.x, normal.y, normal.z);
+        _rawNormalsBuffer.push(normal.x, normal.y, normal.z);
+    }
+}
+</pre></figure></code></pre>
+<p>至此.OBJ解析部分完成了。</p>
+<p>上传Mipmaps代码</p>
+<pre><code><figure class="highlight"><pre><span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">uploadTextureWithMipmaps</span><span class="params">(dest:Texture, src:BitmapData)</span><span class="type">:void</span>
+{</span>
+     <span class="keyword">var</span> ws:int = src.width;
+     <span class="keyword">var</span> hs:int = src.height;
+     <span class="keyword">var</span> level:int = <span class="number">0</span>;
+     <span class="keyword">var</span> tmp:BitmapData;
+     <span class="keyword">var</span> transform:Matrix = <span class="keyword">new</span> Matrix();
+     <span class="keyword">var</span> tmp2:BitmapData;
+     tmp = <span class="keyword">new</span> BitmapData( src.width, src.height, <span class="literal">true</span>, <span class="number">0x00000000</span>);
+     <span class="keyword">while</span> ( ws &gt;= <span class="number">1</span> &amp;&amp; hs &gt;= <span class="number">1</span> )
+     {                                
+          tmp.draw(src, transform, <span class="literal">null</span>, <span class="literal">null</span>, <span class="literal">null</span>, <span class="literal">true</span>);    
+          dest.uploadFromBitmapData(tmp, level);
+          transform.scale(<span class="number">0.5</span>, <span class="number">0.5</span>);
+          level++;
+          ws &gt;&gt;= <span class="number">1</span>;
+          hs &gt;&gt;= <span class="number">1</span>;
+          <span class="keyword">if</span> (hs &amp;&amp; ws) 
+          {
+               tmp.dispose();
+               tmp = <span class="keyword">new</span> BitmapData(ws, hs, <span class="literal">true</span>, <span class="number">0x00000000</span>);
+          }
+     }
+     tmp.dispose();
+}
+</pre></figure></code></pre>
+<p>巨型实例，结束本章</p>
+<pre><code><figure class="highlight"><pre><span class="package"><span class="keyword">package</span>
+{</span>
+<span class="preprocessor"><span class="keyword">import</span> com.adobe.utils.*;</span>
+<span class="preprocessor"><span class="keyword">import</span> flash.display.*;</span>
+<span class="preprocessor"><span class="keyword">import</span> flash.display3D.*;</span>
+<span class="preprocessor"><span class="keyword">import</span> flash.display3D.textures.*;</span>
+<span class="preprocessor"><span class="keyword">import</span> flash.events.*;</span>
+<span class="preprocessor"><span class="keyword">import</span> flash.geom.*;</span>
+<span class="preprocessor"><span class="keyword">import</span> flash.utils.*;</span>
+<span class="preprocessor"><span class="keyword">import</span> flash.text.*;</span>
+[SWF(width=<span class="string">"640"</span>, height=<span class="string">"480"</span>, frameRate=<span class="string">"60"</span>, backgroundColor=<span class="string">"#FFFFFF"</span>)]    
+<span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Stage3dGame</span> <span class="keyword">extends</span> <span class="title">Sprite</span>
+{</span>
+<span class="comment">// used by the GUI</span>
+<span class="keyword">private</span> <span class="keyword">var</span> fpsLast:uint = getTimer();
+<span class="keyword">private</span> <span class="keyword">var</span> fpsTicks:uint = <span class="number">0</span>;
+<span class="keyword">private</span> <span class="keyword">var</span> fpsTf:TextField;
+<span class="keyword">private</span> <span class="keyword">var</span> scoreTf:TextField;
+<span class="keyword">private</span> <span class="keyword">var</span> score:uint = <span class="number">0</span>;
+<span class="comment">// constants used during inits</span>
+<span class="keyword">private</span> <span class="keyword">const</span> swfWidth:int = <span class="number">640</span>;
+<span class="keyword">private</span> <span class="keyword">const</span> swfHeight:int = <span class="number">480</span>;
+<span class="comment">// for this demo, ensure ALL textures are 512x512</span>
+<span class="keyword">private</span> <span class="keyword">const</span> textureSize:int = <span class="number">512</span>;
+<span class="comment">// the 3d graphics window on the stage</span>
+<span class="keyword">private</span> <span class="keyword">var</span> context3D:Context3D;
+<span class="comment">// the compiled shaders used to render our mesh</span>
+<span class="keyword">private</span> <span class="keyword">var</span> shaderProgram1:Program3D;
+<span class="keyword">private</span> <span class="keyword">var</span> shaderProgram2:Program3D;
+<span class="keyword">private</span> <span class="keyword">var</span> shaderProgram3:Program3D;
+<span class="keyword">private</span> <span class="keyword">var</span> shaderProgram4:Program3D;
+<span class="comment">// matrices that affect the mesh location and camera angles</span>
+<span class="keyword">private</span> <span class="keyword">var</span> projectionmatrix:PerspectiveMatrix3D = <span class="keyword">new</span> PerspectiveMatrix3D();
+<span class="keyword">private</span> <span class="keyword">var</span> modelmatrix:Matrix3D = <span class="keyword">new</span> Matrix3D();
+<span class="keyword">private</span> <span class="keyword">var</span> viewmatrix:Matrix3D = <span class="keyword">new</span> Matrix3D();
+<span class="keyword">private</span> <span class="keyword">var</span> terrainviewmatrix:Matrix3D = <span class="keyword">new</span> Matrix3D();
+<span class="keyword">private</span> <span class="keyword">var</span> modelViewProjection:Matrix3D = <span class="keyword">new</span> Matrix3D();
+<span class="comment">// a simple frame counter used for animation</span>
+<span class="keyword">private</span> <span class="keyword">var</span> t:Number = <span class="number">0</span>;
+<span class="comment">// a reusable loop counter</span>
+<span class="keyword">private</span> <span class="keyword">var</span> looptemp:int = <span class="number">0</span>;
+<span class="comment">/* TEXTURES: Pure AS3 and Flex version:
+ * if you are using Adobe Flash CS5 
+ * comment out the following: */</span>
+[Embed (source = <span class="string">"art/spaceship_texture.jpg"</span>)] 
+<span class="keyword">private</span> <span class="keyword">var</span> myTextureBitmap:Class;
+<span class="keyword">private</span> <span class="keyword">var</span> myTextureData:Bitmap = <span class="keyword">new</span> myTextureBitmap();
+[Embed (source = <span class="string">"art/terrain_texture.jpg"</span>)] 
+<span class="keyword">private</span> <span class="keyword">var</span> terrainTextureBitmap:Class;
+<span class="keyword">private</span> <span class="keyword">var</span> terrainTextureData:Bitmap = <span class="keyword">new</span> terrainTextureBitmap();
+<span class="comment">/* TEXTURE: Flash CS5 version:
+ * add the jpgs to your library (F11)
+ * right click and edit the advanced properties
+ * so it is exported for use in Actionscript 
+ * and call them myTextureBitmap and terrainTextureBitmap
+ * if you are using Flex/FlashBuilder/FlashDevelop/FDT
+ * comment out the following: */</span>
+<span class="comment">//private var myBitmapDataObject:myTextureBitmapData = </span>
+<span class="comment">//    new myTextureBitmapData(textureSize, textureSize);</span>
+<span class="comment">//private var myTextureData:Bitmap = </span>
+<span class="comment">//    new Bitmap(myBitmapDataObject);</span>
+<span class="comment">//private var terrainBitmapDataObject:terrainTextureBitmapData = </span>
+<span class="comment">//    new terrainTextureBitmapData(textureSize, textureSize);</span>
+<span class="comment">//private var terrainTextureData:Bitmap = </span>
+<span class="comment">//    new Bitmap(terrainBitmapDataObject);</span>
+<span class="comment">// The Stage3d Texture that uses the above myTextureData</span>
+<span class="keyword">private</span> <span class="keyword">var</span> myTexture:Texture;
+<span class="keyword">private</span> <span class="keyword">var</span> terrainTexture:Texture;
+<span class="comment">// The spaceship mesh data</span>
+[Embed (source = <span class="string">"art/spaceship.obj"</span>, mimeType = <span class="string">"application/octet-stream"</span>)] 
+<span class="keyword">private</span> <span class="keyword">var</span> myObjData:Class;
+<span class="keyword">private</span> <span class="keyword">var</span> myMesh:Stage3dObjParser;
+<span class="comment">// The terrain mesh data</span>
+[Embed (source = <span class="string">"art/terrain.obj"</span>, mimeType = <span class="string">"application/octet-stream"</span>)] 
+<span class="keyword">private</span> <span class="keyword">var</span> terrainObjData:Class;
+<span class="keyword">private</span> <span class="keyword">var</span> terrainMesh:Stage3dObjParser;
+<span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">Stage3dGame</span><span class="params">()</span> 
+{</span>
+    <span class="keyword">if</span> (stage != <span class="literal">null</span>) 
+        init();
+    <span class="keyword">else</span> 
+        addEventListener(Event.ADDED_TO_STAGE, init);
+}
+<span class="keyword">private</span> <span class="function"><span class="keyword">function</span> <span class="title">init</span><span class="params">(e:Event = null)</span><span class="type">:void</span> 
+{</span>
+    <span class="keyword">if</span> (hasEventListener(Event.ADDED_TO_STAGE))
+        removeEventListener(Event.ADDED_TO_STAGE, init);
+    stage.scaleMode = StageScaleMode.NO_SCALE;
+    stage.align = StageAlign.TOP_LEFT;
+    <span class="comment">// add some text labels</span>
+    initGUI();
+    <span class="comment">// and request a context3D from Stage3d</span>
+    stage.stage3Ds[<span class="number">0</span>].addEventListener(Event.CONTEXT3D_CREATE, onContext3DCreate);
+    stage.stage3Ds[<span class="number">0</span>].requestContext3D();
+}
+<span class="keyword">private</span> <span class="function"><span class="keyword">function</span> <span class="title">updateScore</span><span class="params">()</span><span class="type">:void</span>
+{</span>
+    <span class="comment">// for now, you earn points over time</span>
+    score++;
+    <span class="comment">// padded with zeroes</span>
+    <span class="keyword">if</span> (score &lt; <span class="number">10</span>) scoreTf.text = <span class="string">'Score: 00000'</span> + score;
+    <span class="keyword">else</span> <span class="keyword">if</span> (score &lt; <span class="number">100</span>) scoreTf.text = <span class="string">'Score: 0000'</span> + score;
+    <span class="keyword">else</span> <span class="keyword">if</span> (score &lt; <span class="number">1000</span>) scoreTf.text = <span class="string">'Score: 000'</span> + score;
+    <span class="keyword">else</span> <span class="keyword">if</span> (score &lt; <span class="number">10000</span>) scoreTf.text = <span class="string">'Score: 00'</span> + score;
+    <span class="keyword">else</span> <span class="keyword">if</span> (score &lt; <span class="number">100000</span>) scoreTf.text = <span class="string">'Score: 0'</span> + score;
+    <span class="keyword">else</span> scoreTf.text = <span class="string">'Score: '</span> + score;
+}
+<span class="keyword">private</span> <span class="function"><span class="keyword">function</span> <span class="title">initGUI</span><span class="params">()</span><span class="type">:void</span>
+{</span>
+    <span class="comment">// a text format descriptor used by all gui labels</span>
+    <span class="keyword">var</span> myFormat:TextFormat = <span class="keyword">new</span> TextFormat();  
+    myFormat.color = <span class="number">0xFFFFFF</span>;
+    myFormat.size = <span class="number">13</span>;
+    <span class="comment">// create an FPSCounter that displays the framerate on screen</span>
+    fpsTf = <span class="keyword">new</span> TextField();
+    fpsTf.x = <span class="number">0</span>;
+    fpsTf.y = <span class="number">0</span>;
+    fpsTf.selectable = <span class="literal">false</span>;
+    fpsTf.autoSize = TextFieldAutoSize.LEFT;
+    fpsTf.defaultTextFormat = myFormat;
+    fpsTf.text = <span class="string">"Initializing Stage3d..."</span>;
+    addChild(fpsTf);
+    <span class="comment">// create a score display</span>
+    scoreTf = <span class="keyword">new</span> TextField();
+    scoreTf.x = <span class="number">560</span>;
+    scoreTf.y = <span class="number">0</span>;
+    scoreTf.selectable = <span class="literal">false</span>;
+    scoreTf.autoSize = TextFieldAutoSize.LEFT;
+    scoreTf.defaultTextFormat = myFormat;
+    scoreTf.text = <span class="string">"000000"</span>;
+    addChild(scoreTf);
+    <span class="comment">// add some labels to describe each shader</span>
+    <span class="keyword">var</span> label1:TextField = <span class="keyword">new</span> TextField();
+    label1.x = <span class="number">100</span>;
+    label1.y = <span class="number">180</span>;
+    label1.selectable = <span class="literal">false</span>;  
+    label1.autoSize = TextFieldAutoSize.LEFT;  
+    label1.defaultTextFormat = myFormat;
+    label1.text = <span class="string">"Shader 1: Textured"</span>;
+    addChild(label1);
+    <span class="keyword">var</span> label2:TextField = <span class="keyword">new</span> TextField();
+    label2.x = <span class="number">400</span>;
+    label2.y = <span class="number">180</span>;
+    label2.selectable = <span class="literal">false</span>;  
+    label2.autoSize = TextFieldAutoSize.LEFT;  
+    label2.defaultTextFormat = myFormat;
+    label2.text = <span class="string">"Shader 2: Vertex RGB"</span>;
+    addChild(label2);
+    <span class="keyword">var</span> label3:TextField = <span class="keyword">new</span> TextField();
+    label3.x = <span class="number">80</span>;
+    label3.y = <span class="number">440</span>;
+    label3.selectable = <span class="literal">false</span>;  
+    label3.autoSize = TextFieldAutoSize.LEFT;  
+    label3.defaultTextFormat = myFormat;
+    label3.text = <span class="string">"Shader 3: Vertex RGB + Textured"</span>;
+    addChild(label3);
+    <span class="keyword">var</span> label4:TextField = <span class="keyword">new</span> TextField();
+    label4.x = <span class="number">340</span>;
+    label4.y = <span class="number">440</span>;
+    label4.selectable = <span class="literal">false</span>;  
+    label4.autoSize = TextFieldAutoSize.LEFT;  
+    label4.defaultTextFormat = myFormat;
+    label4.text = <span class="string">"Shader 4: Textured + setProgramConstants"</span>;
+    addChild(label4);
+}
+<span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">uploadTextureWithMipmaps</span><span class="params">(dest:Texture, src:BitmapData)</span><span class="type">:void</span>
+{</span>
+     <span class="keyword">var</span> ws:int = src.width;
+     <span class="keyword">var</span> hs:int = src.height;
+     <span class="keyword">var</span> level:int = <span class="number">0</span>;
+     <span class="keyword">var</span> tmp:BitmapData;
+     <span class="keyword">var</span> transform:Matrix = <span class="keyword">new</span> Matrix();
+     <span class="keyword">var</span> tmp2:BitmapData;
+     tmp = <span class="keyword">new</span> BitmapData( src.width, src.height, <span class="literal">true</span>, <span class="number">0x00000000</span>);
+     <span class="keyword">while</span> ( ws &gt;= <span class="number">1</span> &amp;&amp; hs &gt;= <span class="number">1</span> )
+     {                                
+          tmp.draw(src, transform, <span class="literal">null</span>, <span class="literal">null</span>, <span class="literal">null</span>, <span class="literal">true</span>);    
+          dest.uploadFromBitmapData(tmp, level);
+          transform.scale(<span class="number">0.5</span>, <span class="number">0.5</span>);
+          level++;
+          ws &gt;&gt;= <span class="number">1</span>;
+          hs &gt;&gt;= <span class="number">1</span>;
+          <span class="keyword">if</span> (hs &amp;&amp; ws) 
+          {
+               tmp.dispose();
+               tmp = <span class="keyword">new</span> BitmapData(ws, hs, <span class="literal">true</span>, <span class="number">0x00000000</span>);
+          }
+     }
+     tmp.dispose();
+}
+<span class="keyword">private</span> <span class="function"><span class="keyword">function</span> <span class="title">onContext3DCreate</span><span class="params">(event:Event)</span><span class="type">:void</span> 
+{</span>
+    <span class="comment">// Remove existing frame handler. Note that a context</span>
+    <span class="comment">// loss can occur at any time which will force you</span>
+    <span class="comment">// to recreate all objects we create here.</span>
+    <span class="comment">// A context loss occurs for instance if you hit</span>
+    <span class="comment">// CTRL-ALT-DELETE on Windows.            </span>
+    <span class="comment">// It takes a while before a new context is available</span>
+    <span class="comment">// hence removing the enterFrame handler is important!</span>
+    <span class="keyword">if</span> (hasEventListener(Event.ENTER_FRAME))
+        removeEventListener(Event.ENTER_FRAME,enterFrame);
+    <span class="comment">// Obtain the current context</span>
+    <span class="keyword">var</span> t:Stage3D = event.target <span class="keyword">as</span> Stage3D;                    
+    context3D = t.context3D;     
+    <span class="keyword">if</span> (context3D == <span class="literal">null</span>) 
+    {
+        <span class="comment">// Currently no 3d context is available (error!)</span>
+        <span class="keyword">return</span>;
+    }
+    <span class="comment">// Disabling error checking will drastically improve performance.</span>
+    <span class="comment">// If set to true, Flash sends helpful error messages regarding</span>
+    <span class="comment">// AGAL compilation errors, uninitialized program constants, etc.</span>
+    context3D.enableErrorChecking = <span class="literal">true</span>;
+    <span class="comment">// Initialize our mesh data</span>
+    initData();
+    <span class="comment">// The 3d back buffer size is in pixels (2=antialiased)</span>
+    context3D.configureBackBuffer(swfWidth, swfHeight, <span class="number">2</span>, <span class="literal">true</span>);
+    <span class="comment">// assemble all the shaders we need</span>
+    initShaders();
+    myTexture = context3D.createTexture(textureSize, textureSize, Context3DTextureFormat.BGRA, <span class="literal">false</span>);
+    uploadTextureWithMipmaps(myTexture, myTextureData.bitmapData);
+    terrainTexture = context3D.createTexture(textureSize, textureSize, Context3DTextureFormat.BGRA, <span class="literal">false</span>);
+    uploadTextureWithMipmaps(terrainTexture, terrainTextureData.bitmapData);
+    <span class="comment">// create projection matrix for our 3D scene</span>
+    projectionmatrix.identity();
+    <span class="comment">// 45 degrees FOV, 640/480 aspect ratio, 0.1=near, 100=far</span>
+    projectionmatrix.perspectiveFieldOfViewRH(<span class="number">45.0</span>, swfWidth / swfHeight, <span class="number">0.01</span>, <span class="number">5000.0</span>);
+    <span class="comment">// create a matrix that defines the camera location</span>
+    viewmatrix.identity();
+    <span class="comment">// move the camera back a little so we can see the mesh</span>
+    viewmatrix.appendTranslation(<span class="number">0</span>,<span class="number">0</span>,-<span class="number">3</span>);
+    <span class="comment">// tilt the terrain a little so it is coming towards us</span>
+    terrainviewmatrix.identity();
+    terrainviewmatrix.appendRotation(-<span class="number">60</span>,Vector3D.X_AXIS);
+    <span class="comment">// start the render loop!</span>
+    addEventListener(Event.ENTER_FRAME,enterFrame);
+}
+<span class="comment">// create four different shaders</span>
+<span class="keyword">private</span> <span class="function"><span class="keyword">function</span> <span class="title">initShaders</span><span class="params">()</span><span class="type">:void</span>
+{</span>
+    <span class="comment">// A simple vertex shader which does a 3D transformation</span>
+    <span class="comment">// for simplicity, it is used by all four shaders</span>
+    <span class="keyword">var</span> vertexShaderAssembler:AGALMiniAssembler = <span class="keyword">new</span> AGALMiniAssembler();
+    vertexShaderAssembler.assemble
+    ( 
+        Context3DProgramType.VERTEX,
+        <span class="comment">// 4x4 matrix multiply to get camera angle    </span>
+        <span class="string">"m44 op, va0, vc0\n"</span> +
+        <span class="comment">// tell fragment shader about XYZ</span>
+        <span class="string">"mov v0, va0\n"</span> +
+        <span class="comment">// tell fragment shader about UV</span>
+        <span class="string">"mov v1, va1\n"</span> +
+        <span class="comment">// tell fragment shader about RGBA</span>
+        <span class="string">"mov v2, va2\n"</span>
+    );            
+    <span class="comment">// textured using UV coordinates</span>
+    <span class="keyword">var</span> fragmentShaderAssembler1:AGALMiniAssembler = <span class="keyword">new</span> AGALMiniAssembler();
+    fragmentShaderAssembler1.assemble
+    ( 
+        Context3DProgramType.FRAGMENT,    
+        <span class="comment">// grab the texture color from texture 0 </span>
+        <span class="comment">// and uv coordinates from varying register 1</span>
+        <span class="comment">// and store the interpolated value in ft0</span>
+        <span class="string">"tex ft0, v1, fs0 &lt;2d,linear,repeat,miplinear&gt;\n"</span>+
+        <span class="comment">// move this value to the output color</span>
+        <span class="string">"mov oc, ft0\n"</span>
+    );
+    <span class="comment">// no texture, RGBA from the vertex buffer data</span>
+    <span class="keyword">var</span> fragmentShaderAssembler2:AGALMiniAssembler = <span class="keyword">new</span> AGALMiniAssembler();
+    fragmentShaderAssembler2.assemble
+    ( 
+        Context3DProgramType.FRAGMENT,    
+        <span class="comment">// grab the color from the v2 register</span>
+        <span class="comment">// which was set in the vertex program</span>
+        <span class="string">"sub ft0, v2, fc1\n"</span> + <span class="comment">///这句应该删掉？</span>
+        <span class="string">"mov oc, v2\n"</span>
+    );
+    <span class="comment">// textured using UV coordinates AND colored by vertex RGB</span>
+    <span class="keyword">var</span> fragmentShaderAssembler3:AGALMiniAssembler = <span class="keyword">new</span> AGALMiniAssembler();
+    fragmentShaderAssembler3.assemble
+    ( 
+        Context3DProgramType.FRAGMENT,    
+        <span class="comment">// grab the texture color from texture 0 </span>
+        <span class="comment">// and uv coordinates from varying register 1</span>
+        <span class="string">"tex ft0, v1, fs0 &lt;2d,linear,repeat,miplinear&gt;\n"</span> +    
+        <span class="comment">// multiply by the value stored in v2 (the vertex rgb)</span>
+        <span class="string">"mul ft1, v2, ft0\n"</span> +
+        <span class="comment">// move this value to the output color</span>
+        <span class="string">"mov oc, ft1\n"</span>
+    );
+    <span class="comment">// textured using UV coordinates and </span>
+    <span class="comment">// tinted using a fragment constant</span>
+    <span class="keyword">var</span> fragmentShaderAssembler4:AGALMiniAssembler = <span class="keyword">new</span> AGALMiniAssembler();
+    fragmentShaderAssembler4.assemble
+    ( 
+        Context3DProgramType.FRAGMENT,    
+        <span class="comment">// grab the texture color from texture 0 </span>
+        <span class="comment">// and uv coordinates from varying register 1</span>
+        <span class="string">"tex ft0, v1, fs0 &lt;2d,linear,repeat,miplinear&gt;\n"</span> +    
+        <span class="comment">// multiply by the value stored in fc0</span>
+        <span class="string">"mul ft1, fc0, ft0\n"</span> +
+        <span class="comment">// move this value to the output color</span>
+        <span class="string">"mov oc, ft1\n"</span>
+    );
+    <span class="comment">// combine shaders into a program which we then upload to the GPU</span>
+    shaderProgram1 = context3D.createProgram();
+    shaderProgram1.upload(vertexShaderAssembler.agalcode, fragmentShaderAssembler1.agalcode);
+    shaderProgram2 = context3D.createProgram();
+    shaderProgram2.upload(vertexShaderAssembler.agalcode, fragmentShaderAssembler2.agalcode);
+    shaderProgram3 = context3D.createProgram();
+    shaderProgram3.upload(vertexShaderAssembler.agalcode, fragmentShaderAssembler3.agalcode);
+    shaderProgram4 = context3D.createProgram();
+    shaderProgram4.upload(vertexShaderAssembler.agalcode, fragmentShaderAssembler4.agalcode);
+}
+<span class="keyword">private</span> <span class="function"><span class="keyword">function</span> <span class="title">initData</span><span class="params">()</span><span class="type">:void</span> 
+{</span>
+    <span class="comment">// parse the OBJ file and create buffers</span>
+    myMesh = <span class="keyword">new</span> Stage3dObjParser(myObjData, context3D, <span class="number">1</span>, <span class="literal">true</span>, <span class="literal">true</span>);
+    <span class="comment">// parse the terrain mesh as well</span>
+    terrainMesh = <span class="keyword">new</span> Stage3dObjParser(terrainObjData, context3D, <span class="number">1</span>, <span class="literal">true</span>, <span class="literal">true</span>);
+}        
+<span class="keyword">private</span> <span class="function"><span class="keyword">function</span> <span class="title">renderTerrain</span><span class="params">()</span><span class="type">:void</span>
+{</span>
+    context3D.setTextureAt(<span class="number">0</span>, terrainTexture);
+    <span class="comment">// simple textured shader</span>
+    context3D.setProgram ( shaderProgram1 );
+    <span class="comment">// position</span>
+    context3D.setVertexBufferAt(<span class="number">0</span>, terrainMesh.positionsBuffer, 
+        <span class="number">0</span>, Context3DVertexBufferFormat.FLOAT_3);
+    <span class="comment">// tex coord</span>
+    context3D.setVertexBufferAt(<span class="number">1</span>, terrainMesh.uvBuffer, 
+        <span class="number">0</span>, Context3DVertexBufferFormat.FLOAT_2);
+    <span class="comment">// vertex rgba</span>
+    context3D.setVertexBufferAt(<span class="number">2</span>, terrainMesh.colorsBuffer, 
+        <span class="number">0</span>, Context3DVertexBufferFormat.FLOAT_4);
+    <span class="comment">// set up camera angle</span>
+    modelmatrix.identity();
+    <span class="comment">// make the terrain face the right way</span>
+    modelmatrix.appendRotation( -<span class="number">90</span>, Vector3D.Y_AXIS);
+    <span class="comment">// slowly move the terrain around</span>
+    modelmatrix.appendTranslation(
+        Math.cos(t/<span class="number">300</span>)*<span class="number">1000</span>,Math.cos(t/<span class="number">200</span>)*<span class="number">1000</span> + <span class="number">500</span>,-<span class="number">130</span>); 
+    <span class="comment">// clear the matrix and append new angles</span>
+    modelViewProjection.identity();
+    modelViewProjection.append(modelmatrix);
+    modelViewProjection.append(terrainviewmatrix);
+    modelViewProjection.append(projectionmatrix);    
+    <span class="comment">// pass our matrix data to the shader program</span>
+    context3D.setProgramConstantsFromMatrix(
+        Context3DProgramType.VERTEX, 
+        <span class="number">0</span>, modelViewProjection, <span class="literal">true</span> );
+    context3D.drawTriangles(terrainMesh.indexBuffer, 
+        <span class="number">0</span>, terrainMesh.indexBufferCount);        
+}
+<span class="keyword">private</span> <span class="function"><span class="keyword">function</span> <span class="title">enterFrame</span><span class="params">(e:Event)</span><span class="type">:void</span> 
+{</span>
+    <span class="comment">// clear scene before rendering is mandatory</span>
+    context3D.clear(<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>); 
+    <span class="comment">// move or rotate more each frame</span>
+    t += <span class="number">2.0</span>;
+    <span class="comment">// scroll and render the terrain once</span>
+    renderTerrain();
+    <span class="comment">// how far apart each of the 4 spaceships is</span>
+    <span class="keyword">var</span> dist:Number = <span class="number">0.8</span>; 
+    <span class="comment">// loop through each mesh we want to draw</span>
+    <span class="keyword">for</span> (looptemp = <span class="number">0</span>; looptemp &lt; <span class="number">4</span>; looptemp++)
+    {
+        <span class="comment">// clear the transformation matrix to 0,0,0</span>
+        modelmatrix.identity();
+        <span class="comment">// each mesh has a different texture, </span>
+        <span class="comment">// shader, position and spin speed</span>
+        <span class="keyword">switch</span>(looptemp)
+        {
+            <span class="keyword">case</span> <span class="number">0</span>:
+                context3D.setTextureAt(<span class="number">0</span>, myTexture);
+                context3D.setProgram ( shaderProgram1 );
+                modelmatrix.appendRotation(t*<span class="number">0.7</span>, Vector3D.Y_AXIS);
+                modelmatrix.appendRotation(t*<span class="number">0.6</span>, Vector3D.X_AXIS);
+                modelmatrix.appendRotation(t*<span class="number">1.0</span>, Vector3D.Y_AXIS);
+                modelmatrix.appendTranslation(-dist, dist, <span class="number">0</span>);
+                <span class="keyword">break</span>;
+            <span class="keyword">case</span> <span class="number">1</span>:
+                context3D.setTextureAt(<span class="number">0</span>, <span class="literal">null</span>);
+                context3D.setProgram ( shaderProgram2 );
+                modelmatrix.appendRotation(t*-<span class="number">0.2</span>, Vector3D.Y_AXIS);
+                modelmatrix.appendRotation(t*<span class="number">0.4</span>, Vector3D.X_AXIS);
+                modelmatrix.appendRotation(t*<span class="number">0.7</span>, Vector3D.Y_AXIS);
+                modelmatrix.appendTranslation(dist, dist, <span class="number">0</span>);
+                <span class="keyword">break</span>;
+            <span class="keyword">case</span> <span class="number">2</span>:
+                context3D.setTextureAt(<span class="number">0</span>, myTexture);
+                context3D.setProgram ( shaderProgram3 );
+                modelmatrix.appendRotation(t*<span class="number">1.0</span>, Vector3D.Y_AXIS);
+                modelmatrix.appendRotation(t*-<span class="number">0.2</span>, Vector3D.X_AXIS);
+                modelmatrix.appendRotation(t*<span class="number">0.3</span>, Vector3D.Y_AXIS);
+                modelmatrix.appendTranslation(-dist, -dist, <span class="number">0</span>);
+                <span class="keyword">break</span>;
+            <span class="keyword">case</span> <span class="number">3</span>:
+                context3D.setProgramConstantsFromVector(
+                    Context3DProgramType.FRAGMENT, <span class="number">0</span>, Vector.&lt;Number&gt;
+                    ([ <span class="number">1</span>, Math.abs(Math.cos(t/<span class="number">50</span>)), <span class="number">0</span>, <span class="number">1</span> ]) );
+                context3D.setTextureAt(<span class="number">0</span>, myTexture);
+                context3D.setProgram ( shaderProgram4 );
+                modelmatrix.appendRotation(t*<span class="number">0.3</span>, Vector3D.Y_AXIS);
+                modelmatrix.appendRotation(t*<span class="number">0.3</span>, Vector3D.X_AXIS);
+                modelmatrix.appendRotation(t*-<span class="number">0.3</span>, Vector3D.Y_AXIS);
+                modelmatrix.appendTranslation(dist, -dist, <span class="number">0</span>);
+                <span class="keyword">break</span>;
+        }
+        <span class="comment">// clear the matrix and append new angles</span>
+        modelViewProjection.identity();
+        modelViewProjection.append(modelmatrix);
+        modelViewProjection.append(viewmatrix);
+        modelViewProjection.append(projectionmatrix);
+        <span class="comment">// pass our matrix data to the shader program</span>
+        context3D.setProgramConstantsFromMatrix(
+            Context3DProgramType.VERTEX, 
+            <span class="number">0</span>, modelViewProjection, <span class="literal">true</span> );
+        <span class="comment">// draw a spaceship mesh</span>
+        <span class="comment">// position</span>
+        context3D.setVertexBufferAt(<span class="number">0</span>, myMesh.positionsBuffer, 
+            <span class="number">0</span>, Context3DVertexBufferFormat.FLOAT_3);
+        <span class="comment">// tex coord</span>
+        context3D.setVertexBufferAt(<span class="number">1</span>, myMesh.uvBuffer, 
+            <span class="number">0</span>, Context3DVertexBufferFormat.FLOAT_2);
+        <span class="comment">// vertex rgba</span>
+        context3D.setVertexBufferAt(<span class="number">2</span>, myMesh.colorsBuffer, 
+            <span class="number">0</span>, Context3DVertexBufferFormat.FLOAT_4);
+        <span class="comment">// render it</span>
+        context3D.drawTriangles(myMesh.indexBuffer, 
+            <span class="number">0</span>, myMesh.indexBufferCount);        
+    }
+    <span class="comment">// present/flip back buffer</span>
+    <span class="comment">// now that all meshes have been drawn</span>
+    context3D.present();
+    <span class="comment">// update the FPS display</span>
+    fpsTicks++;
+    <span class="keyword">var</span> now:uint = getTimer();
+    <span class="keyword">var</span> delta:uint = now - fpsLast;
+    <span class="comment">// only update the display once a second</span>
+    <span class="keyword">if</span> (delta &gt;= <span class="number">1000</span>) 
+    {
+        <span class="keyword">var</span> fps:Number = fpsTicks / delta * <span class="number">1000</span>;
+        fpsTf.text = fps.toFixed(<span class="number">1</span>) + <span class="string">" fps"</span>;
+        fpsTicks = <span class="number">0</span>;
+        fpsLast = now;
+    }
+    <span class="comment">// update the rest of the GUI</span>
+    updateScore();
+}
+} <span class="comment">// end of class</span>
+} <span class="comment">// end of package</span>
+</pre></figure></code></pre>
+<h3>第6章，Textures: Making Things Look Pretty</h3>
+<hr>
+<p><strong>贴图必须满足2次方</strong></p>
+<blockquote>
+<p>textures must have a length and width that fall into these values: 2,4,8,16,32,64,128,256,512,1024 and so on.</p>
+</blockquote>
+<p><strong>UV坐标</strong></p>
+<blockquote>
+<p>The coordinate U is the left-right axis in a texture, while V represents the up-down axis. Therefore, the bottom of a texture has V of 1 and the far right would have U of 1.</p>
+</blockquote>
+<p><img src="/image/molehill_book04.jpg" alt=""></p>
+<p><strong>透明Textures</strong></p>
+<blockquote>
+<p>You can also use a .PNG file, complete with variable transparency.</p>
+</blockquote>
+<p><strong>Animating UVs</strong></p>
+<p>例如水的特效，可以让uv不断增加一点点，然后uv_offsets传到shader里</p>
+<pre><code><figure class="highlight"><pre><span class="comment">// increment the x axis of a vector3D</span>
+uv_offsets<span class="variable">.x</span> += <span class="number">0.01</span>;
+<span class="comment">// send this vector to the AGAL variable vc4</span>
+context3D<span class="variable">.setProgramConstantsFromVector</span>(Context3DProgramType<span class="variable">.VERTEX</span>,<span class="number">4</span>, uv_offsets, <span class="literal">true</span> );
+</pre></figure></code></pre>
+<p>在shader里把uv做加法</p>
+<pre><code><figure class="highlight"><pre><span class="title">add</span> v1, va1, vc4
+</pre></figure></code></pre>
+<p><strong>Texture Atlases</strong></p>
+<blockquote>
+<p>A great technique to increase your game&#39;s framerate and allow more meshes to be rendered 
+using the same shader is to pack multiple textures into a large bitmap called a texture atlas. </p>
+</blockquote>
+<p>是提升效率的很重要手段，因为可以把很多不同贴图的模型，放在一次draw call 里。</p>
+<blockquote>
+<p>Using texture atlases is definitely the best practice for rendering fonts in your 3D world .</p>
+</blockquote>
+<p><img src="/image/molehill_book04.jpg" alt=""></p>
+<p><strong>Animated Textures</strong></p>
+<p>第一种方法：in your render loop you could switch the texture you send to context3D.setTextureAt() every few frames.</p>
+<p>第2种方法：simple send a new offset in a setProgramConstantsFromVector() call to shift the texture coordinates over to the next frame</p>
+<p>显然第一种方法是很慢很蠢的。</p>
+<p><strong>Manipulating Texture Data</strong></p>
+<p>可以每帧调用uploadFromBitmapData()，但这样效率是很低的，要避免这么做。
+如果决定非要这么做了的话，还可以给bitmapdata加滤镜Anything AS3 code you have around that can generate bitmapdata can be used to as the source pixels for your textures。</p>
+<h2>Render States：Blend modes, backface culling, depth testing</h2>
+<p><strong>Backface Culling</strong></p>
+<p>默认情况下，效率关系只显示mesh可以看见的那一面。如果想两面都显示要这样不做背面裁剪</p>
+<pre><code><figure class="highlight"><pre>context3D<span class="preprocessor">.setCulling</span>(Context3DTriangleFace<span class="preprocessor">.NONE</span>)<span class="comment">;</span>
+</pre></figure></code></pre>
+<p>可选的参数包括</p>
+<pre><code><figure class="highlight"><pre>Context3DTriangleFace<span class="variable">.NONE</span> (不裁剪),
+Context3DTriangleFace<span class="variable">.BACK</span> (默认情况，背面被裁剪),
+Context3DTriangleFace<span class="variable">.FRONT</span> (与正常情况相反，正面被裁减)
+Context3DTriangleFace<span class="variable">.BOTH</span> (没什么用，全裁剪，不渲染任何东西).
+</pre></figure></code></pre>
+<p><strong>Depth Testing</strong></p>
+<p>stage3d在每个在屏幕上的像素都保存一个深度值叫做zbuffer，默认molehill只渲染离camera近的像素，但当你不想为某个mesh保存深度信息（比如爆炸特效或者透明区域例如窗户）就要设置 setDepthTest（）</p>
+<blockquote>
+<p>For example, if you are going to render a transparent mesh like a window that you don&#39;t want to draw on the zbuffer (so that other objects are always visible behind it) but you DO want it to be obscured by furniture in the room that is in front of it, simply use:</p>
+</blockquote>
+<pre><code><figure class="highlight"><pre>context3D<span class="variable">.setDepthTest</span>(<span class="literal">false</span>, Context3DCompareMode<span class="variable">.LESS</span>);
+</pre></figure></code></pre>
+<p>第1个boolean值为true表示下一个要渲染的mesh写入depth buffer，反之不写入。
+第2个参数可以是</p>
+<pre><code><figure class="highlight"><pre> Context3DCompareMode<span class="variable">.ALWAYS</span>
+ Context3DCompareMode<span class="variable">.EQUAL</span>
+ Context3DCompareMode<span class="variable">.GREATER</span>
+ Context3DCompareMode<span class="variable">.GREATER_EQUAL</span>
+ Context3DCompareMode<span class="variable">.LESS</span>
+ Context3DCompareMode<span class="variable">.LESS_EQUAL</span>
+ Context3DCompareMode<span class="variable">.NEVER</span>
+ Context3DCompareMode<span class="variable">.NOT_EQUAL</span>
+</pre></figure></code></pre>
+<blockquote>
+<p>The pixel in question will only be rendered when a comparison between it and the
+destination pixel are TRUE based on the preceding criteria. The default in Stage3D is to only
+render pixels that have a depth value that is LESS than what is already on the screen, closer
+to the camera.
+The preceding example is handy if you are going to render a transparent mesh like a window
+that you don&#39;t want to draw on the zbuffer (so that other objects are always visible behind
+it), but you DO want it to be obscured by furniture in the room that is in front of it.
+Like with other render states, this will be in effect until you set it to something else. You only
+need to call it once and that criteria will be used until you instruct Flash otherwise.</p>
+</blockquote>
+<p><strong>Blend Modes</strong>
+混合模式影响如何渲染texture</p>
+<p>在画mesh之前调用Context3D.setBlendFactors()，传递两个乘数给flash，告诉molehill用什么颜色渲染texture。</p>
+<p>可选参数：</p>
+<pre><code><figure class="highlight"><pre>Context3DBlendFactor<span class="variable">.DESTINATION_ALPHA</span>
+Context3DBlendFactor<span class="variable">.DESTINATION_COLOR</span>
+Context3DBlendFactor<span class="variable">.ONE</span>
+Context3DBlendFactor<span class="variable">.ONE_MINUS_DESTINATION_ALPHA</span>
+Context3DBlendFactor<span class="variable">.ONE_MINUS_DESTINATION_COLOR</span>
+Context3DBlendFactor<span class="variable">.ONE_MINUS_SOURCE_ALPHA</span>
+Context3DBlendFactor<span class="variable">.ONE_MINUS_SOURCE_COLOR</span>
+Context3DBlendFactor<span class="variable">.SOURCE_ALPHA</span>
+Context3DBlendFactor<span class="variable">.SOURCE_COLOR</span>
+Context3DBlendFactor<span class="variable">.ZERO</span>
+</pre></figure></code></pre>
+<p>渲染公式： framebuffercolor = (fragmentcolor <em> srcBlend) + (framebuffercolor </em> destBlend).</p>
+<p>这是stage3d默认参数，完全不透明</p>
+<pre><code><figure class="highlight"><pre>// this <span class="keyword">is</span> <span class="keyword">the</span> Molehill default: nice <span class="keyword">for</span> opaque textures
+// all <span class="keyword">of</span> <span class="keyword">the</span> color <span class="function_start"><span class="keyword">on</span> <span class="title">screen</span></span> comes <span class="keyword">from</span> <span class="keyword">the</span> fragment color
+context3D.setBlendFactors(Context3DBlendFactor.ONE,Context3DBlendFactor.ZERO);
+</pre></figure></code></pre>
+<p>常见的使用透明贴图的方法：</p>
+<pre><code><figure class="highlight"><pre><span class="regexp">//</span> <span class="keyword">this</span> <span class="keyword">is</span> the proper setting to use .png textures
+<span class="regexp">//</span> that have transparent regions
+<span class="regexp">//</span> perfect <span class="keyword">for</span> foliage<span class="regexp">/fences/</span>fonts
+context3D.setBlendFactors(
+Context3DBlendFactor.SOURCE_ALPHA,
+Context3DBlendFactor.ONE_MINUS_SOURCE_ALPHA);
+</pre></figure></code></pre>
+<p>加亮：</p>
+<pre><code><figure class="highlight"><pre>// this setting makes <span class="keyword">it</span> lighten <span class="keyword">the</span> scene only
+// good <span class="keyword">for</span> particles stored <span class="keyword">as</span> .jpg
+// (only white sections add <span class="keyword">to</span> <span class="keyword">the</span> screen - black <span class="keyword">is</span> <span class="keyword">not</span> drawn)
+context3D.setBlendFactors(
+Context3DBlendFactor.SOURCE_COLOR,
+Context3DBlendFactor.ONE);
+</pre></figure></code></pre>
+<blockquote>
+<p>Blend modes, backface culling, and depth testing are all render states, meaning that you 
+only have to set them once and that behavior continues to be in effect until you set it to 
+something else.</p>
+</blockquote>
+<p>效率：</p>
+<p>不透明的jpg贴图效率更高，避免overdraw，看不到的不draw，多用zbuffer，从近到远的顺序draw，避免statechange（backface culling ,depth testing,blendmodes），尽量短的shader，越少mesh越好，组合mesh让drawTriangles()调用次数越少越好，只渲染实际可见的mesh（这就要用到PVS算法，quad-trees, BSP trees, and portals了）</p>
+<p>最后做了demo，具体看Stage3dGame.as代码了</p>
+<p>本章总结</p>
+<blockquote>
+<p>In this chapter, we focused primarily upon three functions that affect how your meshes are 
+rendered: setBlendFactors, setCulling, and setDepthTest. Creative use of these 
+special render states open your game world up to all sorts of special effects.
+In implementing this new functionality, we achieved a few milestones. Our game engine is 
+now using multiple textures and several meshes; we have code for rendering textures using 
+new blend modes which allow us to render special effects such as explosions and smoke. 
+We can change whether backfaces are culled on meshes, so that we can draw the insides of 
+transparent objects, we can ignore or use the zbuffer as desired, and we are now detecting 
+key presses for user control of the action.</p>
+</blockquote>
+<h3>第7章，Timers, Inputs, and Entities: Gameplay Goodness!</h3>
+<hr>
+<p>前边介绍了两个3d不相关的类
+GameTimer
+GameInput</p>
+<p>后面抽象出了一个Stage3dEntity基类.
+介绍了一个技巧就是设置dirty flag，然后下一帧渲染的时候一起更新transform矩阵。</p>
+<p>其他很多数学方法并没有详细介绍原理。</p>
+<p>本章总结</p>
+<blockquote>
+<ul>
+<li>We now have a class that measures time for use in animations</li>
+<li>We also have a new class that detects the player keyboard and mouse input</li>
+<li>We created a game entity class for use by all in-game objects</li>
+<li>We programmed a simple chase camera with mouse-look</li>
+<li>We upgraded our game to include a heads-up-display overlay and many new in-game models and effects</li>
+</ul>
+</blockquote>
+<h3>第8章，Eye-Candy Aplenty</h3>
+<hr>
+<p>粒子是两个mesh型变做法不是很通用的粒子做法，可用性不高，略了，不过这种做法用AGAL做顶点动画的部分还是值得看一下的。</p>
+<h3>第9章，A World Filled with Action</h3>
+<hr>
+<p>深入到游戏细节了，已经没有stage3d的内容了，碰撞检测和可视过滤都是算圆形距离的，不够深入。还有些ui什么的参杂在里边，代码细节太多实在没心情仔细看了。</p>
+<h3>第10章，Chapter 10: 3... 2... 1... ACTION!</h3>
+<hr>
+<p>貌似是重构一些代码? 都是游戏逻辑，没有stage3d内容了，我就没看了。</p>
+<h2>总结</h2>
+<p>书还不错，我确实入门了，遗憾是数学部分没有专门讲解， 如果有本续集，深度一些就好了。</p>
+
+    
+  </div>
+  <footer>
+    
+      
+  
+  <div class="categories">
+    <a href="/categories/article/">article</a>
+  </div>
+
+      
+  
+  <div class="tags">
+    <a href="/tags/stage3d/">stage3d</a>
+  </div>
+
+    
+    <div class="clearfix"></div>
+  </footer>
+</article>
+
+
+<section id="comment">
+  <h1 class="title">留言</h1>
+  <div class="ds-thread" data-title="Adobe Flash 11 Stage3D (Molehill) Game Programming Beginner 笔记">
+  </div>
+</section>
+</div>
+  </div>
+  <div class="widget-wrapper">
+    <aside id="sidebar">
+  
+  
+    
+    
+
+<div class="widget tag first">
+  <h3 class="title">分类</h3>
+  <ul class="entry">
+  
+    <li><a href="/categories/article/">article</a><small>5</small></li>
+  
+    <li><a href="/categories/project/">project</a><small>6</small></li>
+  
+  </ul>
+</div>
+
+  
+    
+    
+
+<div class="widget tagcloud">
+  <h3 class="title">标签云</h3>
+  <div class="entry">
+    <a href="/tags/pdf2mag/" style="font-size: 14.00px;">pdf2mag</a><a href="/tags/stage3d/" style="font-size: 12.00px;">stage3d</a><a href="/tags/webgl/" style="font-size: 10.00px;">webgl</a><a href="/tags/游戏/" style="font-size: 18.00px;">游戏</a><a href="/tags/翻译/" style="font-size: 16.00px;">翻译</a>
+  </div>
+</div>
+
+  
+    
+    
+
+<div class="widget recent-posts">
+  <h3 class="title">最近的文章</h3>
+  <ul class="entry">
+    
+      <li>
+        <a href="/article/2013-07-28/stage3d-game-programming-beginner/">Adobe Flash 11 Stage3D (Molehill) Game Programming Beginner 笔记</a>
+      </li>
+    
+      <li>
+        <a href="/article/2013-06-21/hello-world/">更换博客系统</a>
+      </li>
+    
+      <li>
+        <a href="/article/2013-05-18/as3-to-typescript/">从 ActionScript3 到 TypeScript</a>
+      </li>
+    
+      <li>
+        <a href="/article/2012-04-09/howToMakeMoney/">笔记《黑客与画家》如何创造财富</a>
+      </li>
+    
+      <li>
+        <a href="/project/2011-10-05/go-to-hell/">跨IOS，Android的小游戏《阿鼻地狱》</a>
+      </li>
+    
+  </ul>
+</div>
+
+  
+</aside>
+<div class="clearfix"></div>
+  </div>
+  <footer id="footer"><div class="copyright">
+  
+  &copy; 2013 <a href="/">Nshen</a>
+  
+</div>
+<div class="theme-copyright">
+  Theme by <a href="https://github.com/orderedlist" target="_blank">orderedlist</a>
+   | 
+  Redesign by <a href="http://heroicyang.com/" target="_blank">Heroic Yang</a>
+</div>
+<div class="clearfix"></div></footer>
+  <script src="/js/scale.fix.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+
+
+<script type="text/javascript">
+  var duoshuoQuery = { short_name: 'nshen' };
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';
+    ds.async = true;
+    ds.src = 'http://static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+</script>
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+  (function($){
+    $('.fancybox').fancybox();
+  })(jQuery);
+</script>
+
+</body>
+</html>
