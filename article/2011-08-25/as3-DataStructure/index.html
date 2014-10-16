@@ -1,0 +1,612 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>AS3与数据结构 | N神的研究所</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="时至今日国内外都还没有一本专讲AS3与数据结构的书，对于我这种非科班毕业的社会闲杂人等来说，入门数据结构太难了，我参考了各方代码，经过一段时间的恶补，整理了一下目前Flash开发中有可能遇得到的数据结构。完整代码在文章结尾有下载，如有错漏请直接指出谢谢。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="AS3与数据结构">
+<meta property="og:url" content="http://nshen.net/article/2011-08-25/as3-DataStructure/">
+<meta property="og:site_name" content="N神的研究所">
+<meta property="og:description" content="时至今日国内外都还没有一本专讲AS3与数据结构的书，对于我这种非科班毕业的社会闲杂人等来说，入门数据结构太难了，我参考了各方代码，经过一段时间的恶补，整理了一下目前Flash开发中有可能遇得到的数据结构。完整代码在文章结尾有下载，如有错漏请直接指出谢谢。">
+<meta property="og:image" content="/image/tree01.jpg">
+<meta property="og:image" content="/image/tree02.jpg">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="AS3与数据结构">
+<meta name="twitter:description" content="时至今日国内外都还没有一本专讲AS3与数据结构的书，对于我这种非科班毕业的社会闲杂人等来说，入门数据结构太难了，我参考了各方代码，经过一段时间的恶补，整理了一下目前Flash开发中有可能遇得到的数据结构。完整代码在文章结尾有下载，如有错漏请直接指出谢谢。">
+
+  
+    <link rel="alternative" href="/atom.xml" title="N神的研究所" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  <link rel="stylesheet" href="/css/style.css" type="text/css">
+
+  <!--[if lt IE 9]><script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7/html5shiv.min.js"></script><![endif]-->
+  
+</head>
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">N神的研究所</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/" id="subtitle">我正在考虑在这里写点啥...</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">首页</a>
+        
+          <a class="main-nav-link" href="/categories/article/">学习笔记</a>
+        
+          <a class="main-nav-link" href="/categories/project/">实验项目</a>
+        
+          <a class="main-nav-link" href="/about/">关于我</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="http://www.baidu.com/baidu" method="get" accept-charset="utf-8" class="search-form">
+          <input type="search" name="word" maxlength="20" class="search-form-input" placeholder="Search">
+          <input type="submit" value="" class="search-form-submit">
+          <input name=tn type=hidden value="bds">
+          <input name=cl type=hidden value="3">
+          <input name=ct type=hidden value="2097152">
+          <input type="hidden" name="si" value="nshen.net">
+        </form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-as3-DataStructure" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/article/2011-08-25/as3-DataStructure/" class="article-date">
+  <time datetime="2011-08-25T06:56:31.000Z" itemprop="datePublished">8月 25 2011</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/article/">article</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+	<!---->
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      AS3与数据结构
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>时至今日国内外都还没有一本专讲AS3与数据结构的书，对于我这种非科班毕业的社会闲杂人等来说，入门数据结构太难了，我参考了各方代码，经过一段时间的恶补，整理了一下目前Flash开发中有可能遇得到的数据结构。完整代码在文章结尾有下载，如有错漏请直接指出谢谢。</p>
+<a id="more"></a>
+
+<h3 id="数组">数组</h3>
+<p>Array类应该是Flash里最常用的数据结构了。比其他语言的数组高级和灵活许多，随意装入任何数据类型，不用固定长度。<br>访问速度快，从后方添加(push)和删除(pop)快，但从中间或开头删除会很慢。</p>
+<p>从100万长度的数组开头删除500个元素在我的机器上差不多要1秒钟。</p>
+<pre><code><span class="keyword">var</span> arr:Array = []
+<span class="keyword">for</span>(<span class="keyword">var</span> i:<span class="keyword">uint</span>= <span class="number">0</span> ;i&lt;<span class="number">1000000</span>;i++)arr[i]=i ;
+
+<span class="keyword">var</span> startT:Number = getTimer()
+<span class="keyword">var</span> num:<span class="keyword">uint</span> = <span class="number">500</span>
+<span class="keyword">while</span>(num&gt;<span class="number">0</span>)
+{
+    arr.splice(<span class="number">0</span>,<span class="number">1</span>)
+    num--
+}
+trace(<span class="string">"time:"</span>,getTimer() - startT)
+</code></pre><p>但如果数组没有顺序的话，快速删除法1000个在我机器上才需要1毫秒。</p>
+<pre><code><span class="keyword">var</span> arr:Array = []
+<span class="keyword">for</span>(<span class="keyword">var</span> i:<span class="keyword">uint</span>= <span class="number">0</span> ;i&lt;<span class="number">1000000</span>;i++)arr[i]=i ;
+
+<span class="keyword">var</span> startT:Number = getTimer()
+<span class="keyword">var</span> num:<span class="keyword">uint</span> = <span class="number">1000</span>
+<span class="keyword">while</span>(num&gt;<span class="number">0</span>)
+{
+    arr[<span class="number">0</span>] =arr[arr.length-<span class="number">1</span>]
+    arr.length -=<span class="number">1</span>
+    num--
+}
+trace(getTimer() - startT)
+</code></pre><p>Vector：Vector是Array的升级版。如果想追求效率，恰巧数组中的元素类型是固定的，或者长度是固定的，就可以将Array换成Vector类提升效率。</p>
+<h3 id="堆栈">堆栈</h3>
+<p>堆栈是先进后出的结构，像子弹梭子一样，由于数组的push() pop()非常快，所以数组本身就是最好的堆栈。</p>
+<h3 id="队列">队列</h3>
+<p>队列是先进先出，数组也可以做队列，但是从数组前端删除数据比较慢，下边10万条数据我的机器运行差不多需要2秒。</p>
+<pre><code><span class="keyword">var</span> startT:Number = getTimer()
+<span class="keyword">var</span> queue:Array = []
+<span class="keyword">for</span>(<span class="keyword">var</span> i:<span class="keyword">int</span> = <span class="number">0</span> ; i&lt;<span class="number">100000</span> ;i++)
+{
+    queue.push(i);
+}
+<span class="keyword">for</span>(<span class="keyword">var</span> i:<span class="keyword">int</span> = <span class="number">0</span> ; i&lt;<span class="number">100000</span> ;i++)
+{
+    queue.shift()
+}
+trace(getTimer() - startT)
+</code></pre><p>我参考as3ds改写了个链表（DLinkedList） ，实现了数组一样的 push() pop() shift() unshift() 四个方法。用这个链表只需要改一行代码，同样操作在我的机器上只要100多毫秒。</p>
+<pre><code><span class="keyword">var</span> startT:Number = getTimer()
+<span class="keyword">var</span> queue:DLinkedList = <span class="keyword">new</span> DLinkedList()
+<span class="keyword">for</span>(<span class="keyword">var</span> i:<span class="keyword">int</span> = <span class="number">0</span> ; i&lt;<span class="number">100000</span> ;i++)
+{
+    queue.push(i);
+}
+<span class="keyword">for</span>(<span class="keyword">var</span> i:<span class="keyword">int</span> = <span class="number">0</span> ; i&lt;<span class="number">100000</span> ;i++)
+{
+    queue.shift()
+}
+trace(getTimer() - startT)
+</code></pre><p>这个链表是一个双向链表，可以当作各种队列也可以当作堆栈，效率都不错。</p>
+<h3 id="链表">链表</h3>
+<p>这个链表实现的是一个双向链表，因为删除数据会快些，单链表优点就是省一点点内存，但删除会慢很多，用处不大，所以没有实现。<br>我觉得除了把链表当成队列使用，平时几乎用不到。如果非要使用就要使用Iterator了，Iterator是一种设计模式，不懂可以搜索一下。<br>下边是对链表所有操作的演示。</p>
+<pre><code><span class="tag">var</span> l<span class="value">:DLinkedList = new <span class="function">DLinkedList</span>()
+l.<span class="function">push</span>(<span class="number">1</span>)
+l.<span class="function">push</span>(<span class="number">2</span>)
+l.<span class="function">push</span>(<span class="number">3</span>)
+<span class="function">trace</span>(l,l.head,l.tail) //[<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>] <span class="number">1</span> <span class="number">3</span>
+l.<span class="function">pop</span>()
+<span class="function">trace</span>(l,l.head,l.tail) //[<span class="number">1</span>,<span class="number">2</span>] <span class="number">1</span> <span class="number">2</span>
+l.<span class="function">unshift</span>(<span class="number">0</span>)
+<span class="function">trace</span>(l,l.head,l.tail) //[<span class="number">0</span>,<span class="number">1</span>,<span class="number">2</span>] <span class="number">0</span> <span class="number">2</span>
+l.<span class="function">shift</span>()
+<span class="function">trace</span>(l,l.head,l.tail) //[<span class="number">1</span>,<span class="number">2</span>] <span class="number">1</span> <span class="number">2</span>
+l.<span class="function">push</span>(<span class="number">3</span>)
+<span class="function">trace</span>(l,l.head,l.tail) //[<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>] <span class="number">1</span> <span class="number">3</span>
+
+//遍历,输出  <span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>
+var it:DListIterator = l.<span class="function">getIterator</span>()
+<span class="function">for</span>(it.<span class="function">start</span>() ;</span> it<span class="class">.hasNext</span>(); it<span class="class">.next</span>())
+{
+    <span class="function">trace</span>(it<span class="class">.node</span><span class="class">.data</span>)
+}
+it<span class="class">.start</span>()  <span class="comment">// 索引归0</span>
+it<span class="class">.next</span>()   
+l<span class="class">.remove</span>(it) <span class="comment">//remove 2</span>
+l<span class="class">.remove</span>(it) <span class="comment">//remove 3</span>
+<span class="function">trace</span>(l,l<span class="class">.head</span>,l<span class="class">.tail</span>) <span class="comment">//[1] 1 1</span>
+l<span class="class">.insert</span>(it,2) 
+<span class="function">trace</span>(l,l<span class="class">.head</span>,l<span class="class">.tail</span>) <span class="comment">//[1,2] 1 2</span>
+l<span class="class">.insert</span>(it,3)
+<span class="function">trace</span>(l,l<span class="class">.head</span>,l<span class="class">.tail</span>) <span class="comment">//[1,3,2] 1 2</span>
+</code></pre><h3 id="哈希表">哈希表</h3>
+<p>哈希表应该就是Object？ 在Flash里Object是动态的，赋值就 obj.abc = 123 ,删除就 delete obj.abc</p>
+<pre><code><span class="keyword">var</span> o:<span class="built_in">Object</span> = {}
+o[<span class="string">"key"</span>] = obj   <span class="comment">//插入</span>
+<span class="keyword">delete</span> o[<span class="string">"key"</span>]  <span class="comment">//删除</span>
+</code></pre><p>如果追求Object做key可以用flash.utils.Dictionary类代替Object。</p>
+<h3 id="树">树</h3>
+<p>上边数组和链表都叫线性结构，树是典型的非线性数据结构，普通的树也不常用，但作为一个基础必须掌握，这里的树使用上边提到的双向链表存储子树。操作树要用TreeIterator，下边是演示。</p>
+<pre><code><span class="tag">var</span> tree<span class="value">:Tree = new <span class="function">Tree</span>(<span class="number">0</span>);</span>
+<span class="tag">var</span> itr<span class="value">:TreeIterator = tree.<span class="function">getIterator</span>()
+itr.<span class="function">appendChild</span>(<span class="number">1</span>)
+itr.<span class="function">appendChild</span>(<span class="number">2</span>) 
+
+      <span class="number">0</span>  
+     / \
+    <span class="number">1</span>   <span class="number">2</span>
+
+
+itr.<span class="function">down</span>()
+itr.<span class="function">appendChild</span>(<span class="number">3</span>)
+
+
+         <span class="number">0</span>  
+        / \
+       <span class="number">1</span>   <span class="number">2</span>
+      /
+     <span class="number">3</span>
+
+
+itr.<span class="function">up</span>()
+itr.<span class="function">appendChild</span>(<span class="number">4</span>)
+
+          <span class="number">0</span>  
+        / | \ 
+       <span class="number">1</span>  <span class="number">2</span>  <span class="number">4</span>
+      /
+     <span class="number">3</span>
+
+
+itr.<span class="function">childEnd</span>()
+itr.<span class="function">down</span>()
+itr.<span class="function">prependChild</span>(<span class="number">5</span>)
+itr.<span class="function">prependChild</span>(<span class="number">6</span>)
+
+
+        <span class="number">0</span>  
+      / | \ 
+     <span class="number">1</span>  <span class="number">2</span>  <span class="number">4</span>
+    /      /\
+   <span class="number">3</span>      <span class="number">6</span>  <span class="number">5</span>    
+<span class="function">trace</span>(tree.<span class="function">dump</span>())</span>
+</code></pre><p>上边的代码输出如下：</p>
+<pre><code>[<span class="type">TreeNode</span> &gt;(root) has <span class="number">2</span> child nodes, <span class="typedef"><span class="keyword">data</span>=room1]</span>
++<span class="comment">---[TreeNode &gt; has 2 child nodes, data=room2]</span>
+|    +<span class="comment">---[TreeNode &gt;(leaf), data=room4]</span>
+|    +<span class="comment">---[TreeNode &gt;(leaf), data=room5]</span>
++<span class="comment">---[TreeNode &gt;(leaf), data=room3]</span>
+</code></pre><p>我实现了一个toXML方法，如果把tree.toXML(tree)赋给Flex的Tree组件的dataProvider属性，就会是这个样子。</p>
+<p><img src="/image/tree01.jpg" alt="/image/tree01.jpg"></p>
+<p>树的遍历分为前序遍历和后序遍历，演示：</p>
+<embed src="/image/TreeTraversal.swf" type="application/x-shockwave-flash" width="600" height="380">
+
+<p><a href="http://lab.polygonal.de/2007/05/15/data-structures-example-the-tree-class/" target="_blank">上边是直接来自as3ds的演示，了解更多点击这里</a> </p>
+<p>代码实现看着很简单，但很需要费脑子的，是递归实现。</p>
+<pre><code><span class="comment">/**
+* 前序遍历
+*/</span>
+<span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">preorder</span><span class="params">(Node:Tree,Process:Function)</span><span class="type">:void</span>
+</span>{
+    Process(Node)
+    <span class="keyword">var</span> itr:DListIterator = Node.children.getIterator()
+    <span class="keyword">while</span>(itr.hasNext())
+    {
+        preorder(Tree(itr.node.data),Process)
+        itr.next();
+    }
+}
+
+<span class="comment">/**
+* 后序遍历
+*/</span>
+<span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">postorder</span><span class="params">(Node:Tree,Process:Function)</span><span class="type">:void</span>
+</span>{
+    <span class="keyword">var</span> itr:DListIterator =  Node.children.getIterator()
+    <span class="keyword">while</span>(itr.hasNext())
+    {
+        postorder(Tree(itr.node.data),Process)
+    }
+    Process(Node)
+
+}
+</code></pre><h3 id="二叉堆与优先队列">二叉堆与优先队列</h3>
+<p>优先队列是一种特殊的队列，它不是先入先出，而是入队的元素会自动按你指定顺序排列，先出队的永远是你指定的顺序里排最前面的。<br>当然这个优先队列可以用数组实现，每次入队就push后排一次序，出队pop就可以了，但是这样效率不佳，我们的优先队列是使用二叉堆实现的。</p>
+<p>首先了解二叉树是只有2个子节点的树 ，二叉堆是一种特殊的二叉树，他的每个父节点都比子节点大。<br>里边用了些特殊的算法，让元素入队出队时效率更好。后边的A*寻路也用这个二叉堆来优化效率。具体算法见代码</p>
+<pre><code><span class="keyword">var</span> priorityQueue:Heap =<span class="keyword">new</span> Heap() <span class="comment">//新建二叉堆，默认从大到小排列</span>
+priorityQueue.enqueue(<span class="number">2</span>) <span class="comment">//入队9个数字</span>
+priorityQueue.enqueue(<span class="number">6</span>)
+priorityQueue.enqueue(<span class="number">5</span>)
+priorityQueue.enqueue(<span class="number">8</span>)            
+priorityQueue.enqueue(<span class="number">7</span>)
+priorityQueue.enqueue(<span class="number">4</span>)
+priorityQueue.enqueue(<span class="number">1</span>)
+priorityQueue.enqueue(<span class="number">3</span>)
+priorityQueue.enqueue(<span class="number">9</span>)
+
+<span class="keyword">trace</span>(priorityQueue)  <span class="comment">//输出9,8,5,7,6,4,1,2,3   ，发现并不是按顺序排列的</span>
+<span class="keyword">trace</span>(priorityQueue.dequeue())  <span class="comment">//9 但出队时就已经是排序好的了</span>
+<span class="keyword">trace</span>(priorityQueue.dequeue())  <span class="comment">//8</span>
+<span class="keyword">trace</span>(priorityQueue.dequeue())  <span class="comment">//7</span>
+<span class="keyword">trace</span>(priorityQueue.dequeue())  <span class="comment">//6</span>
+<span class="keyword">trace</span>(priorityQueue.dequeue())  <span class="comment">//5</span>
+<span class="keyword">trace</span>(priorityQueue.dequeue())  <span class="comment">//4</span>
+<span class="keyword">trace</span>(priorityQueue.dequeue())  <span class="comment">//3</span>
+<span class="keyword">trace</span>(priorityQueue.dequeue())  <span class="comment">//2</span>
+<span class="keyword">trace</span>(priorityQueue.dequeue())  <span class="comment">//1</span>
+
+<span class="comment">//如果想要逆序排列，只需要提供一个compare Function，这个跟数组sort方法里的compareFunction参数一样，如下：</span>
+
+<span class="keyword">var</span> f:Function = <span class="function"><span class="keyword">function</span><span class="params">(a:int,b:int)</span><span class="type">:int</span></span>{<span class="keyword">return</span> b-a}
+<span class="keyword">var</span> p:Heap =<span class="keyword">new</span> Heap(f)
+p.enqueue(<span class="number">2</span>)
+p.enqueue(<span class="number">6</span>)
+p.enqueue(<span class="number">5</span>)
+p.enqueue(<span class="number">8</span>)            
+p.enqueue(<span class="number">7</span>)
+p.enqueue(<span class="number">4</span>)
+p.enqueue(<span class="number">1</span>)
+p.enqueue(<span class="number">3</span>)
+p.enqueue(<span class="number">9</span>)
+
+<span class="keyword">trace</span>(p.dequeue()) <span class="comment">//1</span>
+<span class="keyword">trace</span>(p.dequeue()) <span class="comment">//2</span>
+<span class="keyword">trace</span>(p.dequeue()) <span class="comment">//3</span>
+<span class="keyword">trace</span>(p.dequeue()) <span class="comment">//4</span>
+<span class="keyword">trace</span>(p.dequeue()) <span class="comment">//5</span>
+<span class="keyword">trace</span>(p.dequeue()) <span class="comment">//6</span>
+<span class="keyword">trace</span>(p.dequeue()) <span class="comment">//7</span>
+<span class="keyword">trace</span>(p.dequeue()) <span class="comment">//8</span>
+<span class="keyword">trace</span>(p.dequeue()) <span class="comment">//9</span>
+</code></pre><p>其实Heap内部也是由数组存储的，它的算法有两个关键</p>
+<p>1) 如何用数组储存二叉树结构</p>
+<p>比如原树状结构为： </p>
+<pre><code>      4
+     / <span class="command">\
+</span>    3   0
+   /<span class="command">\
+</span>  1  2
+</code></pre><p>则存储成数组为：[4,3,0,1,2]</p>
+<p>2) 如何永远保持parent比child大</p>
+<p>这点比较麻烦具体可以参考我的代码，或者找本书看看。</p>
+<h3 id="四叉树">四叉树</h3>
+<p>四叉树通常用于2d游戏碰撞检测。假设屏幕上有500个mc，每2个之间都要进行碰撞检测，那么每一个mc都要与其他499个mc进行一次碰撞检测，那每帧总共就接近做500×500 = 250000次检测。<br>如果是小球还好办，用半径法，如果碰上复杂的mc需要位图碰撞检测，那每帧检测25万次flash是吃不消的。<br>一个优化的办法就是只与有可能碰撞的mc进行碰撞检测，这时四叉树就派上用场了。</p>
+<p>移动鼠标会发现，只有红色的方块是有可能与鼠标拖动的方块产生碰撞的，你只要将鼠标方块与红色的方块逐个进行检测就好了，大大提升了效率</p>
+<embed src="/image/QuadTree_retrieve.swf" type="application/x-shockwave-flash" width="500" height="500">
+
+<p>四叉树首先通过一个建树的过程将屏幕上的物体分配到，左上，右上，左下，右下四个象限中，这四个象限对应树的四个节点，每个象限还可以继续分成四个象限，根据具体情况考虑分配几层达到一个查找最快效果。</p>
+<p>对比一下速度，下边是数组遍历，250个Sprite，两两碰撞在我机器上就惨不忍睹了。 （放上鼠标开始）</p>
+<embed src="/image/Array_collition.swf" type="application/x-shockwave-flash" width="500" height="600" wmode="transparent"><br>&gt;<br>四叉树版本，500个Sprite，2倍精灵的数量两两碰撞仍然跑的流畅    （放上鼠标开始）<br><br><br><embed src="/image/QuadTree_collition.swf" type="application/x-shockwave-flash" width="600" height="500">
+
+<p>四叉树的思想就是先屏幕分割，然后过滤出离自己很近的，有可能产生碰撞的进行碰撞检测。Flash界使用四叉树最出名的应该就是<a href="http://flixel.org" target="_blank">Flixel游戏引擎</a>，它把四叉树隐藏在碰撞检测的API里，用户不需要直接操作四叉树。<br>调用碰撞检测的同时，引擎内部就自动建树了。大家都看到Flixel引擎的效率是非常高的，各种大小相差几倍的精灵放在一起检测也没有问题，这也是四叉树分区相比网格分区的一个优势。可惜Flixel里的四叉树<br>经过了各种优化，已经不是传统四叉树的样子了，很难分离出来。as3ds包里也没有四叉树的实现，所以我又google了一下，在网上看到一个写的比较清晰的JavaScript版本<a href="http://www.mikechambers.com/blog/2011/03/21/javascript-quadtree-implementation/" target="_blank">JavaScript QuadTree Implementation</a><br>又无意中搜到<a href="http://code.google.com/p/ghostcat/source/browse/trunk/GhostCat/src/ghostcat/algorithm/QuadTree.as?r=584" target="_blank">GhostCat里也有一个四叉树类</a>，GhostCat的这个版本是我看到写的最简洁的四叉树，很是佩服作者。<br>不过经过研究，他们有一个共同的问题就是只能把点(point)添加到树中，这对子弹或者小球的碰撞检测还好，但通常游戏中不论是MC还是Bitmap大都是有宽高的方形。如果把他们按照点来分配进树的话，就会有漏检查的情况出现。<br>下图是我将上边提到的，mikechambers写的JavaScript版本转成AS3后发现的问题，mike虽然已经将压线的矩形作为有可能碰撞的对象返回，但百密一疏，由于他是按照点来分配的，始终会有漏检</p>
+<p><img src="/image/tree02.jpg" alt="/image/tree02.jpg"></p>
+<p>所以我又回头看Flixel里的四叉树是怎么插入的，最后综合以上所有版本，我写了我的这个四叉树类。就是上边演示的那个，代码在文章末尾下载包里，太长就不贴了，我记得应该是写了很多注释。大家可以研究讨论一下。</p>
+<h3 id="图">图</h3>
+<p>图由节点node和指针arc组成，图的遍历与树差不多，分为广度优先遍历(与树的后序遍历)，和深度优先遍历（与树的前序遍历)。</p>
+<p>图在游戏中通常用作保存地图，网上流行的页游地图都是tilemap的，区块其实就是简化了指针之后的图，所以他们的理论是相通的。</p>
+<p>请看基于图的A*算法演示：</p>
+<p>因为我用了Adobe kuler配了一下色，所以漂亮了许多 ：）</p>
+<embed src="/image/GraphTest.swf" type="application/x-shockwave-flash" width="700" height="700">
+
+<p>QuadTree_collition</p>
+<p>为什么要用A*寻路而不是广度或深度遍历寻路呢？因为他们本身是很傻很执着的，由于不知道终点位置而盲目扫描整个图，这会浪费效能，而A星之所以叫做启发式寻路，是因为它事先预测了终点的大概方向而向那个方向扫描，这样增加了效率。</p>
+<p>我是照着这篇很有名的A Star入门教程写的代码：<a href="http://www.vckbase.com/document/viewdoc/?id=1422" target="_blank">A*寻路初探</a></p>
+<p>因为他是基于区块的，所以要改动一下，而需要改变的只有一个地方，他的文章里是循环检查 <strong>周围相邻的8格</strong> ，而我们改成  <strong>连通的所有节点</strong>  就ok了。</p>
+<p>我的Astar类已经按照教程逐句做了注释，对照教程应该很容易理解了。</p>
+<p>与教程不同的地方就是：</p>
+<p>1) 我使用了上边提到Heap优先队列来优化了open列表，使F值最小的始终在列表最上方，这个在教程后边也有讲。</p>
+<p>2）改用了 <strong>距离的启发值函数</strong> 计算H值，而原教程使用的 <em>曼哈顿距离启发值函数</em> 也有提供，可以替换，只是貌似没有距离的效果好,大家可以自己试一下。</p>
+<pre><code><span class="package"><span class="keyword">package</span> <span class="title">examples</span>.<span class="title">Astar</span>
+{</span>
+    <span class="preprocessor"><span class="keyword">import</span> ds.Graph;</span>
+    <span class="preprocessor"><span class="keyword">import</span> ds.GraphArc;</span>
+    <span class="preprocessor"><span class="keyword">import</span> ds.GraphNode;</span>
+    <span class="preprocessor"><span class="keyword">import</span> ds.Heap;</span>
+
+    <span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Astar</span>
+    </span>{            
+    <span class="comment">/**
+     *   距离启发函数
+     */</span>
+    <span class="keyword">public</span> <span class="keyword">static</span> <span class="function"><span class="keyword">function</span> <span class="title">distance</span><span class="params">(startNode:GraphNode,endNode:GraphNode)</span><span class="type">:Number</span>
+    </span>{
+     <span class="keyword">return</span>  Math.sqrt( (endNode.data.x - startNode.data.x)*(endNode.data.x - startNode.data.x) + (endNode.data.y - startNode.data.y)*(endNode.data.y - startNode.data.y))
+    }
+    <span class="comment">/**
+     *  曼哈顿启发函数
+     */</span>
+    <span class="keyword">public</span> <span class="keyword">static</span> <span class="function"><span class="keyword">function</span> <span class="title">manhattan</span><span class="params">(startNode:GraphNode,endNode:GraphNode)</span><span class="type">:Number</span>
+    </span>{
+    <span class="keyword">return</span>  Math.abs(endNode.data.x - startNode.data.x)+Math.abs(endNode.data.y - endNode.data.y);
+    }
+    <span class="comment">/**
+     *  寻路
+     */</span>
+    <span class="keyword">public</span> <span class="keyword">static</span> <span class="function"><span class="keyword">function</span> <span class="title">find</span><span class="params">(graph:Graph , startIndex:int,endIndex:int)</span><span class="type">:Array</span>
+    </span>{
+    <span class="comment">//还原值</span>
+    <span class="keyword">for</span> <span class="keyword">each</span> (<span class="keyword">var</span> n:AstarNode <span class="keyword">in</span> graph.nodes)
+    {
+        n.f = n.g = n.f = <span class="number">0</span>
+        n.parent = <span class="literal">null</span>
+
+    }
+    <span class="comment">//根据f值升序排列 </span>
+    <span class="keyword">var</span> open:Heap = <span class="keyword">new</span> Heap(<span class="function"><span class="keyword">function</span><span class="params">(a:AstarNode,b:AstarNode)</span><span class="type">:Number</span></span>{<span class="keyword">return</span> b.f - a.f}); 
+
+    <span class="keyword">var</span> close:Array = []
+    <span class="comment">//1，把起始节点添加到开启列表。</span>
+    AstarNode(graph.getNode(startIndex)).f =<span class="number">0</span>    
+    open.enqueue(graph.getNode(startIndex));
+    <span class="comment">//2，重复如下的工作：</span>
+    <span class="keyword">while</span>(open.heap.length&gt;<span class="number">0</span>)
+    {
+        <span class="comment">//a) 寻找开启列表中F值最低的节点。我们称它为当前节点。 </span>
+        <span class="keyword">var</span> cur:AstarNode = AstarNode(open.dequeue())
+        <span class="keyword">if</span>(cur==graph.getNode(endIndex))<span class="keyword">return</span>  Astar.getPath(cur) 
+               <span class="comment">//把目标格添加进了关闭列表，这时候路径被找到    </span>
+
+        <span class="comment">//b) 把它切换到关闭列表。</span>
+        close.push(cur)
+        <span class="comment">//c) 对相邻的格中的每一个？</span>
+        <span class="keyword">for</span> <span class="keyword">each</span>(<span class="keyword">var</span> i:GraphArc <span class="keyword">in</span> cur.arcs)
+        {
+            <span class="keyword">var</span> test:AstarNode = AstarNode(i.targetNode)
+            <span class="comment">//如果它不可通过或者已经在关闭列表中，略过它。</span>
+            <span class="keyword">if</span>(close.indexOf(test)&gt;=<span class="number">0</span>)<span class="keyword">continue</span>
+            <span class="comment">//如果它不在开启列表中，把它添加进去。</span>
+                        <span class="comment">//把当前格作为这一格的父节点。记录这一格的F,G,和H值。</span>
+
+            <span class="keyword">if</span>(open.heap.indexOf(test)&lt;<span class="number">0</span>)
+            {                        
+                test.parent =cur
+                test.g = cur.getArc(test).weight
+                test.h = Astar.distance(test,graph.getNode(endIndex))
+                <span class="comment">// 这里使用距离启发值，原教程使用的曼哈顿启发函数</span>
+                                <span class="comment">//可以替换成这句  Astar.manhattan(test,graph.getNode(endIndex))</span>
+                test.f = test.g + test.h
+                open.enqueue(test);
+            }<span class="keyword">else</span>
+            {
+             <span class="comment">//如果它已经在开启列表中，用G值为参考检查新的路径是否更好。</span>
+                         <span class="comment">//更低的G值意味着更好的路径。</span>
+             <span class="comment">//如果是这样，就把这一格的父节点改成当前格，并且重新计算这一格的G和F值。</span>
+                         <span class="comment">//如果你保持你的开启列表按F值排序,改变之后你可能需要重新对开启列表排序。</span>
+                <span class="keyword">if</span>( cur.g+ cur.getArc(test).weight &lt; test.g)
+                {
+                    test.parent = cur
+                    test.g = cur.g+ cur.getArc(test).weight
+                    test.f = test.h+test.g
+                    open.modify(test,test);
+                }                        
+            }
+
+         }    
+    }
+    <span class="keyword">return</span> []
+        }    
+    <span class="keyword">public</span> <span class="keyword">static</span> <span class="function"><span class="keyword">function</span> <span class="title">getPath</span><span class="params">(node:AstarNode)</span><span class="type">:Array</span>
+    </span>{
+        <span class="keyword">var</span> arr:Array = [node]
+        <span class="keyword">while</span>(node.parent)
+        {
+            arr.push(node.parent)
+            node = node.parent
+        }        
+        <span class="keyword">return</span> arr
+    }
+
+    }
+}
+</code></pre><p>以上就是我目前了解到的对于flash开发还比较实用的数据结构了，欢迎补充，以供我继续学习。</p>
+<p><a href="/image/ds1_0.zip" target="_blank">最初代码在此下载 </a></p>
+<p><a href="https://github.com/nshen/as3DataStructure/tree/dev" target="_blank">后期修了一些bug，最新的代码点此直达github</a></p>
+<p>我的版本很多方法都是直接抄自<a href="http://lab.polygonal.de/as3ds/" target="_blank">as3ds</a> ，有些方法却改成比较容易理解的方式，提供的方法也少很多，仅供学习参考.</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      
+        <a data-url="http://nshen.net/article/2011-08-25/as3-DataStructure/" data-id="9reas94y6asgxpw2" class="article-share-link" data-share="baidu">分享到</a>
+      
+
+      
+        <a href="http://nshen.net/article/2011-08-25/as3-DataStructure/#ds-thread" class="article-comment-link">Comments</a>
+      
+
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/project/2011-10-05/go-to-hell/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          跨IOS，Android的小游戏《阿鼻地狱》
+        
+      </div>
+    </a>
+  
+  
+    <a href="/article/2011-08-03/git-note/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">笔记《版本控制之道--使用Git》</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+  <section id="comments">
+    <div id="ds-thread" class="ds-thread" data-thread-key="article/2011-08-25/as3-DataStructure/" data-title="AS3与数据结构" data-url="http://nshen.net/article/2011-08-25/as3-DataStructure/"></div>
+  </section>
+</section>
+        
+      </div>
+      <footer id="footer">
+  
+    <aside id="sidebar" class="outer">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">分类</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/article/">article</a><span class="category-list-count">6</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/project/">project</a><span class="category-list-count">6</span></li></ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">标签云</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/pdf2mag/" style="font-size: 10.00px;">pdf2mag</a><a href="/tags/stage3d/" style="font-size: 10.00px;">stage3d</a><a href="/tags/游戏/" style="font-size: 20.00px;">游戏</a><a href="/tags/翻译/" style="font-size: 10.00px;">翻译</a>
+    </div>
+  </div>
+
+  
+
+<a href=" /links/" >友情链接</a>
+</aside>
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2014 Nshen<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+      .
+      Theme by <a href="https://github.com/xiangming/landscape-plus" target="_blank">Landscape-plus</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">首页</a>
+  
+    <a href="/categories/article/" class="mobile-nav-link">学习笔记</a>
+  
+    <a href="/categories/project/" class="mobile-nav-link">实验项目</a>
+  
+    <a href="/about/" class="mobile-nav-link">关于我</a>
+  
+</nav>
+    
+<!-- 多说公共js代码 start -->
+<script type="text/javascript">
+var duoshuoQuery = {short_name:"nshen"};
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';ds.async = true;
+    ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] 
+     || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+  </script>
+<!-- 多说公共js代码 end -->
+
+
+<!-- 百度分享 start -->
+
+<div id="article-share-box" class="article-share-box">
+  <div id="bdshare" class="bdsharebuttonbox article-share-links">
+    <a class="article-share-weibo" data-cmd="tsina" title="分享到新浪微博"></a>
+    <a class="article-share-weixin" data-cmd="weixin" title="分享到微信"></a>
+    <a class="article-share-qq" data-cmd="sqq" title="分享到QQ"></a>
+    <a class="article-share-renren" data-cmd="renren" title="分享到人人网"></a>
+    <a class="article-share-more" data-cmd="more" title="更多"></a>
+  </div>
+</div>
+<script>window._bd_share_config={"common":{},"share":{"bdCustomStyle":"nocss.css"}};with(document)0[(getElementsByTagName("head")[0]||body).appendChild(createElement("script")).src="http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion="+~(-new Date()/36e5)];</script>
+
+<!-- 百度分享 end -->
+
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+
+
+
+<script src="/js/script.js" type="text/javascript"></script>
+
+  </div>
+</body>
+</html>

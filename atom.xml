@@ -1,0 +1,2813 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+  <title><![CDATA[N神的研究所]]></title>
+  <subtitle><![CDATA[我正在考虑在这里写点啥...]]></subtitle>
+  <link href="/atom.xml" rel="self"/>
+  <link href="http://nshen.net/"/>
+  <updated>2014-10-16T04:43:07.467Z</updated>
+  <id>http://nshen.net/</id>
+  
+  <author>
+    <name><![CDATA[Nshen]]></name>
+    <email><![CDATA[nshen121@gmail.com]]></email>
+  </author>
+  
+  <generator uri="http://zespia.tw/hexo/">Hexo</generator>
+  
+  <entry>
+    <title><![CDATA[更换博客系统]]></title>
+    <link href="http://nshen.net/article/2014-10-16/hello-world/"/>
+    <id>http://nshen.net/article/2014-10-16/hello-world/</id>
+    <published>2014-10-16T04:30:20.000Z</published>
+    <updated>2014-10-16T04:42:57.000Z</updated>
+    <content type="html"><![CDATA[<p><img src="/image/0001.jpg" alt=""> </p>
+<h3 id="2014-10-16">2014-10-16</h3>
+<p>我又回来了，更新了hexo版本和新的模版，未来可能会专注Stage3D,WebGL,Unity3D方向。</p>
+<h3 id="2013-06-21">2013-06-21</h3>
+<p>新站借<a href="http://zespia.tw/hexo/" title="Hexo" target="_blank" rel="external">Hexo</a>,全静态重生，手动把老文全转成Markdown了。</p>
+<h3 id="2011-08-03">2011-08-03</h3>
+<p>新站搬到github,网站算是复活了</p>
+<p>之前的服务器由于各种原因不能访问了，而且之前blog是asp的，太老旧了，正好把博客换新了，内容太多搬不过来，只挑些比较好的内容，到了github以后本地写博客然后git上传就好了，整个世界清静了。</p>
+<p>如果你是从搜索引擎跳转过来的，请到旧站备份中搜索你要的内容%  —&gt; <a href="http://www.riabook.cn/blog" target="_blank">[旧站的备份]</a></p>
+<p>自动语法高亮 ：</p>
+<pre><code><span class="keyword">package</span> net.nshen.blog
+{
+    <span class="keyword">import</span> flash.display.Sprite;
+
+    <span class="javadoc">/**
+     * 复活咯～
+     *<span class="javadoctag"> @author</span>    Nshen
+     */</span>
+    <span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Post</span> <span class="keyword">extends</span> <span class="title">Sprite</span>
+    </span>{
+        <span class="comment">// This is a String</span>
+        <span class="keyword">private</span> var _str:String = <span class="string">"I'm the first post"</span>;
+
+        <span class="javadoc">/**
+         *  override this~
+         */</span>
+        <span class="keyword">public</span> function <span class="title">create</span>():<span class="keyword">void</span>
+        {
+            trace(_str);
+        }
+    }
+}
+</code></pre>]]></content>
+    <summary type="html">
+    <![CDATA[<p><img src="/image/0001.jpg" alt=""> </p>
+<h3 id="2014-10-16">2014-10-16</h3>
+<p>我又回来了，更新了hexo版本和新的模版，未来可能会专注Stage3D,WebGL,Unity3D方向。</p>
+<]]>
+    </summary>
+    
+  </entry>
+  
+  <entry>
+    <title><![CDATA[Adobe Flash 11 Stage3D (Molehill) Game Programming Beginner 笔记]]></title>
+    <link href="http://nshen.net/article/2013-07-28/stage3d-game-programming-beginner/"/>
+    <id>http://nshen.net/article/2013-07-28/stage3d-game-programming-beginner/</id>
+    <published>2013-07-27T18:30:31.000Z</published>
+    <updated>2014-10-16T04:33:25.000Z</updated>
+    <content type="html"><![CDATA[<p>这篇笔记一年半前读书时发到豆瓣上了，去豆瓣搜过书的应该都看见过，这是我入门3d看的第一本书，现在把原文复制过来简单排版和整理了一下。</p>
+<a id="more"></a>
+
+<h3 id="第一章，Let’s_Make_a_Game_Using_Molehill">第一章，Let’s Make a Game Using Molehill</h3>
+<hr>
+<p>介绍什么是molehil。。略 。此书面针对了解AS3，但不太了解3d的读者。</p>
+<h3 id="3d术语：">3d术语：</h3>
+<ul>
+<li><p>Mesh：3d游戏中的模型就叫一个mesh。模型一般用3d studiomax 等软件做的，一个场景可以有几百个mesh组成。</p>
+</li>
+<li><p>Polygon：mesh可以由成百上千的多边形组成，多边形可以是三角形，也可以是四边形，一个3d立方体由6个面片组成，每个面片叫做一个poly。</p>
+</li>
+<li><p>Vertex：每个poly有3个或以上角，每个角的顶点就是一个vertex。</p>
+</li>
+<li><p>Texture：想象成墙纸，可以是一个jpg或png的图片。</p>
+</li>
+<li><p>Shaders：shader是视觉风格的定义，它定义怎样渲染某物，在stage3d中，shaders存在Program3D类中。创建一个shader，需要创建一个vertex program，和一个fragment program 。</p>
+</li>
+<li><p>Fragment program：在molehill中是处理mesh视觉渲染的一系列命令。也叫像素着色器。fragment programs描述一个给定的表面材质和对光照的反应，不同的材质对光照有不同的反应方式取决于反射和透明度等，需要不同的代码来模拟。每个模型都需要一个fragment program，否则就不会渲染出来，它可以是一个简单的texture，也可以是复杂的2个texture混合外加灯光反射。</p>
+</li>
+<li><p>Vertex program：molehill常用 vertex program计算mesh的形状，影响每个vertex在3d世界中的位置。这样可以把mesh缩放，扭曲，做变形动画。也可以分配任意数量的数据到mesh中的每个vertex，不只是xyz坐标，可以是rgb颜色uv等。每个模型的渲染都需要个vertex program，可以是简单的在原始位置渲染或复杂到让mesh做变形动画。</p>
+</li>
+<li><p>Vectors：Vector3D描述空间中的位置，在geom包里</p>
+</li>
+</ul>
+<pre><code><span class="preprocessor"><span class="keyword">import</span> flash.geom.Vector3D;</span>
+<span class="keyword">var</span> putTheTreeHere:Vector3D = <span class="keyword">new</span> Vector3D(<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>);
+<span class="keyword">var</span> locationOfTreasure:Vector3D = <span class="keyword">new</span> Vector3D(<span class="number">1000</span>,<span class="number">0</span>,-<span class="number">15000</span>);
+</code></pre><ul>
+<li><p>Normals：仅用来指明方向，length等于1的单位向量，可以简单的用Vector3D类的normalize()方法获得。</p>
+<p>  var aNormalPointingUp:Vector3D = new Vector3D(0,1,0);</p>
+</li>
+<li><p>Matrices：是向量的集合，Matrix3D是4×4的矩阵，用来方便的移动，旋转，缩放对象。</p>
+</li>
+</ul>
+<p>第一章结束，总结</p>
+<ul>
+<li>Vector3D: containing an x, y, and z component</li>
+<li>Normal: a Vector3D that has a length of one</li>
+<li>Matrix: a 4x4 group of vectors with position, rotation,and scale</li>
+<li>Vertex: a point in space that is the corner of a polygon</li>
+<li>Polygon: a shape defined by multiple vertex coordinates</li>
+<li>Mesh: a group of polygons (polies) that make up a model</li>
+<li>Texture: a bitmap image that is like a wallpaper for a mesh</li>
+<li>Vertex program: commands affecting the shape of a mesh</li>
+<li>Fragment program: commands affecting the look of a mesh</li>
+</ul>
+<h3 id="第2章，Blueprint_of_a_Molehill">第2章，Blueprint of a Molehill</h3>
+<hr>
+<p>原来为什么慢，因为之前DisplayList全部CPU，molehill为什么快，因为molehill是完全GPU加速的。</p>
+<blockquote>
+<p>Molehill will rely on DirectX 9 on Windows machines and OpenGL 1.3 on both Mac OS-X and Linux. On mobile devices such as tablets, televisions, and phones, Molehill will rely upon OpenGL ES2.</p>
+</blockquote>
+<p>DisplayList在stage3d之上，可以组合stage3d和原始的flash显示列表一起做东东.</p>
+<h3 id="Molehill程序结构">Molehill程序结构</h3>
+<p>stage3d已不在显示列表里，不能addchild了.</p>
+<p><img src="/image/molehill_book01.jpg" alt=""></p>
+<ul>
+<li>Context3D：可以想象成”引擎”，所有3d数据都要传给他。</li>
+</ul>
+<blockquote>
+<p>This Context3D is the object that you send all your textures, vertex buffers, and<br>vertex/fragment programs to. The Context3D is the base class that holds all of your game<br>data and does all the work.</p>
+</blockquote>
+<ul>
+<li><p>VertexBuffer3D：VertexBuffer3D是一个numbers的数组，用来保存第一章提到的vertex坐标，但不限于顶点坐标，还可以保存rgb，uv等值。初始化游戏的时候要把这个vertexBuffer3D传给Contex3D，之后Contex3D会把这些数据直接传给显卡的RAM或VRAM，渲染时会用。</p>
+</li>
+<li><p>IndexBuffer3D：由于顶点数据是一大坨VertexBuffer3D，Molehill需要知道每组数据的起始和结束，所以有了index buffer做索引，如下图，表示3个顶点，每个有6个元素 。</p>
+</li>
+</ul>
+<p><img src="/image/molehill_book02.jpg" alt=""></p>
+<ul>
+<li>Program3D：Vertex programs和 fragment programs也叫shaders 与前边的buffer同样传给contex3d，他是从一种类似汇编语言编译成的，他们告诉gpu怎样根据上边提供的buffer画mesh。</li>
+</ul>
+<h3 id="一个stage3d程序的流程图">一个stage3d程序的流程图</h3>
+<p>分2部分，setup 和 render loop</p>
+<p><strong>setup</strong>：<br>所有buffers和programs被编译并发送到显卡。这只做1次。一旦setup，molehill可以在不同位置重复画meshes而不需要其他初始化。</p>
+<p>setup详细过程：</p>
+<ol>
+<li>Request a Context3D instance from Stage3D</li>
+<li>Set up the Context3D (telling it how big it is, and so on)</li>
+<li>Create a VertexBuffer (one for each mesh you intend to use)</li>
+<li>Create an IndexBuffer (each will correspond to a VertexBuffer)</li>
+<li>Upload this data to the Context3D (send it to your GPU)</li>
+<li>“Compile” a VertexProgram (turn your shader source code into bytes)</li>
+<li>“Compile” a FragmentProgram (turn your shader source code into bytes)</li>
+<li>Create a Program3D which will use the preceding shaders (can be used by more than one mesh)</li>
+</ol>
+<p>这8步一般只需要一次，偶尔由于3d环境丢失的关系需要重新来一次，例如因为计算机睡眠等原因。</p>
+<p><strong>render loop</strong>：一般是监听ENTER_FRAME事件重复执行的</p>
+<ol>
+<li>Clear the Context3D (erase the old view)</li>
+<li>Tell the Context3D which Program3D to use (for example, a shader that looks<br>like steel)</li>
+<li>Tell the Context3D which VertexBuffer to use (for example, a spaceship)</li>
+<li>Setup data for you your shaders (variables, such as the new location of a spaceship)</li>
+<li>Draw some triangles (tell the Context3D to do some drawing)</li>
+<li>Update the screen with your drawn triangles (show the user the new scene)</li>
+</ol>
+<p>总结：这章讲了什么？</p>
+<ul>
+<li>The old fashioned way: 2D Flash using DisplayObjects</li>
+<li>The Molehill way: Stage3Ds containing Context3Ds</li>
+<li>Why Molehill is so fast: Hardware 3D, baby</li>
+<li>Combining 2D and 3D: You can use old and new Flash objects together</li>
+<li>Flowchart of a Molehill game: Setup first, then a render loop</li>
+</ul>
+<h3 id="第3章，Fire_up_the_Engines">第3章，Fire up the Engines</h3>
+<hr>
+<p>这章是前边两章内容的一个实例，直接看代码就行了，书里好像也么讲什么新内容，代码倒是注释的很详细<br>除了shader代码要后边章节详细讲，其他的配合帮助文档应该都看懂了。</p>
+<p>详见 <a href="/image/Ch3_Stage3dGame.as" target="_blank">Stage3dGame.as</a>类</p>
+<p>本章总结：</p>
+<blockquote>
+<p>we learned how to obtain Flash 11 for our browser, we got all the tools ready<br>to compile Stage3D games, we learned how to initialize the Stage3D API, how to upload<br>mesh and texture data to the video card, and how to animate a simple 3D scene</p>
+</blockquote>
+<h3 id="第4章，Basic_Shaders">第4章，Basic Shaders</h3>
+<hr>
+<p>AGAL: Adobe Graphics Assembly Language</p>
+<p>前边讲过shaders就是vertex program （vertex shaders）和 fragment program（pixel shaders）。<br>由于他们在gpu中执行，所以很快，每帧可以数百万次，flash的一帧中，mesh中每个顶点都要执行一次vertex program！ fragment shade更厉害，每个像素都执行一次！。</p>
+<p>agal语句是什么样的</p>
+<pre><code><span class="tag">&lt;<span class="title">opcode</span>&gt;</span> <span class="tag">&lt;<span class="title">destination</span>&gt;</span> <span class="tag">&lt;<span class="title">source</span> <span class="attribute">1</span>&gt;</span> <span class="tag">&lt;<span class="title">source</span> <span class="attribute">2</span>&gt;</span>
+</code></pre><p>agal只有30个opcodes，完整列表在Stage3D的文档里找.<br>例如  mov v0, va1  把va1的值copy到v0.</p>
+<p>常见agal opcode:</p>
+<pre><code>mov (copies data from <span class="built_in">source</span>1 to destination)
+add (destination = <span class="built_in">source</span>1 plus <span class="built_in">source</span>2)
+sub (destination = <span class="built_in">source</span>1 minus <span class="built_in">source</span>2)
+mul (destination = <span class="built_in">source</span>1 multiplied by <span class="built_in">source</span>2)
+div (destination = <span class="built_in">source</span>1 divided by <span class="built_in">source</span>2)
+</code></pre><p><strong>什么是寄存器 （register）</strong></p>
+<p>上边提到的”source” 和 “destinations”叫寄存器，你可以把它们当成变量，存储数据的地方。他们代表显存中的一小块，为速度而优化过的。寄存器都是包含4个128位的浮点数 ，用as3的话说就是4个Number。</p>
+<p><strong>寄存器的组成部分</strong>：</p>
+<p>4个值中的每一个都是一个组成部分，可以通过xyzw或者rgba访问<br>va1.x和va1.r一样都是寄存器的第一个组成部分。<br>一般在vertex里用xyzw，fragment里用rgba。<br>opcode一般四个组件同时运算，例如以add opcode为例 source1是一个 Vector3D  (10,100,50,0) 然后source2 是 (5,1,3,0),结果会是(15,101,53,0).</p>
+<p><strong>不同的寄存器有不同的功用</strong>：</p>
+<p><img src="/image/molehill_book03.jpg" alt=""></p>
+<ul>
+<li><p>顶点属性寄存器 Vertex Attribute Registers：va0…va7<br>有8个va寄存器，分别是va0, va1, va2, va3, va4, va5, va6 , va7<br>只在vertex shader里可用，用来指定VertexBuffer中的位置。可以包含x,y,z,或uv坐标，rgb值等。<br>用 Context3D:setVertexBufferAt() 来把VertexBuffer分段分配给属性寄存器。然后在shader里用语法 va<n>访问，n就是属性索引。<br>记住一共有8个寄存器，每个保存4个浮点数，所以每个顶点可以保存32个数字。</n></p>
+</li>
+<li><p>常量寄存器 Constant registers: vc0..vc127 and fc0..fc27<br>as中通过Context3D::setProgramConstants()系列函数来设置<br>在vertex shader中用vc<n>访问，pixel shader中fc<n>访问<br>vertex shaders里一共有128个常量寄存器，pixel shaders里有28个常量寄存器。</n></n></p>
+</li>
+<li><p>临时寄存器 Temporary registers: vt0..vt7 and ft0..ft7<br>这些寄存器是用来在shader里临时计算用的，可以当成临时变量。 这样访问：<br>vt<n> (vertex programs) ， ft<n> (fragment programs)<br>vertex 和pixel shaders各8个临时寄存器。</n></n></p>
+</li>
+<li><p>输出寄存器 Output registers: op在vertex shader里用来输出位置，oc在pixel shader里用来输出颜色。 vertex shader的输出就是顶点的clip space 位置，pixel shader输出的就是就是像素颜色。</p>
+</li>
+<li><p>Varying registers: v0..v7  呃这个不知道中文名了<br>这些寄存器是用来从vertex shaders向pixel shaders传递数据的。，典型应用是从vertex shader传递顶点颜色或纹理的uv坐标到pixel shader。一共有8个，用v<n>访问。</n></p>
+</li>
+<li><p>纹理采样寄存器Texture samplers: fs0..fs7<br>这8个纹理采样寄存器，只可以用在fragment program里，是用来基于uv坐标从textures里提取颜色的。这个寄存器比较特殊，有它独有的规则<br>，采样的纹理，需要提前在as中用Context3D::setTextureAt()指定.</p>
+</li>
+</ul>
+<p>shader里语法是这样</p>
+<pre><code><span class="input"><span class="prompt">fs&lt;n&gt;</span> &lt;flags&gt;</span>
+</code></pre><p>flags是逗号分隔的字符串，类似这样 </p>
+<pre><code>tex ft1, v0, fs0 <span class="tag">&lt;<span class="title">2d,linear,nomip</span>&gt;</span>
+</code></pre><p>关于参数的解释：</p>
+<ol>
+<li><p>texture dimension: 2d, 3d, or cube. A 2D texture is the most commonly used format, a rectangular bitmap. A 3D texture has length, width, and depth, and takes up a lot of texture RAM but is great for 3D materials such as wood, grain, or marble. It is rarely used. A cube texture is a specially encoded group of six rectangular bitmaps and is usually used for reflections, as each of these six images maps to a particular direction like the sides on the inside of a box.</p>
+</li>
+<li><p>mip mapping: nomip, mipnone, mipnearest, or miplinear. If your texture has mip maps (successively smaller versions of itself, generated to avoid jaggies during rendering), then you can instruct Stage3D to smoothly interpolate the texture using them. Mip mapped textures are very useful to increase render quality and avoid the “moiree effect” (flickering) when viewed from far away.</p>
+</li>
+<li><p>texture filtering: nearest or linear. If you prefer a retro, then pixilated look you can use nearest here to tell Stage3D not to interpolate the values smoothly, resulting in blocky textures when viewed up close, for example. If you use linear, when zoomed into a texture it will be blurry and will have smoother edges.</p>
+</li>
+<li><p>texture repeat: repeat, wrap, or clamp. If you want the texture tile properly, then you use repeathere. If you are not tiling the texture and run into problems with edge pixels being the color of the opposite edge (which often happens in transparent billboard particles and when rendering bitmap fonts in 3d), then specify clampto force Stage3D not to blur adjacent edge pixels.</p>
+</li>
+</ol>
+<h3 id="下面开始实例">下面开始实例</h3>
+<pre><code><span class="comment">// the simplest possible vertex program</span>
+m44 op, va0, vc0 <span class="comment">// pos to clipspace</span>
+mov v0, va1 <span class="comment">// copy uv</span>
+</code></pre><p>m44是4×4矩阵相乘，顶点坐标存储在 va0 ，乘以mesh相对于camera的位置矩阵vc0<br>第二行copy va1到v0.<br>关于vc0后边章节会讲，现在知道他MVP矩阵，这个这本书里没有仔细讲，要看点其他数学书了：（</p>
+<p>最简单的fragment program</p>
+<pre><code><span class="comment">// a simple fragment program</span>
+tex ft1, v0, fs0 &lt;<span class="number">2</span>d,linear,nomip&gt;
+mov oc, ft1
+</code></pre><p>从fs0取样到ft1，v0是来自顶点shader的uv坐标<br>把 ft1输出.</p>
+<p>编译 AGAL 代码</p>
+<pre><code><span class="keyword">var</span> vertexShaderAssembler:AGALMiniAssembler = <span class="keyword">new</span> AGALMiniAssembler();
+vertexShaderAssembler.assemble(
+Context3DProgramType.VERTEX,
+<span class="string">"m44 op, va0, vc0\n"</span> +
+<span class="string">"mov v0, va1"</span>
+);
+<span class="keyword">var</span> fragmentShaderAssembler:AGALMiniAssembler = <span class="keyword">new</span> AGALMiniAssembler();
+fragmentShaderAssembler.assemble(
+Context3DProgramType.FRAGMENT,
+<span class="string">"tex ft1, v0, fs0 &lt;2d,linear, nomip&gt;;\n"</span> +
+<span class="string">"mov oc, ft1"</span>
+);
+<span class="keyword">var</span> program:Program3D = context3D.createProgram();
+program.upload(
+vertexShaderAssembler.agalcode,
+fragmentShaderAssembler.agalcode
+);
+</code></pre><p>渲染！</p>
+<ol>
+<li>Clear the Context3D, erasing the previous frame</li>
+<li>Select which vertex buffers to use</li>
+<li>Select which texture to use</li>
+<li>Set the current shader program</li>
+<li>Apply a matrix for use in your shaders to calculate the location</li>
+<li>Render the mesh</li>
+<li>Repeat steps 2 through 6 for every mesh</li>
+<li>Present the final image to the user</li>
+</ol>
+<p>实际代码来了：</p>
+<pre><code>// clear your viewport <span class="keyword">to</span> the background color:
+context3D.clear ( <span class="number">1</span>, <span class="number">1</span>, <span class="number">1</span>, <span class="number">1</span> );
+// vertex position <span class="keyword">to</span> <span class="keyword">attribute</span> <span class="keyword">register</span> <span class="number">0</span> (va0)
+context3D.setVertexBufferAt (<span class="number">0</span>, vertexbuffer, <span class="number">0</span>,
+Context3DVertexBufferFormat.FLOAT_3);
+// uv coordinates <span class="keyword">to</span> <span class="keyword">attribute</span> <span class="keyword">register</span> <span class="number">1</span> (va1)
+context3D.setVertexBufferAt(<span class="number">1</span>, vertexbuffer, <span class="number">3</span>,
+Context3DVertexBufferFormat.FLOAT_2);
+// assign texture <span class="keyword">to</span> texture sampler <span class="number">0</span> (fs0)
+context3D.setTextureAt( <span class="number">0</span>, texture );
+// assign shader program
+context3D.setProgram( program );
+// Note how the two vertex <span class="keyword">buffer</span> streams,
+// vertex positions <span class="keyword">and</span> uv coordinates,
+// get assigned <span class="keyword">to</span> two different <span class="keyword">attribute</span> registers.
+// The texture <span class="keyword">is</span> assigned <span class="keyword">to</span> a specific texture sampler.
+// Pass <span class="keyword">on</span> your transform matrix <span class="keyword">to</span> the shader.
+var m:Matrix3D = <span class="keyword">new</span> Matrix3D();
+m.appendRotation(getTimer()/<span class="number">50</span>, Vector3D.Z_AXIS);
+context3D.setProgramConstantsFromMatrix(
+Context3DProgramType.VERTEX, <span class="number">0</span>, m, true);
+// The matrix gets stored into <span class="keyword">constant</span> <span class="keyword">register</span> <span class="number">0</span> here,
+// <span class="keyword">for</span> the Vertex Shader <span class="keyword">to</span> <span class="keyword">use</span>.
+// <span class="keyword">To</span> render, call drawTriangles passing <span class="keyword">in</span> the index <span class="keyword">buffer</span>.
+context3D.drawTriangles(indexBuffer);
+// You may do additional drawTriangle calls <span class="keyword">in</span> the frame
+// one <span class="keyword">for</span> each mesh you want rendered.
+// You can <span class="keyword">use</span> the same <span class="keyword">or</span> different programs <span class="keyword">for</span> each meshes.
+// Once <span class="keyword">all</span> meshes have been drawn, display them <span class="keyword">on</span> screen:
+context3D.present();
+</code></pre><p>后边全在分块的讲代码，有点晕，都不知道讲到哪了，其实直接看完整的代码就可以了，注释非常全。要费点精力了，我先略了。</p>
+<p>详见 <a href="/image/ch4_Stage3dGame.as" target="_blank">Stage3dGame.as</a>类</p>
+<h3 id="第5章，Making_Stuff_Happen!">第5章，Making Stuff Happen!</h3>
+<hr>
+<p>面片真是太面了，这章要显示真正的模型了。</p>
+<p>.OBJ是模型文件，主流3d软件都应该可以导出这种格式。<br>还有贴图可以photoshop做，具体怎么做的看不懂，等看完了这本书小弟就准备学习学习3d软件了。<br>.obj文件格式类似这样</p>
+<pre><code>v -<span class="number">0.257</span> <span class="number">0.191</span> <span class="number">0.423</span>
+vt <span class="number">0.623</span> <span class="number">0.227</span>
+f <span class="number">1</span><span class="regexp">/1 2/</span><span class="number">2</span> <span class="number">3</span><span class="regexp">/3</span>
+</code></pre><p>第一行是顶点坐标，第2行是uv坐标，第3行是面的定义，用来产生index buffer，复杂的obj文件会有成百上千行。<br>理论就在这些。</p>
+<p>下边开始主要讲解析obj文件<a href="/image/Stage3dObjParser.as" target="_blank">Stage3dObjParser.as</a>类</p>
+<p>第一步readClass把embed进来的obj文件转成字符串</p>
+<pre><code><span class="keyword">private</span> <span class="function"><span class="keyword">function</span> <span class="title">readClass</span><span class="params">(f:Class)</span><span class="type">:String</span>
+</span>{
+    <span class="keyword">var</span> bytes:ByteArray = <span class="keyword">new</span> f();
+    <span class="keyword">return</span> bytes.readUTFBytes(bytes.bytesAvailable);
+}
+</code></pre><p>然后每行解析</p>
+<pre><code>// Split data <span class="keyword">in</span> <span class="keyword">to</span> lines <span class="keyword">and</span> parse <span class="keyword">all</span> lines.
+var lines:<span class="keyword">Array</span> = definition.split(LINE_FEED);
+var <span class="keyword">loop</span>:uint = lines.length;
+<span class="keyword">for</span>(var i:uint = <span class="number">0</span>; i &lt; <span class="keyword">loop</span>; ++i)
+    parseLine(lines[i]);
+</code></pre><p>然后根据firstWord分别解析不同数据</p>
+<pre><code><span class="keyword">private</span> <span class="function"><span class="keyword">function</span> <span class="title">parseLine</span><span class="params">(line:String)</span><span class="type">:void</span>
+</span>{
+        <span class="comment">// Split line into words.</span>
+        <span class="keyword">var</span> words:Array = line.split(SPACE);
+
+        <span class="comment">// Prepare the data of the line.</span>
+        <span class="keyword">if</span> (words.length &gt; <span class="number">0</span>)
+            <span class="keyword">var</span> data:Array = words.slice(<span class="number">1</span>);
+        <span class="keyword">else</span>
+            <span class="keyword">return</span>;
+
+        <span class="comment">// Check first word and delegate remainder to proper parser.</span>
+        <span class="keyword">var</span> firstWord:String = words[<span class="number">0</span>];
+        <span class="keyword">switch</span> (firstWord)
+        {
+            <span class="keyword">case</span> VERTEX:
+                parseVertex(data);
+                <span class="keyword">break</span>;
+            <span class="keyword">case</span> NORMAL:
+                parseNormal(data);
+                <span class="keyword">break</span>;
+            <span class="keyword">case</span> UV:
+                parseUV(data);
+                <span class="keyword">break</span>;
+            <span class="keyword">case</span> INDEX_DATA:
+                parseIndex(data);
+                <span class="keyword">break</span>;
+        }
+}
+</code></pre><p>难点在解析index，这里就略了。</p>
+<p>如果软件可以不导出normal，则可以大大减小文件体积，可以用下边函数计算出normal</p>
+<pre><code><span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">restoreNormals</span><span class="params">()</span><span class="type">:void</span>
+</span>{    <span class="comment">// utility function</span>
+    _rawNormalsBuffer = _cachedRawNormalsBuffer.concat();
+}
+
+<span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">get3PointNormal</span><span class="params">(
+    p0:Vector3D, p1:Vector3D, p2:Vector3D)</span><span class="type">:Vector3D</span>
+</span>{    <span class="comment">// utility function</span>
+    <span class="comment">// calculate the normal from three vectors</span>
+    <span class="keyword">var</span> p0p1:Vector3D = p1.subtract(p0);
+    <span class="keyword">var</span> p0p2:Vector3D = p2.subtract(p0);
+    <span class="keyword">var</span> normal:Vector3D = p0p1.crossProduct(p0p2);
+    normal.normalize();
+    <span class="keyword">return</span> normal;
+}
+
+<span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">forceNormals</span><span class="params">()</span><span class="type">:void</span>
+</span>{    <span class="comment">// utility function</span>
+    <span class="comment">// useful for when the OBJ file doesn't have normal data</span>
+    <span class="comment">// we can calculate it manually by calling this function</span>
+    _cachedRawNormalsBuffer = _rawNormalsBuffer.concat();
+    <span class="keyword">var</span> i:uint, index:uint;
+    <span class="comment">// Translate vertices to vector3d array.</span>
+    <span class="keyword">var</span> loop:uint = _rawPositionsBuffer.length/<span class="number">3</span>;
+    <span class="keyword">var</span> vertices:Vector.&lt;Vector3D&gt; = <span class="keyword">new</span> Vector.&lt;Vector3D&gt;();
+    <span class="keyword">var</span> vertex:Vector3D;
+    <span class="keyword">for</span>(i = <span class="number">0</span>; i &lt; loop; ++i)
+    {
+        index = <span class="number">3</span>*i;
+        vertex = <span class="keyword">new</span> Vector3D(_rawPositionsBuffer[index],
+            _rawPositionsBuffer[index + <span class="number">1</span>], 
+            _rawPositionsBuffer[index + <span class="number">2</span>]);
+        vertices.push(vertex);
+    }
+    <span class="comment">// Calculate normals.</span>
+    loop = vertices.length;
+    <span class="keyword">var</span> p0:Vector3D, p1:Vector3D, p2:Vector3D, normal:Vector3D;
+    _rawNormalsBuffer = <span class="keyword">new</span> Vector.&lt;Number&gt;();
+    <span class="keyword">for</span>(i = <span class="number">0</span>; i &lt; loop; i += <span class="number">3</span>)
+    {
+        p0 = vertices[i];
+        p1 = vertices[i + <span class="number">1</span>];
+        p2 = vertices[i + <span class="number">2</span>];
+        normal = get3PointNormal(p0, p1, p2);
+        _rawNormalsBuffer.push(normal.x, normal.y, normal.z);
+        _rawNormalsBuffer.push(normal.x, normal.y, normal.z);
+        _rawNormalsBuffer.push(normal.x, normal.y, normal.z);
+    }
+}
+</code></pre><p>至此.OBJ解析部分完成了。</p>
+<p>上传Mipmaps代码</p>
+<pre><code><span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">uploadTextureWithMipmaps</span><span class="params">(dest:Texture, src:BitmapData)</span><span class="type">:void</span>
+</span>{
+     <span class="keyword">var</span> ws:int = src.width;
+     <span class="keyword">var</span> hs:int = src.height;
+     <span class="keyword">var</span> level:int = <span class="number">0</span>;
+     <span class="keyword">var</span> tmp:BitmapData;
+     <span class="keyword">var</span> transform:Matrix = <span class="keyword">new</span> Matrix();
+     <span class="keyword">var</span> tmp2:BitmapData;
+     tmp = <span class="keyword">new</span> BitmapData( src.width, src.height, <span class="literal">true</span>, <span class="number">0x00000000</span>);
+     <span class="keyword">while</span> ( ws &gt;= <span class="number">1</span> &amp;&amp; hs &gt;= <span class="number">1</span> )
+     {                                
+          tmp.draw(src, transform, <span class="literal">null</span>, <span class="literal">null</span>, <span class="literal">null</span>, <span class="literal">true</span>);    
+          dest.uploadFromBitmapData(tmp, level);
+          transform.scale(<span class="number">0.5</span>, <span class="number">0.5</span>);
+          level++;
+          ws &gt;&gt;= <span class="number">1</span>;
+          hs &gt;&gt;= <span class="number">1</span>;
+          <span class="keyword">if</span> (hs &amp;&amp; ws) 
+          {
+               tmp.dispose();
+               tmp = <span class="keyword">new</span> BitmapData(ws, hs, <span class="literal">true</span>, <span class="number">0x00000000</span>);
+          }
+     }
+     tmp.dispose();
+}
+</code></pre><p>巨型实例，结束本章</p>
+<pre><code><span class="package"><span class="keyword">package</span>
+{</span>
+<span class="preprocessor"><span class="keyword">import</span> com.adobe.utils.*;</span>
+<span class="preprocessor"><span class="keyword">import</span> flash.display.*;</span>
+<span class="preprocessor"><span class="keyword">import</span> flash.display3D.*;</span>
+<span class="preprocessor"><span class="keyword">import</span> flash.display3D.textures.*;</span>
+<span class="preprocessor"><span class="keyword">import</span> flash.events.*;</span>
+<span class="preprocessor"><span class="keyword">import</span> flash.geom.*;</span>
+<span class="preprocessor"><span class="keyword">import</span> flash.utils.*;</span>
+<span class="preprocessor"><span class="keyword">import</span> flash.text.*;</span>
+[SWF(width=<span class="string">"640"</span>, height=<span class="string">"480"</span>, frameRate=<span class="string">"60"</span>, backgroundColor=<span class="string">"#FFFFFF"</span>)]    
+<span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Stage3dGame</span> <span class="keyword">extends</span> <span class="title">Sprite</span>
+</span>{
+<span class="comment">// used by the GUI</span>
+<span class="keyword">private</span> <span class="keyword">var</span> fpsLast:uint = getTimer();
+<span class="keyword">private</span> <span class="keyword">var</span> fpsTicks:uint = <span class="number">0</span>;
+<span class="keyword">private</span> <span class="keyword">var</span> fpsTf:TextField;
+<span class="keyword">private</span> <span class="keyword">var</span> scoreTf:TextField;
+<span class="keyword">private</span> <span class="keyword">var</span> score:uint = <span class="number">0</span>;
+<span class="comment">// constants used during inits</span>
+<span class="keyword">private</span> <span class="keyword">const</span> swfWidth:int = <span class="number">640</span>;
+<span class="keyword">private</span> <span class="keyword">const</span> swfHeight:int = <span class="number">480</span>;
+<span class="comment">// for this demo, ensure ALL textures are 512x512</span>
+<span class="keyword">private</span> <span class="keyword">const</span> textureSize:int = <span class="number">512</span>;
+<span class="comment">// the 3d graphics window on the stage</span>
+<span class="keyword">private</span> <span class="keyword">var</span> context3D:Context3D;
+<span class="comment">// the compiled shaders used to render our mesh</span>
+<span class="keyword">private</span> <span class="keyword">var</span> shaderProgram1:Program3D;
+<span class="keyword">private</span> <span class="keyword">var</span> shaderProgram2:Program3D;
+<span class="keyword">private</span> <span class="keyword">var</span> shaderProgram3:Program3D;
+<span class="keyword">private</span> <span class="keyword">var</span> shaderProgram4:Program3D;
+<span class="comment">// matrices that affect the mesh location and camera angles</span>
+<span class="keyword">private</span> <span class="keyword">var</span> projectionmatrix:PerspectiveMatrix3D = <span class="keyword">new</span> PerspectiveMatrix3D();
+<span class="keyword">private</span> <span class="keyword">var</span> modelmatrix:Matrix3D = <span class="keyword">new</span> Matrix3D();
+<span class="keyword">private</span> <span class="keyword">var</span> viewmatrix:Matrix3D = <span class="keyword">new</span> Matrix3D();
+<span class="keyword">private</span> <span class="keyword">var</span> terrainviewmatrix:Matrix3D = <span class="keyword">new</span> Matrix3D();
+<span class="keyword">private</span> <span class="keyword">var</span> modelViewProjection:Matrix3D = <span class="keyword">new</span> Matrix3D();
+<span class="comment">// a simple frame counter used for animation</span>
+<span class="keyword">private</span> <span class="keyword">var</span> t:Number = <span class="number">0</span>;
+<span class="comment">// a reusable loop counter</span>
+<span class="keyword">private</span> <span class="keyword">var</span> looptemp:int = <span class="number">0</span>;
+<span class="comment">/* TEXTURES: Pure AS3 and Flex version:
+ * if you are using Adobe Flash CS5 
+ * comment out the following: */</span>
+[Embed (source = <span class="string">"art/spaceship_texture.jpg"</span>)] 
+<span class="keyword">private</span> <span class="keyword">var</span> myTextureBitmap:Class;
+<span class="keyword">private</span> <span class="keyword">var</span> myTextureData:Bitmap = <span class="keyword">new</span> myTextureBitmap();
+[Embed (source = <span class="string">"art/terrain_texture.jpg"</span>)] 
+<span class="keyword">private</span> <span class="keyword">var</span> terrainTextureBitmap:Class;
+<span class="keyword">private</span> <span class="keyword">var</span> terrainTextureData:Bitmap = <span class="keyword">new</span> terrainTextureBitmap();
+<span class="comment">/* TEXTURE: Flash CS5 version:
+ * add the jpgs to your library (F11)
+ * right click and edit the advanced properties
+ * so it is exported for use in Actionscript 
+ * and call them myTextureBitmap and terrainTextureBitmap
+ * if you are using Flex/FlashBuilder/FlashDevelop/FDT
+ * comment out the following: */</span>
+<span class="comment">//private var myBitmapDataObject:myTextureBitmapData = </span>
+<span class="comment">//    new myTextureBitmapData(textureSize, textureSize);</span>
+<span class="comment">//private var myTextureData:Bitmap = </span>
+<span class="comment">//    new Bitmap(myBitmapDataObject);</span>
+<span class="comment">//private var terrainBitmapDataObject:terrainTextureBitmapData = </span>
+<span class="comment">//    new terrainTextureBitmapData(textureSize, textureSize);</span>
+<span class="comment">//private var terrainTextureData:Bitmap = </span>
+<span class="comment">//    new Bitmap(terrainBitmapDataObject);</span>
+<span class="comment">// The Stage3d Texture that uses the above myTextureData</span>
+<span class="keyword">private</span> <span class="keyword">var</span> myTexture:Texture;
+<span class="keyword">private</span> <span class="keyword">var</span> terrainTexture:Texture;
+<span class="comment">// The spaceship mesh data</span>
+[Embed (source = <span class="string">"art/spaceship.obj"</span>, mimeType = <span class="string">"application/octet-stream"</span>)] 
+<span class="keyword">private</span> <span class="keyword">var</span> myObjData:Class;
+<span class="keyword">private</span> <span class="keyword">var</span> myMesh:Stage3dObjParser;
+<span class="comment">// The terrain mesh data</span>
+[Embed (source = <span class="string">"art/terrain.obj"</span>, mimeType = <span class="string">"application/octet-stream"</span>)] 
+<span class="keyword">private</span> <span class="keyword">var</span> terrainObjData:Class;
+<span class="keyword">private</span> <span class="keyword">var</span> terrainMesh:Stage3dObjParser;
+<span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">Stage3dGame</span><span class="params">()</span> 
+</span>{
+    <span class="keyword">if</span> (stage != <span class="literal">null</span>) 
+        init();
+    <span class="keyword">else</span> 
+        addEventListener(Event.ADDED_TO_STAGE, init);
+}
+<span class="keyword">private</span> <span class="function"><span class="keyword">function</span> <span class="title">init</span><span class="params">(e:Event = null)</span><span class="type">:void</span> 
+</span>{
+    <span class="keyword">if</span> (hasEventListener(Event.ADDED_TO_STAGE))
+        removeEventListener(Event.ADDED_TO_STAGE, init);
+    stage.scaleMode = StageScaleMode.NO_SCALE;
+    stage.align = StageAlign.TOP_LEFT;
+    <span class="comment">// add some text labels</span>
+    initGUI();
+    <span class="comment">// and request a context3D from Stage3d</span>
+    stage.stage3Ds[<span class="number">0</span>].addEventListener(Event.CONTEXT3D_CREATE, onContext3DCreate);
+    stage.stage3Ds[<span class="number">0</span>].requestContext3D();
+}
+<span class="keyword">private</span> <span class="function"><span class="keyword">function</span> <span class="title">updateScore</span><span class="params">()</span><span class="type">:void</span>
+</span>{
+    <span class="comment">// for now, you earn points over time</span>
+    score++;
+    <span class="comment">// padded with zeroes</span>
+    <span class="keyword">if</span> (score &lt; <span class="number">10</span>) scoreTf.text = <span class="string">'Score: 00000'</span> + score;
+    <span class="keyword">else</span> <span class="keyword">if</span> (score &lt; <span class="number">100</span>) scoreTf.text = <span class="string">'Score: 0000'</span> + score;
+    <span class="keyword">else</span> <span class="keyword">if</span> (score &lt; <span class="number">1000</span>) scoreTf.text = <span class="string">'Score: 000'</span> + score;
+    <span class="keyword">else</span> <span class="keyword">if</span> (score &lt; <span class="number">10000</span>) scoreTf.text = <span class="string">'Score: 00'</span> + score;
+    <span class="keyword">else</span> <span class="keyword">if</span> (score &lt; <span class="number">100000</span>) scoreTf.text = <span class="string">'Score: 0'</span> + score;
+    <span class="keyword">else</span> scoreTf.text = <span class="string">'Score: '</span> + score;
+}
+<span class="keyword">private</span> <span class="function"><span class="keyword">function</span> <span class="title">initGUI</span><span class="params">()</span><span class="type">:void</span>
+</span>{
+    <span class="comment">// a text format descriptor used by all gui labels</span>
+    <span class="keyword">var</span> myFormat:TextFormat = <span class="keyword">new</span> TextFormat();  
+    myFormat.color = <span class="number">0xFFFFFF</span>;
+    myFormat.size = <span class="number">13</span>;
+    <span class="comment">// create an FPSCounter that displays the framerate on screen</span>
+    fpsTf = <span class="keyword">new</span> TextField();
+    fpsTf.x = <span class="number">0</span>;
+    fpsTf.y = <span class="number">0</span>;
+    fpsTf.selectable = <span class="literal">false</span>;
+    fpsTf.autoSize = TextFieldAutoSize.LEFT;
+    fpsTf.defaultTextFormat = myFormat;
+    fpsTf.text = <span class="string">"Initializing Stage3d..."</span>;
+    addChild(fpsTf);
+    <span class="comment">// create a score display</span>
+    scoreTf = <span class="keyword">new</span> TextField();
+    scoreTf.x = <span class="number">560</span>;
+    scoreTf.y = <span class="number">0</span>;
+    scoreTf.selectable = <span class="literal">false</span>;
+    scoreTf.autoSize = TextFieldAutoSize.LEFT;
+    scoreTf.defaultTextFormat = myFormat;
+    scoreTf.text = <span class="string">"000000"</span>;
+    addChild(scoreTf);
+    <span class="comment">// add some labels to describe each shader</span>
+    <span class="keyword">var</span> label1:TextField = <span class="keyword">new</span> TextField();
+    label1.x = <span class="number">100</span>;
+    label1.y = <span class="number">180</span>;
+    label1.selectable = <span class="literal">false</span>;  
+    label1.autoSize = TextFieldAutoSize.LEFT;  
+    label1.defaultTextFormat = myFormat;
+    label1.text = <span class="string">"Shader 1: Textured"</span>;
+    addChild(label1);
+    <span class="keyword">var</span> label2:TextField = <span class="keyword">new</span> TextField();
+    label2.x = <span class="number">400</span>;
+    label2.y = <span class="number">180</span>;
+    label2.selectable = <span class="literal">false</span>;  
+    label2.autoSize = TextFieldAutoSize.LEFT;  
+    label2.defaultTextFormat = myFormat;
+    label2.text = <span class="string">"Shader 2: Vertex RGB"</span>;
+    addChild(label2);
+    <span class="keyword">var</span> label3:TextField = <span class="keyword">new</span> TextField();
+    label3.x = <span class="number">80</span>;
+    label3.y = <span class="number">440</span>;
+    label3.selectable = <span class="literal">false</span>;  
+    label3.autoSize = TextFieldAutoSize.LEFT;  
+    label3.defaultTextFormat = myFormat;
+    label3.text = <span class="string">"Shader 3: Vertex RGB + Textured"</span>;
+    addChild(label3);
+    <span class="keyword">var</span> label4:TextField = <span class="keyword">new</span> TextField();
+    label4.x = <span class="number">340</span>;
+    label4.y = <span class="number">440</span>;
+    label4.selectable = <span class="literal">false</span>;  
+    label4.autoSize = TextFieldAutoSize.LEFT;  
+    label4.defaultTextFormat = myFormat;
+    label4.text = <span class="string">"Shader 4: Textured + setProgramConstants"</span>;
+    addChild(label4);
+}
+<span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">uploadTextureWithMipmaps</span><span class="params">(dest:Texture, src:BitmapData)</span><span class="type">:void</span>
+</span>{
+     <span class="keyword">var</span> ws:int = src.width;
+     <span class="keyword">var</span> hs:int = src.height;
+     <span class="keyword">var</span> level:int = <span class="number">0</span>;
+     <span class="keyword">var</span> tmp:BitmapData;
+     <span class="keyword">var</span> transform:Matrix = <span class="keyword">new</span> Matrix();
+     <span class="keyword">var</span> tmp2:BitmapData;
+     tmp = <span class="keyword">new</span> BitmapData( src.width, src.height, <span class="literal">true</span>, <span class="number">0x00000000</span>);
+     <span class="keyword">while</span> ( ws &gt;= <span class="number">1</span> &amp;&amp; hs &gt;= <span class="number">1</span> )
+     {                                
+          tmp.draw(src, transform, <span class="literal">null</span>, <span class="literal">null</span>, <span class="literal">null</span>, <span class="literal">true</span>);    
+          dest.uploadFromBitmapData(tmp, level);
+          transform.scale(<span class="number">0.5</span>, <span class="number">0.5</span>);
+          level++;
+          ws &gt;&gt;= <span class="number">1</span>;
+          hs &gt;&gt;= <span class="number">1</span>;
+          <span class="keyword">if</span> (hs &amp;&amp; ws) 
+          {
+               tmp.dispose();
+               tmp = <span class="keyword">new</span> BitmapData(ws, hs, <span class="literal">true</span>, <span class="number">0x00000000</span>);
+          }
+     }
+     tmp.dispose();
+}
+<span class="keyword">private</span> <span class="function"><span class="keyword">function</span> <span class="title">onContext3DCreate</span><span class="params">(event:Event)</span><span class="type">:void</span> 
+</span>{
+    <span class="comment">// Remove existing frame handler. Note that a context</span>
+    <span class="comment">// loss can occur at any time which will force you</span>
+    <span class="comment">// to recreate all objects we create here.</span>
+    <span class="comment">// A context loss occurs for instance if you hit</span>
+    <span class="comment">// CTRL-ALT-DELETE on Windows.            </span>
+    <span class="comment">// It takes a while before a new context is available</span>
+    <span class="comment">// hence removing the enterFrame handler is important!</span>
+    <span class="keyword">if</span> (hasEventListener(Event.ENTER_FRAME))
+        removeEventListener(Event.ENTER_FRAME,enterFrame);
+    <span class="comment">// Obtain the current context</span>
+    <span class="keyword">var</span> t:Stage3D = event.target <span class="keyword">as</span> Stage3D;                    
+    context3D = t.context3D;     
+    <span class="keyword">if</span> (context3D == <span class="literal">null</span>) 
+    {
+        <span class="comment">// Currently no 3d context is available (error!)</span>
+        <span class="keyword">return</span>;
+    }
+    <span class="comment">// Disabling error checking will drastically improve performance.</span>
+    <span class="comment">// If set to true, Flash sends helpful error messages regarding</span>
+    <span class="comment">// AGAL compilation errors, uninitialized program constants, etc.</span>
+    context3D.enableErrorChecking = <span class="literal">true</span>;
+    <span class="comment">// Initialize our mesh data</span>
+    initData();
+    <span class="comment">// The 3d back buffer size is in pixels (2=antialiased)</span>
+    context3D.configureBackBuffer(swfWidth, swfHeight, <span class="number">2</span>, <span class="literal">true</span>);
+    <span class="comment">// assemble all the shaders we need</span>
+    initShaders();
+    myTexture = context3D.createTexture(textureSize, textureSize, Context3DTextureFormat.BGRA, <span class="literal">false</span>);
+    uploadTextureWithMipmaps(myTexture, myTextureData.bitmapData);
+    terrainTexture = context3D.createTexture(textureSize, textureSize, Context3DTextureFormat.BGRA, <span class="literal">false</span>);
+    uploadTextureWithMipmaps(terrainTexture, terrainTextureData.bitmapData);
+    <span class="comment">// create projection matrix for our 3D scene</span>
+    projectionmatrix.identity();
+    <span class="comment">// 45 degrees FOV, 640/480 aspect ratio, 0.1=near, 100=far</span>
+    projectionmatrix.perspectiveFieldOfViewRH(<span class="number">45.0</span>, swfWidth / swfHeight, <span class="number">0.01</span>, <span class="number">5000.0</span>);
+    <span class="comment">// create a matrix that defines the camera location</span>
+    viewmatrix.identity();
+    <span class="comment">// move the camera back a little so we can see the mesh</span>
+    viewmatrix.appendTranslation(<span class="number">0</span>,<span class="number">0</span>,-<span class="number">3</span>);
+    <span class="comment">// tilt the terrain a little so it is coming towards us</span>
+    terrainviewmatrix.identity();
+    terrainviewmatrix.appendRotation(-<span class="number">60</span>,Vector3D.X_AXIS);
+    <span class="comment">// start the render loop!</span>
+    addEventListener(Event.ENTER_FRAME,enterFrame);
+}
+<span class="comment">// create four different shaders</span>
+<span class="keyword">private</span> <span class="function"><span class="keyword">function</span> <span class="title">initShaders</span><span class="params">()</span><span class="type">:void</span>
+</span>{
+    <span class="comment">// A simple vertex shader which does a 3D transformation</span>
+    <span class="comment">// for simplicity, it is used by all four shaders</span>
+    <span class="keyword">var</span> vertexShaderAssembler:AGALMiniAssembler = <span class="keyword">new</span> AGALMiniAssembler();
+    vertexShaderAssembler.assemble
+    ( 
+        Context3DProgramType.VERTEX,
+        <span class="comment">// 4x4 matrix multiply to get camera angle    </span>
+        <span class="string">"m44 op, va0, vc0\n"</span> +
+        <span class="comment">// tell fragment shader about XYZ</span>
+        <span class="string">"mov v0, va0\n"</span> +
+        <span class="comment">// tell fragment shader about UV</span>
+        <span class="string">"mov v1, va1\n"</span> +
+        <span class="comment">// tell fragment shader about RGBA</span>
+        <span class="string">"mov v2, va2\n"</span>
+    );            
+    <span class="comment">// textured using UV coordinates</span>
+    <span class="keyword">var</span> fragmentShaderAssembler1:AGALMiniAssembler = <span class="keyword">new</span> AGALMiniAssembler();
+    fragmentShaderAssembler1.assemble
+    ( 
+        Context3DProgramType.FRAGMENT,    
+        <span class="comment">// grab the texture color from texture 0 </span>
+        <span class="comment">// and uv coordinates from varying register 1</span>
+        <span class="comment">// and store the interpolated value in ft0</span>
+        <span class="string">"tex ft0, v1, fs0 &lt;2d,linear,repeat,miplinear&gt;\n"</span>+
+        <span class="comment">// move this value to the output color</span>
+        <span class="string">"mov oc, ft0\n"</span>
+    );
+    <span class="comment">// no texture, RGBA from the vertex buffer data</span>
+    <span class="keyword">var</span> fragmentShaderAssembler2:AGALMiniAssembler = <span class="keyword">new</span> AGALMiniAssembler();
+    fragmentShaderAssembler2.assemble
+    ( 
+        Context3DProgramType.FRAGMENT,    
+        <span class="comment">// grab the color from the v2 register</span>
+        <span class="comment">// which was set in the vertex program</span>
+        <span class="string">"sub ft0, v2, fc1\n"</span> + <span class="comment">///这句应该删掉？</span>
+        <span class="string">"mov oc, v2\n"</span>
+    );
+    <span class="comment">// textured using UV coordinates AND colored by vertex RGB</span>
+    <span class="keyword">var</span> fragmentShaderAssembler3:AGALMiniAssembler = <span class="keyword">new</span> AGALMiniAssembler();
+    fragmentShaderAssembler3.assemble
+    ( 
+        Context3DProgramType.FRAGMENT,    
+        <span class="comment">// grab the texture color from texture 0 </span>
+        <span class="comment">// and uv coordinates from varying register 1</span>
+        <span class="string">"tex ft0, v1, fs0 &lt;2d,linear,repeat,miplinear&gt;\n"</span> +    
+        <span class="comment">// multiply by the value stored in v2 (the vertex rgb)</span>
+        <span class="string">"mul ft1, v2, ft0\n"</span> +
+        <span class="comment">// move this value to the output color</span>
+        <span class="string">"mov oc, ft1\n"</span>
+    );
+    <span class="comment">// textured using UV coordinates and </span>
+    <span class="comment">// tinted using a fragment constant</span>
+    <span class="keyword">var</span> fragmentShaderAssembler4:AGALMiniAssembler = <span class="keyword">new</span> AGALMiniAssembler();
+    fragmentShaderAssembler4.assemble
+    ( 
+        Context3DProgramType.FRAGMENT,    
+        <span class="comment">// grab the texture color from texture 0 </span>
+        <span class="comment">// and uv coordinates from varying register 1</span>
+        <span class="string">"tex ft0, v1, fs0 &lt;2d,linear,repeat,miplinear&gt;\n"</span> +    
+        <span class="comment">// multiply by the value stored in fc0</span>
+        <span class="string">"mul ft1, fc0, ft0\n"</span> +
+        <span class="comment">// move this value to the output color</span>
+        <span class="string">"mov oc, ft1\n"</span>
+    );
+    <span class="comment">// combine shaders into a program which we then upload to the GPU</span>
+    shaderProgram1 = context3D.createProgram();
+    shaderProgram1.upload(vertexShaderAssembler.agalcode, fragmentShaderAssembler1.agalcode);
+    shaderProgram2 = context3D.createProgram();
+    shaderProgram2.upload(vertexShaderAssembler.agalcode, fragmentShaderAssembler2.agalcode);
+    shaderProgram3 = context3D.createProgram();
+    shaderProgram3.upload(vertexShaderAssembler.agalcode, fragmentShaderAssembler3.agalcode);
+    shaderProgram4 = context3D.createProgram();
+    shaderProgram4.upload(vertexShaderAssembler.agalcode, fragmentShaderAssembler4.agalcode);
+}
+<span class="keyword">private</span> <span class="function"><span class="keyword">function</span> <span class="title">initData</span><span class="params">()</span><span class="type">:void</span> 
+</span>{
+    <span class="comment">// parse the OBJ file and create buffers</span>
+    myMesh = <span class="keyword">new</span> Stage3dObjParser(myObjData, context3D, <span class="number">1</span>, <span class="literal">true</span>, <span class="literal">true</span>);
+    <span class="comment">// parse the terrain mesh as well</span>
+    terrainMesh = <span class="keyword">new</span> Stage3dObjParser(terrainObjData, context3D, <span class="number">1</span>, <span class="literal">true</span>, <span class="literal">true</span>);
+}        
+<span class="keyword">private</span> <span class="function"><span class="keyword">function</span> <span class="title">renderTerrain</span><span class="params">()</span><span class="type">:void</span>
+</span>{
+    context3D.setTextureAt(<span class="number">0</span>, terrainTexture);
+    <span class="comment">// simple textured shader</span>
+    context3D.setProgram ( shaderProgram1 );
+    <span class="comment">// position</span>
+    context3D.setVertexBufferAt(<span class="number">0</span>, terrainMesh.positionsBuffer, 
+        <span class="number">0</span>, Context3DVertexBufferFormat.FLOAT_3);
+    <span class="comment">// tex coord</span>
+    context3D.setVertexBufferAt(<span class="number">1</span>, terrainMesh.uvBuffer, 
+        <span class="number">0</span>, Context3DVertexBufferFormat.FLOAT_2);
+    <span class="comment">// vertex rgba</span>
+    context3D.setVertexBufferAt(<span class="number">2</span>, terrainMesh.colorsBuffer, 
+        <span class="number">0</span>, Context3DVertexBufferFormat.FLOAT_4);
+    <span class="comment">// set up camera angle</span>
+    modelmatrix.identity();
+    <span class="comment">// make the terrain face the right way</span>
+    modelmatrix.appendRotation( -<span class="number">90</span>, Vector3D.Y_AXIS);
+    <span class="comment">// slowly move the terrain around</span>
+    modelmatrix.appendTranslation(
+        Math.cos(t/<span class="number">300</span>)*<span class="number">1000</span>,Math.cos(t/<span class="number">200</span>)*<span class="number">1000</span> + <span class="number">500</span>,-<span class="number">130</span>); 
+    <span class="comment">// clear the matrix and append new angles</span>
+    modelViewProjection.identity();
+    modelViewProjection.append(modelmatrix);
+    modelViewProjection.append(terrainviewmatrix);
+    modelViewProjection.append(projectionmatrix);    
+    <span class="comment">// pass our matrix data to the shader program</span>
+    context3D.setProgramConstantsFromMatrix(
+        Context3DProgramType.VERTEX, 
+        <span class="number">0</span>, modelViewProjection, <span class="literal">true</span> );
+    context3D.drawTriangles(terrainMesh.indexBuffer, 
+        <span class="number">0</span>, terrainMesh.indexBufferCount);        
+}
+<span class="keyword">private</span> <span class="function"><span class="keyword">function</span> <span class="title">enterFrame</span><span class="params">(e:Event)</span><span class="type">:void</span> 
+</span>{
+    <span class="comment">// clear scene before rendering is mandatory</span>
+    context3D.clear(<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>); 
+    <span class="comment">// move or rotate more each frame</span>
+    t += <span class="number">2.0</span>;
+    <span class="comment">// scroll and render the terrain once</span>
+    renderTerrain();
+    <span class="comment">// how far apart each of the 4 spaceships is</span>
+    <span class="keyword">var</span> dist:Number = <span class="number">0.8</span>; 
+    <span class="comment">// loop through each mesh we want to draw</span>
+    <span class="keyword">for</span> (looptemp = <span class="number">0</span>; looptemp &lt; <span class="number">4</span>; looptemp++)
+    {
+        <span class="comment">// clear the transformation matrix to 0,0,0</span>
+        modelmatrix.identity();
+        <span class="comment">// each mesh has a different texture, </span>
+        <span class="comment">// shader, position and spin speed</span>
+        <span class="keyword">switch</span>(looptemp)
+        {
+            <span class="keyword">case</span> <span class="number">0</span>:
+                context3D.setTextureAt(<span class="number">0</span>, myTexture);
+                context3D.setProgram ( shaderProgram1 );
+                modelmatrix.appendRotation(t*<span class="number">0.7</span>, Vector3D.Y_AXIS);
+                modelmatrix.appendRotation(t*<span class="number">0.6</span>, Vector3D.X_AXIS);
+                modelmatrix.appendRotation(t*<span class="number">1.0</span>, Vector3D.Y_AXIS);
+                modelmatrix.appendTranslation(-dist, dist, <span class="number">0</span>);
+                <span class="keyword">break</span>;
+            <span class="keyword">case</span> <span class="number">1</span>:
+                context3D.setTextureAt(<span class="number">0</span>, <span class="literal">null</span>);
+                context3D.setProgram ( shaderProgram2 );
+                modelmatrix.appendRotation(t*-<span class="number">0.2</span>, Vector3D.Y_AXIS);
+                modelmatrix.appendRotation(t*<span class="number">0.4</span>, Vector3D.X_AXIS);
+                modelmatrix.appendRotation(t*<span class="number">0.7</span>, Vector3D.Y_AXIS);
+                modelmatrix.appendTranslation(dist, dist, <span class="number">0</span>);
+                <span class="keyword">break</span>;
+            <span class="keyword">case</span> <span class="number">2</span>:
+                context3D.setTextureAt(<span class="number">0</span>, myTexture);
+                context3D.setProgram ( shaderProgram3 );
+                modelmatrix.appendRotation(t*<span class="number">1.0</span>, Vector3D.Y_AXIS);
+                modelmatrix.appendRotation(t*-<span class="number">0.2</span>, Vector3D.X_AXIS);
+                modelmatrix.appendRotation(t*<span class="number">0.3</span>, Vector3D.Y_AXIS);
+                modelmatrix.appendTranslation(-dist, -dist, <span class="number">0</span>);
+                <span class="keyword">break</span>;
+            <span class="keyword">case</span> <span class="number">3</span>:
+                context3D.setProgramConstantsFromVector(
+                    Context3DProgramType.FRAGMENT, <span class="number">0</span>, Vector.&lt;Number&gt;
+                    ([ <span class="number">1</span>, Math.abs(Math.cos(t/<span class="number">50</span>)), <span class="number">0</span>, <span class="number">1</span> ]) );
+                context3D.setTextureAt(<span class="number">0</span>, myTexture);
+                context3D.setProgram ( shaderProgram4 );
+                modelmatrix.appendRotation(t*<span class="number">0.3</span>, Vector3D.Y_AXIS);
+                modelmatrix.appendRotation(t*<span class="number">0.3</span>, Vector3D.X_AXIS);
+                modelmatrix.appendRotation(t*-<span class="number">0.3</span>, Vector3D.Y_AXIS);
+                modelmatrix.appendTranslation(dist, -dist, <span class="number">0</span>);
+                <span class="keyword">break</span>;
+        }
+        <span class="comment">// clear the matrix and append new angles</span>
+        modelViewProjection.identity();
+        modelViewProjection.append(modelmatrix);
+        modelViewProjection.append(viewmatrix);
+        modelViewProjection.append(projectionmatrix);
+        <span class="comment">// pass our matrix data to the shader program</span>
+        context3D.setProgramConstantsFromMatrix(
+            Context3DProgramType.VERTEX, 
+            <span class="number">0</span>, modelViewProjection, <span class="literal">true</span> );
+        <span class="comment">// draw a spaceship mesh</span>
+        <span class="comment">// position</span>
+        context3D.setVertexBufferAt(<span class="number">0</span>, myMesh.positionsBuffer, 
+            <span class="number">0</span>, Context3DVertexBufferFormat.FLOAT_3);
+        <span class="comment">// tex coord</span>
+        context3D.setVertexBufferAt(<span class="number">1</span>, myMesh.uvBuffer, 
+            <span class="number">0</span>, Context3DVertexBufferFormat.FLOAT_2);
+        <span class="comment">// vertex rgba</span>
+        context3D.setVertexBufferAt(<span class="number">2</span>, myMesh.colorsBuffer, 
+            <span class="number">0</span>, Context3DVertexBufferFormat.FLOAT_4);
+        <span class="comment">// render it</span>
+        context3D.drawTriangles(myMesh.indexBuffer, 
+            <span class="number">0</span>, myMesh.indexBufferCount);        
+    }
+    <span class="comment">// present/flip back buffer</span>
+    <span class="comment">// now that all meshes have been drawn</span>
+    context3D.present();
+    <span class="comment">// update the FPS display</span>
+    fpsTicks++;
+    <span class="keyword">var</span> now:uint = getTimer();
+    <span class="keyword">var</span> delta:uint = now - fpsLast;
+    <span class="comment">// only update the display once a second</span>
+    <span class="keyword">if</span> (delta &gt;= <span class="number">1000</span>) 
+    {
+        <span class="keyword">var</span> fps:Number = fpsTicks / delta * <span class="number">1000</span>;
+        fpsTf.text = fps.toFixed(<span class="number">1</span>) + <span class="string">" fps"</span>;
+        fpsTicks = <span class="number">0</span>;
+        fpsLast = now;
+    }
+    <span class="comment">// update the rest of the GUI</span>
+    updateScore();
+}
+} <span class="comment">// end of class</span>
+} <span class="comment">// end of package</span>
+</code></pre><h3 id="第6章，Textures:_Making_Things_Look_Pretty">第6章，Textures: Making Things Look Pretty</h3>
+<hr>
+<p><strong>贴图必须满足2次方</strong></p>
+<blockquote>
+<p>textures must have a length and width that fall into these values: 2,4,8,16,32,64,128,256,512,1024 and so on.</p>
+</blockquote>
+<p><strong>UV坐标</strong></p>
+<blockquote>
+<p>The coordinate U is the left-right axis in a texture, while V represents the up-down axis. Therefore, the bottom of a texture has V of 1 and the far right would have U of 1.</p>
+</blockquote>
+<p><img src="/image/molehill_book04.jpg" alt=""></p>
+<p><strong>透明Textures</strong></p>
+<blockquote>
+<p>You can also use a .PNG file, complete with variable transparency.</p>
+</blockquote>
+<p><strong>Animating UVs</strong></p>
+<p>例如水的特效，可以让uv不断增加一点点，然后uv_offsets传到shader里</p>
+<pre><code><span class="comment">// increment the x axis of a vector3D</span>
+uv_offsets.x += <span class="number">0.01</span>;
+<span class="comment">// send this vector to the AGAL variable vc4</span>
+context3D.setProgramConstantsFromVector(Context3DProgramType.VERTEX,<span class="number">4</span>, uv_offsets, <span class="literal">true</span> );
+</code></pre><p>在shader里把uv做加法</p>
+<pre><code><span class="built_in">add</span> v1, va1, vc4
+</code></pre><p><strong>Texture Atlases</strong></p>
+<blockquote>
+<p>A great technique to increase your game’s framerate and allow more meshes to be rendered<br>using the same shader is to pack multiple textures into a large bitmap called a texture atlas. </p>
+</blockquote>
+<p>是提升效率的很重要手段，因为可以把很多不同贴图的模型，放在一次draw call 里。</p>
+<blockquote>
+<p>Using texture atlases is definitely the best practice for rendering fonts in your 3D world .</p>
+</blockquote>
+<p><img src="/image/molehill_book04.jpg" alt=""></p>
+<p><strong>Animated Textures</strong></p>
+<p>第一种方法：in your render loop you could switch the texture you send to context3D.setTextureAt() every few frames.</p>
+<p>第2种方法：simple send a new offset in a setProgramConstantsFromVector() call to shift the texture coordinates over to the next frame</p>
+<p>显然第一种方法是很慢很蠢的。</p>
+<p><strong>Manipulating Texture Data</strong></p>
+<p>可以每帧调用uploadFromBitmapData()，但这样效率是很低的，要避免这么做。<br>如果决定非要这么做了的话，还可以给bitmapdata加滤镜Anything AS3 code you have around that can generate bitmapdata can be used to as the source pixels for your textures。</p>
+<h2 id="Render_States：Blend_modes,_backface_culling,_depth_testing">Render States：Blend modes, backface culling, depth testing</h2>
+<p><strong>Backface Culling</strong></p>
+<p>默认情况下，效率关系只显示mesh可以看见的那一面。如果想两面都显示要这样不做背面裁剪</p>
+<pre><code>context3D<span class="built_in">.</span>setCulling(Context3DTriangleFace<span class="built_in">.</span><span class="literal">NONE</span>);
+</code></pre><p>可选的参数包括</p>
+<pre><code><span class="variable">Context3DTriangleFace</span>.<span class="variable">NONE</span> (不裁剪),
+<span class="variable">Context3DTriangleFace</span>.<span class="variable">BACK</span> (默认情况，背面被裁剪),
+<span class="variable">Context3DTriangleFace</span>.<span class="variable">FRONT</span> (与正常情况相反，正面被裁减)
+<span class="variable">Context3DTriangleFace</span>.<span class="variable">BOTH</span> (没什么用，全裁剪，不渲染任何东西).
+</code></pre><p><strong>Depth Testing</strong></p>
+<p>stage3d在每个在屏幕上的像素都保存一个深度值叫做zbuffer，默认molehill只渲染离camera近的像素，但当你不想为某个mesh保存深度信息（比如爆炸特效或者透明区域例如窗户）就要设置 setDepthTest（）</p>
+<blockquote>
+<p>For example, if you are going to render a transparent mesh like a window that you don’t want to draw on the zbuffer (so that other objects are always visible behind it) but you DO want it to be obscured by furniture in the room that is in front of it, simply use:</p>
+</blockquote>
+<pre><code>context3D.setDepthTest(<span class="keyword">false</span>, Context3DCompareMode.<span class="operator">LESS</span>);
+</code></pre><p>第1个boolean值为true表示下一个要渲染的mesh写入depth buffer，反之不写入。<br>第2个参数可以是</p>
+<pre><code> Context3DCompa<span class="comment">reMode.ALWAYS</span>
+ Context3DCompa<span class="comment">reMode.EQUAL</span>
+ Context3DCompa<span class="comment">reMode.GREATER</span>
+ Context3DCompa<span class="comment">reMode.GREATER_EQUAL</span>
+ Context3DCompa<span class="comment">reMode.LESS</span>
+ Context3DCompa<span class="comment">reMode.LESS_EQUAL</span>
+ Context3DCompa<span class="comment">reMode.NEVER</span>
+ Context3DCompa<span class="comment">reMode.NOT_EQUAL</span>
+</code></pre><blockquote>
+<p>The pixel in question will only be rendered when a comparison between it and the<br>destination pixel are TRUE based on the preceding criteria. The default in Stage3D is to only<br>render pixels that have a depth value that is LESS than what is already on the screen, closer<br>to the camera.<br>The preceding example is handy if you are going to render a transparent mesh like a window<br>that you don’t want to draw on the zbuffer (so that other objects are always visible behind<br>it), but you DO want it to be obscured by furniture in the room that is in front of it.<br>Like with other render states, this will be in effect until you set it to something else. You only<br>need to call it once and that criteria will be used until you instruct Flash otherwise.</p>
+</blockquote>
+<p><strong>Blend Modes</strong><br>混合模式影响如何渲染texture</p>
+<p>在画mesh之前调用Context3D.setBlendFactors()，传递两个乘数给flash，告诉molehill用什么颜色渲染texture。</p>
+<p>可选参数：</p>
+<pre><code>Context3DBlendFactor.DESTINATION_ALPHA
+Context3DBlendFactor.DESTINATION_COLOR
+Context3DBlendFactor.<span class="constant">ONE</span>
+Context3DBlendFactor.ONE_MINUS_DESTINATION_ALPHA
+Context3DBlendFactor.ONE_MINUS_DESTINATION_COLOR
+Context3DBlendFactor.ONE_MINUS_SOURCE_ALPHA
+Context3DBlendFactor.ONE_MINUS_SOURCE_COLOR
+Context3DBlendFactor.SOURCE_ALPHA
+Context3DBlendFactor.SOURCE_COLOR
+Context3DBlendFactor.<span class="constant">ZERO</span>
+</code></pre><p>渲染公式： framebuffercolor = (fragmentcolor <em> srcBlend) + (framebuffercolor </em> destBlend).</p>
+<p>这是stage3d默认参数，完全不透明</p>
+<pre><code>// this <span class="keyword">is</span> the Molehill <span class="keyword">default</span>: nice <span class="keyword">for</span> opaque textures
+// <span class="keyword">all</span> <span class="keyword">of</span> the color <span class="keyword">on</span> screen comes from the fragment color
+context3D.setBlendFactors(Context3DBlendFactor.ONE,Context3DBlendFactor.ZERO);
+</code></pre><p>常见的使用透明贴图的方法：</p>
+<pre><code><span class="comment">// this is the proper setting to use .png textures</span>
+<span class="comment">// that have transparent regions</span>
+<span class="comment">// perfect for foliage/fences/fonts</span>
+context3D.setBlendFactors(
+Context3DBlendFactor.SOURCE_ALPHA,
+Context3DBlendFactor.ONE_MINUS_SOURCE_ALPHA);
+</code></pre><p>加亮：</p>
+<pre><code>// this setting makes it lighten the scene <span class="keyword">only</span>
+// good <span class="keyword">for</span> particles stored <span class="keyword">as</span> .jpg
+// (<span class="keyword">only</span> white sections <span class="built_in">add</span> <span class="keyword">to</span> the screen - black <span class="keyword">is</span> not drawn)
+context3D.setBlendFactors(
+Context3DBlendFactor.SOURCE_COLOR,
+Context3DBlendFactor.ONE);
+</code></pre><blockquote>
+<p>Blend modes, backface culling, and depth testing are all render states, meaning that you<br>only have to set them once and that behavior continues to be in effect until you set it to<br>something else.</p>
+</blockquote>
+<p>效率：</p>
+<p>不透明的jpg贴图效率更高，避免overdraw，看不到的不draw，多用zbuffer，从近到远的顺序draw，避免statechange（backface culling ,depth testing,blendmodes），尽量短的shader，越少mesh越好，组合mesh让drawTriangles()调用次数越少越好，只渲染实际可见的mesh（这就要用到PVS算法，quad-trees, BSP trees, and portals了）</p>
+<p>最后做了demo，具体看Stage3dGame.as代码了</p>
+<p>本章总结</p>
+<blockquote>
+<p>In this chapter, we focused primarily upon three functions that affect how your meshes are<br>rendered: setBlendFactors, setCulling, and setDepthTest. Creative use of these<br>special render states open your game world up to all sorts of special effects.<br>In implementing this new functionality, we achieved a few milestones. Our game engine is<br>now using multiple textures and several meshes; we have code for rendering textures using<br>new blend modes which allow us to render special effects such as explosions and smoke.<br>We can change whether backfaces are culled on meshes, so that we can draw the insides of<br>transparent objects, we can ignore or use the zbuffer as desired, and we are now detecting<br>key presses for user control of the action.</p>
+</blockquote>
+<h3 id="第7章，Timers,_Inputs,_and_Entities:_Gameplay_Goodness!">第7章，Timers, Inputs, and Entities: Gameplay Goodness!</h3>
+<hr>
+<p>前边介绍了两个3d不相关的类<br>GameTimer<br>GameInput</p>
+<p>后面抽象出了一个Stage3dEntity基类.<br>介绍了一个技巧就是设置dirty flag，然后下一帧渲染的时候一起更新transform矩阵。</p>
+<p>其他很多数学方法并没有详细介绍原理。</p>
+<p>本章总结</p>
+<blockquote>
+<ul>
+<li>We now have a class that measures time for use in animations</li>
+<li>We also have a new class that detects the player keyboard and mouse input</li>
+<li>We created a game entity class for use by all in-game objects</li>
+<li>We programmed a simple chase camera with mouse-look</li>
+<li>We upgraded our game to include a heads-up-display overlay and many new in-game models and effects</li>
+</ul>
+</blockquote>
+<h3 id="第8章，Eye-Candy_Aplenty">第8章，Eye-Candy Aplenty</h3>
+<hr>
+<p>粒子是两个mesh型变做法不是很通用的粒子做法，可用性不高，略了，不过这种做法用AGAL做顶点动画的部分还是值得看一下的。</p>
+<h3 id="第9章，A_World_Filled_with_Action">第9章，A World Filled with Action</h3>
+<hr>
+<p>深入到游戏细节了，已经没有stage3d的内容了，碰撞检测和可视过滤都是算圆形距离的，不够深入。还有些ui什么的参杂在里边，代码细节太多实在没心情仔细看了。</p>
+<h3 id="第10章，Chapter_10:_3…_2…_1…_ACTION!">第10章，Chapter 10: 3… 2… 1… ACTION!</h3>
+<hr>
+<p>貌似是重构一些代码? 都是游戏逻辑，没有stage3d内容了，我就没看了。</p>
+<h2 id="总结">总结</h2>
+<p>书还不错，我确实入门了，遗憾是数学部分没有专门讲解， 如果有本续集，深度一些就好了。</p>
+]]></content>
+    <summary type="html">
+    <![CDATA[<p>这篇笔记一年半前读书时发到豆瓣上了，去豆瓣搜过书的应该都看见过，这是我入门3d看的第一本书，现在把原文复制过来简单排版和整理了一下。</p>
+]]>
+    
+    </summary>
+    
+      <category term="stage3d" scheme="http://nshen.net/tags/stage3d/"/>
+    
+      <category term="article" scheme="http://nshen.net/categories/article/"/>
+    
+  </entry>
+  
+  <entry>
+    <title><![CDATA[从 ActionScript3 到 TypeScript]]></title>
+    <link href="http://nshen.net/article/2013-05-18/as3-to-typescript/"/>
+    <id>http://nshen.net/article/2013-05-18/as3-to-typescript/</id>
+    <published>2013-05-18T06:56:31.000Z</published>
+    <updated>2014-10-16T04:08:36.000Z</updated>
+    <content type="html"><![CDATA[<p>以下是我总结的笔记，只涉及语法部分，有错漏请指正。</p>
+<a id="more"></a>
+
+<hr>
+<h3 id="基本类型">基本类型</h3>
+<p>基础类型只有这么几种，与AS3对比</p>
+<table><br>  <tr><td><b>TypeScript</b></td><td><b>ActionScript3</b></td></tr><br>  <tr><td>number</td><td>Number</td></tr><br>  <tr><td>string</td><td>String</td></tr><br>  <tr><td>boolean(0.8以前为bool)</td><td>Boolean</td></tr><br>  <tr><td>any</td><td>*</td></tr><br>  <tr><td>undefined</td><td>undefined</td></tr><br>  <tr><td>null</td><td>null</td></tr><br></table>
+
+
+<p>任意类型：</p>
+<p>ActionScript3 ：</p>
+<pre><code>var anyType : * = <span class="keyword">...</span>;
+</code></pre><p>TypeScript：</p>
+<pre><code>var anyType : any = <span class="keyword">...</span>;
+</code></pre><hr>
+<h3 id="变量修饰符：">变量修饰符：</h3>
+<p>TS类似AS3 但不用写”var” ， 没有protected (未来也许会添加)，默认为public。</p>
+<p>ActionScript3 ：</p>
+<pre><code><span class="keyword">private</span> <span class="keyword">var</span> str: <span class="built_in">String</span> = <span class="string">"abc"</span>;    
+<span class="keyword">public</span>  <span class="keyword">var</span> num: <span class="built_in">Number</span> = <span class="number">123</span>;     
+<span class="keyword">var</span> num2 :<span class="built_in">Number</span> = <span class="number">456</span>;        
+static <span class="keyword">var</span> bo: <span class="built_in">Boolean</span> = <span class="literal">true</span>;    
+<span class="keyword">public</span> <span class="keyword">var</span> createTime: <span class="built_in">String</span>;  
+</code></pre><p>TypeScript:</p>
+<pre><code> <span class="keyword">private</span> str: <span class="keyword">string</span> = <span class="string">"abc"</span>;    <span class="comment">// private property</span>
+ <span class="keyword">public</span>  num: number = <span class="number">123</span>;      <span class="comment">// public property</span>
+ num2 :number = <span class="number">456</span>;             <span class="comment">// 不写默认也为public</span>
+ <span class="keyword">static</span> bo: boolean = <span class="keyword">true</span>;         <span class="comment">// static</span>
+ <span class="keyword">public</span> createTime: <span class="keyword">string</span>;      <span class="comment">//createTime 类型为string，值为 undefined</span>
+</code></pre><hr>
+<h3 id="变量类型转换:">变量类型转换:</h3>
+<p>ActionScript3 ：</p>
+<pre><code><span class="keyword">var</span> str:<span class="built_in">String</span> = <span class="string">"abc"</span>;
+<span class="keyword">var</span> strNum:<span class="built_in">Number</span> = <span class="built_in">Number</span>(str);
+<span class="keyword">var</span> strNum:<span class="built_in">Number</span> = str as <span class="built_in">Number</span>;
+</code></pre><p>TypeScript ：</p>
+<pre><code> <span class="keyword">var</span> str : <span class="keyword">string</span> = <span class="string">"abc"</span>;
+ <span class="keyword">var</span> strNum: number = &lt;number&gt; str; <span class="comment">//编译报错 Cannot convert 'string' to 'number'</span>
+</code></pre><p>发现使用any类型会编译通过：</p>
+<pre><code> var str2 :<span class="keyword">any</span> = <span class="string">"abc"</span>;<span class="comment"> //any类型</span>
+ var strNum2 :<span class="built_in">number</span> = &lt;<span class="built_in">number</span>&gt; str2;<span class="comment"> //通过</span>
+ strNum2 += <span class="number">5</span>;<span class="comment"> // abc5 </span>
+</code></pre><p>用 instanceof 判断类型</p>
+<pre><code> <span class="comment">// instanceof</span>
+ <span class="function"><span class="keyword">function</span> <span class="title">CalculateArea</span><span class="params">(shape : Shape)</span> <span class="type">: number</span> </span>{
+     <span class="keyword">if</span> (shape <span class="keyword">instanceof</span> Square) {
+     <span class="keyword">return</span> (&lt;Square&gt;shape).x * (&lt;Square&gt;shape).y;
+ }
+ <span class="keyword">if</span> (shape <span class="keyword">instanceof</span> Ellipse) {
+     <span class="keyword">return</span> (&lt;Ellipse&gt;shape).r1 * (&lt;Ellipse&gt;shape).r2 * Math.PI;
+ }
+ <span class="keyword">if</span> (shape <span class="keyword">instanceof</span> Triangle) {
+     <span class="keyword">return</span> <span class="number">0.5</span> * (&lt;Triangle&gt;shape).x * (&lt;Triangle&gt;shape).y;
+ }
+ <span class="keyword">throw</span> <span class="keyword">new</span> TypeError(<span class="string">"Unsupported type!"</span>);
+}
+</code></pre><hr>
+<h3 id="数组">数组</h3>
+<p>Typescript数组的写法比AS3漂亮很多</p>
+<p>ActionScript3 ：</p>
+<pre><code><span class="keyword">var</span> arr:<span class="built_in">Array</span> = [<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="string">"a"</span>,<span class="string">"b"</span>,<span class="string">"c"</span>]; <span class="comment">// 任意类型数组</span>
+<span class="keyword">var</span> strArray:Vector.&lt;<span class="built_in">String</span>&gt; = Vector.&lt;<span class="built_in">String</span>&gt;([<span class="string">"a"</span>, <span class="string">"b"</span>, <span class="string">"c"</span>]); <span class="comment">//固定类型数组</span>
+</code></pre><p>TypeScript ：</p>
+<pre><code><span class="keyword">var</span> arr: <span class="built_in">any</span>[] = <span class="keyword">new</span> <span class="built_in">Array</span>(); <span class="comment">// 任意类型数组</span>
+<span class="keyword">var</span> strArr: <span class="built_in">string</span>[] = [<span class="string">"a"</span>, <span class="string">"b"</span>, <span class="string">"c"</span> ]; <span class="comment">//固定类型数组</span>
+</code></pre><p>二维数组</p>
+<pre><code><span class="keyword">var</span> array2d: <span class="built_in">string</span>[][] = [
+[<span class="string">"a"</span>, <span class="string">"b"</span>, <span class="string">"c"</span>],
+[<span class="string">"x"</span>, <span class="string">"y"</span>, <span class="string">"z"</span>]
+];
+
+<span class="comment">// or</span>
+
+<span class="keyword">var</span> array2d: <span class="built_in">string</span>[][] = <span class="keyword">new</span> <span class="built_in">Array</span>();
+array2d.push([<span class="string">"a"</span>, <span class="string">"b"</span>, <span class="string">"c"</span>]);
+array2d.push([<span class="string">"x"</span>, <span class="string">"y"</span>, <span class="string">"z"</span>]);
+</code></pre><hr>
+<h3 id="Object_Types">Object Types</h3>
+<p>当AS3调用这样一个函数时，会有下面一个问题。</p>
+<p>ActionScript3 ：</p>
+<pre><code><span class="function"><span class="keyword">function</span> <span class="title">CalculateArea</span> <span class="params">( rect : Object )</span><span class="type">:Number</span>
+</span>{
+      <span class="keyword">return</span> rect.width * rect.height;
+}
+</code></pre><p>此时编译器并不知道rect这个Object里到底有没有width和height，只能等到runtime时才会知道。</p>
+<p>TypeScript 引入<strong>Object Types</strong>解决这一问题，可以指定Object参数的具体内容，相当于让Object参数实现了interface</p>
+<pre><code><span class="function"><span class="keyword">function</span> <span class="title">CalculateArea</span><span class="params">(rect: {width: number; height: number;})</span><span class="type">: number</span>
+</span>{
+    <span class="keyword">return</span> rect.width * rect.height;
+}
+</code></pre><p>此时如果调用<strong>CalculateArea({w:123,h:456});</strong>  编译器不会通过。</p>
+<p><strong>Object Types</strong> 还支持”?”表示可选参数</p>
+<pre><code><span class="function"><span class="keyword">function</span> <span class="title">CalculateArea</span><span class="params">(rect: {width:number; height:number; depth?:number;})</span><span class="type">: number</span>
+</span>{
+    <span class="keyword">if</span>(rect.depth)
+    {
+        <span class="keyword">return</span> rect.width * rect.height * rect.depth;
+    }
+    <span class="keyword">return</span> rect.width * rect.height;
+}
+
+CalculateArea({w:<span class="number">123</span>,h:<span class="number">456</span>}); <span class="comment">//编译器报错</span>
+CalculateArea({width:<span class="number">123</span>,height:<span class="number">456</span>}); <span class="comment">// 通过</span>
+CalculateArea({width:<span class="number">123</span>,height:<span class="number">456</span>,depth:<span class="number">789</span>}); <span class="comment">// 通过</span>
+</code></pre><p>可以这样声明一个Object</p>
+<pre><code><span class="keyword">var</span> example: {
+name: <span class="built_in">string</span>;
+id: <span class="built_in">number</span>;
+collection: <span class="built_in">string</span>[]; 
+} = {
+name: <span class="string">'Example'</span>,
+id: <span class="number">5</span>,
+collection: [<span class="string">'a'</span>, <span class="string">'b'</span>, <span class="string">'c'</span>]
+}
+</code></pre><hr>
+<p>ActionScript3 ：</p>
+<pre><code><span class="keyword">var</span> fun:<span class="function"><span class="keyword">Function</span></span>;   
+<span class="keyword">var</span> fun2:<span class="function"><span class="keyword">Function</span> = <span class="title">someFunction</span></span>;
+</code></pre><p>TypeScript 可以指定Function需要的参数和返回值类型，叫做函数签名，所以变成了这样</p>
+<pre><code><span class="reserved">var</span> fun : <span class="function"><span class="params">(str: string)</span> =&gt;</span> <span class="reserved">void</span>;   <span class="regexp">//</span> fun是输入为string，没有输出的函数
+<span class="reserved">var</span> fun2 : <span class="function"><span class="params">(num: number)</span> =&gt;</span> number = someFnction;  <span class="regexp">//</span>someFnction函数必须输入输出都为number类型
+</code></pre><p>eg.指定callback函数为string输入，any输出。</p>
+<pre><code>function vote(candidate: <span class="type">string</span>, callback: (<span class="literal">result</span>: <span class="type">string</span>) =&gt; <span class="type">any</span>) {
+// ...
+} 
+
+vote(<span class="string">"BigPig"</span>,
+    function(<span class="literal">result</span>: <span class="type">string</span>) {
+        <span class="keyword">if</span> (<span class="literal">result</span> === <span class="string">"BigPig"</span>) {
+            // ...
+        }
+    });
+</code></pre><p>TypeScript 这样的语法虽然使Function更清晰了，但也带来麻烦，比如一个简单的输入输出都是string的函数就要写好长不易阅读</p>
+<pre><code><span class="keyword">var</span> sayHello: (input: <span class="built_in">string</span>) =&gt; <span class="built_in">string</span> = <span class="function"><span class="keyword">function</span> <span class="params">(s: string)</span> </span>{
+    <span class="keyword">return</span> <span class="string">"Hello "</span> + s;
+}
+
+<span class="comment">//保存函数的数组也写很长</span>
+<span class="keyword">var</span> strArray: { (s: <span class="built_in">string</span>): <span class="built_in">string</span>; }[] = [sayHello, <span class="function"><span class="keyword">function</span> <span class="title">aa</span><span class="params">(str: string)</span> </span>{ <span class="keyword">return</span> str; }];    <span class="comment">//两个输入输出都为string的函数</span>
+<span class="keyword">var</span> strArray: { (s: <span class="built_in">string</span>) =&gt; <span class="built_in">string</span>; }[]   <span class="comment">//这样写会报错，不知道为什么要把 “=&gt;”换成“ ：” 不太清楚为什么 -_-b</span>
+</code></pre><p>所以引入了 函数接口</p>
+<h3 id="函数接口">函数接口</h3>
+<pre><code><span class="comment">//定义输入输出都是字符串的函数的接口</span>
+<span class="class"><span class="keyword">interface</span> <span class="title">IStringFunction</span> </span>{
+    (input: <span class="keyword">string</span>) : <span class="keyword">string</span>;
+}
+</code></pre><p>上边很长的都可以这么写了</p>
+<pre><code><span class="keyword">var</span> sayHello: IStringFunction = <span class="function"><span class="keyword">function</span> <span class="params">(s: string)</span> </span>{
+    <span class="keyword">return</span> <span class="string">"Hello "</span> + s;
+}
+<span class="keyword">var</span> strArray: IStringFunction[];
+strArray.push(sayHello);
+</code></pre><h3 id="可选参数加”?”">可选参数加”?”</h3>
+<pre><code><span class="comment">//带默认值</span>
+<span class="function"><span class="keyword">function</span> <span class="title">func</span> <span class="params">(a: number, b?: bool = false)</span><span class="type">: number</span>
+ </span>{
+    <span class="keyword">if</span> (b) { <span class="keyword">return</span> a + b };
+    <span class="keyword">return</span> a;
+}
+
+<span class="comment">//不带默认值，要自己判断了</span>
+<span class="function"><span class="keyword">function</span> <span class="title">func</span> <span class="params">(a: number,b?: bool)</span><span class="type">: number</span> 
+</span>{
+  <span class="keyword">if</span> ( b !== <span class="literal">null</span> &amp;&amp; b !== <span class="literal">undefined</span> )
+  {
+    <span class="keyword">if</span> ( b) { <span class="keyword">return</span> a + b };
+   }
+   <span class="keyword">return</span> a;
+}
+</code></pre><h3 id="rest参数_…paramName[:paramType]">rest参数 …paramName[:paramType]</h3>
+<pre><code><span class="function"><span class="keyword">function</span> <span class="title">CountDwarvesTallerThan</span><span class="params">(minHeight: number, <span class="rest_arg">...dwarves</span>: Dwarf[])</span> <span class="type">: number</span> 
+</span>{
+    <span class="keyword">var</span> count: number = <span class="number">0</span>;
+    <span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; dwarves.length; i++) {
+        <span class="keyword">if</span> (dwarves[i].height &gt; minHeight) {
+            count++;
+        }
+    }
+    <span class="keyword">return</span> count;
+}
+</code></pre><hr>
+<h3 id="Arrow_Function">Arrow Function</h3>
+<p>关于this作用域的问题，AS1时代经常用到的一个技巧：</p>
+<blockquote>
+<p>var _this = this</p>
+</blockquote>
+<pre><code><span class="keyword">var</span> messenger = {
+    message: <span class="string">"Hello World"</span>,
+    start: <span class="function"><span class="keyword">function</span><span class="params">()</span> </span>{
+    <span class="keyword">var</span> _this = <span class="keyword">this</span>;
+    setTimeout(<span class="function"><span class="keyword">function</span><span class="params">()</span> </span>{ 
+        alert(_this.message); 
+        }, <span class="number">3000</span>);
+    }
+};
+messenger.start();
+</code></pre><p>TypeScript把这个技巧封装到语言里了，叫<strong>Arrow Function</strong></p>
+<p>语法格式为 ()=&gt;{}，例子：</p>
+<p>TypeScript：</p>
+<pre><code><span class="reserved">var</span> messenger = {
+    <span class="attribute">message</span>: <span class="string">"Hello World"</span>,
+    <span class="attribute">start</span>: <span class="reserved">function</span>() {
+        setTimeout<span class="function"><span class="params">(() =&gt; { alert(<span class="keyword">this</span>.message); }, <span class="number">3000</span>)</span>;
+    }
+};
+<span class="title">messenger</span>.<span class="title">start</span><span class="params">()</span>;</span>
+</code></pre><p>编译后的JavaScript跟上边的一样</p>
+<pre><code><span class="keyword">var</span> messenger = {
+    message: <span class="string">"Hello World"</span>,
+    start: <span class="function"><span class="keyword">function</span> <span class="params">()</span> </span>{
+        <span class="keyword">var</span> _this = <span class="keyword">this</span>;
+        setTimeout(<span class="function"><span class="keyword">function</span> <span class="params">()</span> </span>{
+            alert(_this.message);
+        }, <span class="number">3000</span>);
+    }
+};
+messenger.start();
+</code></pre><p>网上找到的一个例子，</p>
+<pre><code><span class="comment">//declare var 为环境声明，用来告诉编译器已知的变量类型，例如浏览器定义的一些变量类型</span>
+
+<span class="keyword">declare</span> <span class="keyword">var</span> menu: HTMLElement;       
+<span class="keyword">declare</span> <span class="keyword">var</span> sideBar: HTMLElement;
+
+<span class="keyword">class</span> UITester {
+    menuTouches: <span class="built_in">number</span>;
+    sidebarTouches: <span class="built_in">number</span>;
+
+    beginMenuTest(): <span class="built_in">void</span> {
+        <span class="keyword">this</span>.menuTouches = <span class="number">0</span>;   <span class="comment">// Right!!</span>
+        menu.onmouseenter = <span class="function"><span class="keyword">function</span> <span class="params">(e)</span> </span>{
+            <span class="keyword">this</span>.menuTouches++;  <span class="comment">// Wrong!! </span>
+        }
+    }
+
+    beginSidebarTest(): <span class="built_in">void</span> {
+        <span class="keyword">this</span>.sidebarTouches = <span class="number">0</span>;  <span class="comment">// Right!!</span>
+        sideBar.onmousemove = e =&gt; {  
+            <span class="keyword">this</span>.sidebarTouches++;  <span class="comment">// Still right!!</span>
+        }
+    }
+}
+</code></pre><p>语法中用了(e)=&gt;{} ,将e传给后边的函数，并且省略了e的括号，会编译成这样：</p>
+<pre><code><span class="keyword">var</span> UITester = (<span class="function"><span class="keyword">function</span> <span class="params">()</span> </span>{
+    <span class="function"><span class="keyword">function</span> <span class="title">UITester</span><span class="params">()</span> </span>{ }
+    UITester.prototype.beginMenuTest = <span class="function"><span class="keyword">function</span> <span class="params">()</span> </span>{
+        <span class="keyword">this</span>.menuTouches = <span class="number">0</span>;
+        menu.onmouseenter = <span class="function"><span class="keyword">function</span> <span class="params">(e)</span> </span>{
+            <span class="keyword">this</span>.menuTouches++;
+        };
+    };
+    UITester.prototype.beginSidebarTest = <span class="function"><span class="keyword">function</span> <span class="params">()</span> </span>{
+        <span class="keyword">var</span> _this = <span class="keyword">this</span>;
+        <span class="keyword">this</span>.sidebarTouches = <span class="number">0</span>;
+        sideBar.onmousemove = <span class="function"><span class="keyword">function</span> <span class="params">(e)</span> </span>{
+            _this.sidebarTouches++;
+        };
+    };
+    <span class="keyword">return</span> UITester;
+})();
+</code></pre><p>这里有篇教程详细解释了这个语法：</p>
+<blockquote>
+<p><a href="http://www.codebelt.com/typescript/arrow-function-typescript-tutorial/" target="_blank" rel="external">http://www.codebelt.com/typescript/arrow-function-typescript-tutorial/</a></p>
+</blockquote>
+<hr>
+<h3 id="类相关的">类相关的</h3>
+<p>TypeScript中的module相当于ActionScript3中的Package</p>
+<p>TypeScript中构造函数的函数名用<strong>constructor</strong> ，而不用类名。</p>
+<p>TypeScript:</p>
+<pre><code><span class="module"><span class="keyword">module</span> net.nshen </span>{ 
+    <span class="keyword">export</span> <span class="keyword">class</span> Test1
+    {
+        <span class="keyword">private</span> str: <span class="built_in">string</span> = <span class="string">"abc"</span>;    <span class="comment">// private property</span>
+        <span class="keyword">public</span>  num: <span class="built_in">number</span> = <span class="number">123</span>;      <span class="comment">//public property</span>
+
+        <span class="keyword">public</span> createTime: <span class="built_in">string</span>;      <span class="comment">//createTime = undefined</span>
+
+        <span class="constructor"><span class="keyword">constructor</span>() // <span class="keyword">constructor</span>
+        </span>{
+            <span class="keyword">this</span>.createTime = <span class="keyword">new</span> <span class="built_in">Date</span>().toUTCString();
+        }
+
+        static traceDate(): <span class="built_in">void</span>
+        {
+            <span class="keyword">var</span> currentDate: <span class="built_in">Date</span> = <span class="keyword">new</span> <span class="built_in">Date</span>(); 
+            <span class="built_in">console</span>.log(currentDate.toUTCString());
+        }
+    }
+}
+</code></pre><p>调用Static方法</p>
+<pre><code><span class="winutils">net</span>.nshen.Test1.traceDate();
+</code></pre><h3 id="module原理">module原理</h3>
+<p>module始终是要编译成JS代码的，写一个简单的module看一下原理：</p>
+<pre><code><span class="module"><span class="keyword">module</span> M </span>{
+    <span class="keyword">var</span> s = <span class="string">"hello"</span>;
+    <span class="keyword">export</span> <span class="function"><span class="keyword">function</span> <span class="title">f</span><span class="params">()</span> </span>{
+        <span class="keyword">return</span> s;
+     }
+}
+
+M.f();
+M.s;  <span class="comment">// Error, s is not exported</span>
+</code></pre><p>编译后的JS代码</p>
+<pre><code><span class="keyword">var</span> M;
+(<span class="function"><span class="keyword">function</span><span class="params">(M)</span> </span>{
+    <span class="keyword">var</span> s = <span class="string">"hello"</span>;
+    <span class="function"><span class="keyword">function</span> <span class="title">f</span><span class="params">()</span> </span>{
+    <span class="keyword">return</span> s;
+    }
+    M.f = f;
+})(M||(M={}));
+</code></pre><p>据说这是js界很流行的写法，叫做<strong>JavaScript module pattern</strong></p>
+<hr>
+<h3 id="函数重载">函数重载</h3>
+<p>AS3和JS都是不支持函数重载的，TypeScript以一种鸡肋的方式支持着。</p>
+<p>先写一些同名的函数声明，最后在一个同名函数里写出实现（要自己判断参数类型）：</p>
+<p>TypeScript:</p>
+<pre><code><span class="function"><span class="keyword">function</span> <span class="title">attr</span><span class="params">(name: string)</span><span class="type">: string</span></span>;
+<span class="function"><span class="keyword">function</span> <span class="title">attr</span><span class="params">(name: string, value: string)</span><span class="type">: Accessor</span></span>;
+<span class="function"><span class="keyword">function</span> <span class="title">attr</span><span class="params">(map: any)</span><span class="type">: Accessor</span></span>;
+
+<span class="function"><span class="keyword">function</span> <span class="title">attr</span><span class="params">(nameOrMap: any, value?: string)</span><span class="type">: any</span> </span>{
+    <span class="keyword">if</span> (nameOrMap &amp;&amp; <span class="keyword">typeof</span> nameOrMap === <span class="string">"object"</span>) {
+        <span class="comment">// handle map case</span>
+    }
+    <span class="keyword">else</span> {
+        <span class="comment">// handle string case</span>
+    }
+}
+</code></pre><p>最终会编译成一个JS方法：</p>
+<p>JavaScript：</p>
+<pre><code><span class="function"><span class="keyword">function</span> <span class="title">attr</span><span class="params">(nameOrMap, value)</span> </span>{
+    <span class="keyword">if</span> (nameOrMap &amp;&amp; <span class="keyword">typeof</span> nameOrMap === <span class="string">"object"</span>) {
+    } <span class="keyword">else</span> {
+    }
+}
+</code></pre><p>TypeScript 允许多个类在同一个文件里，但如果类与类在不同的文件，需要这种写法，相当于AS3 的 import</p>
+<pre><code><span class="comment">/// &lt;reference path="SimpleWebSocket.ts"/&gt;</span>
+<span class="class"><span class="keyword">class</span> <span class="title">ComplexWebSocket</span> <span class="keyword">extends</span> <span class="title">SimpleWebSocket</span> </span>{
+...
+}
+</code></pre><p>override方法子类不需要写关键字，直接同名方法即可 ，可调用super.xxx()</p>
+<pre><code><span class="class"><span class="keyword">class</span> <span class="title">Base</span> </span>{
+
+    <span class="keyword">public</span> test():number
+    {
+        <span class="keyword">return</span> <span class="number">1</span>;
+    }
+
+    <span class="keyword">public</span> test2():number
+    {
+        <span class="keyword">return</span> <span class="number">2</span>;
+    }
+}
+
+<span class="class"><span class="keyword">class</span> <span class="title">Derived</span> <span class="keyword">extends</span> <span class="title">Base</span> </span>{
+
+    <span class="keyword">public</span> test():number
+    {
+        <span class="keyword">return</span> <span class="number">3</span>;
+    }
+
+    <span class="keyword">public</span> test2():number
+    {
+        <span class="keyword">return</span> super.test();
+    }
+
+}
+
+
+<span class="keyword">var</span> d:Derived = <span class="keyword">new</span> Derived();
+console.log(d.test()); <span class="comment">// 3</span>
+console.log(d.test2());<span class="comment">// 1</span>
+</code></pre><hr>
+<h3 id="Enum">Enum</h3>
+<p>TypeScript支持enum关键字</p>
+<pre><code><span class="class"><span class="keyword">enum</span> <span class="title">Color</span> </span>{ <span class="type">Red</span>, <span class="type">Green</span>, <span class="type">Blue</span> }
+console.log(<span class="type">Color</span>.<span class="type">Red</span>); <span class="comment">// 0</span>
+<span class="keyword">var</span> <span class="built_in">c</span>:number = <span class="type">Color</span>.<span class="type">Green</span>;
+console.log(<span class="type">Color</span>[<span class="built_in">c</span>])  <span class="comment">//Green</span>
+</code></pre><p>生成对应的js</p>
+<pre><code>var <span class="keyword">Color</span>;
+(function (<span class="keyword">Color</span>) {
+    <span class="keyword">Color</span>[<span class="keyword">Color</span>[<span class="string">"Red"</span>] = <span class="number">0</span>] = <span class="string">"Red"</span>;
+    <span class="keyword">Color</span>[<span class="keyword">Color</span>[<span class="string">"Green"</span>] = <span class="number">1</span>] = <span class="string">"Green"</span>;
+    <span class="keyword">Color</span>[<span class="keyword">Color</span>[<span class="string">"Blue"</span>] = <span class="number">2</span>] = <span class="string">"Blue"</span>;
+})(<span class="keyword">Color</span> || (<span class="keyword">Color</span> = {}));
+console.log(<span class="keyword">Color</span>.Red);
+var c = <span class="keyword">Color</span>.Green;
+console.log(<span class="keyword">Color</span>[c]);//Green
+</code></pre>]]></content>
+    <summary type="html">
+    <![CDATA[<p>以下是我总结的笔记，只涉及语法部分，有错漏请指正。</p>
+]]>
+    
+    </summary>
+    
+      <category term="article" scheme="http://nshen.net/categories/article/"/>
+    
+  </entry>
+  
+  <entry>
+    <title><![CDATA[笔记《黑客与画家》如何创造财富]]></title>
+    <link href="http://nshen.net/article/2012-04-09/howToMakeMoney/"/>
+    <id>http://nshen.net/article/2012-04-09/howToMakeMoney/</id>
+    <published>2012-04-09T06:56:31.000Z</published>
+    <updated>2013-06-21T08:49:25.000Z</updated>
+    <content type="html"><![CDATA[<h3 id="如何创造财富">如何创造财富</h3>
+<p>《黑客与画家》第8章笔记<br><a id="more"></a></p>
+<p><a href="/image/howToMakeMoney.png" target="_blank">图片过大，新窗口打开</a>.</p>
+
+<p><img src="/image/howToMakeMoney.png" alt="如何创造财富"></p>
+]]></content>
+    <summary type="html">
+    <![CDATA[<h3 id="如何创造财富">如何创造财富</h3>
+<p>《黑客与画家》第8章笔记<br>]]>
+    
+    </summary>
+    
+      <category term="article" scheme="http://nshen.net/categories/article/"/>
+    
+  </entry>
+  
+  <entry>
+    <title><![CDATA[跨IOS，Android的小游戏《阿鼻地狱》]]></title>
+    <link href="http://nshen.net/project/2011-10-05/go-to-hell/"/>
+    <id>http://nshen.net/project/2011-10-05/go-to-hell/</id>
+    <published>2011-10-05T06:56:31.000Z</published>
+    <updated>2014-04-01T14:53:05.000Z</updated>
+    <content type="html"><![CDATA[<p>本是用来参加腾讯和天地会举办的flash手机游戏开发大赛的游戏，完整代码见最下边。</p>
+<a id="more"></a>
+
+<p>使用Flixel游戏引擎开发，像素图+程序一手操办，AIR3.0打包，可以跨IOS，Android的。</p>
+<p>当时在iphone4上测试基本维持在30帧。</p>
+<hr>
+<h3 id="2011-10-05发布剪辑的视频：">2011-10-05发布剪辑的视频：</h3>
+<embed src="http://player.youku.com/player.php/sid/XMzA5OTI2NDYw/v.swf" type="application/x-shockwave-flash" allowscriptaccess="always" allowfullscreen="true" wmode="opaque" width="610" height="500">
+
+<hr>
+<h3 id="2011-10-06发布iphone4实机测试视频:">2011-10-06发布iphone4实机测试视频:</h3>
+<embed src="http://player.youku.com/player.php/sid/XMzEwMzE2Njky/v.swf" type="application/x-shockwave-flash" allowscriptaccess="always" allowfullscreen="true" wmode="opaque" width="610" height="500">
+
+
+<hr>
+<h3 id="实机拍摄环境比较简陋">实机拍摄环境比较简陋</h3>
+<p>是用我老婆的g7手机拍的，效果不太好，没办法先这样吧</p>
+<p><img src="/image/hell01.jpg" alt=""></p>
+<hr>
+<h3 id="概念涂鸦一张">概念涂鸦一张</h3>
+<p><img src="/image/hell02.jpg" alt=""></p>
+<hr>
+<p><a href="https://github.com/nshen/goToHell" target="_blank">完整代码：https://github.com/nshen/goToHell </a></p>
+]]></content>
+    <summary type="html">
+    <![CDATA[<p>本是用来参加腾讯和天地会举办的flash手机游戏开发大赛的游戏，完整代码见最下边。</p>
+]]>
+    
+    </summary>
+    
+      <category term="游戏" scheme="http://nshen.net/tags/%E6%B8%B8%E6%88%8F/"/>
+    
+      <category term="project" scheme="http://nshen.net/categories/project/"/>
+    
+  </entry>
+  
+  <entry>
+    <title><![CDATA[AS3与数据结构]]></title>
+    <link href="http://nshen.net/article/2011-08-25/as3-DataStructure/"/>
+    <id>http://nshen.net/article/2011-08-25/as3-DataStructure/</id>
+    <published>2011-08-25T06:56:31.000Z</published>
+    <updated>2014-08-29T06:01:18.000Z</updated>
+    <content type="html"><![CDATA[<p>时至今日国内外都还没有一本专讲AS3与数据结构的书，对于我这种非科班毕业的社会闲杂人等来说，入门数据结构太难了，我参考了各方代码，经过一段时间的恶补，整理了一下目前Flash开发中有可能遇得到的数据结构。完整代码在文章结尾有下载，如有错漏请直接指出谢谢。</p>
+<a id="more"></a>
+
+<h3 id="数组">数组</h3>
+<p>Array类应该是Flash里最常用的数据结构了。比其他语言的数组高级和灵活许多，随意装入任何数据类型，不用固定长度。<br>访问速度快，从后方添加(push)和删除(pop)快，但从中间或开头删除会很慢。</p>
+<p>从100万长度的数组开头删除500个元素在我的机器上差不多要1秒钟。</p>
+<pre><code><span class="keyword">var</span> arr:Array = []
+<span class="keyword">for</span>(<span class="keyword">var</span> i:<span class="keyword">uint</span>= <span class="number">0</span> ;i&lt;<span class="number">1000000</span>;i++)arr[i]=i ;
+
+<span class="keyword">var</span> startT:Number = getTimer()
+<span class="keyword">var</span> num:<span class="keyword">uint</span> = <span class="number">500</span>
+<span class="keyword">while</span>(num&gt;<span class="number">0</span>)
+{
+    arr.splice(<span class="number">0</span>,<span class="number">1</span>)
+    num--
+}
+trace(<span class="string">"time:"</span>,getTimer() - startT)
+</code></pre><p>但如果数组没有顺序的话，快速删除法1000个在我机器上才需要1毫秒。</p>
+<pre><code><span class="keyword">var</span> arr:Array = []
+<span class="keyword">for</span>(<span class="keyword">var</span> i:<span class="keyword">uint</span>= <span class="number">0</span> ;i&lt;<span class="number">1000000</span>;i++)arr[i]=i ;
+
+<span class="keyword">var</span> startT:Number = getTimer()
+<span class="keyword">var</span> num:<span class="keyword">uint</span> = <span class="number">1000</span>
+<span class="keyword">while</span>(num&gt;<span class="number">0</span>)
+{
+    arr[<span class="number">0</span>] =arr[arr.length-<span class="number">1</span>]
+    arr.length -=<span class="number">1</span>
+    num--
+}
+trace(getTimer() - startT)
+</code></pre><p>Vector：Vector是Array的升级版。如果想追求效率，恰巧数组中的元素类型是固定的，或者长度是固定的，就可以将Array换成Vector类提升效率。</p>
+<h3 id="堆栈">堆栈</h3>
+<p>堆栈是先进后出的结构，像子弹梭子一样，由于数组的push() pop()非常快，所以数组本身就是最好的堆栈。</p>
+<h3 id="队列">队列</h3>
+<p>队列是先进先出，数组也可以做队列，但是从数组前端删除数据比较慢，下边10万条数据我的机器运行差不多需要2秒。</p>
+<pre><code><span class="keyword">var</span> startT:Number = getTimer()
+<span class="keyword">var</span> queue:Array = []
+<span class="keyword">for</span>(<span class="keyword">var</span> i:<span class="keyword">int</span> = <span class="number">0</span> ; i&lt;<span class="number">100000</span> ;i++)
+{
+    queue.push(i);
+}
+<span class="keyword">for</span>(<span class="keyword">var</span> i:<span class="keyword">int</span> = <span class="number">0</span> ; i&lt;<span class="number">100000</span> ;i++)
+{
+    queue.shift()
+}
+trace(getTimer() - startT)
+</code></pre><p>我参考as3ds改写了个链表（DLinkedList） ，实现了数组一样的 push() pop() shift() unshift() 四个方法。用这个链表只需要改一行代码，同样操作在我的机器上只要100多毫秒。</p>
+<pre><code><span class="keyword">var</span> startT:Number = getTimer()
+<span class="keyword">var</span> queue:DLinkedList = <span class="keyword">new</span> DLinkedList()
+<span class="keyword">for</span>(<span class="keyword">var</span> i:<span class="keyword">int</span> = <span class="number">0</span> ; i&lt;<span class="number">100000</span> ;i++)
+{
+    queue.push(i);
+}
+<span class="keyword">for</span>(<span class="keyword">var</span> i:<span class="keyword">int</span> = <span class="number">0</span> ; i&lt;<span class="number">100000</span> ;i++)
+{
+    queue.shift()
+}
+trace(getTimer() - startT)
+</code></pre><p>这个链表是一个双向链表，可以当作各种队列也可以当作堆栈，效率都不错。</p>
+<h3 id="链表">链表</h3>
+<p>这个链表实现的是一个双向链表，因为删除数据会快些，单链表优点就是省一点点内存，但删除会慢很多，用处不大，所以没有实现。<br>我觉得除了把链表当成队列使用，平时几乎用不到。如果非要使用就要使用Iterator了，Iterator是一种设计模式，不懂可以搜索一下。<br>下边是对链表所有操作的演示。</p>
+<pre><code><span class="tag">var</span> l<span class="value">:DLinkedList = new <span class="function">DLinkedList</span>()
+l.<span class="function">push</span>(<span class="number">1</span>)
+l.<span class="function">push</span>(<span class="number">2</span>)
+l.<span class="function">push</span>(<span class="number">3</span>)
+<span class="function">trace</span>(l,l.head,l.tail) //[<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>] <span class="number">1</span> <span class="number">3</span>
+l.<span class="function">pop</span>()
+<span class="function">trace</span>(l,l.head,l.tail) //[<span class="number">1</span>,<span class="number">2</span>] <span class="number">1</span> <span class="number">2</span>
+l.<span class="function">unshift</span>(<span class="number">0</span>)
+<span class="function">trace</span>(l,l.head,l.tail) //[<span class="number">0</span>,<span class="number">1</span>,<span class="number">2</span>] <span class="number">0</span> <span class="number">2</span>
+l.<span class="function">shift</span>()
+<span class="function">trace</span>(l,l.head,l.tail) //[<span class="number">1</span>,<span class="number">2</span>] <span class="number">1</span> <span class="number">2</span>
+l.<span class="function">push</span>(<span class="number">3</span>)
+<span class="function">trace</span>(l,l.head,l.tail) //[<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>] <span class="number">1</span> <span class="number">3</span>
+
+//遍历,输出  <span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>
+var it:DListIterator = l.<span class="function">getIterator</span>()
+<span class="function">for</span>(it.<span class="function">start</span>() ;</span> it<span class="class">.hasNext</span>(); it<span class="class">.next</span>())
+{
+    <span class="function">trace</span>(it<span class="class">.node</span><span class="class">.data</span>)
+}
+it<span class="class">.start</span>()  <span class="comment">// 索引归0</span>
+it<span class="class">.next</span>()   
+l<span class="class">.remove</span>(it) <span class="comment">//remove 2</span>
+l<span class="class">.remove</span>(it) <span class="comment">//remove 3</span>
+<span class="function">trace</span>(l,l<span class="class">.head</span>,l<span class="class">.tail</span>) <span class="comment">//[1] 1 1</span>
+l<span class="class">.insert</span>(it,2) 
+<span class="function">trace</span>(l,l<span class="class">.head</span>,l<span class="class">.tail</span>) <span class="comment">//[1,2] 1 2</span>
+l<span class="class">.insert</span>(it,3)
+<span class="function">trace</span>(l,l<span class="class">.head</span>,l<span class="class">.tail</span>) <span class="comment">//[1,3,2] 1 2</span>
+</code></pre><h3 id="哈希表">哈希表</h3>
+<p>哈希表应该就是Object？ 在Flash里Object是动态的，赋值就 obj.abc = 123 ,删除就 delete obj.abc</p>
+<pre><code><span class="keyword">var</span> o:<span class="built_in">Object</span> = {}
+o[<span class="string">"key"</span>] = obj   <span class="comment">//插入</span>
+<span class="keyword">delete</span> o[<span class="string">"key"</span>]  <span class="comment">//删除</span>
+</code></pre><p>如果追求Object做key可以用flash.utils.Dictionary类代替Object。</p>
+<h3 id="树">树</h3>
+<p>上边数组和链表都叫线性结构，树是典型的非线性数据结构，普通的树也不常用，但作为一个基础必须掌握，这里的树使用上边提到的双向链表存储子树。操作树要用TreeIterator，下边是演示。</p>
+<pre><code><span class="tag">var</span> tree<span class="value">:Tree = new <span class="function">Tree</span>(<span class="number">0</span>);</span>
+<span class="tag">var</span> itr<span class="value">:TreeIterator = tree.<span class="function">getIterator</span>()
+itr.<span class="function">appendChild</span>(<span class="number">1</span>)
+itr.<span class="function">appendChild</span>(<span class="number">2</span>) 
+
+      <span class="number">0</span>  
+     / \
+    <span class="number">1</span>   <span class="number">2</span>
+
+
+itr.<span class="function">down</span>()
+itr.<span class="function">appendChild</span>(<span class="number">3</span>)
+
+
+         <span class="number">0</span>  
+        / \
+       <span class="number">1</span>   <span class="number">2</span>
+      /
+     <span class="number">3</span>
+
+
+itr.<span class="function">up</span>()
+itr.<span class="function">appendChild</span>(<span class="number">4</span>)
+
+          <span class="number">0</span>  
+        / | \ 
+       <span class="number">1</span>  <span class="number">2</span>  <span class="number">4</span>
+      /
+     <span class="number">3</span>
+
+
+itr.<span class="function">childEnd</span>()
+itr.<span class="function">down</span>()
+itr.<span class="function">prependChild</span>(<span class="number">5</span>)
+itr.<span class="function">prependChild</span>(<span class="number">6</span>)
+
+
+        <span class="number">0</span>  
+      / | \ 
+     <span class="number">1</span>  <span class="number">2</span>  <span class="number">4</span>
+    /      /\
+   <span class="number">3</span>      <span class="number">6</span>  <span class="number">5</span>    
+<span class="function">trace</span>(tree.<span class="function">dump</span>())</span>
+</code></pre><p>上边的代码输出如下：</p>
+<pre><code>[<span class="type">TreeNode</span> &gt;(root) has <span class="number">2</span> child nodes, <span class="typedef"><span class="keyword">data</span>=room1]</span>
++<span class="comment">---[TreeNode &gt; has 2 child nodes, data=room2]</span>
+|    +<span class="comment">---[TreeNode &gt;(leaf), data=room4]</span>
+|    +<span class="comment">---[TreeNode &gt;(leaf), data=room5]</span>
++<span class="comment">---[TreeNode &gt;(leaf), data=room3]</span>
+</code></pre><p>我实现了一个toXML方法，如果把tree.toXML(tree)赋给Flex的Tree组件的dataProvider属性，就会是这个样子。</p>
+<p><img src="/image/tree01.jpg" alt="/image/tree01.jpg"></p>
+<p>树的遍历分为前序遍历和后序遍历，演示：</p>
+<embed src="/image/TreeTraversal.swf" type="application/x-shockwave-flash" width="600" height="380">
+
+<p><a href="http://lab.polygonal.de/2007/05/15/data-structures-example-the-tree-class/" target="_blank">上边是直接来自as3ds的演示，了解更多点击这里</a> </p>
+<p>代码实现看着很简单，但很需要费脑子的，是递归实现。</p>
+<pre><code><span class="comment">/**
+* 前序遍历
+*/</span>
+<span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">preorder</span><span class="params">(Node:Tree,Process:Function)</span><span class="type">:void</span>
+</span>{
+    Process(Node)
+    <span class="keyword">var</span> itr:DListIterator = Node.children.getIterator()
+    <span class="keyword">while</span>(itr.hasNext())
+    {
+        preorder(Tree(itr.node.data),Process)
+        itr.next();
+    }
+}
+
+<span class="comment">/**
+* 后序遍历
+*/</span>
+<span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">postorder</span><span class="params">(Node:Tree,Process:Function)</span><span class="type">:void</span>
+</span>{
+    <span class="keyword">var</span> itr:DListIterator =  Node.children.getIterator()
+    <span class="keyword">while</span>(itr.hasNext())
+    {
+        postorder(Tree(itr.node.data),Process)
+    }
+    Process(Node)
+
+}
+</code></pre><h3 id="二叉堆与优先队列">二叉堆与优先队列</h3>
+<p>优先队列是一种特殊的队列，它不是先入先出，而是入队的元素会自动按你指定顺序排列，先出队的永远是你指定的顺序里排最前面的。<br>当然这个优先队列可以用数组实现，每次入队就push后排一次序，出队pop就可以了，但是这样效率不佳，我们的优先队列是使用二叉堆实现的。</p>
+<p>首先了解二叉树是只有2个子节点的树 ，二叉堆是一种特殊的二叉树，他的每个父节点都比子节点大。<br>里边用了些特殊的算法，让元素入队出队时效率更好。后边的A*寻路也用这个二叉堆来优化效率。具体算法见代码</p>
+<pre><code><span class="keyword">var</span> priorityQueue:Heap =<span class="keyword">new</span> Heap() <span class="comment">//新建二叉堆，默认从大到小排列</span>
+priorityQueue.enqueue(<span class="number">2</span>) <span class="comment">//入队9个数字</span>
+priorityQueue.enqueue(<span class="number">6</span>)
+priorityQueue.enqueue(<span class="number">5</span>)
+priorityQueue.enqueue(<span class="number">8</span>)            
+priorityQueue.enqueue(<span class="number">7</span>)
+priorityQueue.enqueue(<span class="number">4</span>)
+priorityQueue.enqueue(<span class="number">1</span>)
+priorityQueue.enqueue(<span class="number">3</span>)
+priorityQueue.enqueue(<span class="number">9</span>)
+
+<span class="keyword">trace</span>(priorityQueue)  <span class="comment">//输出9,8,5,7,6,4,1,2,3   ，发现并不是按顺序排列的</span>
+<span class="keyword">trace</span>(priorityQueue.dequeue())  <span class="comment">//9 但出队时就已经是排序好的了</span>
+<span class="keyword">trace</span>(priorityQueue.dequeue())  <span class="comment">//8</span>
+<span class="keyword">trace</span>(priorityQueue.dequeue())  <span class="comment">//7</span>
+<span class="keyword">trace</span>(priorityQueue.dequeue())  <span class="comment">//6</span>
+<span class="keyword">trace</span>(priorityQueue.dequeue())  <span class="comment">//5</span>
+<span class="keyword">trace</span>(priorityQueue.dequeue())  <span class="comment">//4</span>
+<span class="keyword">trace</span>(priorityQueue.dequeue())  <span class="comment">//3</span>
+<span class="keyword">trace</span>(priorityQueue.dequeue())  <span class="comment">//2</span>
+<span class="keyword">trace</span>(priorityQueue.dequeue())  <span class="comment">//1</span>
+
+<span class="comment">//如果想要逆序排列，只需要提供一个compare Function，这个跟数组sort方法里的compareFunction参数一样，如下：</span>
+
+<span class="keyword">var</span> f:Function = <span class="function"><span class="keyword">function</span><span class="params">(a:int,b:int)</span><span class="type">:int</span></span>{<span class="keyword">return</span> b-a}
+<span class="keyword">var</span> p:Heap =<span class="keyword">new</span> Heap(f)
+p.enqueue(<span class="number">2</span>)
+p.enqueue(<span class="number">6</span>)
+p.enqueue(<span class="number">5</span>)
+p.enqueue(<span class="number">8</span>)            
+p.enqueue(<span class="number">7</span>)
+p.enqueue(<span class="number">4</span>)
+p.enqueue(<span class="number">1</span>)
+p.enqueue(<span class="number">3</span>)
+p.enqueue(<span class="number">9</span>)
+
+<span class="keyword">trace</span>(p.dequeue()) <span class="comment">//1</span>
+<span class="keyword">trace</span>(p.dequeue()) <span class="comment">//2</span>
+<span class="keyword">trace</span>(p.dequeue()) <span class="comment">//3</span>
+<span class="keyword">trace</span>(p.dequeue()) <span class="comment">//4</span>
+<span class="keyword">trace</span>(p.dequeue()) <span class="comment">//5</span>
+<span class="keyword">trace</span>(p.dequeue()) <span class="comment">//6</span>
+<span class="keyword">trace</span>(p.dequeue()) <span class="comment">//7</span>
+<span class="keyword">trace</span>(p.dequeue()) <span class="comment">//8</span>
+<span class="keyword">trace</span>(p.dequeue()) <span class="comment">//9</span>
+</code></pre><p>其实Heap内部也是由数组存储的，它的算法有两个关键</p>
+<p>1) 如何用数组储存二叉树结构</p>
+<p>比如原树状结构为： </p>
+<pre><code>      4
+     / <span class="command">\
+</span>    3   0
+   /<span class="command">\
+</span>  1  2
+</code></pre><p>则存储成数组为：[4,3,0,1,2]</p>
+<p>2) 如何永远保持parent比child大</p>
+<p>这点比较麻烦具体可以参考我的代码，或者找本书看看。</p>
+<h3 id="四叉树">四叉树</h3>
+<p>四叉树通常用于2d游戏碰撞检测。假设屏幕上有500个mc，每2个之间都要进行碰撞检测，那么每一个mc都要与其他499个mc进行一次碰撞检测，那每帧总共就接近做500×500 = 250000次检测。<br>如果是小球还好办，用半径法，如果碰上复杂的mc需要位图碰撞检测，那每帧检测25万次flash是吃不消的。<br>一个优化的办法就是只与有可能碰撞的mc进行碰撞检测，这时四叉树就派上用场了。</p>
+<p>移动鼠标会发现，只有红色的方块是有可能与鼠标拖动的方块产生碰撞的，你只要将鼠标方块与红色的方块逐个进行检测就好了，大大提升了效率</p>
+<embed src="/image/QuadTree_retrieve.swf" type="application/x-shockwave-flash" width="500" height="500">
+
+<p>四叉树首先通过一个建树的过程将屏幕上的物体分配到，左上，右上，左下，右下四个象限中，这四个象限对应树的四个节点，每个象限还可以继续分成四个象限，根据具体情况考虑分配几层达到一个查找最快效果。</p>
+<p>对比一下速度，下边是数组遍历，250个Sprite，两两碰撞在我机器上就惨不忍睹了。 （放上鼠标开始）</p>
+<embed src="/image/Array_collition.swf" type="application/x-shockwave-flash" width="500" height="600" wmode="transparent"><br>&gt;<br>四叉树版本，500个Sprite，2倍精灵的数量两两碰撞仍然跑的流畅    （放上鼠标开始）<br><br><br><embed src="/image/QuadTree_collition.swf" type="application/x-shockwave-flash" width="600" height="500">
+
+<p>四叉树的思想就是先屏幕分割，然后过滤出离自己很近的，有可能产生碰撞的进行碰撞检测。Flash界使用四叉树最出名的应该就是<a href="http://flixel.org" target="_blank">Flixel游戏引擎</a>，它把四叉树隐藏在碰撞检测的API里，用户不需要直接操作四叉树。<br>调用碰撞检测的同时，引擎内部就自动建树了。大家都看到Flixel引擎的效率是非常高的，各种大小相差几倍的精灵放在一起检测也没有问题，这也是四叉树分区相比网格分区的一个优势。可惜Flixel里的四叉树<br>经过了各种优化，已经不是传统四叉树的样子了，很难分离出来。as3ds包里也没有四叉树的实现，所以我又google了一下，在网上看到一个写的比较清晰的JavaScript版本<a href="http://www.mikechambers.com/blog/2011/03/21/javascript-quadtree-implementation/" target="_blank">JavaScript QuadTree Implementation</a><br>又无意中搜到<a href="http://code.google.com/p/ghostcat/source/browse/trunk/GhostCat/src/ghostcat/algorithm/QuadTree.as?r=584" target="_blank">GhostCat里也有一个四叉树类</a>，GhostCat的这个版本是我看到写的最简洁的四叉树，很是佩服作者。<br>不过经过研究，他们有一个共同的问题就是只能把点(point)添加到树中，这对子弹或者小球的碰撞检测还好，但通常游戏中不论是MC还是Bitmap大都是有宽高的方形。如果把他们按照点来分配进树的话，就会有漏检查的情况出现。<br>下图是我将上边提到的，mikechambers写的JavaScript版本转成AS3后发现的问题，mike虽然已经将压线的矩形作为有可能碰撞的对象返回，但百密一疏，由于他是按照点来分配的，始终会有漏检</p>
+<p><img src="/image/tree02.jpg" alt="/image/tree02.jpg"></p>
+<p>所以我又回头看Flixel里的四叉树是怎么插入的，最后综合以上所有版本，我写了我的这个四叉树类。就是上边演示的那个，代码在文章末尾下载包里，太长就不贴了，我记得应该是写了很多注释。大家可以研究讨论一下。</p>
+<h3 id="图">图</h3>
+<p>图由节点node和指针arc组成，图的遍历与树差不多，分为广度优先遍历(与树的后序遍历)，和深度优先遍历（与树的前序遍历)。</p>
+<p>图在游戏中通常用作保存地图，网上流行的页游地图都是tilemap的，区块其实就是简化了指针之后的图，所以他们的理论是相通的。</p>
+<p>请看基于图的A*算法演示：</p>
+<p>因为我用了Adobe kuler配了一下色，所以漂亮了许多 ：）</p>
+<embed src="/image/GraphTest.swf" type="application/x-shockwave-flash" width="700" height="700">
+
+<p>QuadTree_collition</p>
+<p>为什么要用A*寻路而不是广度或深度遍历寻路呢？因为他们本身是很傻很执着的，由于不知道终点位置而盲目扫描整个图，这会浪费效能，而A星之所以叫做启发式寻路，是因为它事先预测了终点的大概方向而向那个方向扫描，这样增加了效率。</p>
+<p>我是照着这篇很有名的A Star入门教程写的代码：<a href="http://www.vckbase.com/document/viewdoc/?id=1422" target="_blank">A*寻路初探</a></p>
+<p>因为他是基于区块的，所以要改动一下，而需要改变的只有一个地方，他的文章里是循环检查 <strong>周围相邻的8格</strong> ，而我们改成  <strong>连通的所有节点</strong>  就ok了。</p>
+<p>我的Astar类已经按照教程逐句做了注释，对照教程应该很容易理解了。</p>
+<p>与教程不同的地方就是：</p>
+<p>1) 我使用了上边提到Heap优先队列来优化了open列表，使F值最小的始终在列表最上方，这个在教程后边也有讲。</p>
+<p>2）改用了 <strong>距离的启发值函数</strong> 计算H值，而原教程使用的 <em>曼哈顿距离启发值函数</em> 也有提供，可以替换，只是貌似没有距离的效果好,大家可以自己试一下。</p>
+<pre><code><span class="package"><span class="keyword">package</span> <span class="title">examples</span>.<span class="title">Astar</span>
+{</span>
+    <span class="preprocessor"><span class="keyword">import</span> ds.Graph;</span>
+    <span class="preprocessor"><span class="keyword">import</span> ds.GraphArc;</span>
+    <span class="preprocessor"><span class="keyword">import</span> ds.GraphNode;</span>
+    <span class="preprocessor"><span class="keyword">import</span> ds.Heap;</span>
+
+    <span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Astar</span>
+    </span>{            
+    <span class="comment">/**
+     *   距离启发函数
+     */</span>
+    <span class="keyword">public</span> <span class="keyword">static</span> <span class="function"><span class="keyword">function</span> <span class="title">distance</span><span class="params">(startNode:GraphNode,endNode:GraphNode)</span><span class="type">:Number</span>
+    </span>{
+     <span class="keyword">return</span>  Math.sqrt( (endNode.data.x - startNode.data.x)*(endNode.data.x - startNode.data.x) + (endNode.data.y - startNode.data.y)*(endNode.data.y - startNode.data.y))
+    }
+    <span class="comment">/**
+     *  曼哈顿启发函数
+     */</span>
+    <span class="keyword">public</span> <span class="keyword">static</span> <span class="function"><span class="keyword">function</span> <span class="title">manhattan</span><span class="params">(startNode:GraphNode,endNode:GraphNode)</span><span class="type">:Number</span>
+    </span>{
+    <span class="keyword">return</span>  Math.abs(endNode.data.x - startNode.data.x)+Math.abs(endNode.data.y - endNode.data.y);
+    }
+    <span class="comment">/**
+     *  寻路
+     */</span>
+    <span class="keyword">public</span> <span class="keyword">static</span> <span class="function"><span class="keyword">function</span> <span class="title">find</span><span class="params">(graph:Graph , startIndex:int,endIndex:int)</span><span class="type">:Array</span>
+    </span>{
+    <span class="comment">//还原值</span>
+    <span class="keyword">for</span> <span class="keyword">each</span> (<span class="keyword">var</span> n:AstarNode <span class="keyword">in</span> graph.nodes)
+    {
+        n.f = n.g = n.f = <span class="number">0</span>
+        n.parent = <span class="literal">null</span>
+
+    }
+    <span class="comment">//根据f值升序排列 </span>
+    <span class="keyword">var</span> open:Heap = <span class="keyword">new</span> Heap(<span class="function"><span class="keyword">function</span><span class="params">(a:AstarNode,b:AstarNode)</span><span class="type">:Number</span></span>{<span class="keyword">return</span> b.f - a.f}); 
+
+    <span class="keyword">var</span> close:Array = []
+    <span class="comment">//1，把起始节点添加到开启列表。</span>
+    AstarNode(graph.getNode(startIndex)).f =<span class="number">0</span>    
+    open.enqueue(graph.getNode(startIndex));
+    <span class="comment">//2，重复如下的工作：</span>
+    <span class="keyword">while</span>(open.heap.length&gt;<span class="number">0</span>)
+    {
+        <span class="comment">//a) 寻找开启列表中F值最低的节点。我们称它为当前节点。 </span>
+        <span class="keyword">var</span> cur:AstarNode = AstarNode(open.dequeue())
+        <span class="keyword">if</span>(cur==graph.getNode(endIndex))<span class="keyword">return</span>  Astar.getPath(cur) 
+               <span class="comment">//把目标格添加进了关闭列表，这时候路径被找到    </span>
+
+        <span class="comment">//b) 把它切换到关闭列表。</span>
+        close.push(cur)
+        <span class="comment">//c) 对相邻的格中的每一个？</span>
+        <span class="keyword">for</span> <span class="keyword">each</span>(<span class="keyword">var</span> i:GraphArc <span class="keyword">in</span> cur.arcs)
+        {
+            <span class="keyword">var</span> test:AstarNode = AstarNode(i.targetNode)
+            <span class="comment">//如果它不可通过或者已经在关闭列表中，略过它。</span>
+            <span class="keyword">if</span>(close.indexOf(test)&gt;=<span class="number">0</span>)<span class="keyword">continue</span>
+            <span class="comment">//如果它不在开启列表中，把它添加进去。</span>
+                        <span class="comment">//把当前格作为这一格的父节点。记录这一格的F,G,和H值。</span>
+
+            <span class="keyword">if</span>(open.heap.indexOf(test)&lt;<span class="number">0</span>)
+            {                        
+                test.parent =cur
+                test.g = cur.getArc(test).weight
+                test.h = Astar.distance(test,graph.getNode(endIndex))
+                <span class="comment">// 这里使用距离启发值，原教程使用的曼哈顿启发函数</span>
+                                <span class="comment">//可以替换成这句  Astar.manhattan(test,graph.getNode(endIndex))</span>
+                test.f = test.g + test.h
+                open.enqueue(test);
+            }<span class="keyword">else</span>
+            {
+             <span class="comment">//如果它已经在开启列表中，用G值为参考检查新的路径是否更好。</span>
+                         <span class="comment">//更低的G值意味着更好的路径。</span>
+             <span class="comment">//如果是这样，就把这一格的父节点改成当前格，并且重新计算这一格的G和F值。</span>
+                         <span class="comment">//如果你保持你的开启列表按F值排序,改变之后你可能需要重新对开启列表排序。</span>
+                <span class="keyword">if</span>( cur.g+ cur.getArc(test).weight &lt; test.g)
+                {
+                    test.parent = cur
+                    test.g = cur.g+ cur.getArc(test).weight
+                    test.f = test.h+test.g
+                    open.modify(test,test);
+                }                        
+            }
+
+         }    
+    }
+    <span class="keyword">return</span> []
+        }    
+    <span class="keyword">public</span> <span class="keyword">static</span> <span class="function"><span class="keyword">function</span> <span class="title">getPath</span><span class="params">(node:AstarNode)</span><span class="type">:Array</span>
+    </span>{
+        <span class="keyword">var</span> arr:Array = [node]
+        <span class="keyword">while</span>(node.parent)
+        {
+            arr.push(node.parent)
+            node = node.parent
+        }        
+        <span class="keyword">return</span> arr
+    }
+
+    }
+}
+</code></pre><p>以上就是我目前了解到的对于flash开发还比较实用的数据结构了，欢迎补充，以供我继续学习。</p>
+<p><a href="/image/ds1_0.zip" target="_blank">最初代码在此下载 </a></p>
+<p><a href="https://github.com/nshen/as3DataStructure/tree/dev" target="_blank">后期修了一些bug，最新的代码点此直达github</a></p>
+<p>我的版本很多方法都是直接抄自<a href="http://lab.polygonal.de/as3ds/" target="_blank">as3ds</a> ，有些方法却改成比较容易理解的方式，提供的方法也少很多，仅供学习参考.</p>
+]]></content>
+    <summary type="html">
+    <![CDATA[<p>时至今日国内外都还没有一本专讲AS3与数据结构的书，对于我这种非科班毕业的社会闲杂人等来说，入门数据结构太难了，我参考了各方代码，经过一段时间的恶补，整理了一下目前Flash开发中有可能遇得到的数据结构。完整代码在文章结尾有下载，如有错漏请直接指出谢谢。</p>
+]]>
+    
+    </summary>
+    
+      <category term="article" scheme="http://nshen.net/categories/article/"/>
+    
+  </entry>
+  
+  <entry>
+    <title><![CDATA[笔记《版本控制之道--使用Git》]]></title>
+    <link href="http://nshen.net/article/2011-08-03/git-note/"/>
+    <id>http://nshen.net/article/2011-08-03/git-note/</id>
+    <published>2011-08-03T05:30:20.000Z</published>
+    <updated>2013-06-24T11:16:49.000Z</updated>
+    <content type="html"><![CDATA[<p>我认为每个学过Git的人都应该做过类似这种笔记，因为Git命令太多看着看着就把前边看过的忘了，之前我也看过Git，但是一直没用，现在一看几乎没有印象了，所以这次我要把我看到的命令记下来给我自己备忘。</p>
+<a id="more"></a> 
+
+<p>Git已经是最流行的版本控制系统了，网上相关的免费学习资源很多，我见过的中文书籍就有：</p>
+<ul>
+<li><a href="http://gitbook.liuhui998.com/index.html" target="_blank">Git Community Book 中文版</a></li>
+<li><a href="http://progit.org/book/zh/" target="_blank">Pro Git 中文版 </a></li>
+<li><a href="http://www-cs-students.stanford.edu/~blynn/gitmagic/intl/zh_cn/" target="_blank">Git Magic 中文版 </a></li>
+</ul>
+<p>但我是买的一本纸质书叫做《版本控制之道—使用Git》，下边是我记录的几乎是整本书讲过的所有命令：</p>
+<hr>
+<h3 id="设置">设置</h3>
+<figure class="highlight dos"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">git config --global user.name "Nshen" //必须</div><div class="line">git config --global user.email "nshen121@gmail.com"//必须</div><div class="line">git config --global color.ui "always"</div><div class="line">//或者"auto", always不仅Base环境是彩色，Dos里也是彩色的。</div><div class="line"></div><div class="line">git config --global core.editor notepad.exe//设为windows记事本</div><div class="line">git config --global alias.ci "commit"//别名缩写</div><div class="line">git config --global merge.tool//可以设置合并工具</div><div class="line">git config --global --list//查看设置</div></pre></td></tr></table></figure>
+
+<p>其实最后这些设置都保存在</p>
+<figure class="highlight dos"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">C:\Documents and Settings\用户名\.gitconfig 文件下（windows）</div></pre></td></tr></table></figure>
+
+<hr>
+<p><strong>查看帮助：</strong> </p>
+<figure class="highlight dos"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">git help command</div></pre></td></tr></table></figure>
+
+<p><strong>初始化 :</strong></p>
+<figure class="highlight dos"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">git init</div></pre></td></tr></table></figure>
+
+<p><strong>纳入版本控制:</strong></p>
+<figure class="highlight dos"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">git add *.txt   //添加所有txt文件</div><div class="line">git add README  //添加单个文件</div><div class="line">git add .        //添加所有文件包括子目录，但不包括空目录</div></pre></td></tr></table></figure>
+
+<p>add命令是个多功能命令，根据目标文件的状态不同，此命令的效果也不同：可以用它开始跟踪新文件，或者把已跟踪的文件放到暂存区，还能用于合并时把有冲突的文件标记为已解决状态等）注意每次修改后都要重新add,不然就会提交之前add时的版本。</p>
+<figure class="highlight dos"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">git add -i  //进入交互式add</div><div class="line">git add -p //直接进入补丁模式，可以暂存修改的一部分。</div></pre></td></tr></table></figure>
+
+<p><strong>提交：</strong></p>
+<figure class="highlight dos"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">git commit -m "initial project version"</div><div class="line">git commit -m "something" someFile  //提交指定文件</div><div class="line">git commit -C HEAD -a --amend  //复用HEAD留言，增补提交（修改小错误，而不增加提交记录，掩盖自己的小马虎）</div></pre></td></tr></table></figure>
+
+
+<p><strong>参数:</strong></p>
+<figure class="highlight dos"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">-m "提交的说明"</div><div class="line">-a 动把所有已经跟踪过的文件暂存,并提交.(工作目录中修改过的文件都提交到版本库，不需一个一个手动add了)</div><div class="line">--amend 增补提交</div><div class="line">-C 复用指定提交的提交留言</div><div class="line">-c 打开编辑器在已有的提交基础上编辑修改</div></pre></td></tr></table></figure>
+
+<p>e.g 修改最后一次提交:</p>
+<figure class="highlight dos"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">git commit -m 'initial commit'</div><div class="line">git add forgotten_file</div><div class="line">git commit --amend</div></pre></td></tr></table></figure>
+
+<p>如果没有修改就相当于更改提交说明,上边3个命令得到一个提交.</p>
+<hr>
+<p><strong>忽略提交的文件：</strong></p>
+<p>所有人都需要忽略的文件要写在<strong>.gitignore</strong>文件里，而只有自己的个人偏好需要忽略的文件要写在.git/info/exclude文件中</p>
+<p><strong>语法：</strong></p>
+<figure class="highlight dos"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"># 此为注释 – 将被 Git 忽略</div><div class="line">*.a       # 忽略所有 .a 结尾的文件</div><div class="line">!lib.a    # 但 lib.a 除外</div><div class="line">*.[oa]    #忽略以.o或.a结尾的文件</div><div class="line">*~        #忽略以~结尾的文件</div><div class="line">/TODO     # 仅仅忽略项目根目录下的 TODO 文件，不包括 subdir/TODO</div><div class="line">build/    # 忽略 build/ 目录下的所有文件</div><div class="line">doc/*.txt # 会忽略 doc/notes.txt 但不包括 doc/server/arch.txt</div></pre></td></tr></table></figure>
+
+<h3 id="查看文件改动：">查看文件改动：</h3>
+<figure class="highlight dos"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">git diff   // 比较工作目录与缓存区的区别</div><div class="line">git diff --cached 或者 git diff --staged  //缓存区与版本库里的区别</div><div class="line">git diff HEAD //三者的区别</div></pre></td></tr></table></figure>
+
+<p>请注意，单单 git diff 不过是显示还没有暂存起来的改动，而不是这次工作和上次提交之间的差异。<br>所以有时候你一下子暂存了所有更新过的文件后，运行 git diff 后却什么也没有，就是这个原因。</p>
+<figure class="highlight dos"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">git diff <span class="number">18</span>f822e 	   //<span class="number">18</span>f822e这个版本与当前目录的区别</div><div class="line">git diff aaaaa..bbbbb //比较aaaaa与bbbbb之间差别</div><div class="line">git diff --stat 		  //可以统计数据，比较特别的命令</div></pre></td></tr></table></figure>
+
+<h3 id="重命名，移动，删除文件：">重命名，移动，删除文件：</h3>
+<figure class="highlight dos"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">git mv file_from file_to  //改名或移动</div><div class="line"></div><div class="line">$ git mv README.txt README</div><div class="line">$ git status</div><div class="line"># On branch master</div><div class="line"># Your branch is ahead of 'origin/master' by <span class="number">1</span> commit.</div><div class="line">#</div><div class="line"># Changes to be committed:</div><div class="line">#   (use "git reset HEAD &lt;file&gt;..." to unstage)</div><div class="line">#</div><div class="line">#       renamed:    README.txt -&gt; README</div></pre></td></tr></table></figure>
+
+<p>其实，运行 git mv 就相当于运行了下面三条命令：</p>
+<figure class="highlight dos"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">$ mv README.txt README</div><div class="line">$ git rm README.txt</div><div class="line">$ git add README</div></pre></td></tr></table></figure>
+
+<p>必须调用 “git rm 文件名”  ,从暂存区移除,并且文件也被删除</p>
+<p>如果只是手工删除了文件,运行git status时会出现</p>
+<figure class="highlight dos"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"># Changed but <span class="flow">not</span> updated:</div><div class="line">#   (use "git add/rm &lt;file&gt;..." to update what will be committed)</div><div class="line">#</div><div class="line">#       deleted:    grit.gemspec</div></pre></td></tr></table></figure>
+
+<p>此时必须再运行 “git rm 文件名”,才会在提交时候不再纳入版本管理.<br>如果删除之前修改过并且已经add到缓存区了的话,则必须强制删除 -f</p>
+<p>另外一种情况是，我们想把文件从Git仓库中删除（亦即从暂存区域移除），但仍然希望保留在当前工作目录中。换句话说，仅是从跟踪清单中删除。比如一些大型日志文件或者一堆.a编译文件，不小心纳入仓库后，要移除跟踪但不删除文件，以便稍后在 .gitignore 文件中补上，用 —cached 选项即可。</p>
+<hr>
+<h3 id="查看状态：">查看状态：</h3>
+<h4 id="查看当前状态:">查看当前状态:</h4>
+<p><strong>git status</strong></p>
+<figure class="highlight dos"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">$ git status</div><div class="line"># On branch master</div><div class="line"># Changes to be committed:  //只要在这行后边的,说明放入暂存区了</div><div class="line">#   (use "git reset HEAD &lt;file&gt;..." to unstage) //想取消放入缓存 git reset HEAD README</div><div class="line">#</div><div class="line">#     new file:   README</div><div class="line"># Changed but <span class="flow">not</span> updated:  //跟踪文件内容改变,但还没有放到暂存区,需要git add 命令才会放到暂存区</div><div class="line">#   (use "git add &lt;file&gt;..." to update what will be committed)</div><div class="line">#   (use "git checkout -- &lt;file&gt;..." to discard changes <span class="flow">in</span> working directory)</div><div class="line">#    //删除修改,恢复到之前版本,有危险 (如果想保留并且回退版本用stashing 和分支来处理)</div><div class="line">#     modified:   benchmarks.rb</div></pre></td></tr></table></figure>
+
+<hr>
+<h4 id="查看提交历史:">查看提交历史:</h4>
+<p><strong>git log</strong></p>
+<p>这时“j”向下浏览，“k”向上浏览，“q”退出</p>
+<figure class="highlight dos"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line">git log --pretty=oneline    //一行显示</div><div class="line">        --pretty="%h %s"   //以各种格式输出</div><div class="line"></div><div class="line">git log –p -<span class="number">2</span>    //-p显示每次提交的内容差异  -<span class="number">2</span>表示最近<span class="number">2</span>次更改</div><div class="line"></div><div class="line">	git log --since "<span class="number">5</span> hours"</div><div class="line">	 		--since "<span class="number">3</span> hours"</div><div class="line">			--since "<span class="number">1</span> minute"</div><div class="line">	 		--before ="<span class="number">2008</span>-<span class="number">10</span>.<span class="number">01</span>"</div><div class="line"></div><div class="line">git log <span class="number">27</span>j34j3j..<span class="number">03</span>u43u23  //最老版本..最新版本（不包括起点只包括终点）</div><div class="line"></div><div class="line">git log <span class="number">34</span>j4j4..HEAD</div><div class="line">git log fhfs8fh..           //省略HEAD</div><div class="line"></div><div class="line">git log "HEAD^^".."HEAD^"     //windows必须加引号表示回溯上一个提交</div><div class="line"></div><div class="line">git log -<span class="number">1</span> HEAD~<span class="number">1</span>  //相当于git log -<span class="number">1</span> HEAD^</div><div class="line"></div><div class="line">git log --graph //图形化显示分支</div><div class="line"></div><div class="line">git log --graph --pretty=oneline //一行图形化显示分支</div></pre></td></tr></table></figure>
+
+
+<h3 id="问责：查明谁修改了代码">问责：查明谁修改了代码</h3>
+<figure class="highlight dos"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">git blame hello.html //你也可以用"-L"参数在命令(blame)中指定开始和结束行:</div><div class="line">git blame -L <span class="number">12</span>,+<span class="number">10</span> hello.html  //<span class="number">12</span>到<span class="number">22</span>行</div><div class="line">blame还可以跟踪内容复制，文件复制，略，见版本控制之道 <span class="number">79</span>页</div></pre></td></tr></table></figure>
+
+<h3 id="撤销：">撤销：</h3>
+<h4 id="撤销缓存区的修改（没有commit的）">撤销缓存区的修改（没有commit的）</h4>
+<figure class="highlight dos"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">git checkout head 文件名 //撤销暂存区的修改  </div><div class="line">git checkout head readme.txt todo.txt</div><div class="line">git checkout head *.txt</div><div class="line">git checkout head .  //撤销所有</div></pre></td></tr></table></figure><br>#### 反转提交：<br><br><figure class="highlight dos"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">git revert HEAD  //创建一个反向的新提交抵消原来的提交改动</div><div class="line">如果需要反转多个，必须从最后的开始反转, 加 -n可以不马上提交，之后一起提交。</div><div class="line">git revert -n HEAD</div><div class="line">git revert -n <span class="number">54</span>efhds</div><div class="line">git commit -m "revert head and <span class="number">54</span>efhds"</div></pre></td></tr></table></figure>
+
+<h4 id="复位：还没有commit，让工作目录回到上次提交时的状态">复位：还没有commit，让工作目录回到上次提交时的状态</h4>
+<figure class="highlight dos"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">git reset --hard HEAD   //所有未提交的内容清空，这会让"git diff" 和"git diff --cached"命令的显示法都变为空</div><div class="line">git reset --soft HEAD  //复位版本库，暂存差异，便于提交中发现错误需要更改时有用（例如私人密码放到里边了）</div></pre></td></tr></table></figure>
+
+<h3 id="分支：">分支：</h3>
+<h4 id="在当前分支末梢建立分支：">在当前分支末梢建立分支：</h4>
+<figure class="highlight dos"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">git branch RB_1.<span class="number">0</span>（建立分支不会自动切换过去）</div></pre></td></tr></table></figure>
+
+<h4 id="切换分支：">切换分支：</h4>
+<figure class="highlight dos"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">git checkout RB_1.<span class="number">0</span>（切换到RB_1.<span class="number">0</span>分支）</div></pre></td></tr></table></figure>
+
+<h4 id="创建并切换分支：">创建并切换分支：</h4>
+<figure class="highlight dos"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">git checkout -b RB_1.<span class="number">0</span>（简化上边<span class="number">2</span>步操作）</div></pre></td></tr></table></figure>
+
+<h4 id="删除分支：">删除分支：</h4>
+<figure class="highlight dos"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">git branch -d RB_1.<span class="number">0</span></div></pre></td></tr></table></figure>
+
+<h4 id="基于某次提交、分支或标签创建新分支:">基于某次提交、分支或标签创建新分支:</h4>
+<figure class="highlight dos"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">git branch RB_1.<span class="number">0</span> master</div><div class="line">git branch RB_1.<span class="number">0</span> <span class="number">6</span>fe57de0</div><div class="line">git branch Rb_1.<span class="number">01</span> <span class="number">1</span>.<span class="number">0</span></div></pre></td></tr></table></figure>
+
+<h4 id="查看分支：">查看分支：</h4>
+<figure class="highlight dos"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">git branch //列出本地分支</div><div class="line">  iss53</div><div class="line">* master  //*号表示当前所在分支</div><div class="line">  testing</div><div class="line"></div><div class="line"></div><div class="line">git branch -r //显示远程分支</div><div class="line">git branch -a //列出所有分支</div></pre></td></tr></table></figure>
+
+<h4 id="分支重命名：">分支重命名：</h4>
+<figure class="highlight dos"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">git branch -m master mymaster	</div><div class="line">		   -M 大写M会覆盖同名的分支</div></pre></td></tr></table></figure>
+
+<h4 id="合并分支：">合并分支：</h4>
+<p>直接合并：</p>
+<figure class="highlight dos"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">git merge 想合并到当前分支的源分支名</div><div class="line">git merge --no-commit 分支 //合并但不提交 </div></pre></td></tr></table></figure>
+
+<p>压合合并：将分支压合成一条commit记录，并合并过来</p>
+<figure class="highlight dos"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">git merge --squash 某bug分支</div><div class="line">git commit -m "修复某bug"</div></pre></td></tr></table></figure>
+
+<p>拣选合并：只合并一个提交</p>
+<figure class="highlight dos"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">git cherry-pick <span class="number">321</span>d76f</div></pre></td></tr></table></figure>
+
+
+<p>如果需要连续拣选，就需要加 -n参数<br>然后再git commit ，但不要加-m参数，编辑器就会使用刚拣选的提交留言作为现在的留言。</p>
+<h3 id="标签Tag:">标签Tag:</h3>
+<h4 id="查看标签:">查看标签:</h4>
+<figure class="highlight dos"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">git tag</div></pre></td></tr></table></figure>
+
+<h4 id="创建标签：">创建标签：</h4>
+<figure class="highlight dos"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">git tag <span class="number">1</span>.<span class="number">0</span>  //在当前分支最后一次提交创建标签</div><div class="line">git tag <span class="number">1</span>.<span class="number">0</span> RB_1.<span class="number">0</span> //基于RB_1.<span class="number">0</span>分支的最新踢脚创建标签</div><div class="line">git tag <span class="number">1</span>.<span class="number">0</span> ae468d8kt //为某次提交创建标签</div></pre></td></tr></table></figure>
+
+<h4 id="检出标签：">检出标签：</h4>
+<figure class="highlight dos"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">git checkout <span class="number">1</span>.<span class="number">0</span> //检出标签与检出分支一样操作，但检出标签后用git branch查看本地分支会发现你现在不再任何分支上</div><div class="line">这时你不应该修改，而应该立即基于此标签创建一个分支</div><div class="line">git checkout -b from-<span class="number">1</span>.<span class="number">0</span></div></pre></td></tr></table></figure>
+
+<h3 id="变基：">变基：</h3>
+<figure class="highlight dos"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"><span class="number">1</span>. git rebase RB_1.<span class="number">01</span> //也许修改过一个bug，希望新版本变基到RB_1.<span class="number">01</span>分支上</div><div class="line"><span class="number">2</span>. 手动解决冲突         //如果解决不了直接git rebase --skip或--abort来跳过特定提交或完全放弃变基</div><div class="line"><span class="number">3</span>. git add xxx.html //冲突解决</div><div class="line"><span class="number">4</span>. git rebase --continue</div><div class="line"></div><div class="line"></div><div class="line">git rebase --onto HEAD^^ HEAD^ HEAD </div><div class="line"></div><div class="line"></div><div class="line">//--onto参数可以改写历史抹掉中间的参数，将倒数第一个参数变基到倒数第<span class="number">3</span>个参数，为防止出错建议在试验性分支上先试验。</div><div class="line"></div><div class="line">rebase -i 可以排序历史记录，多个提交合并为<span class="number">1</span>个，一个提交分解成多个提交 ，</div><div class="line">详见版本控制之道p86 ，需要编辑器支持，windows记事本不行</div></pre></td></tr></table></figure>
+
+<h3 id="远程相关：">远程相关：</h3>
+<figure class="highlight dos"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">git clone git://github.com/schacon/grit.git   //从现有仓库克隆</div><div class="line">git clone git://github.com/schacon/grit.git mygrit //换名,唯一区别就是新建的目录成了mygrit,其他都一样</div></pre></td></tr></table></figure>
+
+<h4 id="添加远程仓库:">添加远程仓库:</h4>
+<figure class="highlight dos"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">git <span class="comment">remote add pb git://github.com/paulboone/ticgit.git</span></div><div class="line">clone会默认添加origin仓库，如果原本用git init创建的版本库，后来又想提交到远程版本库，就可以用下边的办法</div><div class="line">git <span class="comment">remote add origin git@example.com:/xxxxxx</span></div></pre></td></tr></table></figure>
+
+<h4 id="查看远程分支：">查看远程分支：</h4>
+<figure class="highlight dos"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">git <span class="comment">remote  -v //查看远程仓库,默认clone后,应该有一个origin仓库,-v显示对应的clone地址</span></div><div class="line">git <span class="comment">remote show origin //查看远程仓库信息</span></div></pre></td></tr></table></figure>
+
+<h4 id="远程仓库重命名和删除:">远程仓库重命名和删除:</h4>
+<figure class="highlight dos"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">git <span class="comment">remote rename pb paul</span></div><div class="line">git <span class="comment">remote rm paul</span></div></pre></td></tr></table></figure>
+
+<h4 id="获取数据：">获取数据：</h4>
+<figure class="highlight dos"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">git fetch [<span class="comment">remote-name] 拉取远程仓库到本地远程仓库,不自动合并    //$ git fetch origin</span></div><div class="line">$ git fetch pb</div><div class="line"><span class="comment">remote: Counting objects: 58, done.</span></div><div class="line"><span class="comment">remote: Compressing objects: 100% (41/41), done.</span></div><div class="line"><span class="comment">remote: Total 44 (delta 24), reused 1 (delta 0)</span></div><div class="line">Unpacking objects: <span class="number">100</span>% (<span class="number">44</span>/<span class="number">44</span>), done.</div><div class="line">From git://github.com/paulboone/ticgit</div><div class="line">* [new branch]      master     -&gt; pb/master</div><div class="line">* [new branch]      ticgit     -&gt; pb/ticgit</div></pre></td></tr></table></figure>
+
+<p>现在pb/master可以在本地访问了,你可以合并到自己的某个分支,或者切换到这个分支看看有什么有趣的更新</p>
+<p>git pull 抓取数据合并到工作目录中当前分支</p>
+<h4 id="推送数据：">推送数据：</h4>
+<figure class="highlight dos"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">git push [<span class="comment">remote-name] [branch-name]  //默认为 git push origin master</span></div><div class="line"></div><div class="line">git push origin serverfix   //推送分支，其实是下边一句的简化,提取我的 serverfix 并更新到远程仓库的 serverfix</div><div class="line"></div><div class="line">git push origin serverfix:serferfix</div><div class="line"></div><div class="line">git push origin :serverfix //这个语法用于删除,只要把分号前留空</div></pre></td></tr></table></figure>
+
+<h3 id="其他：">其他：</h3>
+<figure class="highlight dos"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">git gc  //垃圾回收，每隔一段时间例如一个月运行一次可以减少磁盘占用空间。</div><div class="line">git reflog //最后的保障,列出误删的东东</div><div class="line">git bisect //二分查找，版本控制之道p124页，略</div></pre></td></tr></table></figure>
+
+<h4 id="归档版本库，导出压缩包:">归档版本库，导出压缩包:</h4>
+<figure class="highlight dos"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">git archive --format=格式 --prefix=目录/ 版本&gt;压缩包.zip</div><div class="line">git archive --format=zip head&gt;test.zip</div><div class="line">git archive --format=tar --prefix=mysite-<span class="number">1</span>.<span class="number">0</span>/ <span class="number">1</span>.<span class="number">0</span> | gzip&gt;mysite-<span class="number">1</span>.<span class="number">0</span>.tar.gz</div><div class="line">git archive --format=zip --prefix=mysite-<span class="number">1</span>.<span class="number">0</span>/ <span class="number">1</span>.<span class="number">0</span> &gt;mysie-<span class="number">1</span>.<span class="number">0</span>.zip</div></pre></td></tr></table></figure>
+
+]]></content>
+    <summary type="html">
+    <![CDATA[<p>我认为每个学过Git的人都应该做过类似这种笔记，因为Git命令太多看着看着就把前边看过的忘了，之前我也看过Git，但是一直没用，现在一看几乎没有印象了，所以这次我要把我看到的命令记下来给我自己备忘。</p>
+]]>
+    
+    </summary>
+    
+      <category term="article" scheme="http://nshen.net/categories/article/"/>
+    
+  </entry>
+  
+  <entry>
+    <title><![CDATA[跨IOS，Android的小游戏《TinyKingdom》]]></title>
+    <link href="http://nshen.net/project/2011-07-05/tiny-kingdom/"/>
+    <id>http://nshen.net/project/2011-07-05/tiny-kingdom/</id>
+    <published>2011-07-05T06:56:31.000Z</published>
+    <updated>2014-04-01T14:56:35.000Z</updated>
+    <content type="html"><![CDATA[<p>目前在iphone4和Android的g7上运行效果差不多，具体见视频。</p>
+<a id="more"></a>
+
+<p>对游戏机制设计不是很满意，做了10多关，现暂停开发中。</p>
+<h3 id="2011-07-05在G7上测试视频：">2011-07-05在G7上测试视频：</h3>
+<embed src="http://www.tudou.com/v/WYv-ljAL1xs/&rpid=9086081/v.swf" type="application/x-shockwave-flash" allowscriptaccess="always" allowfullscreen="true" wmode="opaque" width="480" height="400">
+
+
+<hr>
+<p>烂尾了，代码： <a href="https://github.com/nshen/TinyKindom" target="_blank" rel="external">https://github.com/nshen/TinyKindom</a></p>
+]]></content>
+    <summary type="html">
+    <![CDATA[<p>目前在iphone4和Android的g7上运行效果差不多，具体见视频。</p>
+]]>
+    
+    </summary>
+    
+      <category term="游戏" scheme="http://nshen.net/tags/%E6%B8%B8%E6%88%8F/"/>
+    
+      <category term="project" scheme="http://nshen.net/categories/project/"/>
+    
+  </entry>
+  
+  <entry>
+    <title><![CDATA[PDF2MAG：一键pdf文档转flash电子杂志]]></title>
+    <link href="http://nshen.net/project/2011-01-12/pdf2mag/"/>
+    <id>http://nshen.net/project/2011-01-12/pdf2mag/</id>
+    <published>2011-01-12T06:56:31.000Z</published>
+    <updated>2014-04-01T14:54:40.000Z</updated>
+    <content type="html"><![CDATA[<p>PDF2MAG 是我基于Adobe Air编写的一款将pdf文档快速转为flash电子杂志的软件。<br>新版本又增加了支持转换为FlexPaper文档。</p>
+<a id="more"></a>
+
+<p>PDF2MAG 可以快速将PDF文档转换为适合在网页中浏览的Flash电子杂志.</p>
+<h4 id="演示:">演示:</h4>
+<ul>
+<li><a href="http://riabook.cn/files/pdf2mag/demo/" target="_blank" rel="external">硬质封面演示</a></li>
+<li><a href="http://riabook.cn/files/pdf2mag/demo13/" target="_blank" rel="external">软质封面演示</a></li>
+<li><a href="http://riabook.cn/files/pdf2mag/flexpaper/" target="_blank" rel="external">Flexpaper文档演示</a></li>
+</ul>
+<hr>
+<h3 id="下载地址：">下载地址：</h3>
+<p><a href="http://u.115.com/file/c4zvhrqq#DownloadPDF2Mag_1_3.rar" target="_blank" rel="external">PDF2MAG 1.3下载（115网盘）</a></p>
+<p>注意：此软件<strong>个人网站</strong>与<strong>商业网站</strong>均完全<strong>免费</strong>使用，但请发邮件通知我一下网址。 nshen121[at]gmail.com<br>好让我评估是否投入精力继续开发此软件。</p>
+<hr>
+<h3 id="使用方法：">使用方法：</h3>
+<ol>
+<li>解压后点击exe文件进行安装,如安装失败请先 点此安装Adobe Air运行环境。 </li>
+<li>安装成功后，会发现这个图标。 </li>
+</ol>
+<p><img src="/image/pdf2mag_01.png" alt=""></p>
+<ol>
+<li>点击打开，选择生成杂志或是FlexPaper文档，并选取pdf文件和一个空文件夹作为输出目录。 </li>
+</ol>
+<p><img src="/image/pdf2mag02.jpg" alt=""></p>
+<ol>
+<li>转换成功后，将输出目录中的文件通过ftp上传到服务器空间中即可。</li>
+</ol>
+<hr>
+<p>个人精力能力有限,2011年开始停止更新了，如仍有兴趣一起发展此软件的话联系我 nshen121[at]gmail.com</p>
+<hr>
+<h3 id="常见问题：">常见问题：</h3>
+<h5 id="问:转换后报错[RPC_Fault_faultString=”Error_#2148”_faultCode=”InvokeFailed”_faultDetail=”null”]">问:转换后报错[RPC Fault faultString=”Error #2148” faultCode=”InvokeFailed” faultDetail=”null”]</h5>
+<p>答:这是FlashPlayer的本地安全限制,使用FTP上传到服务器应该就好了:)</p>
+<h5 id="问:生成的杂志目录不正确，可以修改吗？">问:生成的杂志目录不正确，可以修改吗？</h5>
+<p>答:所有的配置信息都在生成的目录下config.xml里,用记事本打开,依照下边格式可以编辑目录,然后保存就可以了.</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="title">contents</span>&gt;</span> </div><div class="line"> <span class="tag">&lt;<span class="title">node</span> <span class="attribute">label</span>=<span class="value">"章："</span> <span class="attribute">page</span>=<span class="value">"1"</span>&gt;</span> </div><div class="line">   <span class="tag">&lt;<span class="title">node</span> <span class="attribute">label</span>=<span class="value">"节1"</span> <span class="attribute">page</span>=<span class="value">"1"</span>/&gt;</span> </div><div class="line">   <span class="tag">&lt;<span class="title">node</span> <span class="attribute">label</span>=<span class="value">"节2"</span> <span class="attribute">page</span>=<span class="value">"2"</span>/&gt;</span> </div><div class="line">   <span class="tag">&lt;<span class="title">node</span> <span class="attribute">label</span>=<span class="value">"节3"</span> <span class="attribute">page</span>=<span class="value">"3"</span>/&gt;</span> </div><div class="line"> <span class="tag">&lt;/<span class="title">node</span>&gt;</span> <span class="tag">&lt;<span class="title">node</span> <span class="attribute">label</span>=<span class="value">"章2："</span> <span class="attribute">page</span>=<span class="value">"1"</span>&gt;</span></div><div class="line">   <span class="tag">&lt;<span class="title">node</span> <span class="attribute">label</span>=<span class="value">"节1"</span> <span class="attribute">page</span>=<span class="value">"1"</span>/&gt;</span> </div><div class="line"> <span class="tag">&lt;/<span class="title">node</span>&gt;</span> </div><div class="line"><span class="tag">&lt;/<span class="title">contents</span>&gt;</span></div></pre></td></tr></table></figure>
+
+<h5 id="问:转换FlexPaper后没有显示内容,最后几行输出_Error_This_file_is_too_complex_to_renderer-？">问:转换FlexPaper后没有显示内容,最后几行输出 Error This file is too complex to renderer.？</h5>
+<p>答:目前发现pdf2swf转换复杂的pdf会有这个问题,建议尝试优化一下pdf再试。暂时还无法解决。</p>
+<hr>
+<h3 id="版本历史：">版本历史：</h3>
+<ul>
+<li><p><strong>1.30: 2011-01-12</strong><br>增加生成FlexPaper1.4.1功能(FlexPaper详见: <a href="http://flexpaper.devaldi.com/" target="_blank" rel="external">http://flexpaper.devaldi.com/</a>)</p>
+</li>
+<li><p><strong>1.21: 2010-09-2</strong><br>更新为Adobe AIR 2正式版</p>
+</li>
+<li><p><strong>1.20: 2010-02-10</strong><br>基于Adobe Air 2 beta 2 loading图缩小 页数显示去掉cover backover,使生成后的页数与原pdf页数显示一致,方便添加目录 解决pdf总页数是奇数时翻到最后一页报错的bug 使用位图优化,翻页速度大幅提升 右键菜单增加版本信息 增加生成杂志默认显示大小的设置 增加软硬质封面设置 放大缩小可用 目录功能可用 右上角植入个小图标打印链接</p>
+</li>
+<li><p><strong>1.10: 2010-01-25</strong><br>在1.0基础上添加了转换过程中的文字提示 基于Adobe Air 2 beta 1</p>
+</li>
+<li><p><strong>1.00: 2010-01-25</strong><br>最初版本,实现基本功能 基于Adobe Air 2 beta 1</p>
+</li>
+</ul>
+<hr>
+<p>代码：<a href="https://github.com/nshen/PDF2Mag" target="_blank" rel="external">https://github.com/nshen/PDF2Mag</a></p>
+]]></content>
+    <summary type="html">
+    <![CDATA[<p>PDF2MAG 是我基于Adobe Air编写的一款将pdf文档快速转为flash电子杂志的软件。<br>新版本又增加了支持转换为FlexPaper文档。</p>
+]]>
+    
+    </summary>
+    
+      <category term="pdf2mag" scheme="http://nshen.net/tags/pdf2mag/"/>
+    
+      <category term="project" scheme="http://nshen.net/categories/project/"/>
+    
+  </entry>
+  
+  <entry>
+    <title><![CDATA[《The Little Bee》独立小游戏第一次尝试]]></title>
+    <link href="http://nshen.net/project/2010-08-13/the-little-bee/"/>
+    <id>http://nshen.net/project/2010-08-13/the-little-bee/</id>
+    <published>2010-08-13T06:56:31.000Z</published>
+    <updated>2013-06-22T02:05:44.000Z</updated>
+    <content type="html"><![CDATA[<p>《这只小蜜蜂》1代，程序策划美术全包，原创玩法，具有躲避和升级策略元素的纵版飞行射击游戏。后台统计各平台获10万+玩家流量。</p>
+<a id="more"></a>
+
+<h3 id="游戏地址：">游戏地址：</h3>
+   <p><br><a href="http://www.4399.com/flash/37351_3.htm" target="_blank">[ 中文版 ]</a>   <a href="http://www.mochimedia.com/games/play/the-little-bee/" target="_blank">[English version]</a>   </p>
+
+<p>这是个加入躲避和武器升级元素的飞行射击游戏，你是一只小蜜蜂，升级武器，消灭可恶的Boss，并挑战高分吧！！！</p>
+<h3 id="封面图片：">封面图片：</h3>
+<p><img src="/image/tlb01.png" alt="the little bee"><br><br></p>
+<h3 id="2代策划中">2代策划中</h3>
+<p><img src="/image/tlb02.png" alt="the little bee 2"> </p>
+]]></content>
+    <summary type="html">
+    <![CDATA[<p>《这只小蜜蜂》1代，程序策划美术全包，原创玩法，具有躲避和升级策略元素的纵版飞行射击游戏。后台统计各平台获10万+玩家流量。</p>
+]]>
+    
+    </summary>
+    
+      <category term="游戏" scheme="http://nshen.net/tags/%E6%B8%B8%E6%88%8F/"/>
+    
+      <category term="project" scheme="http://nshen.net/categories/project/"/>
+    
+  </entry>
+  
+  <entry>
+    <title><![CDATA[《ActionScript 3.0 Visual QuickStart Guide》翻译]]></title>
+    <link href="http://nshen.net/project/2009-11-19/as3-visual-quickstart-guide/"/>
+    <id>http://nshen.net/project/2009-11-19/as3-visual-quickstart-guide/</id>
+    <published>2009-11-19T09:19:44.000Z</published>
+    <updated>2014-08-29T07:17:51.000Z</updated>
+    <content type="html"><![CDATA[<p>我跟达达翻译的书终于出版了。</p>
+<a id="more"></a>
+
+<p><img src="/image/as3JiChuJiaoCheng_1.jpg" alt="ActionScript 3.0基础教程"><br></p>
+<hr>
+<h3 id="出版社寄来的样书，已经送给曾经关注的朋友们了：">出版社寄来的样书，已经送给曾经关注的朋友们了：</h3>
+<p><img src="/image/as3JiChuJiaoCheng_2.jpg"><br></p>
+<p><img src="/image/as3JiChuJiaoCheng_3.jpg"><br></p>
+<hr>
+<h3 id="后记：">后记：</h3>
+<p>众所周知本人只有高中学历，英语也就在初中水平，由于这本书英文和内容都非常简单，为了练习英语就主动跟出版社申请翻译了，记得在北京瑞德上班时，每天下班后回到出租屋，窝在桌子前一点点的翻译。虽然都能看懂但要用中文写出来而且语句通顺对我来说还是件很难的事情，前期劲头还很足，后期实在是越翻越无聊，总感觉书的内容太浅，翻译又慢，太浪费宝贵的时间了，后来就叫来达达跟我一起翻译，有了达达的帮忙这本书才终于能够出版了。拿到样书的那一刻还是很激动的。 事实证明初中英语水平也是能翻译技术书的 ：）</p>
+<hr>
+<p>【原 书 名】 ActionScript 3.0: Visual QuickStart Guide</p>
+<p>【原出版社】 Peachpit Press</p>
+<p>【作　　者】(加)Derrick Ypenburg</p>
+<p>【译　　者】 陈新;吴国权</p>
+<p>【丛 书 名】 图灵程序设计丛书</p>
+<p>【出 版 社】 人民邮电出版社 </p>
+<p>【书 号】 9787115215451</p>
+<p>【出版日期】 2009 年11月</p>
+<p>【开 本】 16开</p>
+<p>【页 码】 226</p>
+<p>【版 次】1-1</p>
+<hr>
+<h3 id="购买渠道：">购买渠道：</h3>
+<p><a href="http://product.china-pub.com/196135?ref=xilie" target="_blank">china-pub</a></p>
+<p><a href="http://www.amazon.cn/mn/detailApp/ref=sr_1_1?_encoding=UTF8&s=books&qid=1258449105&asin=B002WJI7UW&sr=8-1" target="_blank">卓越</a></p>
+<p><a href="http://product.dangdang.com/product.aspx?product_id=20724689" target="_blank">当当</a></p>
+]]></content>
+    <summary type="html">
+    <![CDATA[<p>我跟达达翻译的书终于出版了。</p>
+]]>
+    
+    </summary>
+    
+      <category term="翻译" scheme="http://nshen.net/tags/%E7%BF%BB%E8%AF%91/"/>
+    
+      <category term="project" scheme="http://nshen.net/categories/project/"/>
+    
+  </entry>
+  
+  <entry>
+    <title><![CDATA[NTV：基于Flash Media Server的视频文件直播]]></title>
+    <link href="http://nshen.net/project/2009-01-13/ntv/"/>
+    <id>http://nshen.net/project/2009-01-13/ntv/</id>
+    <published>2009-01-13T06:56:31.000Z</published>
+    <updated>2013-06-22T05:56:14.000Z</updated>
+    <content type="html"><![CDATA[<p>之前的公司有需求做事先录制好的视频文件进行直播，由于Flash Media Server没有类似Windows Media Server的视频文件直播功能，所以我做了这个直播flv文件的傻瓜功能。<a id="more"></a>注意是<strong>直播Flv视频文件</strong>，不是直播摄像头，直播摄像头请找官方的FME，或者<a href="http://nshen.net/article/2007-08-29/fms-tutorial/" target="_blank">这篇教程</a>有实现一个简单的。</p>
+<hr>
+<p>下载地址：</p>
+<p><a href="http://115.com/file/dnh98whr#ntv.rar" target="_blank">NTV 0.2下载（115网盘）</a></p>
+<p>注意：此软件<strong>个人网站</strong>与<strong>商业网站</strong>均完全<strong>免费</strong>使用，但请发邮件通知我一下网址。 nshen121[at]gmail.com<br>好让我评估是否投入精力继续开发此软件。</p>
+<hr>
+<p>安装方法：</p>
+<ol>
+<li><p>解压后将ntv文件夹放在 fms安装目录下的applications目录下，例如：<br>C:\Program Files\Adobe\Flash Media Server 3\applications\ntv </p>
+</li>
+<li><p>将N2EventDispatcher.asc保存到FMS安装目录下的scriptlib\nfms2文件夹下，例如：<br>D:\Program Files\Adobe\Flash Media Server 3\scriptlib\nfms2 </p>
+</li>
+<li><p>修改player.html中的rtmp地址为你fms的ip。</p>
+</li>
+<li><p>把player和admin文件夹分别传到web可以访问的地方 ，例如：</p>
+</li>
+</ol>
+<p>www.nshen.net/player<br>www.nshen.net/admin</p>
+<h3 id="使用方法很简单：">使用方法很简单：</h3>
+<p>管理端：</p>
+<p>打开 <a href="http://你的地址/admin/admin.html" target="_blank" rel="external">http://你的地址/admin/admin.html</a><br>输入rtmp地址和默认密码 admin （密码在服务器端 fms安装目录\applications\ntv\password.txt 里边改）</p>
+<p><img src="/image/ntv01.jpg" alt=""></p>
+<p>如果登录成功，左边会自动列出视频库中(ntv\streams_definst_)所有的视频文件 </p>
+<p><img src="/image/ntv02.jpg" alt=""></p>
+<p>点击播放后，从 播放端 (<a href="http://你的地址/player/player.html" target="_blank" rel="external">http://你的地址/player/player.html</a>) ,就能看到视频播放了。此时视频是直播的，也就是说所有人看到的是同步的播放。</p>
+<p><img src="/image/ntv03.jpg" alt="定时直播功能"></p>
+<hr>
+<h3 id="常见问题：">常见问题：</h3>
+<p>问:要放什么格式的视频？</p>
+<p>答:目前只支持.flv格式的视频。</p>
+<p>问:为什么不能定时播放不好用？</p>
+<p>答:可能是没有将N2EventDispatcher.asc保存到FMS安装目录下的scriptlib\nfms2文件夹下.</p>
+<hr>
+<h3 id="版本历史：">版本历史：</h3>
+<p>目前已完全停止开发</p>
+<p>ntv 0.2 : 2009-01-03</p>
+<ul>
+<li>预订时间播放 </li>
+<li>停止播放</li>
+<li>服务器端使用password.txt来修改密码（密码修改后请reload应用程序，密码生效）</li>
+</ul>
+<p>ntv 0.1 : 2008-12-24</p>
+<ul>
+<li>最初版本,实现基本功能</li>
+</ul>
+]]></content>
+    <summary type="html">
+    <![CDATA[<p>之前的公司有需求做事先录制好的视频文件进行直播，由于Flash Media Server没有类似Windows Media Server的视频文件直播功能，所以我做了这个直播flv文件的傻瓜功能。]]>
+    
+    </summary>
+    
+      <category term="project" scheme="http://nshen.net/categories/project/"/>
+    
+  </entry>
+  
+  <entry>
+    <title><![CDATA[Flash Media Server 入门教程]]></title>
+    <link href="http://nshen.net/article/2007-08-29/fms-tutorial/"/>
+    <id>http://nshen.net/article/2007-08-29/fms-tutorial/</id>
+    <published>2007-08-29T06:56:31.000Z</published>
+    <updated>2013-08-28T18:06:09.000Z</updated>
+    <content type="html"><![CDATA[<p>我把我以前的那些FMS学习笔记整理了一下，做了下修改，成了一页的FMS教程，方便想学FMS的新手来看，如果还有错误或者看不懂的地方欢迎留言.</p>
+<a id="more"></a> 
+
+<h3 id="注意：">注意：</h3>
+<p>Flash Media Server的最新版本已经到FMS 4.X了 ，由于本入门教程是在2006~2007年所写，年代久远所以使用FMS 2演示，但当你了解了原理后可以很容易的升到4，因为FMS 1 到 FMS 4 的更新几乎没有什么改动 ，还有本教程客户端使用AS1，如果你需要用AS3的话，语法会有些变化，这些都应该难不倒你。</p>
+<h3 id="什么是Flash_Media_Server_？">什么是Flash Media Server ？</h3>
+<p>Flash大家庭里的一员，这个东东以前叫Flash Communication Server，传说中的FCS就是这个，现在改叫FMS了…<br>不见不知道哦，一见真可怕，adobe还有这么cool的东东，自从见了她，让我做些小东东的兴趣全没了，一心想研究这个</p>
+<h3 id="这东东能做什么？">这东东能做什么？</h3>
+<p>视频录制啊，flash聊天室啊，在线视频会议啊啊， 网络游戏？</p>
+<h3 id="不管怎样先安个试试吧">不管怎样先安个试试吧</h3>
+<p>先到这里下载免费的开发者版本吧</p>
+<p><a href="">http://www.macromedia.com/software/flashmediaserver/</a></p>
+<p>然后安装，安装时记得用户名和密码不要瞎填自己要记住，如果你已经瞎填了那就到 安装目录下\conf\fms.ini 里找吧 </p>
+<p>偶装到了c盘，找到目录 <strong>C:\Program Files\Macromedia\Flash Media Server 2</strong> </p>
+<p><img src="/image/fmsTutorial/1.jpg" alt=""></p>
+<h3 id="先要打开服务器哦">先要打开服务器哦</h3>
+<p>你在本机装的fms，本机就是服务器了哦！记得现在你的机器既是客户端又是服务端哦<br>开始===程序===Macromedia===Flash Media Server 2<br>有两个start<em>**</em>,都要打开，关时候两个都要关，如果你怕麻烦直接找tool文件夹里的批处理文件StartServerService.bat吧，双击他，他会帮你搞定地,想关就找StopServerService.bat。~ </p>
+<p>如果想设置默认开机时候fms自动打开还是需要手动打开，可以在 开始菜单里—运行—输入services.msc ，就会打开服务，找到Flash Media Server项，设置为手动或者自动，这里也可以随时关闭服务或打开服务</p>
+<h3 id="applications文件夹">applications文件夹</h3>
+<p>你可以在里边建一个文件夹例如叫 FirstApp，这就建了一个Application，以后所有此项目服务器端的flv文件啊，共享文件啊都会在这里边，有时服务器端需要写程序的时候里边会有个main.asc 文件，这个就是服务器端程序，服务器端程序目前只支持as1写，是在服务器上执行的，你也可以用trace调试，怎么trace管理服务器时候你会看到，你可能会建若干个app，在一台服务器上同时运行，比如录象的app，聊天室的app。。。这些所有的app都通过fms自带的fms2_console.swf管理，现在就去看看如何管理服务器吧！</p>
+<h3 id="管理服务器~">管理服务器~</h3>
+<p>服务器打开后就要管理了哦，点开fms2_console.swf，别看他只是个swf，后台管理就靠他了，输入你安装时候的密码和用户，服务器地址写 localhost 就好看到了吧，熟悉熟悉他吧</p>
+<p><img src="/image/fmsTutorial/2.jpg" alt=""></p>
+<p>以后我们写程序最常用的就是这个 <strong>View Applications</strong> ，每当有客户端连接服务器时，左边就会列出连接的是哪个app，有多少连接 下图为连接applications文件夹下的bs文件夹(bs文件夹，因为每个文件夹对应一个app，就是bs app)，连接数为1，458是实例名（实例名默认为 <em>definst</em> ，每个文件夹可以有若干实例，互相不影响，这个特性可以用来做聊天是的房间，以后再说） </p>
+<p><img src="/image/fmsTutorial/3.jpg" alt=""></p>
+<p>选中某个app后，或者客户端有连接，会看到当前打开的app的状态，这个</p>
+<p><img src="/image/fmsTutorial/4.jpg" alt=""></p>
+<p>Live Log 服务器端的trace就这里看了 ，右边依次是客户端情况 ， 共享对象，流，执行的情况（占内存，cpu等），后边两个小按钮，调试时候常用哦，reload和unload!<br>每当服务器端main.asc修改后一定记得reload或者unload一下，否则不会生效，unload会把窗口关闭，有客户端连的时候还会自动打开<br>总有人告诉我，他的fms经常会出现诡异现象，比如连接不上，代码已经删了还会执行，一生气连文件夹都删了，还会执行，怀疑是自己的rp有问题。。<br>那不是rp问题，记住出现问题就reload ！实在不行就去tools文件夹点StopServerService.bat</p>
+<h3 id="conf文件夹">conf文件夹</h3>
+<p>还有重要的是conf文件夹了，里边是一些服务器端的配置文件，以后可能会用，先不用动。。。。 </p>
+<p>自此，安装部分结束，go on… </p>
+<h3 id="有一种协议叫rtmp">有一种协议叫rtmp</h3>
+<p>客户端和服务器端通信是使用协议rtmp的</p>
+<p>现在在服务器端applications文件夹（当然偶的客户端和服务器端是一台机器了）里建个test1文件夹，你的地址就为</p>
+<p>rtmp:/test1 或者 rtmp://localhost/test1</p>
+<p>注意两个地址中的 “/ “符号</p>
+<p>打开flash</p>
+<p>与服务器通信首先要建个<strong>NetConnection</strong></p>
+<p>nc = new NetConnection(); </p>
+<p>连接 </p>
+<p>nc.connect(“rtmp://localhost/test1”); </p>
+<p>怎么知道连没连上呢？顺利连接服务器后会触发一个onStatus事件,自己trace一下info.code </p>
+<p>nc.onStatus = function(info)<br>{<br>    //trace(info)<br>    //trace(info.code)<br>    for (i in info) {<br>    trace(i+”: “+info[i]);<br>    }<br>}; </p>
+<p>完整代码：</p>
+<pre><code>nc = <span class="keyword">new</span> NetConnection();
+nc.onStatus = <span class="function"><span class="keyword">function</span><span class="params">(info)</span> 
+</span>{
+     <span class="keyword">trace</span>(info.code);
+     <span class="keyword">if</span> (info.code == <span class="string">"NetConnection.Connect.Success"</span>) {
+         <span class="keyword">trace</span>(<span class="string">"接通"</span>);
+     }
+};
+nc.connect(<span class="string">"rtmp://localhost/test1"</span>);
+</code></pre><h4 id="注意：-1">注意：</h4>
+<p>默认情况下服务器是允许你连接的，但只是默认，如果服务器拒绝你连接的话，上述代码就不好用了。怎么回事？我们看看连接的过程吧</p>
+<h3 id="连接过程">连接过程</h3>
+<p>每当客户端试图连接服务器，一个NetConnection.connect()，服务器将会调用application.onConnect 来鉴定是不是允许客户端连接，onConnect()方法返回null 或不返回则将进入未决状态,直到onConnect方法中返回true或执行acceptConnection(client)则允许，返回false或执行rejectConnection(client)则拒绝，如图(从左往右看)</p>
+<p><img src="/image/fmsTutorial/5.jpg" alt=""></p>
+<p>服务器文件是以<strong>.asc</strong>文件形式存在的，可以在test1文件夹里建一个<strong>main.asc</strong>。</p>
+<pre><code>application.onConnect=<span class="function"><span class="keyword">function</span><span class="params">(client)</span>
+</span>{
+    <span class="keyword">this</span>.rejectConnection(client);        
+    <span class="comment">//this.acceptConnection(client)</span>
+} 
+</code></pre><p>这样就拒绝连接了，动手试试，别忘了，服务器端改动的话，别忘了到fms2_console.swf去reload ！不知道按哪个的到上边找，每当有客户端连接，那个reload按钮的界面就会出来哦。</p>
+<h3 id="检查是否uri错误">检查是否uri错误</h3>
+<p>如果你的rtmp地址是从其他什么地方传过来的，可以顺便检查一下rtmp是否错误，下边代码如果地址是错误的就会trace出来。</p>
+<pre><code>mync = <span class="keyword">new</span> NetConnection();
+mync.onStatus = <span class="function"><span class="keyword">function</span><span class="params">(info)</span> 
+</span>{
+    <span class="keyword">if</span> (info.code == <span class="string">"NetConnection.Connect.Success"</span>) 
+    {
+         <span class="keyword">trace</span>(<span class="string">"连接成功"</span>);
+     }
+};
+<span class="comment">//正确的uri</span>
+<span class="comment">//uri = "rtmp://localhost/connect";</span>
+<span class="comment">//错误的uri</span>
+uri = <span class="string">"rtmpppppp://localhost/connect"</span>;
+
+<span class="keyword">if</span> (mync.connect(uri, <span class="string">"N神"</span>)) {
+ <span class="keyword">trace</span>(<span class="string">"尝试连接服务器中。。"</span>);
+} <span class="keyword">else</span> {
+ <span class="keyword">trace</span>(<span class="string">"没有尝试连接服务器~是uri错误？？？"</span>);
+}
+</code></pre><p>ok 了，现在我们深入一点点。。看看连接上的一些细节问题</p>
+<h3 id="info-code：">info.code：</h3>
+<p>连接后info.code会告诉你连接的状态，上边看的都是<strong>NetConnection.Connect.Success</strong>， 还有一些其他值，和这些值是什么意思，自己看看。</p>
+<p>值得注意的是。<strong>NetConnection.Connect.Rejected</strong>，收到这条消息的时候说明服务器端拒绝了你，接着马上你会收到另一条，<strong>NetConnection.Connect.Closed</strong>，连接就关闭了。</p>
+<pre><code>mync = <span class="keyword">new</span> NetConnection();
+mync.onStatus = <span class="function"><span class="keyword">function</span><span class="params">(info)</span> 
+</span>{
+ <span class="keyword">switch</span> (info.code) 
+{
+     <span class="keyword">case</span> <span class="string">"NetConnection.Connect.Success"</span> :
+         <span class="keyword">trace</span>(<span class="string">"连接成功"</span>);
+     <span class="keyword">break</span>;
+     <span class="keyword">case</span> <span class="string">"NetConnection.Connect.Failed"</span> :
+         <span class="comment">//关掉服务器的情况</span>
+         <span class="keyword">trace</span>(<span class="string">"尝试连接失败，服务器有可能挂掉了 -_-b"</span>);
+     <span class="keyword">break</span>;
+     <span class="keyword">case</span> <span class="string">"NetConnection.Connect.Rejected"</span> :
+         <span class="comment">//注意这里，服务器拒绝你的情况，如果遭到拒绝，将会调用两次mync.onStatus，</span>
+          <span class="comment">//第一次"NetConnection.Connect.Rejected"第2次"NetConnection.Connect.Closed"</span>
+         <span class="keyword">trace</span>(<span class="string">"遭到服务器拒绝"</span>);
+         <span class="keyword">trace</span>(<span class="string">"服务器返回信息："</span>+info.application.msg);
+     <span class="keyword">break</span>;
+         <span class="keyword">case</span> <span class="string">"NetConnection.Connect.Closed"</span> :
+         <span class="keyword">trace</span>(<span class="string">"连接关闭"</span>);
+     <span class="keyword">break</span>;
+ }
+};
+mync.connect(<span class="string">"rtmp://localhost/connect"</span>, <span class="string">"N神"</span>);
+<span class="comment">//mync.connect("rtmp://localhost/connect","小新")</span>
+</code></pre><p>服务器端拒绝连接？好象见过。。。回头找找。。。。。。。。哦在这里</p>
+<pre><code>application.onConnect = <span class="function"><span class="keyword">function</span><span class="params">(client)</span> 
+</span>{    
+    <span class="keyword">this</span>.rejectConnection(client);    
+}
+</code></pre><p>我不能所有人都拒绝了。。我要把讨厌的人拒绝了。。。<br>传给服务器一个人名~~</p>
+<pre><code>mync.<span class="keyword">connect</span>(<span class="string">"rtmp://localhost/connect"</span>, <span class="string">"N神"</span>);
+</code></pre><p>服务器看看是不是讨厌的人。。</p>
+<pre><code>application.onConnect = <span class="function"><span class="keyword">function</span><span class="params">(client, name)</span> </span>{
+ <span class="keyword">trace</span>(name);
+ <span class="keyword">if</span> (name == <span class="string">"N神"</span>) {
+     <span class="comment">//拒绝连接，并返回个错误对象{msg:"服务器不想"+name+"进去，哈哈~"}，包含错误消息</span>
+     application.rejectConnection(client, {msg:<span class="string">"服务器不想"</span>+name+<span class="string">"进去，哈哈~"</span>});
+ } <span class="keyword">else</span> {
+     application.acceptConnection(client);
+     <span class="comment">//成功不能返回客户端信息</span>
+ }
+};
+</code></pre><p>看客户端的代码。。 </p>
+<pre><code><span class="keyword">case</span> <span class="string">"NetConnection.Connect.Rejected"</span> :
+<span class="comment">//注意这里，服务器拒绝你的情况，如果遭到拒绝，将会调用两次mync.onStatus，</span>
+<span class="comment">//第一次"NetConnection.Connect.Rejected"第2次"NetConnection.Connect.Closed"</span>
+<span class="keyword">trace</span>(<span class="string">"遭到服务器拒绝"</span>);
+<span class="keyword">trace</span>(<span class="string">"服务器返回信息："</span>+info.application.msg);
+<span class="keyword">break</span>; 
+</code></pre><p>遭到服务器拒绝后会trace出服务器返回的错误消息，这是一个最基础的与服务器交互的例子，以后还会有很多滴 </p>
+<p>下边进入新一层次。。。 </p>
+<h3 id="视频，流">视频，流</h3>
+<p>这个比较重要，但超简单，网上播放电影，在线录制，在线播放，视频会议，视频电话，全靠他了 ，下边我们先做一个最简单 录制和播放 </p>
+<h4 id="录制flv视频">录制flv视频</h4>
+<p>打开flash，新建一个fla，Ctrl + L 打开library，右键新建视频，确定。 </p>
+<p>拉到舞台上起个名叫my_video </p>
+<p>第一帧开始加代码 </p>
+<pre><code><span class="comment">//从麦和设像头显示视频显示在my_video上     </span>
+my_video.attachVideo(Camera.<span class="keyword">get</span>());
+my_video.attachAudio(Microphone.<span class="keyword">get</span>()); 
+
+<span class="comment">//像以前一样连接 </span>
+nc = <span class="keyword">new</span> NetConnection();
+nc.connect(<span class="string">"rtmp://localhost/aaaa"</span>); <span class="comment">//注意这里，Applications文件夹里要有aaaa文件夹哦！ </span>
+
+
+<span class="comment">//可以理解为在nc连接上绑一个流 </span>
+nsOut = <span class="keyword">new</span> NetStream(nc); 
+
+<span class="comment">//在流上加麦克风和视频头     </span>
+nsOut.attachVideo(Camera.<span class="keyword">get</span>());
+nsOut.attachAudio(Microphone.<span class="keyword">get</span>()); 
+
+<span class="comment">//发布 2.flv</span>
+nsOut.publish(<span class="string">"2"</span>, <span class="string">"record"</span>); 
+</code></pre><p>第一个参数是文件名，后一个参数要”record”才是录制。</p>
+<p>把fla发布一下， 录一会儿，把视频关掉，打开你的</p>
+<blockquote>
+<p>叉盘:\Program Files\Macromedia\Flash Media Server 2\applications\aaaa\</p>
+</blockquote>
+<p>是不是多了个<strong>streams_definst_</strong></p>
+<p>打开</p>
+<blockquote>
+<p>C:\Program Files\Macromedia\Flash Media Server 2\applications\aaaa\streams_definst_</p>
+</blockquote>
+<p>看见2.flv了吧。</p>
+<p><a href="/image/fmsTutorial/fla1.fla" title="下载源文件 fla1.fla">这里下载原文件 fla1.fla</a></p>
+<h4 id="播放flv视频">播放flv视频</h4>
+<p>用fms播放的flv目前是无法下载的，这可以保护你的版权 ：） </p>
+<p>打开flash，新建一个fla ，Ctrl + L 打开library，右键新建视频，确定。 </p>
+<p>拉到舞台上，这回起个名叫view ，我们来播放你刚才录的那个视频 </p>
+<pre><code>nc = <span class="keyword">new</span> NetConnection();
+nc.connect(<span class="string">"rtmp://localhost/aaaa"</span>);
+<span class="keyword">res</span> = <span class="keyword">new</span> NetStream(nc); 
+
+//<span class="keyword">view</span>元件要加载<span class="keyword">res</span>流     
+<span class="keyword">view</span>.attachVideo(<span class="keyword">res</span>);
+<span class="keyword">view</span>.attachAudio(<span class="keyword">res</span>); 
+
+//播放     
+<span class="keyword">res</span>.play(<span class="string">"2"</span>); 
+</code></pre><p><a href="这里下载原文件 fla2.fla">/image/fmsTutorial/fla2.fla</a> </p>
+<h3 id="现场流">现场流</h3>
+<p>上边做的都是先录制好了视频，然后才播放，网上的实时视频会议，视频电话是怎么做的呢？总不能先录好再播放吧？<br>这要用到现场流，现场流是指你连接到服务器后，你在发布的同时，其他人就可以实时的看到你<br>很难吗？看看吧，把上边录制视频的例子拿下来 </p>
+<pre><code>nsOut.publish(<span class="string">"2"</span>, <span class="string">"record"</span>); 
+</code></pre><p>这句改成 </p>
+<pre><code>nsOut.publish(<span class="string">"2"</span>, <span class="string">"live"</span>); 
+</code></pre><p>把”record” 改成”live”后，就不会生成flv了，取而代之的是一个看不到的实时的视频流<br>ok 了，发布，这就是直播端了，同时再发布上边那个播放端，已经可以实时看见你了吧。现在你是用本机测试，等你有了服务器。其他人也能同时看见你了哦。</p>
+<p>到这里你已经可以自己做一个网页上的直播了，发布端不要让别人看到，让别人看你的播放端就好了 ：） 至于为什么要用两个swf，因为目前为止你还不知道怎么样跟服务器之间传递消息，这样做可以避免这些东西，等你把后边的东西全都学完就可以在一个swf里，写个视频会议之类的东东了。</p>
+<h3 id="远程共享">远程共享</h3>
+<p>远程共享？</p>
+<p>共享的概念就是让每个连接到服务器的swf都能实时的得到服务器端共享的数据。<br>一个人更改了这些数据，其他人都会看得到通知。可以想象聊天室里的发言，一个人发了以后其他人都可以看到。</p>
+<p><img src="/image/fmsTutorial/6.jpg" alt=""></p>
+<h3 id="共享对象">共享对象</h3>
+<p>共享对象，说英文大概你比较熟ha~ SharedObject， 恩flash中有两种sharedObject，local sharedobject （LSO） 和 remote sharedobject (RSO)，也就是本地共享和远程共享,偶们讨论远程的，不过之前你最好先去了解了解本地的，对你有好处…</p>
+<p>RSO在服务器端是以文件形式存储的，扩展名是.fso，为什么不是.rso?….我也想问呢- -b</p>
+<h3 id="代码">代码</h3>
+<p>初始化RSO需要先与服务器建立一个连接，续上节 ，我们先与服务器建立一个连接 </p>
+<pre><code><span class="comment">//初始化远程共享要利用nc通道</span>
+<span class="keyword">var</span> myNC = <span class="keyword">new</span> NetConnection();
+myNC.onStatus = <span class="function"><span class="keyword">function</span><span class="params">(info)</span> </span>{
+ <span class="keyword">if</span> (info.code == <span class="string">"NetConnection.Connect.Success"</span>) {
+ <span class="comment">//成功则利用此nc初始化rso</span>
+ initRSO(<span class="keyword">this</span>);
+ }
+};
+</code></pre><p>跟以前的代码一样，只是连接成功后多了一个initRSO()函数，看不懂的回去重头再看一下。。。</p>
+<p>下边是initRSO了，跟连接结构差不多 </p>
+<pre><code><span class="function"><span class="keyword">function</span> <span class="title">initRSO</span><span class="params">(NC)</span> 
+</span>{
+     <span class="comment">//在服务器上建立myRSO.fso文件，第2个参数指定nc通道，第3个指定文件在服务器上持久保留，即使服务器重启了，还是有</span>
+     my_rso = SharedObject.getRemote(<span class="string">"myRSO"</span>, NC.uri, <span class="literal">true</span>);
+     my_rso.onSync = <span class="function"><span class="keyword">function</span><span class="params">(list)</span> </span>{
+     <span class="comment">//list 是一个对象数组 ，类似这种[{name:"x",code:"success"},{name:"y",code:"success"}] ，下边会详细讲</span>
+     <span class="comment">//初始成功</span>
+     };
+     my_rso.connect(NC); <span class="comment">//连接</span>
+}
+</code></pre><p>了解了吧，看一个完整的例子</p>
+<p>画一个mc起名叫mc，在第一帧上写代码</p>
+<pre><code><span class="comment">//初始化远程共享要利用nc通道</span>
+<span class="keyword">var</span> myNC = <span class="keyword">new</span> NetConnection();
+myNC.onStatus = <span class="function"><span class="keyword">function</span><span class="params">(info)</span> </span>{
+ <span class="keyword">if</span> (info.code == <span class="string">"NetConnection.Connect.Success"</span>) {
+ <span class="comment">//成功则利用此nc初始化rso</span>
+ initRSO(<span class="keyword">this</span>);
+ }
+};
+myNC.connect(<span class="string">"rtmp://localhost/test1"</span>); <span class="comment">//不会不知道要建test1文件夹吧 </span>
+
+<span class="function"><span class="keyword">function</span> <span class="title">initRSO</span><span class="params">(NC)</span> </span>{
+ my_rso = SharedObject.getRemote(<span class="string">"myRSO"</span>, NC.uri, <span class="literal">true</span>); 
+<span class="comment">//onSync是回调函数，每次服务器端so数据有改变，这里都会有反映！这里的意思每当有人按鼠标，这里都会有反映，我们读取so的data下的值就可以了</span>
+ my_rso.onSync = <span class="function"><span class="keyword">function</span><span class="params">()</span> </span>{
+ mc._x=<span class="keyword">this</span>.data.x
+ mc._y=<span class="keyword">this</span>.data.y
+ };
+ my_rso.connect(NC);
+} 
+
+onMouseDown = <span class="function"><span class="keyword">function</span> <span class="params">()</span> </span>{ 
+ <span class="comment">//改变so的数据</span>
+ my_rso.data.x = _root._xmouse
+ my_rso.data.y = _root._ymouse
+};
+</code></pre><p>然后发布设置中设置<strong>只允许网络</strong>，发布看看</p>
+<p>现在你可以开多个播放器窗口，点其中一个，看看其他的窗口变不变?</p>
+<p><a href="/image/fmsTutorial/fla3.fla" title="下载源文件 fla3.fla">这里下载原文件 fla3.fla</a></p>
+<h3 id="连接流程">连接流程</h3>
+<p><img src="/image/fmsTutorial/7.jpg" alt=""></p>
+<p>再写一个，看起来很像在做网游~</p>
+<pre><code>mync = <span class="keyword">new</span> NetConnection();
+mync.onStatus = <span class="function"><span class="keyword">function</span><span class="params">(info)</span> </span>{
+ <span class="keyword">if</span> (info.code == <span class="string">"NetConnection.Connect.Success"</span>) {
+ initRSO();
+ }
+ <span class="keyword">if</span> (info.code == <span class="string">"NetConnection.Connect.Closed"</span>) {
+ <span class="keyword">trace</span>(<span class="string">"关闭"</span>);
+ }
+}; 
+
+<span class="function"><span class="keyword">function</span> <span class="title">initRSO</span><span class="params">()</span> </span>{
+ my_RSO = SharedObject.getRemote(<span class="string">"myRSO"</span>, mync.uri, <span class="literal">true</span>);
+ <span class="keyword">trace</span>(my_RSO);
+ my_RSO.onSync = <span class="function"><span class="keyword">function</span><span class="params">()</span> </span>{
+ mc._x = <span class="keyword">this</span>.data.hero.x;
+ };
+ my_RSO.connect(mync);
+}
+mync.connect(<span class="string">"rtmp:/my_app/test1"</span>);
+
+mc.onEnterFrame = <span class="function"><span class="keyword">function</span><span class="params">()</span> </span>{
+ my_RSO.data.hero.x = <span class="keyword">this</span>._x;
+ <span class="keyword">if</span> (Key.isDown(Key.LEFT)) {
+ <span class="keyword">this</span>._x -= <span class="number">5</span>;
+ }
+ <span class="keyword">if</span> (Key.isDown(Key.RIGHT)) {
+ <span class="keyword">this</span>._x += <span class="number">5</span>;
+ }
+};
+</code></pre><h3 id="写个简单的聊天室">写个简单的聊天室</h3>
+<p>很简单的东西，基本上就是共享对象的运用，没有用到服务器端，大型聊天室可能不会这么做，这个只适用于初学者 ：/</p>
+<p>注释很详细，不说多了，可以直接下载原文件</p>
+<p><a href="/image/fmsTutorial/fla4.fla" title="下载源文件 fla4.fla">这里下载原文件 fla4.fla</a></p>
+<p>代码： </p>
+<pre><code><span class="comment">//用户名</span>
+myname=<span class="string">"游客"</span>
+<span class="comment">//建立连接</span>
+<span class="keyword">var</span> myNC = <span class="keyword">new</span> NetConnection();
+myNC.connect(<span class="string">"rtmp://localhost/smallchat"</span>);
+
+<span class="comment">//搞到rso</span>
+Talk_SO = SharedObject.getRemote(<span class="string">"Talk"</span>, myNC.uri, <span class="literal">false</span>);
+Talk_SO.onSync = <span class="function"><span class="keyword">function</span><span class="params">()</span> </span>{
+ <span class="comment">//先把聊天文本框清空</span>
+ remoteText.text = <span class="string">""</span>;
+ <span class="comment">//把聊天列表显示出来，talklist的格式就是[谁谁说:啊啊啊,谁谁谁说:2222]</span>
+ <span class="keyword">var</span> t = <span class="keyword">this</span>.data.talklist;
+ <span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>; i&lt;t.length; i++) {
+ writeln(t[i]);
+ }
+};
+Talk_SO.connect(myNC);
+
+<span class="comment">//发消息函数</span>
+<span class="function"><span class="keyword">function</span> <span class="title">post</span><span class="params">()</span> </span>{
+ <span class="comment">//如果不存在talklist就建一个，这里没用server端，是个技巧</span>
+ <span class="keyword">if</span> (Talk_SO.data.talklist[<span class="number">0</span>] == <span class="literal">undefined</span>) {
+     Talk_SO.data.talklist = [];
+ }
+ <span class="comment">//限制数组长度，是个队列。保证里边有5条消息，当然也可以更多，但如果没有限制，flash会垮的</span>
+ <span class="keyword">if</span> (Talk_SO.data.talklist.length&gt;=<span class="number">5</span>) {
+     Talk_SO.data.talklist.shift();
+ }
+ <span class="comment">//把消息装到so里</span>
+ Talk_SO.data.talklist.push(myname+<span class="string">"说："</span>+meText.text);
+ meText.text = <span class="string">""</span>;
+}
+<span class="comment">//文字显示，换行</span>
+<span class="function"><span class="keyword">function</span> <span class="title">writeln</span><span class="params">(msg)</span> </span>{
+ remoteText.text += msg+<span class="string">"\n"</span>;
+ remoteText.vPosition =remoteText.maxVPosition
+}
+<span class="comment">//-----------------------------------------------</span>
+Btn.onRelease = <span class="function"><span class="keyword">function</span><span class="params">()</span> </span>{
+ post();
+};
+<span class="keyword">this</span>.onKeyDown = <span class="function"><span class="keyword">function</span><span class="params">()</span> </span>{
+ <span class="keyword">if</span> (Key.isDown(Key.ENTER)) {
+     post();
+ }
+};
+Key.addListener(<span class="keyword">this</span>);
+</code></pre><h3 id="深入onSync">深入onSync</h3>
+<p>onSync有个list参数，这个开始有些难度了。不想动脑的可以跳过没影响，只是以后写出的程序效率会低点 ：（</p>
+<p>看代码：</p>
+<pre><code>my_rso = SharedObject.getRemote(<span class="string">"myRSO"</span>, NC.uri, <span class="literal">true</span>);
+my_rso.onSync = <span class="function"><span class="keyword">function</span><span class="params">(list)</span> </span>{<span class="comment">//.......};</span>
+my_rso.connect(NC); <span class="comment">//连接</span>
+</code></pre><p>在onSync回调中我们可以知道我们的my_rso被改变了，但my_rso里具体什么改变了呢？ 我们就要分析这个 list 参数 了</p>
+<p>list参数其实是一个对象数组 ，首先它是一个数组，里边装了很多对象(Object)，每一个对象都包括了SharedObject中一个插槽(slot)的改动信息。我暂时给他起名叫插槽信息对象。。。这名字太猥亵了。。但我就这么叫了。。</p>
+<p>插槽信息对象包含两个属性，name 和 code，偶尔还会有个oldValue?我不太常用，不说它</p>
+<p>name 描述被改变的属性名</p>
+<p>code 描述该属性的改变方式 ，有可能为以下几种值：”success” ， “change” ， “delete” ， “reject” ， “clear” ，具体含义后边说</p>
+<p>说白了这个插槽信息对象大概就是这么个样子：</p>
+<p>{name:”x”,code:”success”} </p>
+<p>表示x属性被修改成功</p>
+<p>要得到这些插槽信息对象就要for in 这个list参数</p>
+<p>for (var i in list) {</p>
+<p>list[i] 就是插槽信息对象</p>
+<p>}</p>
+<p>要分析具体so哪改变了，就是分析list[i]，比如</p>
+<p>if(list[i].code==”change”) trace(“list[i].name”+被+”change了”)</p>
+<p>if(list[i].code==”delete”) trace(“list[i].name”+被+”delete”)</p>
+<p>“change”是啥？“delete”是啥？</p>
+<p>“success” ， “change” ， “delete” ， “reject” ， “clear” 具体含义：</p>
+<p>success : 表示当前影片修改so的插槽获得了成功</p>
+<p>change : 表示so的插槽被别人修改，或填加</p>
+<p>也就是说，你修改so的某个属性成功了会收到 “success” ,与此同时其他影片会收到 “change”</p>
+<p>reject : 拒绝修改</p>
+<p>例如发生在两个或多个客户端同时要修改一个so的插槽，这时候fms会只让一个client修改，并返回”success” 其他的会收到”reject”</p>
+<p>delete , clear : 这个好理解，一个是删除，一个是清空，看例子：</p>
+<p>比如服务器端删除某个so</p>
+<pre><code>so = SharedObject.<span class="keyword">get</span>(<span class="string">"某个so"</span>);
+so.<span class="keyword">lock</span>( );
+<span class="keyword">var</span> names = so.getPropertyNames( );
+<span class="keyword">for</span> (i <span class="keyword">in</span> names) {
+ so.setProperty(names[i], <span class="keyword">null</span>);
+}
+so.unlock( );
+</code></pre><p>这样client端会收到 若干个插槽信息对象，所有的code都为”delete”，表示若干个item被删除</p>
+<p>然而这样：</p>
+<pre><code><span class="keyword">so</span> = SharedObject.<span class="built_in">get</span>(<span class="string">"某个so"</span>);
+<span class="keyword">so</span>.clear( );
+</code></pre><p>client端就只会收到一个插槽信息对象，code属性为“clear”。 </p>
+<h3 id="client端与server端直接交互">client端与server端直接交互</h3>
+<p>看完了SO，看一下client与server端如何直接进行交互的 </p>
+<p><a href="/image/fmsTutorial/1.rar" title="下载源文件 1.rar">这里下载原文件 1.rar</a></p>
+<h4 id="1-_客户端呼叫服务器">1. 客户端呼叫服务器</h4>
+<p>fla： </p>
+<pre><code><span class="comment">//客户端呼叫server端msgfromclient函数,并将返回值trace出来</span>
+mync = <span class="keyword">new</span> NetConnection();
+mync.connect(<span class="string">"rtmp://localhost/connect"</span>);
+<span class="comment">//返回值接收对象</span>
+<span class="keyword">var</span> resObj = <span class="keyword">new</span> Object();
+resObj.onResult = <span class="function"><span class="keyword">function</span><span class="params">(val)</span><span class="type">:Void</span> </span>{
+ <span class="keyword">trace</span>(<span class="string">"val"</span>+val);
+}; 
+<span class="comment">/* 
+我们用mync去call服务器端的msgfromclient函数，resObj是返回接收对象，当服务器有返回值后，会自动直接调用这个对象的onResult处理函数，后边可以传递给server无数个参数，这里只传一个字符串 
+*/</span>
+mync.call(<span class="string">"msgfromclient"</span>, resObj, <span class="string">"第一个call"</span>);
+</code></pre><p>服务器端代码是放在main.asc里的，你可以到你的application下的connect目录下建一个main.asc，写代码</p>
+<p>main.asc: </p>
+<pre><code>//要把函数定义到Client上！！
+application.onConnect = <span class="function"><span class="keyword">function</span><span class="params">(client)</span></span> {
+    /* 在这里定义也可以，在Client.prototype里定义也是可以的 
+    client.msgfromclient=<span class="function"><span class="keyword">function</span><span class="params">(what)</span></span>{
+         trace(what+<span class="string">"进来了"</span>)            
+         var aa=<span class="string">"呼叫成功并返回结果"</span>
+         <span class="keyword">return</span> aa
+     }
+ */
+    application.acceptConnection(client);
+};
+
+Client.prototype.msgfromclient=<span class="function"><span class="keyword">function</span><span class="params">(what)</span></span>{
+     trace(what+<span class="string">"进来了"</span>)
+
+     var aa=<span class="string">"呼叫成功并返回结果"</span>
+     <span class="keyword">return</span> aa
+}
+</code></pre><p>现在去试一下吧。。。成功了的话，再继续……. </p>
+<h4 id="2-_服务器端呼叫指定的客户端">2. 服务器端呼叫指定的客户端</h4>
+<p>fla： </p>
+<pre><code><span class="comment">//server呼叫client端</span>
+<span class="comment">//要把函数定义到nc上！！</span>
+<span class="comment">//</span>
+mync = <span class="keyword">new</span> NetConnection();
+mync.onStatus = <span class="function"><span class="keyword">function</span><span class="params">(info)</span> </span>{
+ <span class="keyword">if</span> (info.code == <span class="string">"NetConnection.Connect.Success"</span>) {
+ <span class="keyword">trace</span>(<span class="string">"连接成功"</span>);
+ }
+};
+mync.connect(<span class="string">"rtmp://localhost/connect"</span>);
+mync.msgfromserver = <span class="function"><span class="keyword">function</span><span class="params">(msg)</span> </span>{
+ <span class="keyword">trace</span>(msg);
+};
+</code></pre><p>main.asc： </p>
+<pre><code>application.onConnect = <span class="function"><span class="keyword">function</span><span class="params">(client)</span> </span>{     
+    application.acceptConnection(client); 
+    <span class="comment">//这里呼叫刚连线成功的客户 </span>
+    <span class="comment">//跟client呼叫server基本一样，服务器一般很少让client端返回值所以第2个参数设为null</span>
+    client.call(<span class="string">"msgfromserver"</span>,<span class="literal">null</span>,<span class="string">"服务器叫你啊"</span>)
+};
+</code></pre><h4 id="3-_服务器端呼叫所有的客户端(广播)">3. 服务器端呼叫所有的客户端(广播)</h4>
+<p>有些时候需要服务器广播数据给所有连接上的客户端，这里就用到了广播的概念 </p>
+<p>广播其实SharedObject的时候已经讲过了一种实现，就是把数据放到remote SharedObject中，当数据改变了，自然所有客户端都会onSync<br>这里再讲一种用call来实现的： </p>
+<p>下边是很常见的一个情况，当某人下线了的时候要通知所有客户端，某某已经下线了 </p>
+<p>server端:</p>
+<pre><code>application.onDisconnect=<span class="function"><span class="keyword">function</span><span class="params">(newClient)</span></span>{ 
+    <span class="comment">//遍历客户端列表，分别call他们</span>
+    <span class="keyword">for</span>(<span class="keyword">var</span> i=<span class="number">0</span>;i&lt;application.clients.length;i++) {
+        application.clients[i].call(<span class="string">"client_fun"</span>，<span class="literal">null</span>，sendvar);
+    }
+}
+</code></pre><p>Client端:</p>
+<pre><code>nc.client_fun=<span class="function"><span class="keyword">function</span><span class="params">(myvar)</span></span>{....... } 
+</code></pre><p>这个自己完善一下吧，这里就不贴fla了 </p>
+<p>还有： </p>
+<p>关于广播，不只有服务器端广播给所有客户，还有可能某一个客户端对所有客户端直接进行广播，当然上边的例子你如果都看懂了的话，你已经可以自己做某一个客户端对所有客户端的广播了。怎么做？ </p>
+<ul>
+<li>第1步 某一个客户端呼叫服务器 </li>
+<li>第2步 服务器广播给所有客户端 </li>
+</ul>
+<p>这样就形成了，某客户端对所有客户端的广播，当然如果你能细心的耐心的看看帮助的话，你会发现Shared Object 和 NetStream都有send方法就是做这件事的，而且更为简洁，服务端不用写代码 ：） </p>
+<p>好了，看到这里，fms常用的大部分概念都说到了，这个教程也就基本结束了，但请注意,现在你只是入门阶段.想学更多的，你可能需要多翻翻手册，多找找教程，英文有不少很好的教程进阶. </p>
+<h3 id="其他需要注意的问题：">其他需要注意的问题：</h3>
+<h4 id="中文编码：">中文编码：</h4>
+<p>有些时候我们用flash去读取外部的php，asp…..文件里的中文显示在flash里会出现乱码的情况，为了解决在flash里显示中文很多教程里通常都直接加了一句System.useCodepage=true<br>问题就在这，显示不了外部中文是因为flash内默认用Unicode编码，外部的文件大多都是gb2312,加上这句System.useCodepage=true代表强制flash使用系统默认的gb2312，这样flash就显示正确了，但fms服务器端默认也是用unicode的，这样客户端跟服务器端不同编码有时就会出错了，搜了一下server字典好象没有System.useCodepage=true了。。。所以解决办法就是去掉System.useCodepage=true，在外部php或asp中把编码转成utf-8，至于怎么转，不知道，问你的asp或php程序员吧 ，另外不要用记事本编辑你的asc文件。。即使编辑最后要一定另存为utf-8格式。</p>
+<h4 id="判断影片播放结束">判断影片播放结束</h4>
+<p>ns.onStatus=function(info){<br>    if(info.code==”NetStream.Play.Stop”)trace(“结束”)<br>}</p>
+<p>乍看好象没错，但是如果设置了缓冲以后（setBufferTime）就不好用了，仔细研究了一下原因4这样的</p>
+<p>监视onStatus(info) ，info.code:</p>
+<p>开始播放<br>NetStream.Play.Start （其实还没播放）</p>
+<p>然后缓冲（根据setBufferTime设置的秒数缓。。）</p>
+<p>NetStream.Buffer.Full （缓冲装满了，这才开始播放）</p>
+<p>然后播放完了NetStream.Play.Stop （其实还没播放完）</p>
+<p>注意了，然后还要播放缓冲 - -b<br>NetStream.Buffer.Empty （缓冲空了，这才播放完了。。）</p>
+<p>群里的kinglong兄比较聪明~，先Stop的时候做个记号，然后再满足Empty才算播放完，也就是两个条件，因为网速慢也会Empty。。。好办法。</p>
+<p>我后来又看了一下帮助，好象有一个专门的事件通知播放结束<br>ns.onPlayStatus=function(info){<br>    if(info.code==”NetStream.Play.Complete”)trace(“感谢观看帮助”)<br>}</p>
+<h4 id="防火墙，端口">防火墙，端口</h4>
+<p>默认安装的话默认端口是1935，管理是1111端口，记得防火墙要把1935和1111端口打开。</p>
+<p>本文原地址：<a href="http://www.nshen.net/article/2007/08/29/fms-tutorial/" target="_blank" rel="external">http://www.nshen.net/article/2007/08/29/fms-tutorial/</a> ,转载请保留链接 。</p>
+]]></content>
+    <summary type="html">
+    <![CDATA[<p>我把我以前的那些FMS学习笔记整理了一下，做了下修改，成了一页的FMS教程，方便想学FMS的新手来看，如果还有错误或者看不懂的地方欢迎留言.</p>
+]]>
+    
+    </summary>
+    
+      <category term="article" scheme="http://nshen.net/categories/article/"/>
+    
+  </entry>
+  
+</feed>
