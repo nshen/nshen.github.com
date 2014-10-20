@@ -1,0 +1,639 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>Stage3D各种投影矩阵的推导 | N神的研究所</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="观察
+先观察一下Stage3D的PerspectiveMatrix3D类提供的投影矩阵。
+左手：
+1. perspectiveOffCenterLH(left:Number, right:Number,bottom:Number,top:Number,zNear:Number, zFar:Number)
+2. perspectiveLH(width:Number, height:Number, z">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Stage3D各种投影矩阵的推导">
+<meta property="og:url" content="http://nshen.net/article/2014-10-16/stage3d-projection-matrix/">
+<meta property="og:site_name" content="N神的研究所">
+<meta property="og:description" content="观察
+先观察一下Stage3D的PerspectiveMatrix3D类提供的投影矩阵。
+左手：
+1. perspectiveOffCenterLH(left:Number, right:Number,bottom:Number,top:Number,zNear:Number, zFar:Number)
+2. perspectiveLH(width:Number, height:Number, z">
+<meta property="og:image" content="/article/2014-10-16/stage3d-projection-matrix/1.jpg">
+<meta property="og:image" content="/article/2014-10-16/stage3d-projection-matrix/2.jpg">
+<meta property="og:image" content="/article/2014-10-16/stage3d-projection-matrix/3.jpg">
+<meta property="og:image" content="/article/2014-10-16/stage3d-projection-matrix/4.jpg">
+<meta property="og:image" content="/article/2014-10-16/stage3d-projection-matrix/5.jpg">
+<meta property="og:image" content="/article/2014-10-16/stage3d-projection-matrix/6.jpg">
+<meta property="og:image" content="/article/2014-10-16/stage3d-projection-matrix/7.jpg">
+<meta property="og:image" content="/article/2014-10-16/stage3d-projection-matrix/8.jpg">
+<meta property="og:image" content="/article/2014-10-16/stage3d-projection-matrix/9.jpg">
+<meta property="og:image" content="/article/2014-10-16/stage3d-projection-matrix/10.jpg">
+<meta property="og:image" content="/article/2014-10-16/stage3d-projection-matrix/11.jpg">
+<meta property="og:image" content="/article/2014-10-16/stage3d-projection-matrix/12.png">
+<meta property="og:image" content="/article/2014-10-16/stage3d-projection-matrix/13.png">
+<meta property="og:image" content="/article/2014-10-16/stage3d-projection-matrix/14.jpg">
+<meta property="og:image" content="/article/2014-10-16/stage3d-projection-matrix/15.png">
+<meta property="og:image" content="/article/2014-10-16/stage3d-projection-matrix/16.jpg">
+<meta property="og:image" content="/article/2014-10-16/stage3d-projection-matrix/15.png">
+<meta property="og:image" content="/article/2014-10-16/stage3d-projection-matrix/17.jpg">
+<meta property="og:image" content="/article/2014-10-16/stage3d-projection-matrix/18.jpg">
+<meta property="og:image" content="/article/2014-10-16/stage3d-projection-matrix/19.jpg">
+<meta property="og:image" content="/article/2014-10-16/stage3d-projection-matrix/20.jpg">
+<meta property="og:image" content="/article/2014-10-16/stage3d-projection-matrix/17.jpg">
+<meta property="og:image" content="/article/2014-10-16/stage3d-projection-matrix/21.jpg">
+<meta property="og:image" content="/article/2014-10-16/stage3d-projection-matrix/22.jpg">
+<meta property="og:image" content="/article/2014-10-16/stage3d-projection-matrix/23.jpg">
+<meta property="og:image" content="/article/2014-10-16/stage3d-projection-matrix/24.jpg">
+<meta property="og:image" content="/article/2014-10-16/stage3d-projection-matrix/25.jpg">
+<meta property="og:image" content="/article/2014-10-16/stage3d-projection-matrix/25.jpg">
+<meta property="og:image" content="/article/2014-10-16/stage3d-projection-matrix/26.jpg">
+<meta property="og:image" content="/article/2014-10-16/stage3d-projection-matrix/27.jpg">
+<meta property="og:image" content="/article/2014-10-16/stage3d-projection-matrix/28.jpg">
+<meta property="og:image" content="/article/2014-10-16/stage3d-projection-matrix/29.jpg">
+<meta property="og:image" content="/article/2014-10-16/stage3d-projection-matrix/30.jpg">
+<meta property="og:image" content="/article/2014-10-16/stage3d-projection-matrix/31.jpg">
+<meta property="og:image" content="/article/2014-10-16/stage3d-projection-matrix/32.jpg">
+<meta property="og:image" content="/article/2014-10-16/stage3d-projection-matrix/33.jpg">
+<meta property="og:image" content="/article/2014-10-16/stage3d-projection-matrix/34.jpg">
+<meta property="og:image" content="/article/2014-10-16/stage3d-projection-matrix/35.jpg">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Stage3D各种投影矩阵的推导">
+<meta name="twitter:description" content="观察
+先观察一下Stage3D的PerspectiveMatrix3D类提供的投影矩阵。
+左手：
+1. perspectiveOffCenterLH(left:Number, right:Number,bottom:Number,top:Number,zNear:Number, zFar:Number)
+2. perspectiveLH(width:Number, height:Number, z">
+
+  
+    <link rel="alternative" href="/atom.xml" title="N神的研究所" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  <link rel="stylesheet" href="/css/style.css" type="text/css">
+
+  <!--[if lt IE 9]><script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7/html5shiv.min.js"></script><![endif]-->
+  
+</head>
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">N神的研究所</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/" id="subtitle">我正在考虑在这里写点啥...</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">首页</a>
+        
+          <a class="main-nav-link" href="/categories/article/">学习笔记</a>
+        
+          <a class="main-nav-link" href="/categories/project/">实验项目</a>
+        
+          <a class="main-nav-link" href="/about/">关于我</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="http://www.baidu.com/baidu" method="get" accept-charset="utf-8" class="search-form">
+          <input type="search" name="word" maxlength="20" class="search-form-input" placeholder="Search">
+          <input type="submit" value="" class="search-form-submit">
+          <input name=tn type=hidden value="bds">
+          <input name=cl type=hidden value="3">
+          <input name=ct type=hidden value="2097152">
+          <input type="hidden" name="si" value="nshen.net">
+        </form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-stage3d-projection-matrix" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/article/2014-10-16/stage3d-projection-matrix/" class="article-date">
+  <time datetime="2014-10-16T05:55:10.000Z" itemprop="datePublished">10月 16 2014</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/article/">article</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+	<!---->
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Stage3D各种投影矩阵的推导
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="观察">观察</h2>
+<p>先观察一下Stage3D的<a href="https://github.com/adobe-flash/graphicscorelib/blob/master/src/com/adobe/utils/PerspectiveMatrix3D.as" target="_blank" rel="external">PerspectiveMatrix3D</a>类提供的投影矩阵。</p>
+<p>左手：</p>
+<pre><code><span class="number">1.</span> perspectiveOffCenterLH(left:<span class="built_in">Number</span>, right:<span class="built_in">Number</span>,bottom:<span class="built_in">Number</span>,top:<span class="built_in">Number</span>,zNear:<span class="built_in">Number</span>, zFar:<span class="built_in">Number</span>)
+<span class="number">2.</span> perspectiveLH(width:<span class="built_in">Number</span>, height:<span class="built_in">Number</span>, zNear:<span class="built_in">Number</span>, zFar:<span class="built_in">Number</span>)
+<span class="number">3.</span> perspectiveFieldOfViewLH(fieldOfViewY:<span class="built_in">Number</span>, aspectRatio:<span class="built_in">Number</span>, zNear:<span class="built_in">Number</span>, zFar:<span class="built_in">Number</span>)
+<span class="number">4.</span> orthoOffCenterLH(left:<span class="built_in">Number</span>, right:<span class="built_in">Number</span>,bottom:<span class="built_in">Number</span>,top:<span class="built_in">Number</span>,zNear:<span class="built_in">Number</span>, zFar:<span class="built_in">Number</span>)
+<span class="number">5.</span> orthoLH(width:<span class="built_in">Number</span>,height:<span class="built_in">Number</span>,zNear:<span class="built_in">Number</span>,zFar:<span class="built_in">Number</span>)
+</code></pre><p>右手：</p>
+<pre><code><span class="number">6.</span> perspectiveOffCenterRH(left:<span class="built_in">Number</span>, right:<span class="built_in">Number</span>,bottom:<span class="built_in">Number</span>,top:<span class="built_in">Number</span>,zNear:<span class="built_in">Number</span>, zFar:<span class="built_in">Number</span>)
+<span class="number">7.</span> perspectiveRH(width:<span class="built_in">Number</span>, height:<span class="built_in">Number</span>, zNear:<span class="built_in">Number</span>, zFar:<span class="built_in">Number</span>)
+<span class="number">8.</span> perspectiveFieldOfViewRH(fieldOfViewY:<span class="built_in">Number</span>, aspectRatio:<span class="built_in">Number</span>, zNear:<span class="built_in">Number</span>, zFar:<span class="built_in">Number</span>)
+<span class="number">9.</span> orthoOffCenterRH(left:<span class="built_in">Number</span>, right:<span class="built_in">Number</span>,bottom:<span class="built_in">Number</span>,top:<span class="built_in">Number</span>,zNear:<span class="built_in">Number</span>, zFar:<span class="built_in">Number</span>)
+<span class="number">10.</span> orthoRH(width:<span class="built_in">Number</span>,height:<span class="built_in">Number</span>,zNear:<span class="built_in">Number</span>,zFar:<span class="built_in">Number</span>)
+</code></pre><p>仔细观察后，根据参数不同一共提供了3种透视投影和2种正交投影生成方式，分为左右手两个版本，共10款，总有一款适合你。</p>
+<p>提供左右手两个版本说明在眼空间可以任意使用左右手坐标系，只要在最后投影时选择合适的投影矩阵即可。</p>
+<p>本文将对这10个矩阵逐个推导一遍，能力有限，如有错误请猛喷。</p>
+<a id="more"></a>
+
+<hr>
+<h2 id="准备">准备</h2>
+<p>我的推导原理是基于下边几个教程的，这些是我搜遍全网找到的最好的教程，只不过大都是OpenGL的，而我这里要基于他们的原理推导一遍Stage3D和WebGL的（下一篇再写WebGL的）。</p>
+<blockquote>
+<p><a href="http://blog.csdn.net/popy007/article/details/1797121" target="_blank" rel="external">深入探索透视投影变换</a><br><a href="http://blog.csdn.net/popy007/article/details/4091967" target="_blank" rel="external">深入探索透视投影变换(续)</a></p>
+</blockquote>
+<p>最详细的矩阵投影3部曲：</p>
+<blockquote>
+<p><a href="http://scratchapixel.com/lessons/3d-advanced-lessons/perspective-and-orthographic-projection-matrix/perspective-projection-matrix/" target="_blank" rel="external">1. Perspective Projection Matrix</a><br><a href="http://scratchapixel.com/lessons/3d-advanced-lessons/perspective-and-orthographic-projection-matrix/opengl-perspective-projection-matrix/" target="_blank" rel="external">2. OpenGL Perspective Projection Matrix</a><br><a href="http://scratchapixel.com/lessons/3d-advanced-lessons/perspective-and-orthographic-projection-matrix/orthographic-projection/" target="_blank" rel="external">3. Orthographic Projection</a></p>
+</blockquote>
+<p>OpenGL 投影矩阵详细推导过程：</p>
+<blockquote>
+<p><a href="http://www.songho.ca/opengl/gl_projectionmatrix.html" target="_blank" rel="external">OpenGL Projection Matrix</a></p>
+</blockquote>
+<p>我只写推导过程，不会详细解释原理，因为原理实在太难说清楚了，不过上边这些教程解释的非常清楚，你可能需要先看一遍再来看我的推导。如果不看，至少要知道这些：</p>
+<ul>
+<li>左右手坐标系</li>
+<li>透视投影和正交投影是什么</li>
+<li>相似三角形</li>
+<li>矩阵乘法</li>
+<li>线性插值</li>
+<li>其次坐标转普通坐标</li>
+<li>NDC（Normalized Device Coordinates） </li>
+</ul>
+<hr>
+<h2 id="开始推导">开始推导</h2>
+<blockquote>
+<p>免责声明：不会打公式，全手写，字丑勿怪。</p>
+</blockquote>
+<p>先推导左手坐标系的5个矩阵，函数名和参数太长，眼花了，我来用首字母把参数简写一下。<br>例如： <code>right -&gt; r</code>  , <code>width -&gt; w</code> ，<code>zNear -&gt; n</code> , <code>zFar -&gt; f</code></p>
+<p><img src="/article/2014-10-16/stage3d-projection-matrix/1.jpg" alt=""></p>
+<p>发现参数都有near和far，区别只在于前几个参数。<br>其实只要推出参数最多的2个典型：</p>
+<pre><code><span class="number">1.</span> perspectiveOffCenterLH(left:<span class="built_in">Number</span>,right:<span class="built_in">Number</span>,bottom:<span class="built_in">Number</span>,top:<span class="built_in">Number</span>,zNear:<span class="built_in">Number</span>, zFar:<span class="built_in">Number</span>)    
+<span class="number">4.</span> orthoOffCenterLH(left:<span class="built_in">Number</span>, right:<span class="built_in">Number</span>,bottom:<span class="built_in">Number</span>,top:<span class="built_in">Number</span>,zNear:<span class="built_in">Number</span>, zFar:<span class="built_in">Number</span>)
+</code></pre><p>其他的都只是他们的变种而已。<br>从1号典型开始，看最终能否得到<a href="https://github.com/adobe-flash/graphicscorelib/blob/master/src/com/adobe/utils/PerspectiveMatrix3D.as" target="_blank" rel="external">官方提供的</a>矩阵：</p>
+<pre><code><span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">perspectiveOffCenterLH</span><span class="params">(left:Number, right:Number,bottom:Number,top:Number,zNear:Number, zFar:Number)</span><span class="type">:void</span> 
+</span>{
+   <span class="keyword">this</span>.copyRawDataFrom(Vector.&lt;Number&gt;([
+    <span class="number">2.0</span>*zNear/(right-left), <span class="number">0.0</span>, <span class="number">0.0</span>, <span class="number">0.0</span>,
+    <span class="number">0.0</span>, -<span class="number">2.0</span>*zNear/(bottom-top), <span class="number">0.0</span>, <span class="number">0.0</span>,
+    -<span class="number">1.0</span>-<span class="number">2.0</span>*left/(right-left), <span class="number">1.0</span>+<span class="number">2.0</span>*top/(bottom-top), -zFar/(zNear-zFar), <span class="number">1.0</span>,
+    <span class="number">0.0</span>, <span class="number">0.0</span>, (zNear*zFar)/(zNear-zFar), <span class="number">0.0</span>
+   ]));
+  }
+</code></pre><hr>
+<h4 id="推导_1-_perspectiveOffCenterLH">推导 1. perspectiveOffCenterLH</h4>
+<p>点p投影到p’，N为近平面 ，左手坐标系，所以近平面在正z轴方向，画图</p>
+<p><img src="/article/2014-10-16/stage3d-projection-matrix/2.jpg" alt=""></p>
+<p>根据大小两个相似三角形，得到</p>
+<p><img src="/article/2014-10-16/stage3d-projection-matrix/3.jpg" alt=""></p>
+<p>求出x’为</p>
+<p><img src="/article/2014-10-16/stage3d-projection-matrix/4.jpg" alt=""></p>
+<p>同理 y’为</p>
+<p><img src="/article/2014-10-16/stage3d-projection-matrix/5.jpg" alt=""></p>
+<p>当点P投影到近平面，z’自然永远等于近平面<strong>N</strong>，所以先不要算他了，后边再说。x’ y’已经是投影后的坐标了，但显卡需要的是NDC坐标，所以我们要根据线性插值把x’ y’插值到NDC范围内， 结果记为xn yn。</p>
+<blockquote>
+<p><strong>注意：Stage3D的NDC范围在(-1,-1,0)到(1,1,1)</strong></p>
+</blockquote>
+<p>已知 left, right,bottom,top ，简写为 l, r, b, t  ，投影后的点为x’,根据线性插值公式求出缩放后的Xn.</p>
+<p><img src="/article/2014-10-16/stage3d-projection-matrix/6.jpg" alt=""></p>
+<p>同理yn等于</p>
+<p><img src="/article/2014-10-16/stage3d-projection-matrix/7.jpg" alt=""></p>
+<p>把上边的求得的投影点x’,y’带入xn,yn，整理。</p>
+<p><img src="/article/2014-10-16/stage3d-projection-matrix/8.jpg" alt=""></p>
+<p>为啥整理成这种形式呢？因为这是一个巧妙的安排，毕竟我们最终要用<strong>一个矩阵乘法</strong> + <strong>一个其次坐标转普通坐标</strong> 来完成整个转换，把z放到分母可以方便后边做其次坐标转普通坐标，后边会看到两个分子也可以方便的带入矩阵。</p>
+<p>同理yn等于</p>
+<p><img src="/article/2014-10-16/stage3d-projection-matrix/9.jpg" alt=""></p>
+<p>好啦，现在改成矩阵形式，投影前的点<strong>[x,y,z,1]</strong>乘以一个矩阵<strong>M</strong>  得到的其次坐标，再除以w转成普通坐标后，应该得到的结果为<strong>[xn，yn，zn,1]</strong>求这个矩阵。</p>
+<blockquote>
+<p><strong>注意：Stage3D使用行向量右乘列矩阵</strong></p>
+</blockquote>
+<p>根据上边我们求得的结果，已经可以猜出矩阵部分元素了</p>
+<p><img src="/article/2014-10-16/stage3d-projection-matrix/10.jpg" alt=""></p>
+<p>就差z坐标了，z坐标投影后永远等于近平面n，保存他没有意义了，我们要用z来保存转换之前的深度，并线性插值到NDC范围内提供给设备，<strong>注意Stage3D中zn的NDC范围在0~1之间</strong>，但按照之前xy线性插值的方法，我推不出来 , 需要换种想法了，之前提到的教程里也都是这种方法。</p>
+<p>看上边的图，<strong>[x,y,z,1]</strong>点乘<strong>[?,?,?,?]</strong> 应该等于转换后的其次坐标z ， 由于z与x,y无关，所以把这两个位置都写成0，借助后两个元素A，B来解决线性插值。</p>
+<p><img src="/article/2014-10-16/stage3d-projection-matrix/11.jpg" alt=""></p>
+<p>[x,y,z,1] 点乘[?,?,?,?] 就变成了  [x,y,z,1]点乘[0,0,A,B]</p>
+<p>zn其次坐标就等于 x <em> 0 + y </em> 0 + A <em> z + 1 </em> B</p>
+<p>其次转普通坐标</p>
+<p><img src="/article/2014-10-16/stage3d-projection-matrix/12.png" alt=""></p>
+<p>zn的NDC范围在 0~1之间，说明在zNear时为0，zFar时为1，so</p>
+<p><img src="/article/2014-10-16/stage3d-projection-matrix/13.png" alt=""></p>
+<p>解方程组求A，B</p>
+<p><img src="/article/2014-10-16/stage3d-projection-matrix/14.jpg" alt=""></p>
+<p>带入矩阵，最终结果</p>
+<p><img src="/article/2014-10-16/stage3d-projection-matrix/15.png" alt=""></p>
+<p>对比一下官方的结果，</p>
+<pre><code><span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">perspectiveOffCenterLH</span><span class="params">(left:Number, right:Number,bottom:Number,top:Number,zNear:Number, zFar:Number)</span><span class="type">:void</span> 
+</span>{
+   <span class="keyword">this</span>.copyRawDataFrom(Vector.&lt;Number&gt;([
+    <span class="number">2.0</span>*zNear/(right-left), <span class="number">0.0</span>, <span class="number">0.0</span>, <span class="number">0.0</span>,
+    <span class="number">0.0</span>, -<span class="number">2.0</span>*zNear/(bottom-top), <span class="number">0.0</span>, <span class="number">0.0</span>,
+    -<span class="number">1.0</span>-<span class="number">2.0</span>*left/(right-left), <span class="number">1.0</span>+<span class="number">2.0</span>*top/(bottom-top), -zFar/(zNear-zFar), <span class="number">1.0</span>,
+    <span class="number">0.0</span>, <span class="number">0.0</span>, (zNear*zFar)/(zNear-zFar), <span class="number">0.0</span>
+   ]));
+  }
+</code></pre><p>好像除了第3行第1列和第2列不一样，其他都一样的。</p>
+<p>仔细看看官方给的第3行，第1列</p>
+<blockquote>
+<p>-1.0-2.0*left/(right-left)</p>
+</blockquote>
+<p><img src="/article/2014-10-16/stage3d-projection-matrix/16.jpg" alt=""></p>
+<p>原来跟我们的一样，而且我们的版本更简洁一些：）</p>
+<p>第3行第2列也一样，就不写了。</p>
+<hr>
+<h3 id="推导_2-_perspectiveLH">推导 2. perspectiveLH</h3>
+<pre><code>perspectiveLH(width:<span class="built_in">Number</span>, height:<span class="built_in">Number</span>, zNear:<span class="built_in">Number</span>, zFar:<span class="built_in">Number</span>)
+</code></pre><p>这个是以视口的中心做投影，所以</p>
+<p>left = - right<br>top = - bottom</p>
+<p>也就是说 </p>
+<p>r + l = 0<br>r - l = width</p>
+<p>t + b = 0<br>t - b = height</p>
+<p>直接带入上一个推导的矩阵</p>
+<p><img src="/article/2014-10-16/stage3d-projection-matrix/15.png" alt=""></p>
+<p>把上边的矩阵简化，得到</p>
+<p><img src="/article/2014-10-16/stage3d-projection-matrix/17.jpg" alt=""></p>
+<p>正好是官方的这个，一模一样：</p>
+<pre><code><span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">perspectiveLH</span><span class="params">(width:Number, height:Number, zNear:Number, zFar:Number)</span><span class="type">:void</span> 
+</span>{
+   <span class="keyword">this</span>.copyRawDataFrom(Vector.&lt;Number&gt;([
+    <span class="number">2.0</span>*zNear/width, <span class="number">0.0</span>, <span class="number">0.0</span>, <span class="number">0.0</span>,
+    <span class="number">0.0</span>, <span class="number">2.0</span>*zNear/height, <span class="number">0.0</span>, <span class="number">0.0</span>,
+    <span class="number">0.0</span>, <span class="number">0.0</span>, zFar/(zFar-zNear), <span class="number">1.0</span>,
+    <span class="number">0.0</span>, <span class="number">0.0</span>, zNear*zFar/(zNear-zFar), <span class="number">0.0</span>
+   ]));
+  }
+</code></pre><hr>
+<h3 id="推导_3-_perspectiveFieldOfViewLH">推导 3. perspectiveFieldOfViewLH</h3>
+<pre><code>perspectiveFieldOfViewLH(fieldOfViewY:<span class="built_in">Number</span>,aspectRatio:<span class="built_in">Number</span>,zNear:<span class="built_in">Number</span>,zFar:<span class="built_in">Number</span>) 
+</code></pre><p>这里有了两个新参数<strong>fov</strong>和<strong>aspect</strong></p>
+<p><img src="/article/2014-10-16/stage3d-projection-matrix/18.jpg" alt=""></p>
+<p>经过研究，这里的 fov 如图所示，是指YZ平面，top和bottom之间的夹角。</p>
+<p>看看能不能把这两个参数转成width和height表示，这样就可以直接带入上一个推出的矩阵得到新矩阵了</p>
+<p>fov，aspect 与 w ，h是什么关系？</p>
+<p><img src="/article/2014-10-16/stage3d-projection-matrix/19.jpg" alt=""></p>
+<p>这样就可以把h和w求出来了</p>
+<p><img src="/article/2014-10-16/stage3d-projection-matrix/20.jpg" alt=""></p>
+<p>带入上一个矩阵</p>
+<p><img src="/article/2014-10-16/stage3d-projection-matrix/17.jpg" alt=""></p>
+<p>得到</p>
+<p><img src="/article/2014-10-16/stage3d-projection-matrix/21.jpg" alt=""></p>
+<p>仔细看一下正好与官方提供的一样。</p>
+<pre><code><span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">perspectiveFieldOfViewLH</span><span class="params">(fieldOfViewY:Number,aspectRatio:Number,zNear:Number,zFar:Number)</span><span class="type">:void</span> </span>{
+   <span class="keyword">var</span> yScale:Number = <span class="number">1.0</span>/Math.tan(fieldOfViewY/<span class="number">2.0</span>);
+   <span class="keyword">var</span> xScale:Number = yScale / aspectRatio;
+   <span class="keyword">this</span>.copyRawDataFrom(Vector.&lt;Number&gt;([
+    xScale, <span class="number">0.0</span>, <span class="number">0.0</span>, <span class="number">0.0</span>,
+    <span class="number">0.0</span>, yScale, <span class="number">0.0</span>, <span class="number">0.0</span>,
+    <span class="number">0.0</span>, <span class="number">0.0</span>, zFar/(zFar-zNear), <span class="number">1.0</span>,
+    <span class="number">0.0</span>, <span class="number">0.0</span>, (zNear*zFar)/(zNear-zFar), <span class="number">0.0</span>
+   ]));
+  }
+</code></pre><hr>
+<h3 id="推导_4-_orthoOffCenterLH">推导 4. orthoOffCenterLH</h3>
+<p>很难想象这么重要的一个类，官方给的orthoOffCenterLH矩阵居然是错的，而且adobe已经停止支持这个库了，<a href="http://github.com/thibaultimbert/graphicscorelib/issues/5" target="_blank" rel="external">有人提交了错误，也已经没人回应了</a>。</p>
+<p>正确的应该是这样的：</p>
+<pre><code>  <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">orthoOffCenterLH</span><span class="params">(left:Number,right:Number, bottom:Number, top:Number, zNear:Number, zFar:Number)</span><span class="type">:void</span> </span>{
+   <span class="keyword">this</span>.copyRawDataFrom(Vector.&lt;Number&gt;([
+    <span class="number">2.0</span>/(right-left), <span class="number">0.0</span>, <span class="number">0.0</span>, <span class="number">0.0</span>,
+    <span class="number">0.0</span>, <span class="number">2.0</span>*/(top-bottom), <span class="number">0.0</span>, <span class="number">0.0</span>,
+    <span class="number">0.0</span>, <span class="number">0.0</span>, <span class="number">1.0</span>/(zFar-zNear), <span class="number">0.0</span>,
+    (left+right)/(left-right), (bottom+top)/(bottom-top), zNear/(zNear-zFar), <span class="number">1.0</span>
+   ]));
+  }
+</code></pre><p>推导比透视投影简单，因为是正交投影则，所以 </p>
+<pre><code><span class="variable">x =</span> x'
+<span class="variable">y =</span> y'
+</code></pre><p>只需要各个方向缩放到NDC范围内就好了，跟之前一样，线性插值</p>
+<p><img src="/article/2014-10-16/stage3d-projection-matrix/22.jpg" alt=""></p>
+<p>放到矩阵里</p>
+<p><img src="/article/2014-10-16/stage3d-projection-matrix/23.jpg" alt=""></p>
+<p>Az+B 在近裁剪面为0，远裁剪面为1，so</p>
+<pre><code><span class="constant">A n + B</span> = <span class="number">0</span> 
+<span class="constant">A f + B</span> = <span class="number">1</span>
+</code></pre><p>解得：</p>
+<p><img src="/article/2014-10-16/stage3d-projection-matrix/24.jpg" alt=""></p>
+<p>放入矩阵</p>
+<p><img src="/article/2014-10-16/stage3d-projection-matrix/25.jpg" alt=""></p>
+<pre><code>  <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">orthoOffCenterLH</span><span class="params">(left:Number,right:Number, bottom:Number, top:Number, zNear:Number, zFar:Number)</span><span class="type">:void</span> </span>{
+   <span class="keyword">this</span>.copyRawDataFrom(Vector.&lt;Number&gt;([
+    <span class="number">2.0</span>/(right-left), <span class="number">0.0</span>, <span class="number">0.0</span>, <span class="number">0.0</span>,
+    <span class="number">0.0</span>, <span class="number">2.0</span>*/(top-bottom), <span class="number">0.0</span>, <span class="number">0.0</span>,
+    <span class="number">0.0</span>, <span class="number">0.0</span>, <span class="number">1.0</span>/(zFar-zNear), <span class="number">0.0</span>,
+    (left+right)/(left-right), (bottom+top)/(bottom-top), zNear/(zNear-zFar), <span class="number">1.0</span>
+   ]));
+  }
+</code></pre><hr>
+<h3 id="推导_5-_orthoLH">推导 5. orthoLH</h3>
+<pre><code>orthoLH(width:<span class="built_in">Number</span>,height:<span class="built_in">Number</span>,zNear:<span class="built_in">Number</span>,zFar:<span class="built_in">Number</span>)
+</code></pre><p>由于是以视口为中心的正交投影矩阵，所以：</p>
+<pre><code><span class="keyword">left</span> = - <span class="keyword">right</span>
+top = - bottom
+</code></pre><p>也就是说</p>
+<p>r + l = 0<br>r - l = width</p>
+<p>t + b = 0<br>t - b = height</p>
+<p>带入刚才求得的这个矩阵</p>
+<p><img src="/article/2014-10-16/stage3d-projection-matrix/25.jpg" alt=""></p>
+<p>得到：</p>
+<pre><code><span class="number">2</span>/w, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>,
+<span class="number">0</span>, <span class="number">2</span>/h, <span class="number">0</span>, <span class="number">0</span>,
+<span class="number">0</span>, <span class="number">0</span>, <span class="number">1</span>/f-n, <span class="number">0</span>,
+<span class="number">0</span>, <span class="number">0</span>, n/n<span class="operator">-f</span>, <span class="number">1</span> 
+</code></pre><p>对比官方的版本，是一样的</p>
+<pre><code>  <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">orthoLH</span><span class="params">(width:Number,height:Number,zNear:Number,zFar:Number)</span><span class="type">:void</span> </span>{
+   <span class="keyword">this</span>.copyRawDataFrom(Vector.&lt;Number&gt;([
+    <span class="number">2.0</span>/width, <span class="number">0.0</span>, <span class="number">0.0</span>, <span class="number">0.0</span>,
+    <span class="number">0.0</span>, <span class="number">2.0</span>/height, <span class="number">0.0</span>, <span class="number">0.0</span>,
+    <span class="number">0.0</span>, <span class="number">0.0</span>, <span class="number">1.0</span>/(zFar-zNear), <span class="number">0.0</span>,
+    <span class="number">0.0</span>, <span class="number">0.0</span>, zNear/(zNear-zFar), <span class="number">1.0</span>
+   ]));
+  }
+</code></pre><p>至此左手5个已经推导完毕，右手的类似，要加快速度了。</p>
+<hr>
+<h3 id="推导_6-_perspectiveOffCenterRH">推导 6. perspectiveOffCenterRH</h3>
+<p>从参数最多的开始</p>
+<pre><code>perspectiveOffCenterRH(left:<span class="built_in">Number</span>, right:<span class="built_in">Number</span>,bottom:<span class="built_in">Number</span>,top:<span class="built_in">Number</span>,zNear:<span class="built_in">Number</span>, zFar:<span class="built_in">Number</span>)
+</code></pre><p>点p投影到p’ ，N为近平面 ，右手坐标系，所以近平面在负z轴方向，这次换个方向画图吧</p>
+<p><img src="/article/2014-10-16/stage3d-projection-matrix/26.jpg" alt=""></p>
+<p>先求投影点x’ y’,然后插值到NDC范围-1~1之间， 结果记为xn yn。</p>
+<p><img src="/article/2014-10-16/stage3d-projection-matrix/27.jpg" alt=""></p>
+<p>分母都是-z 说明在做透视除法时w为-z ，所以猜到矩阵为</p>
+<p><img src="/article/2014-10-16/stage3d-projection-matrix/28.jpg" alt=""></p>
+<p>处理z</p>
+<p><img src="/article/2014-10-16/stage3d-projection-matrix/29.jpg" alt=""></p>
+<p>AB带入矩阵</p>
+<p><img src="/article/2014-10-16/stage3d-projection-matrix/30.jpg" alt=""></p>
+<p>对比官方提供的，稍微整理一下正负号就一模一样了。</p>
+<pre><code><span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">perspectiveOffCenterRH</span><span class="params">(left:Number,right:Number,bottom:Number,top:Number,zNear:Number, zFar:Number)</span><span class="type">:void</span> </span>{
+   <span class="keyword">this</span>.copyRawDataFrom(Vector.&lt;Number&gt;([
+    <span class="number">2.0</span>*zNear/(right-left), <span class="number">0.0</span>, <span class="number">0.0</span>, <span class="number">0.0</span>,
+    <span class="number">0.0</span>, -<span class="number">2.0</span>*zNear/(bottom-top), <span class="number">0.0</span>, <span class="number">0.0</span>,
+    <span class="number">1.0</span>+<span class="number">2.0</span>*left/(right-left), -<span class="number">1.0</span>-<span class="number">2.0</span>*top/(bottom-top), zFar/(zNear-zFar), -<span class="number">1.0</span>,
+    <span class="number">0.0</span>, <span class="number">0.0</span>, (zNear*zFar)/(zNear-zFar), <span class="number">0.0</span>
+   ]));
+  }
+</code></pre><p>有了这个，后边两个变种就容易了</p>
+<hr>
+<h3 id="推导_7-_perspectiveRH">推导 7. perspectiveRH</h3>
+<pre><code>perspectiveRH(width:<span class="built_in">Number</span>,height:<span class="built_in">Number</span>,zNear:<span class="built_in">Number</span>,zFar:<span class="built_in">Number</span>)
+</code></pre><p>以视口的中心做投影，所以</p>
+<pre><code><span class="keyword">left</span> = - <span class="keyword">right</span>
+top = - bottom
+</code></pre><p>也就是说</p>
+<pre><code>r + <span class="variable">l =</span> <span class="number">0</span>
+r - <span class="variable">l =</span> width
+t + <span class="variable">b =</span> <span class="number">0</span>
+t - <span class="variable">b =</span> height
+</code></pre><p>直接带入上一个推导的矩阵，得到的结果跟官方一模一样。</p>
+<pre><code><span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">perspectiveRH</span><span class="params">(width:Number,height:Number,zNear:Number,zFar:Number)</span><span class="type">:void</span> </span>{
+   <span class="keyword">this</span>.copyRawDataFrom(Vector.&lt;Number&gt;([
+    <span class="number">2.0</span>*zNear/width, <span class="number">0.0</span>, <span class="number">0.0</span>, <span class="number">0.0</span>,
+    <span class="number">0.0</span>, <span class="number">2.0</span>*zNear/height, <span class="number">0.0</span>, <span class="number">0.0</span>,
+    <span class="number">0.0</span>, <span class="number">0.0</span>, zFar/(zNear-zFar), -<span class="number">1.0</span>,
+    <span class="number">0.0</span>, <span class="number">0.0</span>, zNear*zFar/(zNear-zFar), <span class="number">0.0</span>
+   ]));
+  }
+</code></pre><hr>
+<h3 id="推导_8-_perspectiveFieldOfViewRH">推导 8. perspectiveFieldOfViewRH</h3>
+<pre><code>perspectiveFieldOfViewRH(fieldOfViewY:<span class="built_in">Number</span>,aspectRatio:<span class="built_in">Number</span>,zNear:<span class="built_in">Number</span>,zFar:<span class="built_in">Number</span>)
+</code></pre><p>跟左手差不多，z轴相反，就不画图了</p>
+<p><img src="/article/2014-10-16/stage3d-projection-matrix/31.jpg" alt=""></p>
+<p>带入上个矩阵</p>
+<p><img src="/article/2014-10-16/stage3d-projection-matrix/32.jpg" alt=""></p>
+<p>对比，一模一样：）</p>
+<pre><code>  <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">perspectiveFieldOfViewRH</span><span class="params">(fieldOfViewY:Number,aspectRatio:Number,zNear:Number,zFar:Number)</span><span class="type">:void</span> </span>{
+   <span class="keyword">var</span> yScale:Number = <span class="number">1.0</span>/Math.tan(fieldOfViewY/<span class="number">2.0</span>);
+   <span class="keyword">var</span> xScale:Number = yScale / aspectRatio;
+   <span class="keyword">this</span>.copyRawDataFrom(Vector.&lt;Number&gt;([
+    xScale, <span class="number">0.0</span>, <span class="number">0.0</span>, <span class="number">0.0</span>,
+    <span class="number">0.0</span>, yScale, <span class="number">0.0</span>, <span class="number">0.0</span>,
+    <span class="number">0.0</span>, <span class="number">0.0</span>, zFar/(zNear-zFar), -<span class="number">1.0</span>,
+    <span class="number">0.0</span>, <span class="number">0.0</span>, (zNear*zFar)/(zNear-zFar), <span class="number">0.0</span>
+   ]));
+  }
+</code></pre><hr>
+<h3 id="推导_9-_orthoOffCenterRH">推导 9. orthoOffCenterRH</h3>
+<pre><code>orthoOffCenterRH(left:<span class="built_in">Number</span>,right:<span class="built_in">Number</span>,bottom:<span class="built_in">Number</span>,top:<span class="built_in">Number</span>,zNear:<span class="built_in">Number</span>, zFar:<span class="built_in">Number</span>)
+</code></pre><p>这个官方提供的矩阵也错了，正确的应该这样：</p>
+<pre><code><span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">orthoOffCenterRH</span><span class="params">(left:Number,right:Number,bottom:Number,top:Number,zNear:Number, zFar:Number)</span><span class="type">:void</span> </span>{
+        <span class="keyword">this</span>.copyRawDataFrom(Vector.&lt;Number&gt;([
+            <span class="number">2.0</span>/(right-left), <span class="number">0.0</span>, <span class="number">0.0</span>, <span class="number">0.0</span>,
+            <span class="number">0.0</span>, <span class="number">2.0</span>/(top-bottom), <span class="number">0.0</span>, <span class="number">0.0</span>,
+            <span class="number">0.0</span>, <span class="number">0.0</span>, <span class="number">1.0</span>/(zNear-zFar), <span class="number">0.0</span>,
+            (left+right)/(left-right), (bottom+top)/(bottom-top), zNear/(zNear-zFar), <span class="number">1.0</span>
+        ]));
+        }
+</code></pre><p>因为正交投影，则 </p>
+<pre><code><span class="variable">x =</span> x'
+<span class="variable">y =</span> y'
+</code></pre><p>直接线性插值到 -1 ~ 1之间</p>
+<p><img src="/article/2014-10-16/stage3d-projection-matrix/33.jpg" alt=""></p>
+<p>推出矩阵</p>
+<p><img src="/article/2014-10-16/stage3d-projection-matrix/34.jpg" alt=""></p>
+<p>求变换后的Zn</p>
+<p><img src="/article/2014-10-16/stage3d-projection-matrix/35.jpg" alt=""></p>
+<hr>
+<h3 id="推导_10-_orthoRH">推导 10. orthoRH</h3>
+<pre><code>orthoRH(width:<span class="built_in">Number</span>,height:<span class="built_in">Number</span>,zNear:<span class="built_in">Number</span>,zFar:<span class="built_in">Number</span>)
+</code></pre><p>最后一个视口中心投影 ，这个官方提供的矩阵也有一个笔误 @_@，第3行第3列:</p>
+<blockquote>
+<p>1.0/(zNear-zNear)</p>
+</blockquote>
+<p>应该为</p>
+<blockquote>
+<p>1.0/(zNear-zFar)</p>
+</blockquote>
+<p>开始推导：</p>
+<pre><code><span class="variable">r =</span> - l
+<span class="variable">b =</span> -t
+</code></pre><p>so</p>
+<pre><code>r - <span class="variable">l =</span> w
+r + <span class="variable">l =</span> <span class="number">0</span>
+t - <span class="variable">b =</span> h
+t + <span class="variable">b =</span> <span class="number">0</span>
+</code></pre><p>带入上边矩阵，很明显得到</p>
+<pre><code><span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">orthoRH</span><span class="params">(width:Number,height:Number,zNear:Number,zFar:Number)</span><span class="type">:void</span> </span>{
+   <span class="keyword">this</span>.copyRawDataFrom(Vector.&lt;Number&gt;([
+    <span class="number">2.0</span>/width, <span class="number">0.0</span>, <span class="number">0.0</span>, <span class="number">0.0</span>,
+    <span class="number">0.0</span>, <span class="number">2.0</span>/height, <span class="number">0.0</span>, <span class="number">0.0</span>,
+    <span class="number">0.0</span>, <span class="number">0.0</span>, <span class="number">1.0</span>/(zNear-zFar), <span class="number">0.0</span>,
+    <span class="number">0.0</span>, <span class="number">0.0</span>, zNear/(zNear-zFar), <span class="number">1.0</span>
+   ]));
+  }
+</code></pre><p>全文完。 </p>
+
+		<hr>
+		<blockquote>
+		<p>如本文对你有一点点帮助的话，请用支付宝钱包扫码请我喝杯可乐，3Q。</p>
+		</blockquote>
+		<p><img src="/image/alipay.png" alt=""></p>
+      
+    </div>
+    <footer class="article-footer">
+      
+        <a data-url="http://nshen.net/article/2014-10-16/stage3d-projection-matrix/" data-id="zl8kl8old1o0wbek" class="article-share-link" data-share="baidu">分享到</a>
+      
+
+      
+        <a href="http://nshen.net/article/2014-10-16/stage3d-projection-matrix/#ds-thread" class="article-comment-link">Comments</a>
+      
+
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/math/">math</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/stage3d/">stage3d</a></li></ul>
+
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/article/2014-10-16/hello-world/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">更换博客系统</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+  <section id="comments">
+    <div id="ds-thread" class="ds-thread" data-thread-key="article/2014-10-16/stage3d-projection-matrix/" data-title="Stage3D各种投影矩阵的推导" data-url="http://nshen.net/article/2014-10-16/stage3d-projection-matrix/"></div>
+  </section>
+</section>
+        
+      </div>
+      <footer id="footer">
+  
+    <aside id="sidebar" class="outer">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">分类</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/article/">article</a><span class="category-list-count">7</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/project/">project</a><span class="category-list-count">7</span></li></ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">标签云</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/math/" style="font-size: 10.00px;">math</a><a href="/tags/pdf2mag/" style="font-size: 10.00px;">pdf2mag</a><a href="/tags/stage3d/" style="font-size: 15.00px;">stage3d</a><a href="/tags/游戏/" style="font-size: 20.00px;">游戏</a><a href="/tags/翻译/" style="font-size: 10.00px;">翻译</a>
+    </div>
+  </div>
+
+  
+
+<a href=" /links/" >友情链接</a>
+</aside>
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2014 Nshen<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+      .
+      Theme by <a href="https://github.com/xiangming/landscape-plus" target="_blank">Landscape-plus</a>
+    </div>
+	<script type="text/javascript">
+		var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+		document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3Fe1acab9c095adb812998c18d06d414ea' type='text/javascript'%3E%3C/script%3E"));
+	</script>
+
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">首页</a>
+  
+    <a href="/categories/article/" class="mobile-nav-link">学习笔记</a>
+  
+    <a href="/categories/project/" class="mobile-nav-link">实验项目</a>
+  
+    <a href="/about/" class="mobile-nav-link">关于我</a>
+  
+</nav>
+    
+<!-- 多说公共js代码 start -->
+<script type="text/javascript">
+var duoshuoQuery = {short_name:"nshen"};
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';ds.async = true;
+    ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] 
+     || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+  </script>
+<!-- 多说公共js代码 end -->
+
+
+<!-- 百度分享 start -->
+
+<div id="article-share-box" class="article-share-box">
+  <div id="bdshare" class="bdsharebuttonbox article-share-links">
+    <a class="article-share-weibo" data-cmd="tsina" title="分享到新浪微博"></a>
+    <a class="article-share-weixin" data-cmd="weixin" title="分享到微信"></a>
+    <a class="article-share-qq" data-cmd="sqq" title="分享到QQ"></a>
+    <a class="article-share-renren" data-cmd="renren" title="分享到人人网"></a>
+    <a class="article-share-more" data-cmd="more" title="更多"></a>
+  </div>
+</div>
+<script>window._bd_share_config={"common":{},"share":{"bdCustomStyle":"nocss.css"}};with(document)0[(getElementsByTagName("head")[0]||body).appendChild(createElement("script")).src="http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion="+~(-new Date()/36e5)];</script>
+
+<!-- 百度分享 end -->
+
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css" type="text/css">
+
+  <script src="/fancybox/jquery.fancybox.pack.js" type="text/javascript"></script>
+
+
+
+<script src="/js/script.js" type="text/javascript"></script>
+
+  </div>
+</body>
+</html>
