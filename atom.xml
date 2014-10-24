@@ -4,7 +4,7 @@
   <subtitle><![CDATA[我正在考虑在这里写点啥...]]></subtitle>
   <link href="/atom.xml" rel="self"/>
   <link href="http://nshen.net/"/>
-  <updated>2014-10-22T01:30:12.955Z</updated>
+  <updated>2014-10-24T17:04:51.666Z</updated>
   <id>http://nshen.net/</id>
   
   <author>
@@ -19,7 +19,7 @@
     <link href="http://nshen.net/article/2014-10-16/stage3d-projection-matrix/"/>
     <id>http://nshen.net/article/2014-10-16/stage3d-projection-matrix/</id>
     <published>2014-10-16T05:55:10.000Z</published>
-    <updated>2014-10-20T15:39:35.000Z</updated>
+    <updated>2014-10-24T16:21:22.000Z</updated>
     <content type="html"><![CDATA[<h2 id="观察">观察</h2>
 <p>先观察一下Stage3D的<a href="https://github.com/adobe-flash/graphicscorelib/blob/master/src/com/adobe/utils/PerspectiveMatrix3D.as" target="_blank" rel="external">PerspectiveMatrix3D</a>类提供的投影矩阵。</p>
 <p>左手：</p>
@@ -198,7 +198,7 @@
 <pre><code>  <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">orthoOffCenterLH</span><span class="params">(left:Number,right:Number, bottom:Number, top:Number, zNear:Number, zFar:Number)</span><span class="type">:void</span> </span>{
    <span class="keyword">this</span>.copyRawDataFrom(Vector.&lt;Number&gt;([
     <span class="number">2.0</span>/(right-left), <span class="number">0.0</span>, <span class="number">0.0</span>, <span class="number">0.0</span>,
-    <span class="number">0.0</span>, <span class="number">2.0</span>*/(top-bottom), <span class="number">0.0</span>, <span class="number">0.0</span>,
+    <span class="number">0.0</span>, <span class="number">2.0</span>/(top-bottom), <span class="number">0.0</span>, <span class="number">0.0</span>,
     <span class="number">0.0</span>, <span class="number">0.0</span>, <span class="number">1.0</span>/(zFar-zNear), <span class="number">0.0</span>,
     (left+right)/(left-right), (bottom+top)/(bottom-top), zNear/(zNear-zFar), <span class="number">1.0</span>
    ]));
@@ -220,7 +220,7 @@
 <pre><code>  <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">orthoOffCenterLH</span><span class="params">(left:Number,right:Number, bottom:Number, top:Number, zNear:Number, zFar:Number)</span><span class="type">:void</span> </span>{
    <span class="keyword">this</span>.copyRawDataFrom(Vector.&lt;Number&gt;([
     <span class="number">2.0</span>/(right-left), <span class="number">0.0</span>, <span class="number">0.0</span>, <span class="number">0.0</span>,
-    <span class="number">0.0</span>, <span class="number">2.0</span>*/(top-bottom), <span class="number">0.0</span>, <span class="number">0.0</span>,
+    <span class="number">0.0</span>, <span class="number">2.0</span>/(top-bottom), <span class="number">0.0</span>, <span class="number">0.0</span>,
     <span class="number">0.0</span>, <span class="number">0.0</span>, <span class="number">1.0</span>/(zFar-zNear), <span class="number">0.0</span>,
     (left+right)/(left-right), (bottom+top)/(bottom-top), zNear/(zNear-zFar), <span class="number">1.0</span>
    ]));

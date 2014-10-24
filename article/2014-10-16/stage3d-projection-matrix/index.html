@@ -330,7 +330,7 @@
 <pre><code>  <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">orthoOffCenterLH</span><span class="params">(left:Number,right:Number, bottom:Number, top:Number, zNear:Number, zFar:Number)</span><span class="type">:void</span> </span>{
    <span class="keyword">this</span>.copyRawDataFrom(Vector.&lt;Number&gt;([
     <span class="number">2.0</span>/(right-left), <span class="number">0.0</span>, <span class="number">0.0</span>, <span class="number">0.0</span>,
-    <span class="number">0.0</span>, <span class="number">2.0</span>*/(top-bottom), <span class="number">0.0</span>, <span class="number">0.0</span>,
+    <span class="number">0.0</span>, <span class="number">2.0</span>/(top-bottom), <span class="number">0.0</span>, <span class="number">0.0</span>,
     <span class="number">0.0</span>, <span class="number">0.0</span>, <span class="number">1.0</span>/(zFar-zNear), <span class="number">0.0</span>,
     (left+right)/(left-right), (bottom+top)/(bottom-top), zNear/(zNear-zFar), <span class="number">1.0</span>
    ]));
@@ -352,7 +352,7 @@
 <pre><code>  <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">orthoOffCenterLH</span><span class="params">(left:Number,right:Number, bottom:Number, top:Number, zNear:Number, zFar:Number)</span><span class="type">:void</span> </span>{
    <span class="keyword">this</span>.copyRawDataFrom(Vector.&lt;Number&gt;([
     <span class="number">2.0</span>/(right-left), <span class="number">0.0</span>, <span class="number">0.0</span>, <span class="number">0.0</span>,
-    <span class="number">0.0</span>, <span class="number">2.0</span>*/(top-bottom), <span class="number">0.0</span>, <span class="number">0.0</span>,
+    <span class="number">0.0</span>, <span class="number">2.0</span>/(top-bottom), <span class="number">0.0</span>, <span class="number">0.0</span>,
     <span class="number">0.0</span>, <span class="number">0.0</span>, <span class="number">1.0</span>/(zFar-zNear), <span class="number">0.0</span>,
     (left+right)/(left-right), (bottom+top)/(bottom-top), zNear/(zNear-zFar), <span class="number">1.0</span>
    ]));
