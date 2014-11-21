@@ -3,12 +3,12 @@
 <head>
   <meta charset="utf-8">
   
-  <title>Tag: stage3d | N神的研究所</title>
+  <title>Archives: 2014/11 | N神的研究所</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta name="description" content="陈新的个人站点，关注Flash平台相关技术，通常发布一些个人笔记和业余项目等。">
 <meta property="og:type" content="website">
 <meta property="og:title" content="N神的研究所">
-<meta property="og:url" content="http://nshen.net/tags/stage3d/">
+<meta property="og:url" content="http://nshen.net/archives/2014/11/">
 <meta property="og:site_name" content="N神的研究所">
 <meta property="og:description" content="陈新的个人站点，关注Flash平台相关技术，通常发布一些个人笔记和业余项目等。">
 <meta name="twitter:card" content="summary">
@@ -79,134 +79,36 @@
       <div class="outer">
         <section id="main">
   
-    <article id="post-stage3d-projection-matrix" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/article/2014-10-16/stage3d-projection-matrix/" class="article-date">
-  <time datetime="2014-10-16T05:55:10.000Z" itemprop="datePublished">10月 16 2014</time>
+  
+    
+    
+      
+      
+      <section class="archives-wrap">
+        <div class="archive-year-wrap">
+          <a href="/archives/2014" class="archive-year">2014</a>
+        </div>
+        <div class="archives">
+    
+    <article class="archive-article archive-type-post">
+  <div class="archive-article-inner">
+    <header class="archive-article-header">
+      <a href="/project/2014-11-21/as2ts/" class="archive-article-date">
+  <time datetime="2014-11-21T02:35:00.000Z" itemprop="datePublished">11月 21</time>
 </a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/article/">article</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-	<!---->
-    
-      <header class="article-header">
-        
+      
   
     <h1 itemprop="name">
-      <a class="article-title" href="/article/2014-10-16/stage3d-projection-matrix/">Stage3D各种投影矩阵的推导</a>
+      <a class="archive-article-title" href="/project/2014-11-21/as2ts/">AS2TS：ActionScript3在线转为TypeScript</a>
     </h1>
   
 
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h2 id="观察">观察</h2>
-<p>先观察一下Stage3D的<a href="https://github.com/adobe-flash/graphicscorelib/blob/master/src/com/adobe/utils/PerspectiveMatrix3D.as" target="_blank" rel="external">PerspectiveMatrix3D</a>类提供的投影矩阵。</p>
-<p>左手：</p>
-<pre><code><span class="number">1.</span> perspectiveOffCenterLH(left:<span class="built_in">Number</span>, right:<span class="built_in">Number</span>,bottom:<span class="built_in">Number</span>,top:<span class="built_in">Number</span>,zNear:<span class="built_in">Number</span>, zFar:<span class="built_in">Number</span>)
-<span class="number">2.</span> perspectiveLH(width:<span class="built_in">Number</span>, height:<span class="built_in">Number</span>, zNear:<span class="built_in">Number</span>, zFar:<span class="built_in">Number</span>)
-<span class="number">3.</span> perspectiveFieldOfViewLH(fieldOfViewY:<span class="built_in">Number</span>, aspectRatio:<span class="built_in">Number</span>, zNear:<span class="built_in">Number</span>, zFar:<span class="built_in">Number</span>)
-<span class="number">4.</span> orthoOffCenterLH(left:<span class="built_in">Number</span>, right:<span class="built_in">Number</span>,bottom:<span class="built_in">Number</span>,top:<span class="built_in">Number</span>,zNear:<span class="built_in">Number</span>, zFar:<span class="built_in">Number</span>)
-<span class="number">5.</span> orthoLH(width:<span class="built_in">Number</span>,height:<span class="built_in">Number</span>,zNear:<span class="built_in">Number</span>,zFar:<span class="built_in">Number</span>)
-</code></pre><p>右手：</p>
-<pre><code><span class="number">6.</span> perspectiveOffCenterRH(left:<span class="built_in">Number</span>, right:<span class="built_in">Number</span>,bottom:<span class="built_in">Number</span>,top:<span class="built_in">Number</span>,zNear:<span class="built_in">Number</span>, zFar:<span class="built_in">Number</span>)
-<span class="number">7.</span> perspectiveRH(width:<span class="built_in">Number</span>, height:<span class="built_in">Number</span>, zNear:<span class="built_in">Number</span>, zFar:<span class="built_in">Number</span>)
-<span class="number">8.</span> perspectiveFieldOfViewRH(fieldOfViewY:<span class="built_in">Number</span>, aspectRatio:<span class="built_in">Number</span>, zNear:<span class="built_in">Number</span>, zFar:<span class="built_in">Number</span>)
-<span class="number">9.</span> orthoOffCenterRH(left:<span class="built_in">Number</span>, right:<span class="built_in">Number</span>,bottom:<span class="built_in">Number</span>,top:<span class="built_in">Number</span>,zNear:<span class="built_in">Number</span>, zFar:<span class="built_in">Number</span>)
-<span class="number">10.</span> orthoRH(width:<span class="built_in">Number</span>,height:<span class="built_in">Number</span>,zNear:<span class="built_in">Number</span>,zFar:<span class="built_in">Number</span>)
-</code></pre><p>仔细观察后，根据参数不同一共提供了3种透视投影和2种正交投影生成方式，分为左右手两个版本，共10款，总有一款适合你。</p>
-<p>提供左右手两个版本说明在眼空间可以任意使用左右手坐标系，只要在最后投影时选择合适的投影矩阵即可。</p>
-<p>本文将对这10个矩阵逐个推导一遍，能力有限，如有错误请猛喷。</p>
-
-        
-          <p class="article-more-link">
-            <a href="/article/2014-10-16/stage3d-projection-matrix/#more">Read More</a>
-          </p>
-        
-      
-    </div>
-    <footer class="article-footer">
-      
-        <a data-url="http://nshen.net/article/2014-10-16/stage3d-projection-matrix/" data-id="7ipamlaqt6h7b582" class="article-share-link" data-share="baidu">分享到</a>
-      
-
-      
-        <a href="http://nshen.net/article/2014-10-16/stage3d-projection-matrix/#ds-thread" class="article-comment-link">Comments</a>
-      
-
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/math/">math</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/stage3d/">stage3d</a></li></ul>
-
-
-    </footer>
+    </header>
   </div>
-  
 </article>
-
-
   
-    <article id="post-stage3d-game-programming-beginner" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/article/2013-07-28/stage3d-game-programming-beginner/" class="article-date">
-  <time datetime="2013-07-27T18:30:31.000Z" itemprop="datePublished">7月 28 2013</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/article/">article</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-	<!---->
-    
-      <header class="article-header">
-        
   
-    <h1 itemprop="name">
-      <a class="article-title" href="/article/2013-07-28/stage3d-game-programming-beginner/">Adobe Flash 11 Stage3D (Molehill) Game Programming Beginner 笔记</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>这篇笔记一年半前读书时发到豆瓣上了，去豆瓣搜过书的应该都看见过，这是我入门3d看的第一本书，现在把原文复制过来简单排版和整理了一下。</p>
-
-        
-          <p class="article-more-link">
-            <a href="/article/2013-07-28/stage3d-game-programming-beginner/#more">Read More</a>
-          </p>
-        
-      
-    </div>
-    <footer class="article-footer">
-      
-        <a data-url="http://nshen.net/article/2013-07-28/stage3d-game-programming-beginner/" data-id="rapquz4z47rtl4tj" class="article-share-link" data-share="baidu">分享到</a>
-      
-
-      
-        <a href="http://nshen.net/article/2013-07-28/stage3d-game-programming-beginner/#ds-thread" class="article-comment-link">Comments</a>
-      
-
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/stage3d/">stage3d</a></li></ul>
-
-
-    </footer>
-  </div>
-  
-</article>
-
-
-  
+    </div></section>
   
 </section>
         

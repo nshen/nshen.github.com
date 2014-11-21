@@ -3,17 +3,38 @@
 <head>
   <meta charset="utf-8">
   
-  <title>Tag: 游戏 | N神的研究所</title>
+  <title>AS2TS：ActionScript3在线转为TypeScript | N神的研究所</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="陈新的个人站点，关注Flash平台相关技术，通常发布一些个人笔记和业余项目等。">
-<meta property="og:type" content="website">
-<meta property="og:title" content="N神的研究所">
-<meta property="og:url" content="http://nshen.net/tags/游戏/">
+  <meta name="description" content="做Flash很少用正则表达式，所以一直都不会写。。这几天恶补了一下，由于之前研究过ActionScript与TypeScript的区别，作为练习写了个ActionScript转TypeScript的小程序，純html5的。
+试用: 
+http://nshen.net/as2ts/
+源码(请fork我吧): 
+https://github.com/nshen/as2ts 
+转换列表：
+
+Boolea">
+<meta property="og:type" content="article">
+<meta property="og:title" content="AS2TS：ActionScript3在线转为TypeScript">
+<meta property="og:url" content="http://nshen.net/project/2014-11-21/as2ts/">
 <meta property="og:site_name" content="N神的研究所">
-<meta property="og:description" content="陈新的个人站点，关注Flash平台相关技术，通常发布一些个人笔记和业余项目等。">
+<meta property="og:description" content="做Flash很少用正则表达式，所以一直都不会写。。这几天恶补了一下，由于之前研究过ActionScript与TypeScript的区别，作为练习写了个ActionScript转TypeScript的小程序，純html5的。
+试用: 
+http://nshen.net/as2ts/
+源码(请fork我吧): 
+https://github.com/nshen/as2ts 
+转换列表：
+
+Boolea">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="N神的研究所">
-<meta name="twitter:description" content="陈新的个人站点，关注Flash平台相关技术，通常发布一些个人笔记和业余项目等。">
+<meta name="twitter:title" content="AS2TS：ActionScript3在线转为TypeScript">
+<meta name="twitter:description" content="做Flash很少用正则表达式，所以一直都不会写。。这几天恶补了一下，由于之前研究过ActionScript与TypeScript的区别，作为练习写了个ActionScript转TypeScript的小程序，純html5的。
+试用: 
+http://nshen.net/as2ts/
+源码(请fork我吧): 
+https://github.com/nshen/as2ts 
+转换列表：
+
+Boolea">
 
   
     <link rel="alternative" href="http://feed.feedsky.com/nshen" title="N神的研究所" type="application/atom+xml">
@@ -77,12 +98,10 @@
   </div>
 </header>
       <div class="outer">
-        <section id="main">
-  
-    <article id="post-go-to-hell" class="article article-type-post" itemscope itemprop="blogPost">
+        <section id="main"><article id="post-as2ts" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
-    <a href="/project/2011-10-05/go-to-hell/" class="article-date">
-  <time datetime="2011-10-05T06:56:31.000Z" itemprop="datePublished">10月 5 2011</time>
+    <a href="/project/2014-11-21/as2ts/" class="article-date">
+  <time datetime="2014-11-21T02:35:00.000Z" itemprop="datePublished">11月 21 2014</time>
 </a>
     
   <div class="article-category">
@@ -97,8 +116,8 @@
       <header class="article-header">
         
   
-    <h1 itemprop="name">
-      <a class="article-title" href="/project/2011-10-05/go-to-hell/">跨IOS，Android的小游戏《阿鼻地狱》</a>
+    <h1 class="article-title" itemprop="name">
+      AS2TS：ActionScript3在线转为TypeScript
     </h1>
   
 
@@ -106,148 +125,91 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>本是用来参加腾讯和天地会举办的flash手机游戏开发大赛的游戏，完整代码见最下边。</p>
+        <p>做Flash很少用正则表达式，所以一直都不会写。。这几天恶补了一下，由于之前研究过<a href="http://www.nshen.net/article/2013-05-18/as3-to-typescript/" target="_blank" rel="external">ActionScript与TypeScript的区别</a>，作为练习写了个ActionScript转TypeScript的小程序，純html5的。</p>
+<h2 id="试用:_">试用: </h2>
+<p><a href="http://nshen.net/as2ts/" target="_blank" rel="external">http://nshen.net/as2ts/</a></p>
+<h2 id="源码(请fork我吧):_">源码(请fork我吧): </h2>
+<p><a href="https://github.com/nshen/as2ts" target="_blank" rel="external">https://github.com/nshen/as2ts</a> </p>
+<h2 id="转换列表：">转换列表：</h2>
+<ul>
+<li><code>Boolean</code> to <code>boolean</code></li>
+<li><code>uint</code> / <code>int</code> / <code>Number</code> to <code>number</code></li>
+<li><code>String</code> to <code>string</code></li>
+<li><code>:*</code> to <code>:any</code></li>
+<li><code>package</code> to <code>module</code></li>
+<li>comment out <code>import</code> statements ?</li>
+<li><code>public class</code> to <code>export class</code></li>
+<li><code>public function class_name(...):void</code> to <code>constructor(...)</code></li>
+<li><code>internal</code> to <code>public</code></li>
+<li><code>static (public|private|protected)</code> to  <code>(public|private|protected) static</code></li>
+<li><code>(private|public|protected) var</code> to <code>(private|public|protected)</code></li>
+<li><code>(private|public|protected) const</code> to <code>(private|public|protected)</code></li>
+<li><code>(override) (private|public|protected) function</code> to <code>(private|public|protected)</code></li>
+<li><code>(private|public|protected) static var</code> to <code>(private|public|protected) static</code></li>
+<li><code>(private|public|protected) static const</code> to <code>(private|public|protected) static</code></li>
+<li><code>(private|public|protected) static function</code> to <code>(private|public|protected) static</code></li>
+<li>local <code>const</code> to <code>var</code></li>
+<li><code>A as B</code> to <code>&lt;B&gt; A</code></li>
+<li><code>:Array</code> to <code>:any[]</code></li>
+<li><code>:Vector.&lt;type&gt; =</code> to <code>type[] =</code></li>
+<li><code>:Vector.&lt;type&gt;;</code> to <code>type[];</code></li>
+<li><code>: Vector.&lt;type&gt; {</code> to <code>type[] {</code></li>
+<li><code>new Vector.&lt;type&gt;(7,true)</code> to <code>[]</code></li>
+<li><code>new &lt;type&gt;[1,2,3]</code> to <code>[1,2,3]</code></li>
+<li><code>Vector.&lt;type&gt;([1, 2, 3])</code> to <code>[1, 2, 3]</code></li>
+<li><code>trace</code> to <code>console.log</code></li>
+</ul>
+<a id="more"></a>
 
-        
-          <p class="article-more-link">
-            <a href="/project/2011-10-05/go-to-hell/#more">Read More</a>
-          </p>
-        
+<h2 id="常见问题：">常见问题：</h2>
+<ul>
+<li>问：AS3程序能转为TS程序了？</li>
+<li>答：不能，这只是常见<strong>语法</strong>的转换，具体运行环境不同。</li>
+</ul>
+<h2 id="版本历史：">版本历史：</h2>
+<p>as2ts v0.1 : 2014-11-21 最初版本,实现基本功能</p>
+
+		<hr>
+		<blockquote>
+		<p>如本文对你有一点点帮助的话，请点击右下角的 “分享到” 帮忙扩散，或用支付宝钱包扫码请我喝杯可乐，3Q。</p>
+		</blockquote>
+		<p><img src="/image/alipay.png" alt=""></p>
       
     </div>
     <footer class="article-footer">
       
-        <a data-url="http://nshen.net/project/2011-10-05/go-to-hell/" data-id="lyn4tc4b3ompfy9d" class="article-share-link" data-share="baidu">分享到</a>
+        <a data-url="http://nshen.net/project/2014-11-21/as2ts/" data-id="dzxlsz5sary5qyti" class="article-share-link" data-share="baidu">分享到</a>
       
 
       
-        <a href="http://nshen.net/project/2011-10-05/go-to-hell/#ds-thread" class="article-comment-link">Comments</a>
+        <a href="http://nshen.net/project/2014-11-21/as2ts/#ds-thread" class="article-comment-link">Comments</a>
       
 
       
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/游戏/">游戏</a></li></ul>
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/typescript/">typescript</a></li></ul>
 
 
     </footer>
   </div>
   
-</article>
-
-
+    
+<nav id="article-nav">
   
-    <article id="post-tiny-kingdom" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/project/2011-07-05/tiny-kingdom/" class="article-date">
-  <time datetime="2011-07-05T06:56:31.000Z" itemprop="datePublished">7月 5 2011</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/project/">project</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-	<!---->
-    
-      <header class="article-header">
-        
   
-    <h1 itemprop="name">
-      <a class="article-title" href="/project/2011-07-05/tiny-kingdom/">跨IOS，Android的小游戏《TinyKingdom》</a>
-    </h1>
+    <a href="/article/2014-10-16/stage3d-projection-matrix/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">Stage3D各种投影矩阵的推导</div>
+    </a>
   
+</nav>
 
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>目前在iphone4和Android的g7上运行效果差不多，具体见视频。</p>
-
-        
-          <p class="article-more-link">
-            <a href="/project/2011-07-05/tiny-kingdom/#more">Read More</a>
-          </p>
-        
-      
-    </div>
-    <footer class="article-footer">
-      
-        <a data-url="http://nshen.net/project/2011-07-05/tiny-kingdom/" data-id="1hcy28a0xogk8w9o" class="article-share-link" data-share="baidu">分享到</a>
-      
-
-      
-        <a href="http://nshen.net/project/2011-07-05/tiny-kingdom/#ds-thread" class="article-comment-link">Comments</a>
-      
-
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/游戏/">游戏</a></li></ul>
-
-
-    </footer>
-  </div>
   
 </article>
 
 
-  
-    <article id="post-the-little-bee" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/project/2010-08-13/the-little-bee/" class="article-date">
-  <time datetime="2010-08-13T06:56:31.000Z" itemprop="datePublished">8月 13 2010</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/project/">project</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-	<!---->
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/project/2010-08-13/the-little-bee/">《The Little Bee》独立小游戏第一次尝试</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>《这只小蜜蜂》1代，程序策划美术全包，原创玩法，具有躲避和升级策略元素的纵版飞行射击游戏。后台统计各平台获10万+玩家流量。</p>
-
-        
-          <p class="article-more-link">
-            <a href="/project/2010-08-13/the-little-bee/#more">Read More</a>
-          </p>
-        
-      
-    </div>
-    <footer class="article-footer">
-      
-        <a data-url="http://nshen.net/project/2010-08-13/the-little-bee/" data-id="dq82bvnhtakfmnct" class="article-share-link" data-share="baidu">分享到</a>
-      
-
-      
-        <a href="http://nshen.net/project/2010-08-13/the-little-bee/#ds-thread" class="article-comment-link">Comments</a>
-      
-
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/游戏/">游戏</a></li></ul>
-
-
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-  
+  <section id="comments">
+    <div id="ds-thread" class="ds-thread" data-thread-key="project/2014-11-21/as2ts/" data-title="AS2TS：ActionScript3在线转为TypeScript" data-url="http://nshen.net/project/2014-11-21/as2ts/"></div>
+  </section>
 </section>
         
       </div>

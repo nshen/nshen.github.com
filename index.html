@@ -79,6 +79,95 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-as2ts" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/project/2014-11-21/as2ts/" class="article-date">
+  <time datetime="2014-11-21T02:35:00.000Z" itemprop="datePublished">11月 21 2014</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/project/">project</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+	<!---->
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/project/2014-11-21/as2ts/">AS2TS：ActionScript3在线转为TypeScript</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>做Flash很少用正则表达式，所以一直都不会写。。这几天恶补了一下，由于之前研究过<a href="http://www.nshen.net/article/2013-05-18/as3-to-typescript/" target="_blank" rel="external">ActionScript与TypeScript的区别</a>，作为练习写了个ActionScript转TypeScript的小程序，純html5的。</p>
+<h2 id="试用:_">试用: </h2>
+<p><a href="http://nshen.net/as2ts/" target="_blank" rel="external">http://nshen.net/as2ts/</a></p>
+<h2 id="源码(请fork我吧):_">源码(请fork我吧): </h2>
+<p><a href="https://github.com/nshen/as2ts" target="_blank" rel="external">https://github.com/nshen/as2ts</a> </p>
+<h2 id="转换列表：">转换列表：</h2>
+<ul>
+<li><code>Boolean</code> to <code>boolean</code></li>
+<li><code>uint</code> / <code>int</code> / <code>Number</code> to <code>number</code></li>
+<li><code>String</code> to <code>string</code></li>
+<li><code>:*</code> to <code>:any</code></li>
+<li><code>package</code> to <code>module</code></li>
+<li>comment out <code>import</code> statements ?</li>
+<li><code>public class</code> to <code>export class</code></li>
+<li><code>public function class_name(...):void</code> to <code>constructor(...)</code></li>
+<li><code>internal</code> to <code>public</code></li>
+<li><code>static (public|private|protected)</code> to  <code>(public|private|protected) static</code></li>
+<li><code>(private|public|protected) var</code> to <code>(private|public|protected)</code></li>
+<li><code>(private|public|protected) const</code> to <code>(private|public|protected)</code></li>
+<li><code>(override) (private|public|protected) function</code> to <code>(private|public|protected)</code></li>
+<li><code>(private|public|protected) static var</code> to <code>(private|public|protected) static</code></li>
+<li><code>(private|public|protected) static const</code> to <code>(private|public|protected) static</code></li>
+<li><code>(private|public|protected) static function</code> to <code>(private|public|protected) static</code></li>
+<li>local <code>const</code> to <code>var</code></li>
+<li><code>A as B</code> to <code>&lt;B&gt; A</code></li>
+<li><code>:Array</code> to <code>:any[]</code></li>
+<li><code>:Vector.&lt;type&gt; =</code> to <code>type[] =</code></li>
+<li><code>:Vector.&lt;type&gt;;</code> to <code>type[];</code></li>
+<li><code>: Vector.&lt;type&gt; {</code> to <code>type[] {</code></li>
+<li><code>new Vector.&lt;type&gt;(7,true)</code> to <code>[]</code></li>
+<li><code>new &lt;type&gt;[1,2,3]</code> to <code>[1,2,3]</code></li>
+<li><code>Vector.&lt;type&gt;([1, 2, 3])</code> to <code>[1, 2, 3]</code></li>
+<li><code>trace</code> to <code>console.log</code></li>
+</ul>
+
+        
+          <p class="article-more-link">
+            <a href="/project/2014-11-21/as2ts/#more">Read More</a>
+          </p>
+        
+      
+    </div>
+    <footer class="article-footer">
+      
+        <a data-url="http://nshen.net/project/2014-11-21/as2ts/" data-id="dzxlsz5sary5qyti" class="article-share-link" data-share="baidu">分享到</a>
+      
+
+      
+        <a href="http://nshen.net/project/2014-11-21/as2ts/#ds-thread" class="article-comment-link">Comments</a>
+      
+
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/typescript/">typescript</a></li></ul>
+
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
     <article id="post-stage3d-projection-matrix" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/article/2014-10-16/stage3d-projection-matrix/" class="article-date">
@@ -313,99 +402,9 @@
 
 
   
-    <article id="post-as3-to-typescript" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/article/2013-05-18/as3-to-typescript/" class="article-date">
-  <time datetime="2013-05-18T06:56:31.000Z" itemprop="datePublished">5月 18 2013</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/article/">article</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-	<!---->
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/article/2013-05-18/as3-to-typescript/">从 ActionScript3 到 TypeScript</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>以下是我总结的笔记，只涉及语法部分，有错漏请指正。</p>
-<h3 id="基本类型">基本类型</h3>
-<p>基础类型只有这么几种，与AS3对比</p>
-<table>
-<thead>
-<tr>
-<th>TypeScript</th>
-<th style="text-align:center">ActionScript3</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>number</td>
-<td style="text-align:center">Number</td>
-</tr>
-<tr>
-<td>string</td>
-<td style="text-align:center">String</td>
-</tr>
-<tr>
-<td>boolean(0.8以前为bool)</td>
-<td style="text-align:center">Boolean</td>
-</tr>
-<tr>
-<td>any</td>
-<td style="text-align:center">*</td>
-</tr>
-<tr>
-<td>undefined</td>
-<td style="text-align:center">undefined</td>
-</tr>
-<tr>
-<td>null</td>
-<td style="text-align:center">null</td>
-</tr>
-</tbody>
-</table>
-
-        
-          <p class="article-more-link">
-            <a href="/article/2013-05-18/as3-to-typescript/#more">Read More</a>
-          </p>
-        
-      
-    </div>
-    <footer class="article-footer">
-      
-        <a data-url="http://nshen.net/article/2013-05-18/as3-to-typescript/" data-id="yz9eo8n4hsw91frd" class="article-share-link" data-share="baidu">分享到</a>
-      
-
-      
-        <a href="http://nshen.net/article/2013-05-18/as3-to-typescript/#ds-thread" class="article-comment-link">Comments</a>
-      
-
-      
-
-    </footer>
-  </div>
-  
-</article>
-
-
-  
   
     <nav id="page-nav">
-      <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><a class="extend next" rel="next" href="/page/2/">Next &raquo;</a>
+      <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><a class="extend next" rel="next" href="/page/2/">Next &raquo;</a>
     </nav>
   
 </section>
@@ -419,7 +418,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">分类</h3>
     <div class="widget">
-      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/article/">article</a><span class="category-list-count">7</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/project/">project</a><span class="category-list-count">7</span></li></ul>
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/article/">article</a><span class="category-list-count">7</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/project/">project</a><span class="category-list-count">8</span></li></ul>
     </div>
   </div>
 
@@ -428,7 +427,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">标签云</h3>
     <div class="widget tagcloud">
-      <a href="/tags/math/" style="font-size: 10.00px;">math</a><a href="/tags/pdf2mag/" style="font-size: 10.00px;">pdf2mag</a><a href="/tags/stage3d/" style="font-size: 15.00px;">stage3d</a><a href="/tags/游戏/" style="font-size: 20.00px;">游戏</a><a href="/tags/翻译/" style="font-size: 10.00px;">翻译</a>
+      <a href="/tags/math/" style="font-size: 10.00px;">math</a><a href="/tags/pdf2mag/" style="font-size: 10.00px;">pdf2mag</a><a href="/tags/stage3d/" style="font-size: 15.00px;">stage3d</a><a href="/tags/typescript/" style="font-size: 15.00px;">typescript</a><a href="/tags/游戏/" style="font-size: 20.00px;">游戏</a><a href="/tags/翻译/" style="font-size: 10.00px;">翻译</a>
     </div>
   </div>
 

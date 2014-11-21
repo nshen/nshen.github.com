@@ -4,7 +4,7 @@
   <subtitle><![CDATA[我正在考虑在这里写点啥...]]></subtitle>
   <link href="/atom.xml" rel="self"/>
   <link href="http://nshen.net/"/>
-  <updated>2014-10-31T07:32:42.809Z</updated>
+  <updated>2014-11-21T02:36:17.411Z</updated>
   <id>http://nshen.net/</id>
   
   <author>
@@ -13,6 +13,101 @@
   </author>
   
   <generator uri="http://zespia.tw/hexo/">Hexo</generator>
+  
+  <entry>
+    <title><![CDATA[AS2TS：ActionScript3在线转为TypeScript]]></title>
+    <link href="http://nshen.net/project/2014-11-21/as2ts/"/>
+    <id>http://nshen.net/project/2014-11-21/as2ts/</id>
+    <published>2014-11-21T02:35:00.000Z</published>
+    <updated>2014-11-21T02:35:58.000Z</updated>
+    <content type="html"><![CDATA[<p>做Flash很少用正则表达式，所以一直都不会写。。这几天恶补了一下，由于之前研究过<a href="http://www.nshen.net/article/2013-05-18/as3-to-typescript/" target="_blank" rel="external">ActionScript与TypeScript的区别</a>，作为练习写了个ActionScript转TypeScript的小程序，純html5的。</p>
+<h2 id="试用:_">试用: </h2>
+<p><a href="http://nshen.net/as2ts/" target="_blank" rel="external">http://nshen.net/as2ts/</a></p>
+<h2 id="源码(请fork我吧):_">源码(请fork我吧): </h2>
+<p><a href="https://github.com/nshen/as2ts" target="_blank" rel="external">https://github.com/nshen/as2ts</a> </p>
+<h2 id="转换列表：">转换列表：</h2>
+<ul>
+<li><code>Boolean</code> to <code>boolean</code></li>
+<li><code>uint</code> / <code>int</code> / <code>Number</code> to <code>number</code></li>
+<li><code>String</code> to <code>string</code></li>
+<li><code>:*</code> to <code>:any</code></li>
+<li><code>package</code> to <code>module</code></li>
+<li>comment out <code>import</code> statements ?</li>
+<li><code>public class</code> to <code>export class</code></li>
+<li><code>public function class_name(...):void</code> to <code>constructor(...)</code></li>
+<li><code>internal</code> to <code>public</code></li>
+<li><code>static (public|private|protected)</code> to  <code>(public|private|protected) static</code></li>
+<li><code>(private|public|protected) var</code> to <code>(private|public|protected)</code></li>
+<li><code>(private|public|protected) const</code> to <code>(private|public|protected)</code></li>
+<li><code>(override) (private|public|protected) function</code> to <code>(private|public|protected)</code></li>
+<li><code>(private|public|protected) static var</code> to <code>(private|public|protected) static</code></li>
+<li><code>(private|public|protected) static const</code> to <code>(private|public|protected) static</code></li>
+<li><code>(private|public|protected) static function</code> to <code>(private|public|protected) static</code></li>
+<li>local <code>const</code> to <code>var</code></li>
+<li><code>A as B</code> to <code>&lt;B&gt; A</code></li>
+<li><code>:Array</code> to <code>:any[]</code></li>
+<li><code>:Vector.&lt;type&gt; =</code> to <code>type[] =</code></li>
+<li><code>:Vector.&lt;type&gt;;</code> to <code>type[];</code></li>
+<li><code>: Vector.&lt;type&gt; {</code> to <code>type[] {</code></li>
+<li><code>new Vector.&lt;type&gt;(7,true)</code> to <code>[]</code></li>
+<li><code>new &lt;type&gt;[1,2,3]</code> to <code>[1,2,3]</code></li>
+<li><code>Vector.&lt;type&gt;([1, 2, 3])</code> to <code>[1, 2, 3]</code></li>
+<li><code>trace</code> to <code>console.log</code></li>
+</ul>
+<a id="more"></a>
+
+<h2 id="常见问题：">常见问题：</h2>
+<ul>
+<li>问：AS3程序能转为TS程序了？</li>
+<li>答：不能，这只是常见<strong>语法</strong>的转换，具体运行环境不同。</li>
+</ul>
+<h2 id="版本历史：">版本历史：</h2>
+<p>as2ts v0.1 : 2014-11-21 最初版本,实现基本功能</p>
+]]></content>
+    <summary type="html">
+    <![CDATA[<p>做Flash很少用正则表达式，所以一直都不会写。。这几天恶补了一下，由于之前研究过<a href="http://www.nshen.net/article/2013-05-18/as3-to-typescript/" target="_blank" rel="external">ActionScript与TypeScript的区别</a>，作为练习写了个ActionScript转TypeScript的小程序，純html5的。</p>
+<h2 id="试用:_">试用: </h2>
+<p><a href="http://nshen.net/as2ts/" target="_blank" rel="external">http://nshen.net/as2ts/</a></p>
+<h2 id="源码(请fork我吧):_">源码(请fork我吧): </h2>
+<p><a href="https://github.com/nshen/as2ts" target="_blank" rel="external">https://github.com/nshen/as2ts</a> </p>
+<h2 id="转换列表：">转换列表：</h2>
+<ul>
+<li><code>Boolean</code> to <code>boolean</code></li>
+<li><code>uint</code> / <code>int</code> / <code>Number</code> to <code>number</code></li>
+<li><code>String</code> to <code>string</code></li>
+<li><code>:*</code> to <code>:any</code></li>
+<li><code>package</code> to <code>module</code></li>
+<li>comment out <code>import</code> statements ?</li>
+<li><code>public class</code> to <code>export class</code></li>
+<li><code>public function class_name(...):void</code> to <code>constructor(...)</code></li>
+<li><code>internal</code> to <code>public</code></li>
+<li><code>static (public|private|protected)</code> to  <code>(public|private|protected) static</code></li>
+<li><code>(private|public|protected) var</code> to <code>(private|public|protected)</code></li>
+<li><code>(private|public|protected) const</code> to <code>(private|public|protected)</code></li>
+<li><code>(override) (private|public|protected) function</code> to <code>(private|public|protected)</code></li>
+<li><code>(private|public|protected) static var</code> to <code>(private|public|protected) static</code></li>
+<li><code>(private|public|protected) static const</code> to <code>(private|public|protected) static</code></li>
+<li><code>(private|public|protected) static function</code> to <code>(private|public|protected) static</code></li>
+<li>local <code>const</code> to <code>var</code></li>
+<li><code>A as B</code> to <code>&lt;B&gt; A</code></li>
+<li><code>:Array</code> to <code>:any[]</code></li>
+<li><code>:Vector.&lt;type&gt; =</code> to <code>type[] =</code></li>
+<li><code>:Vector.&lt;type&gt;;</code> to <code>type[];</code></li>
+<li><code>: Vector.&lt;type&gt; {</code> to <code>type[] {</code></li>
+<li><code>new Vector.&lt;type&gt;(7,true)</code> to <code>[]</code></li>
+<li><code>new &lt;type&gt;[1,2,3]</code> to <code>[1,2,3]</code></li>
+<li><code>Vector.&lt;type&gt;([1, 2, 3])</code> to <code>[1, 2, 3]</code></li>
+<li><code>trace</code> to <code>console.log</code></li>
+</ul>
+]]>
+    
+    </summary>
+    
+      <category term="typescript" scheme="http://nshen.net/tags/typescript/"/>
+    
+      <category term="project" scheme="http://nshen.net/categories/project/"/>
+    
+  </entry>
   
   <entry>
     <title><![CDATA[Stage3D各种投影矩阵的推导]]></title>
@@ -1539,8 +1634,9 @@ server.listen(<span class="number">2345</span>, <span class="string">"localhost"
     <link href="http://nshen.net/article/2013-05-18/as3-to-typescript/"/>
     <id>http://nshen.net/article/2013-05-18/as3-to-typescript/</id>
     <published>2013-05-18T06:56:31.000Z</published>
-    <updated>2014-10-19T16:59:28.000Z</updated>
+    <updated>2014-11-21T02:34:58.000Z</updated>
     <content type="html"><![CDATA[<p>以下是我总结的笔记，只涉及语法部分，有错漏请指正。</p>
+<p>如果你只想把现有的AS3代码转换为TypeScript代码的话，请尝试我写的这个<a href="http://nshen.net/project/2014-11-21/as2ts/" target="_blank" rel="external">在线转换器</a></p>
 <h3 id="基本类型">基本类型</h3>
 <p>基础类型只有这么几种，与AS3对比</p>
 <table>
@@ -1974,6 +2070,7 @@ console.log(<span class="keyword">Color</span>[c]);//Green
 </code></pre>]]></content>
     <summary type="html">
     <![CDATA[<p>以下是我总结的笔记，只涉及语法部分，有错漏请指正。</p>
+<p>如果你只想把现有的AS3代码转换为TypeScript代码的话，请尝试我写的这个<a href="http://nshen.net/project/2014-11-21/as2ts/" target="_blank" rel="external">在线转换器</a></p>
 <h3 id="基本类型">基本类型</h3>
 <p>基础类型只有这么几种，与AS3对比</p>
 <table>
@@ -2013,6 +2110,8 @@ console.log(<span class="keyword">Color</span>[c]);//Green
 ]]>
     
     </summary>
+    
+      <category term="typescript" scheme="http://nshen.net/tags/typescript/"/>
     
       <category term="article" scheme="http://nshen.net/categories/article/"/>
     
