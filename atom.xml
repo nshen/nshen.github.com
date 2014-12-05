@@ -4,7 +4,7 @@
   <subtitle><![CDATA[我正在考虑在这里写点啥...]]></subtitle>
   <link href="/atom.xml" rel="self"/>
   <link href="http://nshen.net/"/>
-  <updated>2014-11-21T02:36:17.411Z</updated>
+  <updated>2014-12-05T05:35:39.559Z</updated>
   <id>http://nshen.net/</id>
   
   <author>
@@ -13,6 +13,188 @@
   </author>
   
   <generator uri="http://zespia.tw/hexo/">Hexo</generator>
+  
+  <entry>
+    <title><![CDATA[Grunt笔记:使用grunt-ts编译typescript项目]]></title>
+    <link href="http://nshen.net/article/2014-12-05/grunt-ts/"/>
+    <id>http://nshen.net/article/2014-12-05/grunt-ts/</id>
+    <published>2014-12-05T04:55:20.000Z</published>
+    <updated>2014-12-05T05:23:18.000Z</updated>
+    <content type="html"><![CDATA[<p>不是这世界变化快，是我一直没关注。这几年js发展这么快是我怎么也想不到的，今天研究的是js界高大上的Grunt构建工具，因为发现很多老外的开源项目都在用这个。研究一下，还挺方便的。</p>
+<p>首先看一下我的目录结构</p>
+<pre><code>ProjectA
+    |-----build <span class="comment">//编译后的all.js等文件放在这里</span>
+    |-----core  <span class="comment">//typescript项目,里边若干.ts文件</span>
+    |-----test  <span class="comment">//用编译后的all.js做测试,里边有若干js和html文件</span>
+</code></pre><p>我的需求是这样的，core文件夹里有多个.ts文件，需要按照我指定的顺序编译成一个all.js文件，为什么要指定顺序，是因为js是从上到下执行，没执行到的就是不存在的。如果顺序不对的话运行时会报各种找不到类的错误。除了这个还有以下需求：</p>
+<ul>
+<li>编译的<code>all.js</code>放到<code>build/</code>目录</li>
+<li>需要生成<code>build/all.js.map</code></li>
+<li>需要生成<code>build/all.d.ts</code></li>
+<li>需要生成<code>build/all.min.js</code></li>
+<li>基于ES5，Commonjs编译</li>
+<li>编译后的文件删除注释</li>
+<li>编译后将build目录下的所有文件复制到test文件夹里做测试</li>
+</ul>
+<a id="more"></a> 
+
+<p>估计已经涵盖大部分typescript开源项目的需求了，我不知道其他人是怎么做这些的，我自己之前一直使用WebStorm来写TypeScript，WebStorm里有一个叫做File Watcher的功能，可以把它配置成每次发现文件改动自动调用编译器tsc来编译TypeScript，它有一个Arguments的文本框，可以添加tsc的编译参数。</p>
+<p>我都是这么填的：</p>
+<pre><code>--sourcemap E:<span class="command">\ProjectA</span><span class="command">\core</span><span class="command">\reference</span>.ts -d --out E:<span class="command">\ProjectA</span><span class="command">\test</span><span class="command">\all</span>.js --target ES5 --removeComments
+</code></pre><p>我在reference.ts里指定了ts文件的顺序，所以只编译这一个文件，就达到了按指定文件顺序全部编译的目的。<br>我写了绝对路径，这样就可以在任何目录里编译了。<br>因为不能复制文件，就只能把core项目直接编译到test文件夹里做测试了。</p>
+<p>测试完后，我还要手动手动把all.js复制回build文件夹，想办法生成min.js等一堆麻烦事。。。直到发现了<a href="http://gruntjs.com/" target="_blank" rel="external">Grunt</a>。</p>
+<h2 id="用Grount实现需求">用Grount实现需求</h2>
+<h3 id="安装cli">安装<code>cli</code></h3>
+<pre><code>npm install -g grunt-<span class="keyword">cli</span>
+</code></pre><h3 id="来到项目路径">来到项目路径</h3>
+<p>npm init 命令来创建一个 <code>package.json</code> 文件，回答问题会自动创建<code>package.json</code>，其实一路回车就行了，都有默认答案<br>好多属性，不知道有什么用的，删掉！看官网教程好像只需要一个name ，一个 version就行，其他删掉了。</p>
+<pre><code>{
+  "<span class="attribute">name</span>": <span class="value"><span class="string">"gruntTest"</span></span>,
+  "<span class="attribute">version</span>": <span class="value"><span class="string">"1.0.0"</span></span>,
+  "<span class="attribute">description</span>": <span class="value"><span class="string">"just a test"</span>
+</span>}
+</code></pre><h3 id="装第一个依赖项目，必然是grunt本身">装第一个依赖项目，必然是<code>grunt</code>本身</h3>
+<pre><code>npm <span class="operator"><span class="keyword">install</span> grunt <span class="comment">--save-dev</span></span>
+</code></pre><p>安装完成，目录里多了一个<code>node_modules</code>目录，这是nodejs模块安装到的目录。</p>
+<h3 id="修改gitignore">修改gitignore</h3>
+<p><code>.gitignore</code>文件里加入这两个目录，不然被传到github上就不好了</p>
+<pre><code>/node_modules
+.tscache
+</code></pre><p>现在<code>package.json</code>变成这样了</p>
+<pre><code>{
+  "<span class="attribute">name</span>": <span class="value"><span class="string">"gruntTest"</span></span>,
+  "<span class="attribute">version</span>": <span class="value"><span class="string">"1.0.0"</span></span>,
+  "<span class="attribute">description</span>": <span class="value"><span class="string">"just a test"</span></span>,
+  "<span class="attribute">devDependencies</span>": <span class="value">{
+    "<span class="attribute">grunt</span>": <span class="value"><span class="string">"^0.4.5"</span>
+  </span>}
+</span>}
+</code></pre><p>因为安装grunt时时加了<code>--save-dev</code>参数，所以会被自动加进依赖里 </p>
+<h3 id="安装今天的主角，TypeScript的编译器插件grunt-ts">安装今天的主角，TypeScript的编译器插件grunt-ts</h3>
+<pre><code>npm <span class="operator"><span class="keyword">install</span> grunt-ts <span class="comment">--save-dev</span></span>
+</code></pre><p>再看<code>package.json</code>如下:</p>
+<pre><code>{
+  "<span class="attribute">name</span>": <span class="value"><span class="string">"gruntTest"</span></span>,
+  "<span class="attribute">version</span>": <span class="value"><span class="string">"1.0.0"</span></span>,
+  "<span class="attribute">description</span>": <span class="value"><span class="string">"just a test"</span></span>,
+  "<span class="attribute">devDependencies</span>": <span class="value">{
+    "<span class="attribute">grunt</span>": <span class="value"><span class="string">"^0.4.5"</span></span>,
+    "<span class="attribute">grunt-ts</span>": <span class="value"><span class="string">"^1.12.1"</span>
+  </span>}
+</span>}
+</code></pre><h3 id="安装生成all-min-js的插件">安装生成all.min.js的插件</h3>
+<pre><code>npm <span class="operator"><span class="keyword">install</span> grunt-contrib-uglify <span class="comment">--save-dev</span></span>
+</code></pre><h3 id="安装copy插件">安装copy插件</h3>
+<pre><code>npm <span class="operator"><span class="keyword">install</span> grunt-contrib-copy <span class="comment">--save-dev</span></span>
+</code></pre><p>现在看一眼<code>package.json</code>应该变成这样了</p>
+<pre><code>{
+  "<span class="attribute">name</span>": <span class="value"><span class="string">"gruntTest"</span></span>,
+  "<span class="attribute">version</span>": <span class="value"><span class="string">"1.0.0"</span></span>,
+  "<span class="attribute">description</span>": <span class="value"><span class="string">"just a test"</span></span>,
+  "<span class="attribute">devDependencies</span>": <span class="value">{
+    "<span class="attribute">grunt</span>": <span class="value"><span class="string">"^0.4.5"</span></span>,
+    "<span class="attribute">grunt-contrib-copy</span>": <span class="value"><span class="string">"^0.7.0"</span></span>,
+    "<span class="attribute">grunt-contrib-uglify</span>": <span class="value"><span class="string">"^0.6.0"</span></span>,
+    "<span class="attribute">grunt-ts</span>": <span class="value"><span class="string">"^1.12.1"</span>
+  </span>}
+</span>}
+</code></pre><p>ok ，全部安装完毕，现在可以看<a href="https://www.npmjs.org/package/grunt-ts" target="_blank" rel="external">grunt-ts官网</a>介绍各种参数怎么用吧</p>
+<p>添加一个Gruntfile，基于<a href="https://github.com/TypeStrong/grunt-ts/blob/master/sample/Gruntfile.js" target="_blank" rel="external">官网的例子</a>直接修改的</p>
+<pre><code><span class="built_in">module</span>.exports = <span class="function"><span class="keyword">function</span> <span class="params">(grunt)</span> </span>{
+<span class="pi">    "use strict"</span>;
+
+    grunt.initConfig({
+        ts:  <span class="comment">//用来编译typescript的任务</span>
+        {
+            options: 
+            {
+                comments: <span class="literal">false</span>,               <span class="comment">// 删除注释</span>
+                target: <span class="string">'es5'</span>,                 <span class="comment">// es5,默认为es3</span>
+                <span class="built_in">module</span>: <span class="string">'commonjs'</span>,            <span class="comment">// 居然默认是amd?</span>
+                declaration: <span class="literal">true</span>,             <span class="comment">// 生成.d.ts</span>
+            },
+
+            build: 
+            {
+                src: [<span class="string">"core/reference.ts"</span>],  
+                <span class="comment">// reference: 'core/reference.ts',  //第一次生成reference.ts,之后手动修改顺序,之后注释掉</span>
+                out: <span class="string">'./build/all.js'</span>, 
+            }
+        },
+
+
+        uglify: <span class="comment">//uglify插件用来代码压缩,生成min.js</span>
+        {
+            min: 
+            {
+              files: {<span class="string">'build/all.min.js'</span>: [<span class="string">'build/all.js'</span>]}
+            }
+        },
+
+        <span class="comment">//copy插件把build目录下的所有文件复制到test文件夹</span>
+        copy:
+        {
+           builds: {expand: <span class="literal">true</span>, cwd: <span class="string">'build/'</span>, src: <span class="string">'*'</span>, dest: <span class="string">'test/'</span>}
+        }
+
+    });
+
+    <span class="comment">//加载之前命令行安装的3个插件</span>
+    grunt.loadNpmTasks(<span class="string">"grunt-ts"</span>);     
+    grunt.loadNpmTasks(<span class="string">"grunt-contrib-copy"</span>);
+    grunt.loadNpmTasks(<span class="string">"grunt-contrib-uglify"</span>);
+
+    <span class="comment">//任务顺序: 编译typescript -&gt; 生成min.js -&gt; 复制build目录里的文件到ProjectA_Test</span>
+    grunt.registerTask(<span class="string">"default"</span>, [<span class="string">"ts:build"</span> , <span class="string">"uglify:min"</span> , <span class="string">"copy:builds"</span>]);
+};
+</code></pre><p>可以编译了，打开命令行，输入grunt ，应该是这样的</p>
+<pre><code>E:\ProjectA&gt; grunt
+
+Running <span class="string">"ts:build"</span> (ts) <span class="keyword">task</span>
+Compiling...
+Cleared fast <span class="keyword">compile</span> cache <span class="keyword">for</span> target: build
+Fast <span class="keyword">compile</span> will not work when --out is specified. Ignoring fast compilation
+Using tsc v1.<span class="number">0.1</span>
+
+TypeScript compilation complete: <span class="number">4.51</span>s <span class="keyword">for</span> <span class="number">1</span> typescript files
+
+Running <span class="string">"uglify:min"</span> (uglify) <span class="keyword">task</span>
+&gt;&gt; <span class="number">1</span> <span class="keyword">file</span> created.
+
+Running <span class="string">"copy:builds"</span> (<span class="keyword">copy</span>) <span class="keyword">task</span>
+Copied <span class="number">4</span> files
+
+Done, without errors.
+</code></pre><p>Done了，没有错误！</p>
+]]></content>
+    <summary type="html">
+    <![CDATA[<p>不是这世界变化快，是我一直没关注。这几年js发展这么快是我怎么也想不到的，今天研究的是js界高大上的Grunt构建工具，因为发现很多老外的开源项目都在用这个。研究一下，还挺方便的。</p>
+<p>首先看一下我的目录结构</p>
+<pre><code>ProjectA
+    |-----build <span class="comment">//编译后的all.js等文件放在这里</span>
+    |-----core  <span class="comment">//typescript项目,里边若干.ts文件</span>
+    |-----test  <span class="comment">//用编译后的all.js做测试,里边有若干js和html文件</span>
+</code></pre><p>我的需求是这样的，core文件夹里有多个.ts文件，需要按照我指定的顺序编译成一个all.js文件，为什么要指定顺序，是因为js是从上到下执行，没执行到的就是不存在的。如果顺序不对的话运行时会报各种找不到类的错误。除了这个还有以下需求：</p>
+<ul>
+<li>编译的<code>all.js</code>放到<code>build/</code>目录</li>
+<li>需要生成<code>build/all.js.map</code></li>
+<li>需要生成<code>build/all.d.ts</code></li>
+<li>需要生成<code>build/all.min.js</code></li>
+<li>基于ES5，Commonjs编译</li>
+<li>编译后的文件删除注释</li>
+<li>编译后将build目录下的所有文件复制到test文件夹里做测试</li>
+</ul>
+]]>
+    
+    </summary>
+    
+      <category term="grunt" scheme="http://nshen.net/tags/grunt/"/>
+    
+      <category term="typescript" scheme="http://nshen.net/tags/typescript/"/>
+    
+      <category term="article" scheme="http://nshen.net/categories/article/"/>
+    
+  </entry>
   
   <entry>
     <title><![CDATA[AS2TS：ActionScript3在线转为TypeScript]]></title>
@@ -2576,7 +2758,7 @@ p.enqueue(<span class="number">9</span>)
     <link href="http://nshen.net/article/2011-08-03/git-note/"/>
     <id>http://nshen.net/article/2011-08-03/git-note/</id>
     <published>2011-08-03T05:30:20.000Z</published>
-    <updated>2014-10-28T04:56:56.000Z</updated>
+    <updated>2014-12-04T15:15:44.000Z</updated>
     <content type="html"><![CDATA[<p>我认为每个学过Git的人都应该做过类似这种笔记，因为Git命令太多看着看着就把前边看过的忘了，之前我也看过Git，但是一直没用，现在一看几乎没有印象了，所以这次我要把我看到的命令记下来给我自己备忘。</p>
 <p>Git已经是最流行的版本控制系统了，网上相关的免费学习资源很多，我见过的中文书籍就有：</p>
 <ul>
@@ -2807,6 +2989,8 @@ git remote show origin <span class="comment">//查看远程仓库信息</span>
 </code></pre><h4 id="远程仓库重命名和删除:">远程仓库重命名和删除:</h4>
 <pre><code>git <span class="comment">remote rename pb paul</span>
 git <span class="comment">remote rm paul</span>
+</code></pre><h4 id="远程仓库重命名">远程仓库重命名</h4>
+<pre><code>git remote <span class="keyword">set</span>-url origin 新地址
 </code></pre><h4 id="获取数据：">获取数据：</h4>
 <pre><code>git fetch [remote-name] 拉取远程仓库到本地远程仓库,不自动合并    <span class="comment">//$ git fetch origin</span>
 $ git fetch pb
