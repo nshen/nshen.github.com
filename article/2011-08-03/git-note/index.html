@@ -369,7 +369,9 @@ From git:<span class="comment">//github.com/paulboone/ticgit</span>
 * [<span class="keyword">new</span> branch]      ticgit     -&gt; pb/ticgit
 </code></pre><p>现在pb/master可以在本地访问了,你可以合并到自己的某个分支,或者切换到这个分支看看有什么有趣的更新</p>
 <p>git pull 抓取数据合并到工作目录中当前分支</p>
-<h4 id="推送数据：">推送数据：</h4>
+<p>如果提示tracking information什么不对,可以这样指定本地examples分支跟随远端examples分支</p>
+<pre><code>git branch --<span class="keyword">set</span>-upstream-<span class="keyword">to</span>=origin/examples examples
+</code></pre><h4 id="推送数据：">推送数据：</h4>
 <pre><code>git <span class="keyword">push</span> [remote-name] [branch-name]  <span class="comment">//默认为 git push origin master</span>
 
 git <span class="keyword">push</span> origin serverfix   <span class="comment">//推送分支，其实是下边一句的简化,提取我的 serverfix 并更新到远程仓库的 serverfix</span>

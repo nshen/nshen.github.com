@@ -4,7 +4,7 @@
   <subtitle><![CDATA[我正在考虑在这里写点啥...]]></subtitle>
   <link href="/atom.xml" rel="self"/>
   <link href="http://nshen.net/"/>
-  <updated>2014-12-05T05:35:39.559Z</updated>
+  <updated>2014-12-20T01:26:46.272Z</updated>
   <id>http://nshen.net/</id>
   
   <author>
@@ -1816,7 +1816,7 @@ server.listen(<span class="number">2345</span>, <span class="string">"localhost"
     <link href="http://nshen.net/article/2013-05-18/as3-to-typescript/"/>
     <id>http://nshen.net/article/2013-05-18/as3-to-typescript/</id>
     <published>2013-05-18T06:56:31.000Z</published>
-    <updated>2014-11-21T02:34:58.000Z</updated>
+    <updated>2014-12-07T01:52:07.000Z</updated>
     <content type="html"><![CDATA[<p>以下是我总结的笔记，只涉及语法部分，有错漏请指正。</p>
 <p>如果你只想把现有的AS3代码转换为TypeScript代码的话，请尝试我写的这个<a href="http://nshen.net/project/2014-11-21/as2ts/" target="_blank" rel="external">在线转换器</a></p>
 <h3 id="基本类型">基本类型</h3>
@@ -2195,7 +2195,10 @@ M.s;  <span class="comment">// Error, s is not exported</span>
     } <span class="keyword">else</span> {
     }
 }
-</code></pre><p>TypeScript 允许多个类在同一个文件里，但如果类与类在不同的文件，需要这种写法，相当于AS3 的 import</p>
+</code></pre><blockquote>
+<p> 2014/12/07 补充 : js判断类型也是个很大的坑,详见 <a href="http://tobyho.com/2011/01/28/checking-types-in-javascript/" target="_blank" rel="external">http://tobyho.com/2011/01/28/checking-types-in-javascript/</a></p>
+</blockquote>
+<p>TypeScript 允许多个类在同一个文件里，但如果类与类在不同的文件，需要这种写法，相当于AS3 的 import</p>
 <pre><code><span class="comment">/// &lt;reference path="SimpleWebSocket.ts"/&gt;</span>
 <span class="class"><span class="keyword">class</span> <span class="title">ComplexWebSocket</span> <span class="keyword">extends</span> <span class="title">SimpleWebSocket</span> </span>{
 ...
@@ -2758,7 +2761,7 @@ p.enqueue(<span class="number">9</span>)
     <link href="http://nshen.net/article/2011-08-03/git-note/"/>
     <id>http://nshen.net/article/2011-08-03/git-note/</id>
     <published>2011-08-03T05:30:20.000Z</published>
-    <updated>2014-12-04T15:15:44.000Z</updated>
+    <updated>2014-12-20T01:24:25.000Z</updated>
     <content type="html"><![CDATA[<p>我认为每个学过Git的人都应该做过类似这种笔记，因为Git命令太多看着看着就把前边看过的忘了，之前我也看过Git，但是一直没用，现在一看几乎没有印象了，所以这次我要把我看到的命令记下来给我自己备忘。</p>
 <p>Git已经是最流行的版本控制系统了，网上相关的免费学习资源很多，我见过的中文书籍就有：</p>
 <ul>
@@ -3003,7 +3006,9 @@ From git:<span class="comment">//github.com/paulboone/ticgit</span>
 * [<span class="keyword">new</span> branch]      ticgit     -&gt; pb/ticgit
 </code></pre><p>现在pb/master可以在本地访问了,你可以合并到自己的某个分支,或者切换到这个分支看看有什么有趣的更新</p>
 <p>git pull 抓取数据合并到工作目录中当前分支</p>
-<h4 id="推送数据：">推送数据：</h4>
+<p>如果提示tracking information什么不对,可以这样指定本地examples分支跟随远端examples分支</p>
+<pre><code>git branch --<span class="keyword">set</span>-upstream-<span class="keyword">to</span>=origin/examples examples
+</code></pre><h4 id="推送数据：">推送数据：</h4>
 <pre><code>git <span class="keyword">push</span> [remote-name] [branch-name]  <span class="comment">//默认为 git push origin master</span>
 
 git <span class="keyword">push</span> origin serverfix   <span class="comment">//推送分支，其实是下边一句的简化,提取我的 serverfix 并更新到远程仓库的 serverfix</span>

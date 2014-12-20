@@ -3,6 +3,41 @@
 
     
   <url>
+    <loc>http://nshen.net/article/2011-08-03/git-note/</loc>
+    <lastmod>2014-12-20T01:24:25.000Z</lastmod>
+    <data>
+        <display>
+        <title>笔记《版本控制之道--使用Git》</title>
+        <pubTime>2011-08-03T05:30:20.000Z</pubTime>
+        
+         
+              <breadCrumb title="article" url="http://nshen.net/categories/article/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+    
+  <url>
+    <loc>http://nshen.net/article/2013-05-18/as3-to-typescript/</loc>
+    <lastmod>2014-12-07T01:52:07.000Z</lastmod>
+    <data>
+        <display>
+        <title>从 ActionScript3 到 TypeScript</title>
+        <pubTime>2013-05-18T06:56:31.000Z</pubTime>
+        
+         
+              <breadCrumb title="typescript" url="http://nshen.net/tags/typescript/"/>
+          
+              <breadCrumb title="article" url="http://nshen.net/categories/article/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
     <loc>http://nshen.net/article/2014-12-05/grunt-ts/</loc>
     <lastmod>2014-12-05T05:23:18.000Z</lastmod>
     <data>
@@ -23,22 +58,6 @@
 
     
   <url>
-    <loc>http://nshen.net/article/2011-08-03/git-note/</loc>
-    <lastmod>2014-12-04T15:15:44.000Z</lastmod>
-    <data>
-        <display>
-        <title>笔记《版本控制之道--使用Git》</title>
-        <pubTime>2011-08-03T05:30:20.000Z</pubTime>
-        
-         
-              <breadCrumb title="article" url="http://nshen.net/categories/article/"/>
-          
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
     <loc>http://nshen.net/project/2014-11-21/as2ts/</loc>
     <lastmod>2014-11-21T02:35:58.000Z</lastmod>
     <data>
@@ -50,24 +69,6 @@
               <breadCrumb title="typescript" url="http://nshen.net/tags/typescript/"/>
           
               <breadCrumb title="project" url="http://nshen.net/categories/project/"/>
-          
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
-    <loc>http://nshen.net/article/2013-05-18/as3-to-typescript/</loc>
-    <lastmod>2014-11-21T02:34:58.000Z</lastmod>
-    <data>
-        <display>
-        <title>从 ActionScript3 到 TypeScript</title>
-        <pubTime>2013-05-18T06:56:31.000Z</pubTime>
-        
-         
-              <breadCrumb title="typescript" url="http://nshen.net/tags/typescript/"/>
-          
-              <breadCrumb title="article" url="http://nshen.net/categories/article/"/>
           
         </display>
     </data>
@@ -126,7 +127,6 @@
     </data>
     </url>
 
-    
     
   <url>
     <loc>http://nshen.net/project/2009-11-19/as3-visual-quickstart-guide/</loc>

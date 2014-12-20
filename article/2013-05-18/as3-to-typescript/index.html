@@ -569,7 +569,10 @@ M.s;  <span class="comment">// Error, s is not exported</span>
     } <span class="keyword">else</span> {
     }
 }
-</code></pre><p>TypeScript 允许多个类在同一个文件里，但如果类与类在不同的文件，需要这种写法，相当于AS3 的 import</p>
+</code></pre><blockquote>
+<p> 2014/12/07 补充 : js判断类型也是个很大的坑,详见 <a href="http://tobyho.com/2011/01/28/checking-types-in-javascript/" target="_blank" rel="external">http://tobyho.com/2011/01/28/checking-types-in-javascript/</a></p>
+</blockquote>
+<p>TypeScript 允许多个类在同一个文件里，但如果类与类在不同的文件，需要这种写法，相当于AS3 的 import</p>
 <pre><code><span class="comment">/// &lt;reference path="SimpleWebSocket.ts"/&gt;</span>
 <span class="class"><span class="keyword">class</span> <span class="title">ComplexWebSocket</span> <span class="keyword">extends</span> <span class="title">SimpleWebSocket</span> </span>{
 ...
