@@ -14,7 +14,7 @@ ProjectA
     |-----t">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Grunt笔记:使用grunt-ts编译typescript项目">
-<meta property="og:url" content="http://nshen.net/article/2014-12-05/grunt-ts/">
+<meta property="og:url" content="http://nshen.net/article/2014-12-05/grunt-ts/index.html">
 <meta property="og:site_name" content="N神的研究所">
 <meta property="og:description" content="不是这世界变化快，是我一直没关注。这几年js发展这么快是我怎么也想不到的，今天研究的是js界高大上的Grunt构建工具，因为发现很多老外的开源项目都在用这个。研究一下，还挺方便的。
 首先看一下我的目录结构
@@ -22,6 +22,7 @@ ProjectA
     |-----build //编译后的all.js等文件放在这里
     |-----core  //typescript项目,里边若干.ts文件
     |-----t">
+<meta property="og:updated_time" content="2015-10-30T08:33:39.380Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Grunt笔记:使用grunt-ts编译typescript项目">
 <meta name="twitter:description" content="不是这世界变化快，是我一直没关注。这几年js发展这么快是我怎么也想不到的，今天研究的是js界高大上的Grunt构建工具，因为发现很多老外的开源项目都在用这个。研究一下，还挺方便的。
@@ -30,15 +31,15 @@ ProjectA
     |-----build //编译后的all.js等文件放在这里
     |-----core  //typescript项目,里边若干.ts文件
     |-----t">
-
   
-    <link rel="alternative" href="http://feed.feedsky.com/nshen" title="N神的研究所" type="application/atom+xml">
+    <link rel="alternative" href="/atom.xml" title="N神的研究所" type="application/atom+xml">
   
   
     <link rel="icon" href="/favicon.png">
   
   <link rel="stylesheet" href="/css/style.css" type="text/css">
-
+  <link href="//cdn.bootcss.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
+  <link href="//fonts.useso.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
   <!--[if lt IE 9]><script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7/html5shiv.min.js"></script><![endif]-->
   
 </head>
@@ -48,36 +49,33 @@ ProjectA
     <header id="header">
   <div id="banner"></div>
   <div id="header-outer" class="outer">
-    <div id="header-title" class="inner">
-    
-      <h1 id="logo-wrap">
-        <a href="/" id="logo">N神的研究所</a>
-      </h1>
-      
-        <h2 id="subtitle-wrap">
-          <a href="/" id="subtitle">我正在考虑在这里写点啥...</a>
-        </h2>
-      
-
-    </div>
     <div id="header-inner" class="inner">
+      <div id="header-title">
+        <h1 id="logo-wrap">
+          <a href="/" id="logo">N神的研究所</a>
+        </h1>
+        
+      </div>
       <nav id="main-nav">
         <a id="main-nav-toggle" class="nav-icon"></a>
         
-          <a class="main-nav-link" href="/">首页</a>
+          <a class="main-nav-link" href="/">主页</a>
         
-          <a class="main-nav-link" href="/categories/article/">学习笔记</a>
+          <a class="main-nav-link" href="/list">所有日志</a>
         
-          <a class="main-nav-link" href="/categories/project/">实验项目</a>
+          <a class="main-nav-link" href="/about">关于</a>
         
-          <a class="main-nav-link" href="/about/">关于我</a>
+          <a class="main-nav-link" href="/links">友情链接</a>
         
       </nav>
       <nav id="sub-nav">
+        <a id="nav-search-btn" class="nav-icon fa-search" title="Search"></a>
+      </nav>
+      <nav id="sub-nav-social">
         
-          <a id="nav-rss-link" class="nav-icon" href="http://feed.feedsky.com/nshen" title="RSS Feed"></a>
         
-        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+          <a id="nav-rss-link" class="nav-icon fa-rss" href="/atom.xml" title="RSS Feed"></a>
+        
       </nav>
       <div id="search-form-wrap">
         <form action="http://www.baidu.com/baidu" method="get" accept-charset="utf-8" class="search-form">
@@ -94,9 +92,10 @@ ProjectA
 </header>
     <div class="outer">
       <section id="main"><article id="post-grunt-ts" class="article article-type-post" itemscope itemprop="blogPost">
+  
   <div class="article-meta">
     <a href="/article/2014-12-05/grunt-ts/" class="article-date">
-  <time datetime="2014-12-05T04:55:20.000Z" itemprop="datePublished">12月 5 2014</time>
+  <time datetime="2014-12-05T04:55:20.000Z" itemprop="datePublished">2014-12-05</time>
 </a>
     
   <div class="article-category">
@@ -104,9 +103,9 @@ ProjectA
   </div>
 
   </div>
+  
   <div class="article-inner">
     
-	<!---->
     
       <header class="article-header">
         
@@ -125,7 +124,7 @@ ProjectA
 <pre><code>ProjectA
     |-----build <span class="comment">//编译后的all.js等文件放在这里</span>
     |-----core  <span class="comment">//typescript项目,里边若干.ts文件</span>
-    |-----test  <span class="comment">//用编译后的all.js做测试,里边有若干js和html文件</span>
+    |-----<span class="keyword">test</span>  <span class="comment">//用编译后的all.js做测试,里边有若干js和html文件</span>
 </code></pre><p>我的需求是这样的，core文件夹里有多个.ts文件，需要按照我指定的顺序编译成一个all.js文件，为什么要指定顺序，是因为js是从上到下执行，没执行到的就是不存在的。如果顺序不对的话运行时会报各种找不到类的错误。除了这个还有以下需求：</p>
 <ul>
 <li>编译的<code>all.js</code>放到<code>build/</code>目录</li>
@@ -137,27 +136,21 @@ ProjectA
 <li>编译后将build目录下的所有文件复制到test文件夹里做测试</li>
 </ul>
 <a id="more"></a> 
-
 <p>估计已经涵盖大部分typescript开源项目的需求了，我不知道其他人是怎么做这些的，我自己之前一直使用WebStorm来写TypeScript，WebStorm里有一个叫做File Watcher的功能，可以把它配置成每次发现文件改动自动调用编译器tsc来编译TypeScript，它有一个Arguments的文本框，可以添加tsc的编译参数。</p>
 <p>我都是这么填的：</p>
 <pre><code>--sourcemap E:<span class="command">\ProjectA</span><span class="command">\core</span><span class="command">\reference</span>.ts -d --out E:<span class="command">\ProjectA</span><span class="command">\test</span><span class="command">\all</span>.js --target ES5 --removeComments
 </code></pre><p>我在reference.ts里指定了ts文件的顺序，所以只编译这一个文件，就达到了按指定文件顺序全部编译的目的。<br>我写了绝对路径，这样就可以在任何目录里编译了。<br>因为不能复制文件，就只能把core项目直接编译到test文件夹里做测试了。</p>
 <p>测试完后，我还要手动手动把all.js复制回build文件夹，想办法生成min.js等一堆麻烦事。。。直到发现了<a href="http://gruntjs.com/" target="_blank" rel="external">Grunt</a>。</p>
-<h2 id="用Grount实现需求">用Grount实现需求</h2>
-<h3 id="安装cli">安装<code>cli</code></h3>
-<pre><code>npm install -g grunt-<span class="keyword">cli</span>
-</code></pre><h3 id="来到项目路径">来到项目路径</h3>
-<p>npm init 命令来创建一个 <code>package.json</code> 文件，回答问题会自动创建<code>package.json</code>，其实一路回车就行了，都有默认答案<br>好多属性，不知道有什么用的，删掉！看官网教程好像只需要一个name ，一个 version就行，其他删掉了。</p>
+<h2 id="用Grount实现需求">用Grount实现需求</h2><h3 id="安装cli">安装<code>cli</code></h3><pre><code>npm <span class="operator"><span class="keyword">install</span> -<span class="keyword">g</span> grunt-cli</span>
+</code></pre><h3 id="来到项目路径">来到项目路径</h3><p>npm init 命令来创建一个 <code>package.json</code> 文件，回答问题会自动创建<code>package.json</code>，其实一路回车就行了，都有默认答案<br>好多属性，不知道有什么用的，删掉！看官网教程好像只需要一个name ，一个 version就行，其他删掉了。</p>
 <pre><code>{
   "<span class="attribute">name</span>": <span class="value"><span class="string">"gruntTest"</span></span>,
   "<span class="attribute">version</span>": <span class="value"><span class="string">"1.0.0"</span></span>,
   "<span class="attribute">description</span>": <span class="value"><span class="string">"just a test"</span>
 </span>}
-</code></pre><h3 id="装第一个依赖项目，必然是grunt本身">装第一个依赖项目，必然是<code>grunt</code>本身</h3>
-<pre><code>npm <span class="operator"><span class="keyword">install</span> grunt <span class="comment">--save-dev</span></span>
+</code></pre><h3 id="装第一个依赖项目，必然是grunt本身">装第一个依赖项目，必然是<code>grunt</code>本身</h3><pre><code>npm install grunt --<span class="built_in">save</span>-<span class="built_in">dev</span>
 </code></pre><p>安装完成，目录里多了一个<code>node_modules</code>目录，这是nodejs模块安装到的目录。</p>
-<h3 id="修改gitignore">修改gitignore</h3>
-<p><code>.gitignore</code>文件里加入这两个目录，不然被传到github上就不好了</p>
+<h3 id="修改gitignore">修改gitignore</h3><p><code>.gitignore</code>文件里加入这两个目录，不然被传到github上就不好了</p>
 <pre><code>/node_modules
 .tscache
 </code></pre><p>现在<code>package.json</code>变成这样了</p>
@@ -170,8 +163,7 @@ ProjectA
   </span>}
 </span>}
 </code></pre><p>因为安装grunt时时加了<code>--save-dev</code>参数，所以会被自动加进依赖里 </p>
-<h3 id="安装今天的主角，TypeScript的编译器插件grunt-ts">安装今天的主角，TypeScript的编译器插件grunt-ts</h3>
-<pre><code>npm <span class="operator"><span class="keyword">install</span> grunt-ts <span class="comment">--save-dev</span></span>
+<h3 id="安装今天的主角，TypeScript的编译器插件grunt-ts">安装今天的主角，TypeScript的编译器插件grunt-ts</h3><pre><code>npm install grunt-ts --<span class="built_in">save</span>-<span class="built_in">dev</span>
 </code></pre><p>再看<code>package.json</code>如下:</p>
 <pre><code>{
   "<span class="attribute">name</span>": <span class="value"><span class="string">"gruntTest"</span></span>,
@@ -182,10 +174,8 @@ ProjectA
     "<span class="attribute">grunt-ts</span>": <span class="value"><span class="string">"^1.12.1"</span>
   </span>}
 </span>}
-</code></pre><h3 id="安装生成all-min-js的插件">安装生成all.min.js的插件</h3>
-<pre><code>npm <span class="operator"><span class="keyword">install</span> grunt-contrib-uglify <span class="comment">--save-dev</span></span>
-</code></pre><h3 id="安装copy插件">安装copy插件</h3>
-<pre><code>npm <span class="operator"><span class="keyword">install</span> grunt-contrib-copy <span class="comment">--save-dev</span></span>
+</code></pre><h3 id="安装生成all-min-js的插件">安装生成all.min.js的插件</h3><pre><code>npm install grunt-contrib-uglify --<span class="built_in">save</span>-<span class="built_in">dev</span>
+</code></pre><h3 id="安装copy插件">安装copy插件</h3><pre><code>npm install grunt-contrib-<span class="keyword">copy</span> <span class="comment">--save-dev</span>
 </code></pre><p>现在看一眼<code>package.json</code>应该变成这样了</p>
 <pre><code>{
   "<span class="attribute">name</span>": <span class="value"><span class="string">"gruntTest"</span></span>,
@@ -200,7 +190,7 @@ ProjectA
 </span>}
 </code></pre><p>ok ，全部安装完毕，现在可以看<a href="https://www.npmjs.org/package/grunt-ts" target="_blank" rel="external">grunt-ts官网</a>介绍各种参数怎么用吧</p>
 <p>添加一个Gruntfile，基于<a href="https://github.com/TypeStrong/grunt-ts/blob/master/sample/Gruntfile.js" target="_blank" rel="external">官网的例子</a>直接修改的</p>
-<pre><code><span class="built_in">module</span>.exports = <span class="function"><span class="keyword">function</span> <span class="params">(grunt)</span> </span>{
+<pre><code><span class="built_in">module</span>.exports = <span class="function"><span class="keyword">function</span> (<span class="params">grunt</span>) </span>{
 <span class="pi">    "use strict"</span>;
 
     grunt.initConfig({
@@ -267,16 +257,16 @@ Copied <span class="number">4</span> files
 Done, without errors.
 </code></pre><p>Done了，没有错误！</p>
 
-		<hr>
-		<blockquote>
-		<p>如本文对你有一点点帮助的话，请点击右下角的 “分享到” 帮忙扩散，或用支付宝钱包扫码请我喝杯可乐，3Q。</p>
-		</blockquote>
-		<p><img src="/image/alipay.png" alt=""></p>
+        <hr>
+        <blockquote>
+        <p>如本文对你有一点点帮助的话，请点击右下角的 “分享到” 帮忙扩散，或用支付宝钱包小额赞助请我喝杯可乐，3Q。</p>
+        </blockquote>
+        <p><img src="/image/alipay.png" alt=""></p>
       
     </div>
     <footer class="article-footer">
       
-        <a data-url="http://nshen.net/article/2014-12-05/grunt-ts/" data-id="v46qvhsz8pn0f7u8" class="article-share-link" data-share="baidu">分享到</a>
+        <a data-url="http://nshen.net/article/2014-12-05/grunt-ts/" data-id="cighl27rv0011zkma16ex1o2y" class="article-share-link" data-share="baidu" data-title="Grunt笔记:使用grunt-ts编译typescript项目">分享到</a>
       
 
       
@@ -286,12 +276,20 @@ Done, without errors.
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/grunt/">grunt</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/typescript/">typescript</a></li></ul>
 
-
     </footer>
   </div>
   
     
 <nav id="article-nav">
+  
+    <a href="/article/2015-10-30/learnMoreStudyLess/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">下一篇</strong>
+      <div class="article-nav-title">
+        
+          《Learn More Study Less》整体性学习法
+        
+      </div>
+    </a>
   
   
     <a href="/project/2014-11-21/as2ts/" id="article-nav-older" class="article-nav-link-wrap">
@@ -319,7 +317,7 @@ Done, without errors.
   <div class="widget-wrap">
     <h3 class="widget-title">分类</h3>
     <div class="widget">
-      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/article/">article</a><span class="category-list-count">8</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/project/">project</a><span class="category-list-count">8</span></li></ul>
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/article/">article</a><span class="category-list-count">9</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/project/">project</a><span class="category-list-count">8</span></li></ul>
     </div>
   </div>
 
@@ -328,13 +326,11 @@ Done, without errors.
   <div class="widget-wrap">
     <h3 class="widget-title">标签云</h3>
     <div class="widget tagcloud">
-      <a href="/tags/grunt/" style="font-size: 10.00px;">grunt</a><a href="/tags/math/" style="font-size: 10.00px;">math</a><a href="/tags/pdf2mag/" style="font-size: 10.00px;">pdf2mag</a><a href="/tags/stage3d/" style="font-size: 15.00px;">stage3d</a><a href="/tags/typescript/" style="font-size: 20.00px;">typescript</a><a href="/tags/游戏/" style="font-size: 20.00px;">游戏</a><a href="/tags/翻译/" style="font-size: 10.00px;">翻译</a>
+      <a href="/tags/grunt/" style="font-size: 10px;">grunt</a> <a href="/tags/math/" style="font-size: 10px;">math</a> <a href="/tags/pdf2mag/" style="font-size: 10px;">pdf2mag</a> <a href="/tags/stage3d/" style="font-size: 15px;">stage3d</a> <a href="/tags/typescript/" style="font-size: 20px;">typescript</a> <a href="/tags/游戏/" style="font-size: 20px;">游戏</a> <a href="/tags/翻译/" style="font-size: 10px;">翻译</a> <a href="/tags/读书笔记/" style="font-size: 10px;">读书笔记</a>
     </div>
   </div>
 
   
-
-<a href=" /links/" >友情链接</a>
 </aside>
   
   <div class="outer">
@@ -344,24 +340,27 @@ Done, without errors.
       .
       Theme by <a href="https://github.com/xiangming/landscape-plus" target="_blank">Landscape-plus</a>
     </div>
-	<script type="text/javascript">
-		var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
-		document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3Fe1acab9c095adb812998c18d06d414ea' type='text/javascript'%3E%3C/script%3E"));
-	</script>
-
   </div>
 </footer>
   </div>
   <nav id="mobile-nav">
-  
-    <a href="/" class="mobile-nav-link">首页</a>
-  
-    <a href="/categories/article/" class="mobile-nav-link">学习笔记</a>
-  
-    <a href="/categories/project/" class="mobile-nav-link">实验项目</a>
-  
-    <a href="/about/" class="mobile-nav-link">关于我</a>
-  
+  <div>
+    
+      <a href="/" class="mobile-nav-link">主页</a>
+    
+      <a href="/list" class="mobile-nav-link">所有日志</a>
+    
+      <a href="/about" class="mobile-nav-link">关于</a>
+    
+      <a href="/links" class="mobile-nav-link">友情链接</a>
+    
+  </div>
+  <div id="mobile-nav-social">
+    
+    
+      <a id="nav-rss-link" class="nav-icon fa-rss" href="/atom.xml" title="RSS Feed"></a>
+    
+  </div>
 </nav>
   <!-- totop start -->
 <div id="totop">
@@ -378,7 +377,7 @@ var duoshuoQuery = {short_name:"nshen121"};
     ds.type = 'text/javascript';ds.async = true;
     ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
     ds.charset = 'UTF-8';
-    (document.getElementsByTagName('head')[0] 
+    (document.getElementsByTagName('head')[0]
      || document.getElementsByTagName('body')[0]).appendChild(ds);
   })();
   </script>
@@ -396,7 +395,20 @@ var duoshuoQuery = {short_name:"nshen121"};
     <a class="article-share-more" data-cmd="more" title="更多"></a>
   </div>
 </div>
-<script>window._bd_share_config={"common":{},"share":{"bdCustomStyle":"/css/bdshare.css"}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?cdnversion='+~(-new Date()/36e5)];</script>
+<script>
+  function SetShareData(cmd, config) {
+    if (shareDataTitle && shareDataUrl) {
+      config.bdText = shareDataTitle;
+      config.bdUrl = shareDataUrl;
+    }
+    return config;
+  }
+  window._bd_share_config={
+    "common":{onBeforeClick: SetShareData},
+    "share":{"bdCustomStyle":"/css/bdshare.css"}
+  };
+  with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?cdnversion='+~(-new Date()/36e5)];
+</script>
 
 <!-- 百度分享 end -->
 
@@ -404,14 +416,11 @@ var duoshuoQuery = {short_name:"nshen121"};
 
 
   <link rel="stylesheet" href="/fancybox/jquery.fancybox.css" type="text/css">
-
   <script src="/fancybox/jquery.fancybox.pack.js" type="text/javascript"></script>
 
 
 
-
 <script src="/js/script.js" type="text/javascript"></script>
-
 
 </div>
 </body>

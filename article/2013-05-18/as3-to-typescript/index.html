@@ -8,8 +8,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta name="description" content="以下是我总结的笔记，只涉及语法部分，有错漏请指正。
 如果你只想把现有的AS3代码转换为TypeScript代码的话，请尝试我写的这个在线转换器
-基本类型
-基础类型只有这么几种，与AS3对比
+基本类型基础类型只有这么几种，与AS3对比
 
 
 
@@ -35,15 +34,14 @@ any
 *
 
 
-und">
+unde">
 <meta property="og:type" content="article">
 <meta property="og:title" content="从 ActionScript3 到 TypeScript">
-<meta property="og:url" content="http://nshen.net/article/2013-05-18/as3-to-typescript/">
+<meta property="og:url" content="http://nshen.net/article/2013-05-18/as3-to-typescript/index.html">
 <meta property="og:site_name" content="N神的研究所">
 <meta property="og:description" content="以下是我总结的笔记，只涉及语法部分，有错漏请指正。
 如果你只想把现有的AS3代码转换为TypeScript代码的话，请尝试我写的这个在线转换器
-基本类型
-基础类型只有这么几种，与AS3对比
+基本类型基础类型只有这么几种，与AS3对比
 
 
 
@@ -69,13 +67,13 @@ any
 *
 
 
-und">
+unde">
+<meta property="og:updated_time" content="2015-10-30T08:30:23.260Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="从 ActionScript3 到 TypeScript">
 <meta name="twitter:description" content="以下是我总结的笔记，只涉及语法部分，有错漏请指正。
 如果你只想把现有的AS3代码转换为TypeScript代码的话，请尝试我写的这个在线转换器
-基本类型
-基础类型只有这么几种，与AS3对比
+基本类型基础类型只有这么几种，与AS3对比
 
 
 
@@ -101,16 +99,16 @@ any
 *
 
 
-und">
-
+unde">
   
-    <link rel="alternative" href="http://feed.feedsky.com/nshen" title="N神的研究所" type="application/atom+xml">
+    <link rel="alternative" href="/atom.xml" title="N神的研究所" type="application/atom+xml">
   
   
     <link rel="icon" href="/favicon.png">
   
   <link rel="stylesheet" href="/css/style.css" type="text/css">
-
+  <link href="//cdn.bootcss.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
+  <link href="//fonts.useso.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
   <!--[if lt IE 9]><script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7/html5shiv.min.js"></script><![endif]-->
   
 </head>
@@ -120,36 +118,33 @@ und">
     <header id="header">
   <div id="banner"></div>
   <div id="header-outer" class="outer">
-    <div id="header-title" class="inner">
-    
-      <h1 id="logo-wrap">
-        <a href="/" id="logo">N神的研究所</a>
-      </h1>
-      
-        <h2 id="subtitle-wrap">
-          <a href="/" id="subtitle">我正在考虑在这里写点啥...</a>
-        </h2>
-      
-
-    </div>
     <div id="header-inner" class="inner">
+      <div id="header-title">
+        <h1 id="logo-wrap">
+          <a href="/" id="logo">N神的研究所</a>
+        </h1>
+        
+      </div>
       <nav id="main-nav">
         <a id="main-nav-toggle" class="nav-icon"></a>
         
-          <a class="main-nav-link" href="/">首页</a>
+          <a class="main-nav-link" href="/">主页</a>
         
-          <a class="main-nav-link" href="/categories/article/">学习笔记</a>
+          <a class="main-nav-link" href="/list">所有日志</a>
         
-          <a class="main-nav-link" href="/categories/project/">实验项目</a>
+          <a class="main-nav-link" href="/about">关于</a>
         
-          <a class="main-nav-link" href="/about/">关于我</a>
+          <a class="main-nav-link" href="/links">友情链接</a>
         
       </nav>
       <nav id="sub-nav">
+        <a id="nav-search-btn" class="nav-icon fa-search" title="Search"></a>
+      </nav>
+      <nav id="sub-nav-social">
         
-          <a id="nav-rss-link" class="nav-icon" href="http://feed.feedsky.com/nshen" title="RSS Feed"></a>
         
-        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+          <a id="nav-rss-link" class="nav-icon fa-rss" href="/atom.xml" title="RSS Feed"></a>
+        
       </nav>
       <div id="search-form-wrap">
         <form action="http://www.baidu.com/baidu" method="get" accept-charset="utf-8" class="search-form">
@@ -166,9 +161,10 @@ und">
 </header>
     <div class="outer">
       <section id="main"><article id="post-as3-to-typescript" class="article article-type-post" itemscope itemprop="blogPost">
+  
   <div class="article-meta">
     <a href="/article/2013-05-18/as3-to-typescript/" class="article-date">
-  <time datetime="2013-05-18T06:56:31.000Z" itemprop="datePublished">5月 18 2013</time>
+  <time datetime="2013-05-18T06:56:31.000Z" itemprop="datePublished">2013-05-18</time>
 </a>
     
   <div class="article-category">
@@ -176,9 +172,9 @@ und">
   </div>
 
   </div>
+  
   <div class="article-inner">
     
-	<!---->
     
       <header class="article-header">
         
@@ -193,9 +189,8 @@ und">
     <div class="article-entry" itemprop="articleBody">
       
         <p>以下是我总结的笔记，只涉及语法部分，有错漏请指正。</p>
-<p>如果你只想把现有的AS3代码转换为TypeScript代码的话，请尝试我写的这个<a href="http://nshen.net/project/2014-11-21/as2ts/" target="_blank" rel="external">在线转换器</a></p>
-<h3 id="基本类型">基本类型</h3>
-<p>基础类型只有这么几种，与AS3对比</p>
+<p>如果你只想把现有的AS3代码转换为TypeScript代码的话，请尝试我写的这个<a href="http://nshen.net/project/2014-11-21/as2ts/">在线转换器</a></p>
+<h3 id="基本类型">基本类型</h3><p>基础类型只有这么几种，与AS3对比</p>
 <table>
 <thead>
 <tr>
@@ -231,7 +226,6 @@ und">
 </tbody>
 </table>
 <a id="more"></a>
-
 <!--
 <table >
   <tr><td><B>TypeScript</B></td><td><B>ActionScript3</B></td></tr>
@@ -243,40 +237,36 @@ und">
   <tr><td>null</td><td>null</td></tr>
 </table>
 -->
-
-<h3 id="任意类型：">任意类型：</h3>
-<p>ActionScript3 ：</p>
-<pre><code>var anyType : * = <span class="keyword">...</span>;
+<h3 id="任意类型：">任意类型：</h3><p>ActionScript3 ：</p>
+<pre><code><span class="variable"><span class="keyword">var</span> anyType</span> : * = ...;
 </code></pre><p>TypeScript：</p>
-<pre><code>var anyType : any = <span class="keyword">...</span>;
+<pre><code><span class="variable"><span class="keyword">var</span> anyType</span> : any = ...;
 </code></pre><hr>
-<h3 id="变量修饰符：">变量修饰符：</h3>
-<p>TS类似AS3 但不用写”var” ， 没有protected (未来也许会添加)，默认为public。</p>
+<h3 id="变量修饰符：">变量修饰符：</h3><p>TS类似AS3 但不用写”var” ， 没有protected (未来也许会添加)，默认为public。</p>
 <p>ActionScript3 ：</p>
-<pre><code><span class="keyword">private</span> <span class="keyword">var</span> str: <span class="built_in">String</span> = <span class="string">"abc"</span>;    
-<span class="keyword">public</span>  <span class="keyword">var</span> num: <span class="built_in">Number</span> = <span class="number">123</span>;     
-<span class="keyword">var</span> num2 :<span class="built_in">Number</span> = <span class="number">456</span>;        
-static <span class="keyword">var</span> bo: <span class="built_in">Boolean</span> = <span class="literal">true</span>;    
-<span class="keyword">public</span> <span class="keyword">var</span> createTime: <span class="built_in">String</span>;  
+<pre><code><span class="keyword">private</span> <span class="variable"><span class="keyword">var</span> str</span>: String = <span class="string">"abc"</span>;    
+<span class="keyword">public</span>  <span class="variable"><span class="keyword">var</span> num</span>: Number = <span class="number">123</span>;     
+<span class="variable"><span class="keyword">var</span> num2</span> :Number = <span class="number">456</span>;        
+static <span class="variable"><span class="keyword">var</span> bo</span>: <span class="typename">Boolean</span> = <span class="literal">true</span>;    
+<span class="keyword">public</span> <span class="variable"><span class="keyword">var</span> createTime</span>: String;  
 </code></pre><p>TypeScript:</p>
-<pre><code> <span class="keyword">private</span> str: <span class="keyword">string</span> = <span class="string">"abc"</span>;    <span class="comment">// private property</span>
- <span class="keyword">public</span>  num: number = <span class="number">123</span>;      <span class="comment">// public property</span>
- num2 :number = <span class="number">456</span>;             <span class="comment">// 不写默认也为public</span>
- <span class="keyword">static</span> bo: boolean = <span class="keyword">true</span>;         <span class="comment">// static</span>
- <span class="keyword">public</span> createTime: <span class="keyword">string</span>;      <span class="comment">//createTime 类型为string，值为 undefined</span>
+<pre><code><span class="keyword">private</span> <span class="string">str:</span> string = <span class="string">"abc"</span>;    <span class="comment">// private property</span>
+<span class="keyword">public</span>  <span class="string">num:</span> number = <span class="number">123</span>;      <span class="comment">// public property</span>
+<span class="string">num2 :</span>number = <span class="number">456</span>;             <span class="comment">// 不写默认也为public</span>
+<span class="keyword">static</span> <span class="string">bo:</span> <span class="typename">boolean</span> = <span class="literal">true</span>;         <span class="comment">// static</span>
+<span class="keyword">public</span> <span class="string">createTime:</span> string;      <span class="comment">//createTime 类型为string，值为 undefined</span>
 </code></pre><hr>
-<h3 id="变量类型转换:">变量类型转换:</h3>
-<p>ActionScript3 ：</p>
+<h3 id="变量类型转换:">变量类型转换:</h3><p>ActionScript3 ：</p>
 <pre><code><span class="keyword">var</span> str:<span class="built_in">String</span> = <span class="string">"abc"</span>;
 <span class="keyword">var</span> strNum:<span class="built_in">Number</span> = <span class="built_in">Number</span>(str);
-<span class="keyword">var</span> strNum:<span class="built_in">Number</span> = str as <span class="built_in">Number</span>;
+<span class="keyword">var</span> strNum:<span class="built_in">Number</span> = str <span class="keyword">as</span> <span class="built_in">Number</span>;
 </code></pre><p>TypeScript ：</p>
-<pre><code> <span class="keyword">var</span> str : <span class="keyword">string</span> = <span class="string">"abc"</span>;
- <span class="keyword">var</span> strNum: number = &lt;number&gt; str; <span class="comment">//编译报错 Cannot convert 'string' to 'number'</span>
+<pre><code><span class="keyword">var</span> str : <span class="built_in">string</span> = <span class="string">"abc"</span>;
+<span class="keyword">var</span> strNum: <span class="built_in">number</span> = &lt;<span class="built_in">number</span>&gt; str; <span class="comment">//编译报错 Cannot convert 'string' to 'number'</span>
 </code></pre><p>发现使用any类型会编译通过：</p>
-<pre><code> var str2 :<span class="keyword">any</span> = <span class="string">"abc"</span>;<span class="comment"> //any类型</span>
- var strNum2 :<span class="built_in">number</span> = &lt;<span class="built_in">number</span>&gt; str2;<span class="comment"> //通过</span>
- strNum2 += <span class="number">5</span>;<span class="comment"> // abc5 </span>
+<pre><code><span class="keyword">var</span> str2 :<span class="built_in">any</span> = <span class="string">"abc"</span>; <span class="comment">//any类型</span>
+<span class="keyword">var</span> strNum2 :<span class="built_in">number</span> = &lt;<span class="built_in">number</span>&gt; str2; <span class="comment">//通过</span>
+strNum2 += <span class="number">5</span>; <span class="comment">// abc5 </span>
 </code></pre><p>用 instanceof 判断类型</p>
 <pre><code> <span class="comment">// instanceof</span>
  <span class="function"><span class="keyword">function</span> <span class="title">CalculateArea</span><span class="params">(shape : Shape)</span> <span class="type">: number</span> </span>{
@@ -292,8 +282,7 @@ static <span class="keyword">var</span> bo: <span class="built_in">Boolean</span
  <span class="keyword">throw</span> <span class="keyword">new</span> TypeError(<span class="string">"Unsupported type!"</span>);
 }
 </code></pre><hr>
-<h3 id="数组">数组</h3>
-<p>Typescript数组的写法比AS3漂亮很多</p>
+<h3 id="数组">数组</h3><p>Typescript数组的写法比AS3漂亮很多</p>
 <p>ActionScript3 ：</p>
 <pre><code><span class="keyword">var</span> arr:<span class="built_in">Array</span> = [<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="string">"a"</span>,<span class="string">"b"</span>,<span class="string">"c"</span>]; <span class="comment">// 任意类型数组</span>
 <span class="keyword">var</span> strArray:Vector.&lt;<span class="built_in">String</span>&gt; = Vector.&lt;<span class="built_in">String</span>&gt;([<span class="string">"a"</span>, <span class="string">"b"</span>, <span class="string">"c"</span>]); <span class="comment">//固定类型数组</span>
@@ -301,19 +290,18 @@ static <span class="keyword">var</span> bo: <span class="built_in">Boolean</span
 <pre><code><span class="keyword">var</span> arr: <span class="built_in">any</span>[] = <span class="keyword">new</span> <span class="built_in">Array</span>(); <span class="comment">// 任意类型数组</span>
 <span class="keyword">var</span> strArr: <span class="built_in">string</span>[] = [<span class="string">"a"</span>, <span class="string">"b"</span>, <span class="string">"c"</span> ]; <span class="comment">//固定类型数组</span>
 </code></pre><p>二维数组</p>
-<pre><code><span class="keyword">var</span> array2d: <span class="built_in">string</span>[][] = [
+<pre><code><span class="atom">var</span> <span class="atom">array2d</span>: <span class="atom">string</span>[][] = [
 [<span class="string">"a"</span>, <span class="string">"b"</span>, <span class="string">"c"</span>],
 [<span class="string">"x"</span>, <span class="string">"y"</span>, <span class="string">"z"</span>]
 ];
 
-<span class="comment">// or</span>
+// <span class="atom">or</span>
 
-<span class="keyword">var</span> array2d: <span class="built_in">string</span>[][] = <span class="keyword">new</span> <span class="built_in">Array</span>();
-array2d.push([<span class="string">"a"</span>, <span class="string">"b"</span>, <span class="string">"c"</span>]);
-array2d.push([<span class="string">"x"</span>, <span class="string">"y"</span>, <span class="string">"z"</span>]);
+<span class="atom">var</span> <span class="atom">array2d</span>: <span class="atom">string</span>[][] = <span class="atom">new</span> <span class="name">Array</span>();
+<span class="atom">array2d</span>.<span class="atom">push</span>([<span class="string">"a"</span>, <span class="string">"b"</span>, <span class="string">"c"</span>]);
+<span class="atom">array2d</span>.<span class="atom">push</span>([<span class="string">"x"</span>, <span class="string">"y"</span>, <span class="string">"z"</span>]);
 </code></pre><hr>
-<h3 id="Object_Types">Object Types</h3>
-<p>当AS3调用这样一个函数时，会有下面一个问题。</p>
+<h3 id="Object_Types">Object Types</h3><p>当AS3调用这样一个函数时，会有下面一个问题。</p>
 <p>ActionScript3 ：</p>
 <pre><code><span class="function"><span class="keyword">function</span> <span class="title">CalculateArea</span> <span class="params">( rect : Object )</span><span class="type">:Number</span>
 </span>{
@@ -327,35 +315,35 @@ array2d.push([<span class="string">"x"</span>, <span class="string">"y"</span>, 
 }
 </code></pre><p>此时如果调用<strong>CalculateArea({w:123,h:456});</strong>  编译器不会通过。</p>
 <p><strong>Object Types</strong> 还支持”?”表示可选参数</p>
-<pre><code><span class="function"><span class="keyword">function</span> <span class="title">CalculateArea</span><span class="params">(rect: {width:number; height:number; depth?:number;})</span><span class="type">: number</span>
-</span>{
-    <span class="keyword">if</span>(rect.depth)
+<pre><code>function CalculateArea(<span class="built_in">rect</span>: {<span class="variable">width</span>:number; <span class="variable">height</span>:number; depth?:number;}): number
+{
+    <span class="keyword">if</span>(<span class="built_in">rect</span>.depth)
     {
-        <span class="keyword">return</span> rect.width * rect.height * rect.depth;
+        <span class="keyword">return</span> <span class="built_in">rect</span>.<span class="variable">width</span> * <span class="built_in">rect</span>.<span class="variable">height</span> * <span class="built_in">rect</span>.depth;
     }
-    <span class="keyword">return</span> rect.width * rect.height;
+    <span class="keyword">return</span> <span class="built_in">rect</span>.<span class="variable">width</span> * <span class="built_in">rect</span>.<span class="variable">height</span>;
 }
 
 CalculateArea({w:<span class="number">123</span>,h:<span class="number">456</span>}); <span class="comment">//编译器报错</span>
-CalculateArea({width:<span class="number">123</span>,height:<span class="number">456</span>}); <span class="comment">// 通过</span>
-CalculateArea({width:<span class="number">123</span>,height:<span class="number">456</span>,depth:<span class="number">789</span>}); <span class="comment">// 通过</span>
+CalculateArea({<span class="variable">width</span>:<span class="number">123</span>,<span class="variable">height</span>:<span class="number">456</span>}); <span class="comment">// 通过</span>
+CalculateArea({<span class="variable">width</span>:<span class="number">123</span>,<span class="variable">height</span>:<span class="number">456</span>,depth:<span class="number">789</span>}); <span class="comment">// 通过</span>
 </code></pre><p>可以这样声明一个Object</p>
-<pre><code><span class="keyword">var</span> example: {
-name: <span class="built_in">string</span>;
-id: <span class="built_in">number</span>;
-collection: <span class="built_in">string</span>[]; 
+<pre><code>var <span class="string">example:</span> {
+<span class="string">name:</span> string;
+<span class="string">id:</span> number;
+<span class="string">collection:</span> string[]; 
 } = {
-name: <span class="string">'Example'</span>,
-id: <span class="number">5</span>,
-collection: [<span class="string">'a'</span>, <span class="string">'b'</span>, <span class="string">'c'</span>]
+<span class="string">name:</span> <span class="string">'Example'</span>,
+<span class="string">id:</span> <span class="number">5</span>,
+<span class="string">collection:</span> [<span class="string">'a'</span>, <span class="string">'b'</span>, <span class="string">'c'</span>]
 }
 </code></pre><hr>
 <p>ActionScript3 ：</p>
-<pre><code><span class="keyword">var</span> fun:<span class="function"><span class="keyword">Function</span></span>;   
-<span class="keyword">var</span> fun2:<span class="function"><span class="keyword">Function</span> = <span class="title">someFunction</span></span>;
+<pre><code>var <span class="function"><span class="keyword">fun</span>:<span class="title">Function</span></span>;   
+var <span class="symbol">fun2:</span><span class="constant">Function</span> = someFunction;
 </code></pre><p>TypeScript 可以指定Function需要的参数和返回值类型，叫做函数签名，所以变成了这样</p>
-<pre><code><span class="reserved">var</span> fun : <span class="function"><span class="params">(str: string)</span> =&gt;</span> <span class="reserved">void</span>;   <span class="regexp">//</span> fun是输入为string，没有输出的函数
-<span class="reserved">var</span> fun2 : <span class="function"><span class="params">(num: number)</span> =&gt;</span> number = someFnction;  <span class="regexp">//</span>someFnction函数必须输入输出都为number类型
+<pre><code>var <span class="function"><span class="keyword">fun</span> : (<span class="title">str</span></span>: string) =&gt; void;   <span class="regexp">//</span> <span class="function"><span class="keyword">fun</span>是输入为<span class="title">string</span></span>，没有输出的函数
+var fun2 : (<span class="symbol">num:</span> number) =&gt; number = someFnction;  <span class="regexp">//some</span>Fnction函数必须输入输出都为number类型
 </code></pre><p>eg.指定callback函数为string输入，any输出。</p>
 <pre><code>function vote(candidate: <span class="type">string</span>, callback: (<span class="literal">result</span>: <span class="type">string</span>) =&gt; <span class="type">any</span>) {
 // ...
@@ -368,17 +356,16 @@ vote(<span class="string">"BigPig"</span>,
         }
     });
 </code></pre><p>TypeScript 这样的语法虽然使Function更清晰了，但也带来麻烦，比如一个简单的输入输出都是string的函数就要写好长不易阅读</p>
-<pre><code><span class="keyword">var</span> sayHello: (input: <span class="built_in">string</span>) =&gt; <span class="built_in">string</span> = <span class="function"><span class="keyword">function</span> <span class="params">(s: string)</span> </span>{
+<pre><code><span class="keyword">var</span> sayHello: (input: <span class="built_in">string</span>) =&gt; <span class="built_in">string</span> = <span class="function"><span class="keyword">function</span> (<span class="params">s: <span class="built_in">string</span></span>) </span>{
     <span class="keyword">return</span> <span class="string">"Hello "</span> + s;
 }
 
 <span class="comment">//保存函数的数组也写很长</span>
-<span class="keyword">var</span> strArray: { (s: <span class="built_in">string</span>): <span class="built_in">string</span>; }[] = [sayHello, <span class="function"><span class="keyword">function</span> <span class="title">aa</span><span class="params">(str: string)</span> </span>{ <span class="keyword">return</span> str; }];    <span class="comment">//两个输入输出都为string的函数</span>
+<span class="keyword">var</span> strArray: { (s: <span class="built_in">string</span>): <span class="built_in">string</span>; }[] = [sayHello, <span class="function"><span class="keyword">function</span> <span class="title">aa</span>(<span class="params">str: <span class="built_in">string</span></span>) </span>{ <span class="keyword">return</span> str; }];    <span class="comment">//两个输入输出都为string的函数</span>
 <span class="keyword">var</span> strArray: { (s: <span class="built_in">string</span>) =&gt; <span class="built_in">string</span>; }[]   <span class="comment">//这样写会报错，不知道为什么要把 “=&gt;”换成“ ：” 不太清楚为什么 -_-b</span>
 </code></pre><p>所以引入了 函数接口</p>
-<h3 id="函数接口">函数接口</h3>
-<pre><code><span class="comment">//定义输入输出都是字符串的函数的接口</span>
-<span class="class"><span class="keyword">interface</span> <span class="title">IStringFunction</span> </span>{
+<h3 id="函数接口">函数接口</h3><pre><code><span class="comment">//定义输入输出都是字符串的函数的接口</span>
+<span class="keyword">interface</span> <span class="title">IStringFunction</span> {
     (input: <span class="keyword">string</span>) : <span class="keyword">string</span>;
 }
 </code></pre><p>上边很长的都可以这么写了</p>
@@ -387,8 +374,7 @@ vote(<span class="string">"BigPig"</span>,
 }
 <span class="keyword">var</span> strArray: IStringFunction[];
 strArray.push(sayHello);
-</code></pre><h3 id="可选参数加”?”">可选参数加”?”</h3>
-<pre><code><span class="comment">//带默认值</span>
+</code></pre><h3 id="可选参数加”?”">可选参数加”?”</h3><pre><code><span class="comment">//带默认值</span>
 <span class="function"><span class="keyword">function</span> <span class="title">func</span> <span class="params">(a: number, b?: bool = false)</span><span class="type">: number</span>
  </span>{
     <span class="keyword">if</span> (b) { <span class="keyword">return</span> a + b };
@@ -404,8 +390,7 @@ strArray.push(sayHello);
    }
    <span class="keyword">return</span> a;
 }
-</code></pre><h3 id="rest参数_…paramName[:paramType]">rest参数 …paramName[:paramType]</h3>
-<pre><code><span class="function"><span class="keyword">function</span> <span class="title">CountDwarvesTallerThan</span><span class="params">(minHeight: number, <span class="rest_arg">...dwarves</span>: Dwarf[])</span> <span class="type">: number</span> 
+</code></pre><h3 id="rest参数_…paramName[:paramType]">rest参数 …paramName[:paramType]</h3><pre><code><span class="function"><span class="keyword">function</span> <span class="title">CountDwarvesTallerThan</span><span class="params">(minHeight: number, <span class="rest_arg">...dwarves</span>: Dwarf[])</span> <span class="type">: number</span> 
 </span>{
     <span class="keyword">var</span> count: number = <span class="number">0</span>;
     <span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; dwarves.length; i++) {
@@ -416,17 +401,16 @@ strArray.push(sayHello);
     <span class="keyword">return</span> count;
 }
 </code></pre><hr>
-<h3 id="Arrow_Function">Arrow Function</h3>
-<p>关于this作用域的问题，AS1时代经常用到的一个技巧：</p>
+<h3 id="Arrow_Function">Arrow Function</h3><p>关于this作用域的问题，AS1时代经常用到的一个技巧：</p>
 <blockquote>
 <p>var _this = this</p>
 </blockquote>
-<pre><code><span class="keyword">var</span> messenger = {
+<pre><code>var messenger = {
     message: <span class="string">"Hello World"</span>,
-    start: <span class="function"><span class="keyword">function</span><span class="params">()</span> </span>{
-    <span class="keyword">var</span> _this = <span class="keyword">this</span>;
-    setTimeout(<span class="function"><span class="keyword">function</span><span class="params">()</span> </span>{ 
-        alert(_this.message); 
+    start: function() {
+    var <span class="built_in">_this</span> = this;
+    setTimeout(function() { 
+        alert(<span class="built_in">_this</span>.message); 
         }, <span class="number">3000</span>);
     }
 };
@@ -434,20 +418,20 @@ messenger.start();
 </code></pre><p>TypeScript把这个技巧封装到语言里了，叫<strong>Arrow Function</strong></p>
 <p>语法格式为 ()=&gt;{}，例子：</p>
 <p>TypeScript：</p>
-<pre><code><span class="reserved">var</span> messenger = {
-    <span class="attribute">message</span>: <span class="string">"Hello World"</span>,
-    <span class="attribute">start</span>: <span class="reserved">function</span>() {
-        setTimeout<span class="function"><span class="params">(() =&gt; { alert(<span class="keyword">this</span>.message); }, <span class="number">3000</span>)</span>;
-    }
-};
-<span class="title">messenger</span>.<span class="title">start</span><span class="params">()</span>;</span>
-</code></pre><p>编译后的JavaScript跟上边的一样</p>
 <pre><code><span class="keyword">var</span> messenger = {
     message: <span class="string">"Hello World"</span>,
-    start: <span class="function"><span class="keyword">function</span> <span class="params">()</span> </span>{
-        <span class="keyword">var</span> _this = <span class="keyword">this</span>;
-        setTimeout(<span class="function"><span class="keyword">function</span> <span class="params">()</span> </span>{
-            alert(_this.message);
+    start: <span class="function"><span class="keyword">function</span><span class="params">()</span> </span>{
+        setTimeout(() =&gt; { alert(<span class="keyword">this</span>.message); }, <span class="number">3000</span>);
+    }
+};
+messenger.start();
+</code></pre><p>编译后的JavaScript跟上边的一样</p>
+<pre><code>var messenger = {
+    message: <span class="string">"Hello World"</span>,
+    start: function () {
+        var <span class="built_in">_this</span> = this;
+        setTimeout(function () {
+            alert(<span class="built_in">_this</span>.message);
         }, <span class="number">3000</span>);
     }
 };
@@ -464,7 +448,7 @@ messenger.start();
 
     beginMenuTest(): <span class="built_in">void</span> {
         <span class="keyword">this</span>.menuTouches = <span class="number">0</span>;   <span class="comment">// Right!!</span>
-        menu.onmouseenter = <span class="function"><span class="keyword">function</span> <span class="params">(e)</span> </span>{
+        menu.onmouseenter = <span class="function"><span class="keyword">function</span> (<span class="params">e</span>) </span>{
             <span class="keyword">this</span>.menuTouches++;  <span class="comment">// Wrong!! </span>
         }
     }
@@ -499,8 +483,7 @@ messenger.start();
 <p><a href="http://www.codebelt.com/typescript/arrow-function-typescript-tutorial/" target="_blank" rel="external">http://www.codebelt.com/typescript/arrow-function-typescript-tutorial/</a></p>
 </blockquote>
 <hr>
-<h3 id="类相关的">类相关的</h3>
-<p>TypeScript中的module相当于ActionScript3中的Package</p>
+<h3 id="类相关的">类相关的</h3><p>TypeScript中的module相当于ActionScript3中的Package</p>
 <p>TypeScript中构造函数的函数名用<strong>constructor</strong> ，而不用类名。</p>
 <p>TypeScript:</p>
 <pre><code><span class="module"><span class="keyword">module</span> net.nshen </span>{ 
@@ -516,7 +499,7 @@ messenger.start();
             <span class="keyword">this</span>.createTime = <span class="keyword">new</span> <span class="built_in">Date</span>().toUTCString();
         }
 
-        static traceDate(): <span class="built_in">void</span>
+        <span class="keyword">static</span> traceDate(): <span class="built_in">void</span>
         {
             <span class="keyword">var</span> currentDate: <span class="built_in">Date</span> = <span class="keyword">new</span> <span class="built_in">Date</span>(); 
             <span class="built_in">console</span>.log(currentDate.toUTCString());
@@ -524,12 +507,11 @@ messenger.start();
     }
 }
 </code></pre><p>调用Static方法</p>
-<pre><code><span class="winutils">net</span>.nshen.Test1.traceDate();
-</code></pre><h3 id="module原理">module原理</h3>
-<p>module始终是要编译成JS代码的，写一个简单的module看一下原理：</p>
-<pre><code><span class="module"><span class="keyword">module</span> M </span>{
+<pre><code><span class="tag">net</span><span class="class">.nshen</span><span class="class">.Test1</span><span class="class">.traceDate</span>();
+</code></pre><h3 id="module原理">module原理</h3><p>module始终是要编译成JS代码的，写一个简单的module看一下原理：</p>
+<pre><code><span class="built_in">module</span> M {
     <span class="keyword">var</span> s = <span class="string">"hello"</span>;
-    <span class="keyword">export</span> <span class="function"><span class="keyword">function</span> <span class="title">f</span><span class="params">()</span> </span>{
+    <span class="keyword">export</span> <span class="function"><span class="keyword">function</span> <span class="title">f</span>(<span class="params"></span>) </span>{
         <span class="keyword">return</span> s;
      }
 }
@@ -537,18 +519,17 @@ messenger.start();
 M.f();
 M.s;  <span class="comment">// Error, s is not exported</span>
 </code></pre><p>编译后的JS代码</p>
-<pre><code><span class="keyword">var</span> M;
-(<span class="function"><span class="keyword">function</span><span class="params">(M)</span> </span>{
-    <span class="keyword">var</span> s = <span class="string">"hello"</span>;
-    <span class="function"><span class="keyword">function</span> <span class="title">f</span><span class="params">()</span> </span>{
-    <span class="keyword">return</span> s;
+<pre><code>var M<span class="comment">;</span>
+<span class="list">(<span class="keyword">function</span><span class="list">(<span class="keyword">M</span>)</span> {
+    var s = <span class="string">"hello"</span><span class="comment">;</span>
+    function f<span class="list">()</span> {
+    return s<span class="comment">;</span>
     }
-    M.f = f;
-})(M||(M={}));
+    M.f = f<span class="comment">;</span>
+})</span><span class="list">(<span class="keyword">M</span><span class="keyword">||</span><span class="list">(<span class="keyword">M=</span>{})</span>)</span><span class="comment">;</span>
 </code></pre><p>据说这是js界很流行的写法，叫做<strong>JavaScript module pattern</strong></p>
 <hr>
-<h3 id="函数重载">函数重载</h3>
-<p>AS3和JS都是不支持函数重载的，TypeScript以一种鸡肋的方式支持着。</p>
+<h3 id="函数重载">函数重载</h3><p>AS3和JS都是不支持函数重载的，TypeScript以一种鸡肋的方式支持着。</p>
 <p>先写一些同名的函数声明，最后在一个同名函数里写出实现（要自己判断参数类型）：</p>
 <p>TypeScript:</p>
 <pre><code><span class="function"><span class="keyword">function</span> <span class="title">attr</span><span class="params">(name: string)</span><span class="type">: string</span></span>;
@@ -575,48 +556,47 @@ M.s;  <span class="comment">// Error, s is not exported</span>
 </blockquote>
 <p>TypeScript 允许多个类在同一个文件里，但如果类与类在不同的文件，需要这种写法，相当于AS3 的 import</p>
 <pre><code><span class="comment">/// &lt;reference path="SimpleWebSocket.ts"/&gt;</span>
-<span class="class"><span class="keyword">class</span> <span class="title">ComplexWebSocket</span> <span class="keyword">extends</span> <span class="title">SimpleWebSocket</span> </span>{
+<span class="class"><span class="keyword">class</span> <span class="title">ComplexWebSocket</span> <span class="keyword"><span class="keyword">extends</span></span> <span class="title">SimpleWebSocket</span> {</span>
 ...
 }
 </code></pre><p>override方法子类不需要写关键字，直接同名方法即可 ，可调用super.xxx()</p>
-<pre><code><span class="class"><span class="keyword">class</span> <span class="title">Base</span> </span>{
+<pre><code><span class="class"><span class="keyword">class</span> <span class="title">Base</span> {</span>
 
-    <span class="keyword">public</span> test():number
+    public test():number
     {
         <span class="keyword">return</span> <span class="number">1</span>;
     }
 
-    <span class="keyword">public</span> test2():number
+    public test2():number
     {
         <span class="keyword">return</span> <span class="number">2</span>;
     }
 }
 
-<span class="class"><span class="keyword">class</span> <span class="title">Derived</span> <span class="keyword">extends</span> <span class="title">Base</span> </span>{
+<span class="class"><span class="keyword">class</span> <span class="title">Derived</span> <span class="keyword"><span class="keyword">extends</span></span> <span class="title">Base</span> {</span>
 
-    <span class="keyword">public</span> test():number
+    public test():number
     {
         <span class="keyword">return</span> <span class="number">3</span>;
     }
 
-    <span class="keyword">public</span> test2():number
+    public test2():number
     {
-        <span class="keyword">return</span> super.test();
+        <span class="keyword">return</span> <span class="keyword">super</span>.test();
     }
 
 }
 
 
-<span class="keyword">var</span> d:Derived = <span class="keyword">new</span> Derived();
+<span class="keyword">var</span> d:<span class="type">Derived</span> = <span class="keyword">new</span> <span class="type">Derived</span>();
 console.log(d.test()); <span class="comment">// 3</span>
 console.log(d.test2());<span class="comment">// 1</span>
 </code></pre><hr>
-<h3 id="Enum">Enum</h3>
-<p>TypeScript支持enum关键字</p>
-<pre><code><span class="class"><span class="keyword">enum</span> <span class="title">Color</span> </span>{ <span class="type">Red</span>, <span class="type">Green</span>, <span class="type">Blue</span> }
-console.log(<span class="type">Color</span>.<span class="type">Red</span>); <span class="comment">// 0</span>
-<span class="keyword">var</span> <span class="built_in">c</span>:number = <span class="type">Color</span>.<span class="type">Green</span>;
-console.log(<span class="type">Color</span>[<span class="built_in">c</span>])  <span class="comment">//Green</span>
+<h3 id="Enum">Enum</h3><p>TypeScript支持enum关键字</p>
+<pre><code><span class="class"><span class="keyword">enum</span> <span class="title">Color</span> { <span class="title">Red</span>, <span class="title">Green</span>, <span class="title">Blue</span> }</span>
+console.log(<span class="constant">Color</span>.<span class="constant">Red</span>); <span class="regexp">//</span> <span class="number">0</span>
+var <span class="symbol">c:</span>number = <span class="constant">Color</span>.<span class="constant">Green</span>;
+console.log(<span class="constant">Color</span>[c])  /<span class="regexp">/Green</span>
 </code></pre><p>生成对应的js</p>
 <pre><code>var <span class="keyword">Color</span>;
 (function (<span class="keyword">Color</span>) {
@@ -628,16 +608,16 @@ console.log(<span class="keyword">Color</span>.Red);
 var c = <span class="keyword">Color</span>.Green;
 console.log(<span class="keyword">Color</span>[c]);//Green
 </code></pre>
-		<hr>
-		<blockquote>
-		<p>如本文对你有一点点帮助的话，请点击右下角的 “分享到” 帮忙扩散，或用支付宝钱包扫码请我喝杯可乐，3Q。</p>
-		</blockquote>
-		<p><img src="/image/alipay.png" alt=""></p>
+        <hr>
+        <blockquote>
+        <p>如本文对你有一点点帮助的话，请点击右下角的 “分享到” 帮忙扩散，或用支付宝钱包小额赞助请我喝杯可乐，3Q。</p>
+        </blockquote>
+        <p><img src="/image/alipay.png" alt=""></p>
       
     </div>
     <footer class="article-footer">
       
-        <a data-url="http://nshen.net/article/2013-05-18/as3-to-typescript/" data-id="6n2j06b1s6x1qj32" class="article-share-link" data-share="baidu">分享到</a>
+        <a data-url="http://nshen.net/article/2013-05-18/as3-to-typescript/" data-id="cighl27s6001izkma287bupnj" class="article-share-link" data-share="baidu" data-title="从 ActionScript3 到 TypeScript">分享到</a>
       
 
       
@@ -646,7 +626,6 @@ console.log(<span class="keyword">Color</span>[c]);//Green
 
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/typescript/">typescript</a></li></ul>
-
 
     </footer>
   </div>
@@ -689,7 +668,7 @@ console.log(<span class="keyword">Color</span>[c]);//Green
   <div class="widget-wrap">
     <h3 class="widget-title">分类</h3>
     <div class="widget">
-      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/article/">article</a><span class="category-list-count">8</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/project/">project</a><span class="category-list-count">8</span></li></ul>
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/article/">article</a><span class="category-list-count">9</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/project/">project</a><span class="category-list-count">8</span></li></ul>
     </div>
   </div>
 
@@ -698,13 +677,11 @@ console.log(<span class="keyword">Color</span>[c]);//Green
   <div class="widget-wrap">
     <h3 class="widget-title">标签云</h3>
     <div class="widget tagcloud">
-      <a href="/tags/grunt/" style="font-size: 10.00px;">grunt</a><a href="/tags/math/" style="font-size: 10.00px;">math</a><a href="/tags/pdf2mag/" style="font-size: 10.00px;">pdf2mag</a><a href="/tags/stage3d/" style="font-size: 15.00px;">stage3d</a><a href="/tags/typescript/" style="font-size: 20.00px;">typescript</a><a href="/tags/游戏/" style="font-size: 20.00px;">游戏</a><a href="/tags/翻译/" style="font-size: 10.00px;">翻译</a>
+      <a href="/tags/grunt/" style="font-size: 10px;">grunt</a> <a href="/tags/math/" style="font-size: 10px;">math</a> <a href="/tags/pdf2mag/" style="font-size: 10px;">pdf2mag</a> <a href="/tags/stage3d/" style="font-size: 15px;">stage3d</a> <a href="/tags/typescript/" style="font-size: 20px;">typescript</a> <a href="/tags/游戏/" style="font-size: 20px;">游戏</a> <a href="/tags/翻译/" style="font-size: 10px;">翻译</a> <a href="/tags/读书笔记/" style="font-size: 10px;">读书笔记</a>
     </div>
   </div>
 
   
-
-<a href=" /links/" >友情链接</a>
 </aside>
   
   <div class="outer">
@@ -714,24 +691,27 @@ console.log(<span class="keyword">Color</span>[c]);//Green
       .
       Theme by <a href="https://github.com/xiangming/landscape-plus" target="_blank">Landscape-plus</a>
     </div>
-	<script type="text/javascript">
-		var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
-		document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3Fe1acab9c095adb812998c18d06d414ea' type='text/javascript'%3E%3C/script%3E"));
-	</script>
-
   </div>
 </footer>
   </div>
   <nav id="mobile-nav">
-  
-    <a href="/" class="mobile-nav-link">首页</a>
-  
-    <a href="/categories/article/" class="mobile-nav-link">学习笔记</a>
-  
-    <a href="/categories/project/" class="mobile-nav-link">实验项目</a>
-  
-    <a href="/about/" class="mobile-nav-link">关于我</a>
-  
+  <div>
+    
+      <a href="/" class="mobile-nav-link">主页</a>
+    
+      <a href="/list" class="mobile-nav-link">所有日志</a>
+    
+      <a href="/about" class="mobile-nav-link">关于</a>
+    
+      <a href="/links" class="mobile-nav-link">友情链接</a>
+    
+  </div>
+  <div id="mobile-nav-social">
+    
+    
+      <a id="nav-rss-link" class="nav-icon fa-rss" href="/atom.xml" title="RSS Feed"></a>
+    
+  </div>
 </nav>
   <!-- totop start -->
 <div id="totop">
@@ -748,7 +728,7 @@ var duoshuoQuery = {short_name:"nshen121"};
     ds.type = 'text/javascript';ds.async = true;
     ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
     ds.charset = 'UTF-8';
-    (document.getElementsByTagName('head')[0] 
+    (document.getElementsByTagName('head')[0]
      || document.getElementsByTagName('body')[0]).appendChild(ds);
   })();
   </script>
@@ -766,7 +746,20 @@ var duoshuoQuery = {short_name:"nshen121"};
     <a class="article-share-more" data-cmd="more" title="更多"></a>
   </div>
 </div>
-<script>window._bd_share_config={"common":{},"share":{"bdCustomStyle":"/css/bdshare.css"}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?cdnversion='+~(-new Date()/36e5)];</script>
+<script>
+  function SetShareData(cmd, config) {
+    if (shareDataTitle && shareDataUrl) {
+      config.bdText = shareDataTitle;
+      config.bdUrl = shareDataUrl;
+    }
+    return config;
+  }
+  window._bd_share_config={
+    "common":{onBeforeClick: SetShareData},
+    "share":{"bdCustomStyle":"/css/bdshare.css"}
+  };
+  with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?cdnversion='+~(-new Date()/36e5)];
+</script>
 
 <!-- 百度分享 end -->
 
@@ -774,14 +767,11 @@ var duoshuoQuery = {short_name:"nshen121"};
 
 
   <link rel="stylesheet" href="/fancybox/jquery.fancybox.css" type="text/css">
-
   <script src="/fancybox/jquery.fancybox.pack.js" type="text/javascript"></script>
 
 
 
-
 <script src="/js/script.js" type="text/javascript"></script>
-
 
 </div>
 </body>
