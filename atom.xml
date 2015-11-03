@@ -4,7 +4,7 @@
   
   <link href="/atom.xml" rel="self"/>
   <link href="http://nshen.net/"/>
-  <updated>2015-11-02T09:16:57.195Z</updated>
+  <updated>2015-11-03T08:11:21.120Z</updated>
   <id>http://nshen.net/</id>
   
   <author>
@@ -16,15 +16,18 @@
   
   <entry>
     <title><![CDATA[《Learn More Study Less》整体性学习法]]></title>
-    <link href="http://nshen.net/article/2015-10-30/learnMoreStudyLess/"/>
-    <id>http://nshen.net/article/2015-10-30/learnMoreStudyLess/</id>
-    <published>2015-10-30T09:30:31.000Z</published>
-    <updated>2015-11-02T09:16:57.195Z</updated>
-    <content type="html"><![CDATA[<p>整体性学习法是一套能更准确描述大脑如何运作的学习理论。</p>
-<p>基于这3个idea：</p>
-<p><img src="/image/learnMoreStudyLess/0.png" alt=""></p>
+    <link href="http://nshen.net/article/2015-11-03/learnMoreStudyLess/"/>
+    <id>http://nshen.net/article/2015-11-03/learnMoreStudyLess/</id>
+    <published>2015-11-03T01:21:00.000Z</published>
+    <updated>2015-11-03T08:11:21.120Z</updated>
+    <content type="html"><![CDATA[<p>忘记在哪里看到这本书的介绍了，据说是一个小子自学1年，完成了4年麻省理工的课程，然后写了一本他学习方法的书。<br>我搜了一下，居然中英文版都有，就花时间好好读了一遍，就是这本。</p>
+<p><img src="/image/learnMoreStudyLess/book.jpg" alt=""></p>
+<p>以下是这本书的完整笔记：</p>
 <a id="more"></a> 
-<h2 id="骨架">骨架</h2><h3 id="结构_Constructs">结构 Constructs</h3><p>一个结构，就像脑中的一座城市， 大脑中有无数个这种城市， 比如 c++结构(c++ city)， 这个结构定义了你知道的c++所有知识和你对c++所有知识点(ideas)的interconnected的总和. 而某一个知识点(idea)就像这个city中的一个building， building之间连接的道路越多越容易越容易在知识点中穿梭，所以当建造一个Construct (城市)的时候，你的目标应该是在ideas之间建设尽可能多的interconnections。</p>
+<hr>
+<p><strong>整体性学习法是一套能更准确描述大脑如何运作的学习理论。</strong></p>
+<h2 id="其骨架基于这3个idea：">其骨架基于这3个idea：</h2><p><img src="/image/learnMoreStudyLess/0.png" alt=""></p>
+<h3 id="结构_Constructs">结构 Constructs</h3><p>一个结构，就像脑中的一座城市， 大脑中有无数个这种城市， 比如 c++结构(c++ city)， 这个结构定义了你知道的c++所有知识和你对c++所有知识点(ideas)的interconnected的总和. 而某一个知识点(idea)就像这个city中的一个building， building之间连接的道路越多越容易越容易在知识点中穿梭，所以当建造一个Construct (城市)的时候，你的目标应该是在ideas之间建设尽可能多的interconnections。</p>
 <h4 id="常见的结构_Familiar_Constructs">常见的结构 Familiar Constructs</h4><ul>
 <li>感知结构 Sensory Constructs<br>很多的图像，声音，感觉通过经验聚集在一起。</li>
 <li>关系结构 Relationship Constructs<br>故事，人，人们之间的交互定义了我们的经验. 有没有精彩的故事能让要学习的主题更容易理解?</li>
@@ -379,11 +382,16 @@
 <li>把目标转化成daily和weekly的具体行动</li>
 <li>有规律的回顾你设置的目标，至少每周一次检查目标实现情况。</li>
 </ol>
+<h3 id="完整思维导图">完整思维导图</h3><p><img src="/image/learnMoreStudyLess/learnMoreStudyLess.png" alt=""></p>
+<h4 id="下载：">下载：</h4><ul>
+<li><a href="/image/learnMoreStudyLess/learnMoreStudyLess.png">learnMoreStudyLess.png</a></li>
+<li><a href="/image/learnMoreStudyLess/learnMoreStudyLess.xmind">learnMoreStudyLess.xmind</a></li>
+</ul>
 ]]></content>
     <summary type="html">
-    <![CDATA[<p>整体性学习法是一套能更准确描述大脑如何运作的学习理论。</p>
-<p>基于这3个idea：</p>
-<p><img src="/image/learnMoreStudyLess/0.png" alt=""></p>]]>
+    <![CDATA[<p>忘记在哪里看到这本书的介绍了，据说是一个小子自学1年，完成了4年麻省理工的课程，然后写了一本他学习方法的书。<br>我搜了一下，居然中英文版都有，就花时间好好读了一遍，就是这本。</p>
+<p><img src="/image/learnMoreStudyLess/book.jpg" alt=""></p>
+<p>以下是这本书的完整笔记：</p>]]>
     
     </summary>
     
@@ -394,11 +402,76 @@
   </entry>
   
   <entry>
+    <title><![CDATA[Stage3D.js：用TypeScript与WebGL实现Stage3D API]]></title>
+    <link href="http://nshen.net/project/2015-02-04/stage3d-js/"/>
+    <id>http://nshen.net/project/2015-02-04/stage3d-js/</id>
+    <published>2015-02-04T09:12:00.000Z</published>
+    <updated>2015-11-03T08:08:14.321Z</updated>
+    <content type="html"><![CDATA[<p>在入门WebGL的过程中经常与Stage3D的API对比，后干脆把Stage3D的API实现出来了，也包括了AS3的数学库。</p>
+<h2 id="一些演示：">一些演示：</h2><p><a href="http://www.nshen.net/Stage3D.js/examples/bunnyMark/BunnyMark.html" target="_blank" rel="external">bunnymark</a><br><a href="http://www.nshen.net/Stage3D.js/examples/shooter/index.html" target="_blank" rel="external">a shooter game</a><br><a href="http://www.nshen.net/Stage3D.js/examples/blend.html" target="_blank" rel="external">blend test</a><br><a href="http://www.nshen.net/Stage3D.js/examples/gouraudShading.html" target="_blank" rel="external">gouraudShading</a><br><a href="http://www.nshen.net/Stage3D.js/examples/loadObj.html" target="_blank" rel="external">load Obj model</a><br><a href="http://www.nshen.net/Stage3D.js/examples/textureTriangle.html" target="_blank" rel="external">textureTriangle</a><br><a href="http://www.nshen.net/Stage3D.js/examples/renderingModes.html" target="_blank" rel="external">renderingModes</a><br><a href="http://www.nshen.net/Stage3D.js/examples/drawSquare.html" target="_blank" rel="external">drawSquare</a><br><a href="http://www.nshen.net/Stage3D.js/examples/drawTriangle.html" target="_blank" rel="external">drawTriangle</a></p>
+<h2 id="项目地址：">项目地址：</h2><p><a href="https://github.com/nshen/Stage3D.js" target="_blank" rel="external">https://github.com/nshen/Stage3D.js</a></p>
+<a id="more"></a>
+<h3 id="最简单的画三角形的代码如下_(效果演示)_:">最简单的画三角形的代码如下 <a href="http://www.nshen.net/Stage3D.js/examples/drawTriangle.html" target="_blank" rel="external">(效果演示)</a> :</h3><pre><code><span class="keyword">var</span> canvas: HTMLCanvasElement = &lt;HTMLCanvasElement&gt;document.getElementById(<span class="string">"my-canvas"</span>);
+
+stage3d = <span class="keyword">new</span> stageJS.Stage3D(canvas);
+stage3d.addEventListener(stageJS.events.Event.CONTEXT3D_CREATE, onCreated);
+stage3d.requestContext3D();
+
+<span class="function"><span class="keyword">function</span> <span class="title">onCreated</span><span class="params">(e: stagl.events.Event)</span><span class="type">: void</span>
+</span>{
+    context3d = stage3d.context3D;
+    context3d.configureBackBuffer(stage3d.stageWidth, stage3d.stageHeight, <span class="number">2</span>, <span class="literal">true</span>);
+
+    <span class="keyword">var</span> program: stagl.Program3D = context3d.createProgram();
+    program.upload(<span class="string">"shader-vs"</span>, <span class="string">"shader-fs"</span>); <span class="comment">// shaders are in html file</span>
+    context3d.setProgram(program);
+
+
+    <span class="keyword">var</span> vertexBuffer: stagl.VertexBuffer3D = context3d.createVertexBuffer(<span class="number">3</span>, <span class="number">7</span>);
+    vertexBuffer.uploadFromVector([
+        -<span class="number">1</span>, -<span class="number">1</span>, <span class="number">0</span>, <span class="number">1</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">1</span>,   <span class="comment">//xyz rgba</span>
+        <span class="number">1</span>, -<span class="number">1</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">1</span>, <span class="number">0</span>, <span class="number">1</span>,
+        <span class="number">0</span>, <span class="number">1</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">1</span>, <span class="number">1</span>]
+        , <span class="number">0</span>, <span class="number">3</span>);
+
+    context3d.setVertexBufferAt(<span class="string">"va0"</span>, vertexBuffer, <span class="number">0</span>, stagl.Context3DVertexBufferFormat.FLOAT_3); <span class="comment">// pos</span>
+    context3d.setVertexBufferAt(<span class="string">"va1"</span>, vertexBuffer, <span class="number">3</span>, stagl.Context3DVertexBufferFormat.FLOAT_4); <span class="comment">// color</span>
+
+    <span class="keyword">var</span> indexBuffer: stagl.IndexBuffer3D = context3d.createIndexBuffer(<span class="number">3</span>);
+    indexBuffer.uploadFromVector([<span class="number">0</span>, <span class="number">1</span>, <span class="number">2</span>], <span class="number">0</span>, <span class="number">3</span>);
+
+    context3d.clear(<span class="number">0.0</span>, <span class="number">0.0</span>, <span class="number">0.0</span>, <span class="number">1.0</span>);
+    context3d.drawTriangles(indexBuffer);
+    context3d.present();
+
+}
+</code></pre><p>然后我直接拿第二个例子<a href="http://www.nshen.net/Stage3D.js/examples/shooter/index.html" target="_blank" rel="external">(a shooter game)</a> 参加了coding.net的HTML5大赛，得了个优秀作品奖：）</p>
+<h3 id="战利品：">战利品：</h3><p>定制 Filco 机械键盘一个</p>
+<p><img src="/image/coding.jpg" alt=""></p>
+]]></content>
+    <summary type="html">
+    <![CDATA[<p>在入门WebGL的过程中经常与Stage3D的API对比，后干脆把Stage3D的API实现出来了，也包括了AS3的数学库。</p>
+<h2 id="一些演示：">一些演示：</h2><p><a href="http://www.nshen.net/Stage3D.js/examples/bunnyMark/BunnyMark.html">bunnymark</a><br><a href="http://www.nshen.net/Stage3D.js/examples/shooter/index.html">a shooter game</a><br><a href="http://www.nshen.net/Stage3D.js/examples/blend.html">blend test</a><br><a href="http://www.nshen.net/Stage3D.js/examples/gouraudShading.html">gouraudShading</a><br><a href="http://www.nshen.net/Stage3D.js/examples/loadObj.html">load Obj model</a><br><a href="http://www.nshen.net/Stage3D.js/examples/textureTriangle.html">textureTriangle</a><br><a href="http://www.nshen.net/Stage3D.js/examples/renderingModes.html">renderingModes</a><br><a href="http://www.nshen.net/Stage3D.js/examples/drawSquare.html">drawSquare</a><br><a href="http://www.nshen.net/Stage3D.js/examples/drawTriangle.html">drawTriangle</a></p>
+<h2 id="项目地址：">项目地址：</h2><p><a href="https://github.com/nshen/Stage3D.js">https://github.com/nshen/Stage3D.js</a></p>]]>
+    
+    </summary>
+    
+      <category term="stage3d" scheme="http://nshen.net/tags/stage3d/"/>
+    
+      <category term="typescript" scheme="http://nshen.net/tags/typescript/"/>
+    
+      <category term="webgl" scheme="http://nshen.net/tags/webgl/"/>
+    
+      <category term="project" scheme="http://nshen.net/categories/project/"/>
+    
+  </entry>
+  
+  <entry>
     <title><![CDATA[Grunt笔记:使用grunt-ts编译typescript项目]]></title>
     <link href="http://nshen.net/article/2014-12-05/grunt-ts/"/>
     <id>http://nshen.net/article/2014-12-05/grunt-ts/</id>
     <published>2014-12-05T04:55:20.000Z</published>
-    <updated>2015-10-30T08:33:39.380Z</updated>
+    <updated>2015-11-03T01:20:44.602Z</updated>
     <content type="html"><![CDATA[<p>不是这世界变化快，是我一直没关注。这几年js发展这么快是我怎么也想不到的，今天研究的是js界高大上的Grunt构建工具，因为发现很多老外的开源项目都在用这个。研究一下，还挺方便的。</p>
 <p>首先看一下我的目录结构</p>
 <pre><code>ProjectA
@@ -1019,7 +1092,7 @@ t + b = 0
     <link href="http://nshen.net/article/2014-10-16/hello-world/"/>
     <id>http://nshen.net/article/2014-10-16/hello-world/</id>
     <published>2014-10-16T04:30:20.000Z</published>
-    <updated>2015-10-30T08:33:47.488Z</updated>
+    <updated>2015-11-03T01:21:20.790Z</updated>
     <content type="html"><![CDATA[<h3 id="2014-10-16">2014-10-16</h3><p>我又回来了，更新了hexo版本和新的模版，未来可能会关注Stage3D,WebGL,Unity3D方向。</p>
 <a id="more"></a>
 <h3 id="2013-06-21">2013-06-21</h3><p>新站借<a href="http://zespia.tw/hexo/" title="Hexo" target="_blank" rel="external">Hexo</a>,全静态重生，手动把老文全转成Markdown了。</p>
@@ -1056,6 +1129,8 @@ t + b = 0
     
     </summary>
     
+      <category term="article" scheme="http://nshen.net/categories/article/"/>
+    
   </entry>
   
   <entry>
@@ -1063,7 +1138,7 @@ t + b = 0
     <link href="http://nshen.net/article/2013-07-28/stage3d-game-programming-beginner/"/>
     <id>http://nshen.net/article/2013-07-28/stage3d-game-programming-beginner/</id>
     <published>2013-07-27T18:30:31.000Z</published>
-    <updated>2015-10-30T08:35:37.957Z</updated>
+    <updated>2015-11-03T01:22:57.306Z</updated>
     <content type="html"><![CDATA[<p>这篇笔记一年半前读书时发到豆瓣上了，去豆瓣搜过书的应该都看见过，这是我入门3d看的第一本书，现在把原文复制过来简单排版和整理了一下。</p>
 <a id="more"></a>
 <h3 id="第一章，Let’s_Make_a_Game_Using_Molehill">第一章，Let’s Make a Game Using Molehill</h3><hr>
@@ -2003,6 +2078,8 @@ Context3DBlendFactor.ONE);
     
       <category term="stage3d" scheme="http://nshen.net/tags/stage3d/"/>
     
+      <category term="读书笔记" scheme="http://nshen.net/tags/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/"/>
+    
       <category term="article" scheme="http://nshen.net/categories/article/"/>
     
   </entry>
@@ -2603,7 +2680,7 @@ console.log(<span class="keyword">Color</span>[c]);//Green
     <link href="http://nshen.net/article/2012-04-09/howToMakeMoney/"/>
     <id>http://nshen.net/article/2012-04-09/howToMakeMoney/</id>
     <published>2012-04-09T06:56:31.000Z</published>
-    <updated>2015-10-30T08:33:51.445Z</updated>
+    <updated>2015-11-03T01:21:27.677Z</updated>
     <content type="html"><![CDATA[<h3 id="如何创造财富">如何创造财富</h3><p>《黑客与画家》第8章笔记<br><a id="more"></a></p>
 <p><a href="/image/howToMakeMoney.png" target="_blank">图片过大，新窗口打开</a>.</p>
 
@@ -2613,6 +2690,8 @@ console.log(<span class="keyword">Color</span>[c]);//Green
     <![CDATA[<h3 id="如何创造财富">如何创造财富</h3><p>《黑客与画家》第8章笔记<br>]]>
     
     </summary>
+    
+      <category term="读书笔记" scheme="http://nshen.net/tags/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/"/>
     
       <category term="article" scheme="http://nshen.net/categories/article/"/>
     
@@ -2659,7 +2738,7 @@ console.log(<span class="keyword">Color</span>[c]);//Green
     <link href="http://nshen.net/article/2011-08-25/as3-DataStructure/"/>
     <id>http://nshen.net/article/2011-08-25/as3-DataStructure/</id>
     <published>2011-08-25T06:56:31.000Z</published>
-    <updated>2015-10-30T08:29:30.073Z</updated>
+    <updated>2015-11-03T01:19:13.089Z</updated>
     <content type="html"><![CDATA[<p>时至今日国内外都还没有一本专讲AS3与数据结构的书，对于我这种非科班毕业的社会闲杂人等来说，入门数据结构太难了，我参考了各方代码，经过一段时间的恶补，整理了一下目前Flash开发中有可能遇得到的数据结构。完整代码在文章结尾有下载，如有错漏请直接指出谢谢。</p>
 <a id="more"></a>
 <h3 id="数组">数组</h3><p>Array类应该是Flash里最常用的数据结构了。比其他语言的数组高级和灵活许多，随意装入任何数据类型，不用固定长度。<br>访问速度快，从后方添加(push)和删除(pop)快，但从中间或开头删除会很慢。</p>
@@ -3029,6 +3108,8 @@ trace(p.dequeue()) //9
     
     </summary>
     
+      <category term="算法与数据结构" scheme="http://nshen.net/tags/%E7%AE%97%E6%B3%95%E4%B8%8E%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/"/>
+    
       <category term="article" scheme="http://nshen.net/categories/article/"/>
     
   </entry>
@@ -3038,7 +3119,7 @@ trace(p.dequeue()) //9
     <link href="http://nshen.net/article/2011-08-03/git-note/"/>
     <id>http://nshen.net/article/2011-08-03/git-note/</id>
     <published>2011-08-03T05:30:20.000Z</published>
-    <updated>2015-10-30T08:33:01.422Z</updated>
+    <updated>2015-11-03T01:20:32.341Z</updated>
     <content type="html"><![CDATA[<p>我认为每个学过Git的人都应该做过类似这种笔记，因为Git命令太多看着看着就把前边看过的忘了，之前我也看过Git，但是一直没用，现在一看几乎没有印象了，所以这次我要把我看到的命令记下来给我自己备忘。</p>
 <p>Git已经是最流行的版本控制系统了，网上相关的免费学习资源很多，我见过的中文书籍就有：</p>
 <ul>
@@ -3279,6 +3360,8 @@ git archive --<span class="keyword">format</span>=<span class="keyword">zip</spa
     
     </summary>
     
+      <category term="git" scheme="http://nshen.net/tags/git/"/>
+    
       <category term="article" scheme="http://nshen.net/categories/article/"/>
     
   </entry>
@@ -3314,7 +3397,7 @@ git archive --<span class="keyword">format</span>=<span class="keyword">zip</spa
     <link href="http://nshen.net/project/2011-01-12/pdf2mag/"/>
     <id>http://nshen.net/project/2011-01-12/pdf2mag/</id>
     <published>2011-01-12T06:56:31.000Z</published>
-    <updated>2015-10-30T08:34:42.428Z</updated>
+    <updated>2015-11-03T01:22:19.306Z</updated>
     <content type="html"><![CDATA[<p>PDF2MAG 是我基于Adobe Air编写的一款将pdf文档快速转为flash电子杂志的软件。<br>新版本又增加了支持转换为FlexPaper文档。</p>
 <a id="more"></a>
 <p>PDF2MAG 可以快速将PDF文档转换为适合在网页中浏览的Flash电子杂志.</p>
@@ -3367,8 +3450,6 @@ git archive --<span class="keyword">format</span>=<span class="keyword">zip</spa
     
     </summary>
     
-      <category term="pdf2mag" scheme="http://nshen.net/tags/pdf2mag/"/>
-    
       <category term="project" scheme="http://nshen.net/categories/project/"/>
     
   </entry>
@@ -3403,7 +3484,7 @@ git archive --<span class="keyword">format</span>=<span class="keyword">zip</spa
     <link href="http://nshen.net/project/2009-11-19/as3-visual-quickstart-guide/"/>
     <id>http://nshen.net/project/2009-11-19/as3-visual-quickstart-guide/</id>
     <published>2009-11-19T09:19:44.000Z</published>
-    <updated>2015-10-30T08:30:34.540Z</updated>
+    <updated>2015-11-03T01:19:52.929Z</updated>
     <content type="html"><![CDATA[<p>我跟达达翻译的书终于出版了。</p>
 <a id="more"></a>
 <p><img src="/image/as3JiChuJiaoCheng_1.jpg" alt="ActionScript 3.0基础教程"><br></p>
@@ -3413,21 +3494,9 @@ git archive --<span class="keyword">format</span>=<span class="keyword">zip</spa
 <hr>
 <h3 id="后记：">后记：</h3><p>众所周知本人只有高中学历，英语也就在初中水平，由于这本书英文和内容都非常简单，为了练习英语就主动跟出版社申请翻译了，记得在北京瑞德上班时，每天下班后回到出租屋，窝在桌子前一点点的翻译。虽然都能看懂但要用中文写出来而且语句通顺对我来说还是件很难的事情，前期劲头还很足，后期实在是越翻越无聊，总感觉书的内容太浅，翻译又慢，太浪费宝贵的时间了，后来就叫来达达跟我一起翻译，有了达达的帮忙这本书才终于能够出版了。拿到样书的那一刻还是很激动的。 事实证明初中英语水平也是能翻译技术书的 ：）</p>
 <hr>
-<p>【原 书 名】 ActionScript 3.0: Visual QuickStart Guide</p>
-<p>【原出版社】 Peachpit Press</p>
-<p>【作　　者】(加)Derrick Ypenburg</p>
-<p>【译　　者】 陈新;吴国权</p>
-<p>【丛 书 名】 图灵程序设计丛书</p>
-<p>【出 版 社】 人民邮电出版社 </p>
-<p>【书 号】 9787115215451</p>
-<p>【出版日期】 2009 年11月</p>
-<p>【开 本】 16开</p>
-<p>【页 码】 226</p>
-<p>【版 次】1-1</p>
+<p>【原 书 名】 ActionScript 3.0: Visual QuickStart Guide<br>【原出版社】 Peachpit Press<br>【作　　者】(加)Derrick Ypenburg<br>【译　　者】 陈新;吴国权<br>【丛 书 名】 图灵程序设计丛书<br>【出 版 社】 人民邮电出版社<br>【书 号】 9787115215451<br>【出版日期】 2009 年11月<br>【开 本】 16开<br>【页 码】 226<br>【版 次】1-1</p>
 <hr>
-<h3 id="购买渠道：">购买渠道：</h3><p><a href="http://product.china-pub.com/196135?ref=xilie" target="_blank">china-pub</a></p>
-<p><a href="http://www.amazon.cn/mn/detailApp/ref=sr_1_1?_encoding=UTF8&s=books&qid=1258449105&asin=B002WJI7UW&sr=8-1" target="_blank">卓越</a></p>
-<p><a href="http://product.dangdang.com/product.aspx?product_id=20724689" target="_blank">当当</a></p>
+<h3 id="购买渠道：">购买渠道：</h3><p><a href="http://product.china-pub.com/196135?ref=xilie" target="_blank">china-pub</a><br><a href="http://www.amazon.cn/mn/detailApp/ref=sr_1_1?_encoding=UTF8&s=books&qid=1258449105&asin=B002WJI7UW&sr=8-1" target="_blank">卓越</a><br><a href="http://product.dangdang.com/product.aspx?product_id=20724689" target="_blank">当当</a></p>
 ]]></content>
     <summary type="html">
     <![CDATA[<p>我跟达达翻译的书终于出版了。</p>]]>
@@ -3445,7 +3514,7 @@ git archive --<span class="keyword">format</span>=<span class="keyword">zip</spa
     <link href="http://nshen.net/project/2009-01-13/ntv/"/>
     <id>http://nshen.net/project/2009-01-13/ntv/</id>
     <published>2009-01-13T06:56:31.000Z</published>
-    <updated>2015-10-30T08:34:15.546Z</updated>
+    <updated>2015-11-03T01:22:06.521Z</updated>
     <content type="html"><![CDATA[<p>之前的公司有需求做事先录制好的视频文件进行直播，由于Flash Media Server没有类似Windows Media Server的视频文件直播功能，所以我做了这个直播flv文件的傻瓜功能。<a id="more"></a>注意是<strong>直播Flv视频文件</strong>，不是直播摄像头，直播摄像头请找官方的FME，或者<a href="http://nshen.net/article/2007-08-29/fms-tutorial/" target="_blank">这篇教程</a>有实现一个简单的。</p>
 <hr>
 <p>下载地址：</p>
@@ -3493,6 +3562,8 @@ git archive --<span class="keyword">format</span>=<span class="keyword">zip</spa
     
     </summary>
     
+      <category term="FMS" scheme="http://nshen.net/tags/FMS/"/>
+    
       <category term="project" scheme="http://nshen.net/categories/project/"/>
     
   </entry>
@@ -3502,7 +3573,7 @@ git archive --<span class="keyword">format</span>=<span class="keyword">zip</spa
     <link href="http://nshen.net/article/2007-08-29/fms-tutorial/"/>
     <id>http://nshen.net/article/2007-08-29/fms-tutorial/</id>
     <published>2007-08-29T06:56:31.000Z</published>
-    <updated>2015-10-30T08:31:53.453Z</updated>
+    <updated>2015-11-03T01:20:22.717Z</updated>
     <content type="html"><![CDATA[<p>我把我以前的那些FMS学习笔记整理了一下，做了下修改，成了一页的FMS教程，方便想学FMS的新手来看，如果还有错误或者看不懂的地方欢迎留言.</p>
 <h3 id="注意：">注意：</h3><blockquote>
 <p>Flash Media Server的最新版本已经到FMS 4.X了 ，由于本入门教程是在2006~2007年所写，年代久远所以使用FMS 2演示，但当你了解了原理后可以很容易的升到4，因为FMS 1 到 FMS 4 的更新几乎没有什么改动 ，还有本教程客户端使用AS1，如果你需要用AS3的话，语法会有些变化，这些都应该难不倒你。</p>
@@ -3974,6 +4045,8 @@ mync.msgfromserver = <span class="function"><span class="keyword">function</span
 </blockquote>]]>
     
     </summary>
+    
+      <category term="FMS" scheme="http://nshen.net/tags/FMS/"/>
     
       <category term="article" scheme="http://nshen.net/categories/article/"/>
     
