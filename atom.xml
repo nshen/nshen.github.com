@@ -3119,7 +3119,7 @@ trace(p.dequeue()) //9
     <link href="http://nshen.net/article/2011-08-03/git-note/"/>
     <id>http://nshen.net/article/2011-08-03/git-note/</id>
     <published>2011-08-03T05:30:20.000Z</published>
-    <updated>2015-11-03T01:20:32.341Z</updated>
+    <updated>2015-11-04T02:55:24.411Z</updated>
     <content type="html"><![CDATA[<p>我认为每个学过Git的人都应该做过类似这种笔记，因为Git命令太多看着看着就把前边看过的忘了，之前我也看过Git，但是一直没用，现在一看几乎没有印象了，所以这次我要把我看到的命令记下来给我自己备忘。</p>
 <p>Git已经是最流行的版本控制系统了，网上相关的免费学习资源很多，我见过的中文书籍就有：</p>
 <ul>
@@ -3156,8 +3156,10 @@ git <span class="built_in">add</span> .       <span class="comment"> //添加所
 <pre><code>git add -<span class="tag">i</span>  <span class="comment">//进入交互式add</span>
 git add -<span class="tag">p</span> <span class="comment">//直接进入补丁模式，可以暂存修改的一部分。</span>
 </code></pre><p><strong>提交：</strong></p>
-<figure class="highlight dos"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">git commit -m "initial project version"</span><br><span class="line">git commit -m "something" someFile  //提交指定文件</span><br><span class="line">git commit -C HEAD -a --amend  //复用HEAD留言，增补提交（修改小错误，而不增加提交记录，掩盖自己的小马虎）</span><br></pre></td></tr></table></figure>
-<p><strong>参数的意思:</strong></p>
+<pre><code>git <span class="operator"><span class="keyword">commit</span> -<span class="keyword">m</span> <span class="string">"initial project version"</span>
+git <span class="keyword">commit</span> -<span class="keyword">m</span> <span class="string">"something"</span> someFile  //提交指定文件
+git <span class="keyword">commit</span> -<span class="keyword">C</span> <span class="keyword">HEAD</span> -a <span class="comment">--amend  //复用HEAD留言，增补提交（修改小错误，而不增加提交记录，掩盖自己的小马虎）</span></span>
+</code></pre><p><strong>参数的意思:</strong></p>
 <blockquote>
 <p>-m “提交的说明”<br>-a 动把所有已经跟踪过的文件暂存,并提交.(工作目录中修改过的文件都提交到版本库，不需一个一个手动add了)<br>–amend 增补提交<br>-C 复用指定提交的提交留言<br>-c 打开编辑器在已有的提交基础上编辑修改</p>
 </blockquote>
