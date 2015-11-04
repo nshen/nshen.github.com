@@ -7,6 +7,13 @@
     </url>
     
     <url>
+        <loc>http://nshen.net/links/index.html</loc>
+        <lastmod>2015-11-04T02:21:36.634Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.8</priority>
+    </url>
+    
+    <url>
         <loc>http://nshen.net/404.html</loc>
         <lastmod>2015-11-03T08:41:48.901Z</lastmod>
         <changefreq>weekly</changefreq>
@@ -16,13 +23,6 @@
     <url>
         <loc>http://nshen.net/list/index.html</loc>
         <lastmod>2015-11-03T02:46:31.415Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.8</priority>
-    </url>
-    
-    <url>
-        <loc>http://nshen.net/links/index.html</loc>
-        <lastmod>2015-11-03T01:14:06.971Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.8</priority>
     </url>
