@@ -1088,19 +1088,21 @@ t + b = 0
   </entry>
   
   <entry>
-    <title><![CDATA[更换博客系统]]></title>
+    <title><![CDATA[本博历史]]></title>
     <link href="http://nshen.net/article/2014-10-16/hello-world/"/>
     <id>http://nshen.net/article/2014-10-16/hello-world/</id>
     <published>2014-10-16T04:30:20.000Z</published>
-    <updated>2015-11-03T01:21:20.790Z</updated>
-    <content type="html"><![CDATA[<h3 id="2014-10-16">2014-10-16</h3><p>我又回来了，更新了hexo版本和新的模版，未来可能会关注Stage3D,WebGL,Unity3D方向。</p>
+    <updated>2015-11-04T05:51:35.544Z</updated>
+    <content type="html"><![CDATA[<h3 id="2015-11-03">2015-11-03</h3><p>各种社交平台出来以后好多人都不写博客了，也包括我，最近想了想还是应该坚持思考与总结，少些社交网站上无意义的吐槽。</p>
+<p>更新了hexo3，新的模板，转移到gitcafe，加油写！</p>
+<h3 id="2014-10-16">2014-10-16</h3><p>我又回来了，更新了hexo版本和新的模版，未来可能会关注Stage3D,WebGL,Unity3D方向。</p>
 <a id="more"></a>
-<h3 id="2013-06-21">2013-06-21</h3><p>新站借<a href="http://zespia.tw/hexo/" title="Hexo" target="_blank" rel="external">Hexo</a>,全静态重生，手动把老文全转成Markdown了。</p>
+<h3 id="2013-06-21">2013-06-21</h3><p>新站借<a href="http://hexo.io" title="Hexo" target="_blank" rel="external">Hexo</a>,全静态重生，手动把有意义的文章转成Markdown了。</p>
 <h3 id="2011-08-03">2011-08-03</h3><p>新站搬到github,网站算是复活了</p>
 <p><img src="/image/0001.jpg" alt=""> </p>
 <p>之前的服务器由于各种原因不能访问了，而且之前blog是asp的，太老旧了，正好把博客换新了，内容太多搬不过来，只挑些比较好的内容，到了github以后本地写博客然后git上传就好了，整个世界清静了。</p>
 <p>如果你是从搜索引擎跳转过来的，请到旧站备份中搜索你要的内容%  —&gt; <a href="http://www.riabook.cn/blog" target="_blank">[旧站的备份]</a></p>
-<p>自动语法高亮 ：</p>
+<p>hexo自动语法高亮 ：</p>
 <pre><code><span class="package"><span class="keyword">package</span> <span class="title">net</span>.<span class="title">nshen</span>.<span class="title">blog</span>
 {</span>
     <span class="preprocessor"><span class="keyword">import</span> flash.display.Sprite;</span>
@@ -1125,7 +1127,9 @@ t + b = 0
 }
 </code></pre>]]></content>
     <summary type="html">
-    <![CDATA[<h3 id="2014-10-16">2014-10-16</h3><p>我又回来了，更新了hexo版本和新的模版，未来可能会关注Stage3D,WebGL,Unity3D方向。</p>]]>
+    <![CDATA[<h3 id="2015-11-03">2015-11-03</h3><p>各种社交平台出来以后好多人都不写博客了，也包括我，最近想了想还是应该坚持思考与总结，少些社交网站上无意义的吐槽。</p>
+<p>更新了hexo3，新的模板，转移到gitcafe，加油写！</p>
+<h3 id="2014-10-16">2014-10-16</h3><p>我又回来了，更新了hexo版本和新的模版，未来可能会关注Stage3D,WebGL,Unity3D方向。</p>]]>
     
     </summary>
     

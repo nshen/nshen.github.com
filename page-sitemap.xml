@@ -7,6 +7,13 @@
     </url>
     
     <url>
+        <loc>http://nshen.net/about/index.html</loc>
+        <lastmod>2015-11-04T05:52:17.223Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.8</priority>
+    </url>
+    
+    <url>
         <loc>http://nshen.net/baidu_verify_XYXy5YGxjt.html</loc>
         <lastmod>2015-11-04T03:14:22.631Z</lastmod>
         <changefreq>weekly</changefreq>
@@ -30,13 +37,6 @@
     <url>
         <loc>http://nshen.net/list/index.html</loc>
         <lastmod>2015-11-03T02:46:31.415Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.8</priority>
-    </url>
-    
-    <url>
-        <loc>http://nshen.net/about/index.html</loc>
-        <lastmod>2015-11-02T09:23:10.058Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.8</priority>
     </url>

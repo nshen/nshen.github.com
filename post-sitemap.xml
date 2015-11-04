@@ -7,6 +7,14 @@
     </url>
 
     <url>
+        <loc>http://nshen.net/article/2014-10-16/hello-world/</loc>
+        <lastmod>2015-11-04T05:51:35.544Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
         <loc>http://nshen.net/article/2011-08-03/git-note/</loc>
         <lastmod>2015-11-04T02:55:24.411Z</lastmod>
         <changefreq>weekly</changefreq>
@@ -57,14 +65,6 @@
     <url>
         <loc>http://nshen.net/article/2012-04-09/howToMakeMoney/</loc>
         <lastmod>2015-11-03T01:21:27.677Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.6</priority>
-
-    </url>
-
-    <url>
-        <loc>http://nshen.net/article/2014-10-16/hello-world/</loc>
-        <lastmod>2015-11-03T01:21:20.790Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
 
