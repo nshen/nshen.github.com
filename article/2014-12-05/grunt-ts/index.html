@@ -1,0 +1,312 @@
+<!doctype html>
+<html>
+
+<head>
+    <title> 使用grunt-ts编译typescript项目 | N神的研究所</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Grunt笔记，教您如何使用 grunt-ts 编译 typescript">
+    
+    <meta name="keywords" content="TypeScript">
+    <meta name="author" content="Nshen <nshen121@gmail.com>">
+
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <link rel="bookmark" href="/favicon.ico" />
+
+    <link rel="stylesheet" href="/assets/css/normalize.css">  
+    <link rel="stylesheet" href="/assets/css/github.css">
+    <link rel="stylesheet" href="/assets/css/prism.css">
+    <link rel="stylesheet" href="/assets/css/site.css">
+    <link rel="stylesheet" href="/assets/css/share.min.css">
+</head>
+
+<body>
+  <div id="container">
+    <header>
+        <div id="header_inner" class="center">
+            <div id="main_logo">
+                <a id="logo" href="/">N神的研究所</a>
+            </div>
+            <nav id="main_nav">
+                <a id="main_nav_link" href="/articles">学习（输入）</a>
+                <a id="main_nav_link" href="/projects">实践（输出）</a>
+                <a id="main_nav_link" href="/about">关于</a>
+                <a id="main_nav_link" href="/links">友情链接</a>
+            </nav>
+        </div>
+    </header>        <main >
+          <div class="contents" >
+            <div class="article_title">
+              <h1>使用grunt-ts编译typescript项目</h1>
+            </div>
+ 
+            <div class="article_date">
+              <p>发表于 2014年12月5日 </p>
+            </div>
+     
+            <div class="markdown-body markdown-contents">
+              <p>不是这世界变化快，是我一直没关注。这几年js发展这么快是我怎么也想不到的，今天研究的是js界高大上的Grunt构建工具，因为发现很多老外的开源项目都在用这个。研究一下，还挺方便的。</p>
+<p>首先看一下我的目录结构</p>
+<pre><code class="language-markup">    ProjectA
+        |-----build //编译后的all.js等文件放在这里
+        |-----core  //typescript项目,里边若干.ts文件
+        |-----test  //用编译后的all.js做测试,里边有若干js和html文件
+</code></pre>
+<p>我的需求是这样的，core文件夹里有多个.ts文件，需要按照我指定的顺序编译成一个all.js文件，为什么要指定顺序，是因为js是从上到下执行，没执行到的就是不存在的。如果顺序不对的话运行时会报各种找不到类的错误。除了这个还有以下需求：</p>
+<ul>
+<li>编译的<code>all.js</code>放到<code>build/</code>目录</li>
+<li>需要生成<code>build/all.js.map</code></li>
+<li>需要生成<code>build/all.d.ts</code></li>
+<li>需要生成<code>build/all.min.js</code></li>
+<li>基于ES5，Commonjs编译</li>
+<li>编译后的文件删除注释</li>
+<li>编译后将build目录下的所有文件复制到test文件夹里做测试</li>
+</ul>
+<!-- more -->
+<p>估计已经涵盖大部分typescript开源项目的需求了，我不知道其他人是怎么做这些的，我自己之前一直使用WebStorm来写TypeScript，WebStorm里有一个叫做File Watcher的功能，可以把它配置成每次发现文件改动自动调用编译器tsc来编译TypeScript，它有一个Arguments的文本框，可以添加tsc的编译参数。</p>
+<p>我都是这么填的：</p>
+<pre><code class="language-bash">--sourcemap E:\ProjectA\core\reference.ts -d --out E:\ProjectA\test\all.js --target ES5 --removeComments
+</code></pre>
+<p>我在reference.ts里指定了ts文件的顺序，所以只编译这一个文件，就达到了按指定文件顺序全部编译的目的。<br>我写了绝对路径，这样就可以在任何目录里编译了。<br>因为不能复制文件，就只能把core项目直接编译到test文件夹里做测试了。</p>
+<p>测试完后，我还要手动手动把all.js复制回build文件夹，想办法生成min.js等一堆麻烦事。。。直到发现了<a href="http://gruntjs.com/">Grunt</a>。</p>
+<h1 id="-grount-">用Grount实现需求</h1>
+<h2 id="-cli">安装<code>cli</code></h2>
+<pre><code class="language-bash">npm install -g grunt-cli
+</code></pre>
+<h2 id="-">来到项目路径</h2>
+<p>npm init 命令来创建一个 <code>package.json</code> 文件，回答问题会自动创建<code>package.json</code>，其实一路回车就行了，都有默认答案<br>好多属性，不知道有什么用的，删掉！看官网教程好像只需要一个name ，一个 version就行，其他删掉了。</p>
+<pre><code class="language-json">{
+    &quot;name&quot;: &quot;gruntTest&quot;,
+    &quot;version&quot;: &quot;1.0.0&quot;,
+    &quot;description&quot;: &quot;just a test&quot;
+}
+</code></pre>
+<h3 id="-grunt-">装第一个依赖项目，必然是<code>grunt</code>本身</h3>
+<pre><code class="language-bash">npm install grunt --save-dev
+</code></pre>
+<p>安装完成，目录里多了一个<code>node_modules</code>目录，这是nodejs模块安装到的目录。</p>
+<h3 id="-gitignore">修改gitignore</h3>
+<p><code>.gitignore</code>文件里加入这两个目录，不然被传到github上就不好了</p>
+<pre><code class="language-markup">/node_modules
+.tscache
+</code></pre>
+<p>现在<code>package.json</code>变成这样了</p>
+<pre><code class="language-json">{
+    &quot;name&quot;: &quot;gruntTest&quot;,
+    &quot;version&quot;: &quot;1.0.0&quot;,
+    &quot;description&quot;: &quot;just a test&quot;,
+    &quot;devDependencies&quot;: {
+    &quot;grunt&quot;: &quot;^0.4.5&quot;
+    }
+}
+</code></pre>
+<p>因为安装grunt时时加了<code>--save-dev</code>参数，所以会被自动加进依赖里</p>
+<h3 id="-typescript-grunt-ts">安装今天的主角，TypeScript的编译器插件grunt-ts</h3>
+<pre><code class="language-bash">npm install grunt-ts --save-dev
+</code></pre>
+<p>再看<code>package.json</code>如下:</p>
+<pre><code class="language-json">{
+    &quot;name&quot;: &quot;gruntTest&quot;,
+    &quot;version&quot;: &quot;1.0.0&quot;,
+    &quot;description&quot;: &quot;just a test&quot;,
+    &quot;devDependencies&quot;: {
+    &quot;grunt&quot;: &quot;^0.4.5&quot;,
+    &quot;grunt-ts&quot;: &quot;^1.12.1&quot;
+    }
+}
+</code></pre>
+<h3 id="-all-min-js-">安装生成all.min.js的插件</h3>
+<pre><code class="language-bash">npm install grunt-contrib-uglify --save-dev
+</code></pre>
+<h3 id="-copy-">安装copy插件</h3>
+<pre><code class="language-bash">npm install grunt-contrib-copy --save-dev
+</code></pre>
+<p>现在看一眼<code>package.json</code>应该变成这样了</p>
+<pre><code class="language-json">{
+    &quot;name&quot;: &quot;gruntTest&quot;,
+    &quot;version&quot;: &quot;1.0.0&quot;,
+    &quot;description&quot;: &quot;just a test&quot;,
+    &quot;devDependencies&quot;: {
+    &quot;grunt&quot;: &quot;^0.4.5&quot;,
+    &quot;grunt-contrib-copy&quot;: &quot;^0.7.0&quot;,
+    &quot;grunt-contrib-uglify&quot;: &quot;^0.6.0&quot;,
+    &quot;grunt-ts&quot;: &quot;^1.12.1&quot;
+    }
+}
+</code></pre>
+<p>ok ，全部安装完毕，现在可以看<a href="https://www.npmjs.org/package/grunt-ts">grunt-ts官网</a>介绍各种参数怎么用吧</p>
+<p>添加一个Gruntfile，基于<a href="https://github.com/TypeStrong/grunt-ts/blob/master/sample/Gruntfile.js">官网的例子</a>直接修改的</p>
+<pre><code class="language-javascript">module.exports = function (grunt) {
+    &quot;use strict&quot;;
+
+    grunt.initConfig({
+        ts:  //用来编译typescript的任务
+        {
+            options: 
+            {
+                comments: false,               // 删除注释
+                target: &#39;es5&#39;,                 // es5,默认为es3
+                module: &#39;commonjs&#39;,            // 居然默认是amd?
+                declaration: true,             // 生成.d.ts
+            },
+
+            build: 
+            {
+                src: [&quot;core/reference.ts&quot;],  
+                // reference: &#39;core/reference.ts&#39;,  //第一次生成reference.ts,之后手动修改顺序,之后注释掉
+                out: &#39;./build/all.js&#39;, 
+            }
+        },
+
+        uglify: //uglify插件用来代码压缩,生成min.js
+        {
+            min:
+            {
+                files: {&#39;build/all.min.js&#39;: [&#39;build/all.js&#39;]}
+            }
+        },
+
+        //copy插件把build目录下的所有文件复制到test文件夹
+        copy:
+        {
+            builds: {expand: true, cwd: &#39;build/&#39;, src: &#39;*&#39;, dest: &#39;test/&#39;}
+        }
+
+    });
+
+    //加载之前命令行安装的3个插件
+    grunt.loadNpmTasks(&quot;grunt-ts&quot;);     
+    grunt.loadNpmTasks(&quot;grunt-contrib-copy&quot;);
+    grunt.loadNpmTasks(&quot;grunt-contrib-uglify&quot;);
+
+    //任务顺序: 编译typescript -&gt; 生成min.js -&gt; 复制build目录里的文件到ProjectA_Test
+    grunt.registerTask(&quot;default&quot;, [&quot;ts:build&quot; , &quot;uglify:min&quot; , &quot;copy:builds&quot;]);
+};
+</code></pre>
+<p>可以编译了，打开命令行，输入grunt ，应该是这样的</p>
+<pre><code class="language-bash">E:\ProjectA&gt; grunt
+
+    Running &quot;ts:build&quot; (ts) task
+    Compiling...
+    Cleared fast compile cache for target: build
+    Fast compile will not work when --out is specified. Ignoring fast compilation
+    Using tsc v1.0.1
+
+    TypeScript compilation complete: 4.51s for 1 typescript files
+
+    Running &quot;uglify:min&quot; (uglify) task
+    &gt;&gt; 1 file created.
+
+    Running &quot;copy:builds&quot; (copy) task
+    Copied 4 files
+
+    Done, without errors.
+
+</code></pre>
+<p>Done了，没有错误！</p>
+
+
+              本文采用 <a rel="license" style="color:#0366d6;" href="https://creativecommons.org/licenses/by-nd/4.0/deed.zh">署名-禁止演绎 4.0 国际许可协议 (CC BY-ND 4.0)</a> 进行许可（保留链接可任意转载，禁止修改）。
+            </div>
+            <div class="article_row">
+                 <a title="TypeScript" class="tag_button big_button" href="/tags/#TypeScript">TypeScript</a>
+            </div>
+
+            <div class="article_row" >
+              <div class="social-share"></div>
+            </div>
+
+            <div class="article_row">
+             <p>留言系统需要代理访问</p>
+            </div>
+            <div class="article_row">
+              <div>
+                <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+                  <!-- 2017blogarticle -->
+                  <ins class="adsbygoogle"
+                  style="display:block"
+                  data-ad-client="ca-pub-3527087615346771"
+                  data-ad-slot="2049652650"
+                  data-ad-format="auto"></ins>
+                <script>
+                (adsbygoogle = window.adsbygoogle || []).push({});
+                </script>
+              </div>
+            </div>
+
+            <div>
+             <div id="disqus_thread"></div>
+              <script>
+
+              /**
+              *  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+              *  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables*/
+              
+              var disqus_config = function () {
+              this.page.url = "http://nshen.net/article/2014-12-05/grunt-ts"
+              this.page.identifier = "article-grunt-ts"; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+              };
+              
+              (function() { // DON'T EDIT BELOW THIS LINE
+              var d = document, s = d.createElement('script');
+              s.src = 'https://nshen-net.disqus.com/embed.js';
+              s.setAttribute('data-timestamp', +new Date());
+              (d.head || d.body).appendChild(s);
+              })();
+              </script>
+              <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+            </div>
+            <div id="pre_and_next" class="markdown-body" >
+              <div id="pre_link"> 
+                    <a href="/project/2015-02-04/stage3d-js" ><span>&laquo;&nbsp;Stage3D.js：用TypeScript与WebGL实现Stage3D API</span></a>
+              </div>
+              <div id="next_link"> 
+                    <a href="/project/2014-11-21/as2ts"><span>AS2TS：ActionScript3在线转为TypeScript&nbsp;&raquo;</span></a>
+              </div>
+            </div>
+
+          </div>
+
+        </main>
+    <footer id="footer">
+        <div class="center">
+            <p>&copy; 2004-2017 Nshen.net | <a href="/atom.xml" target="blank">Feed</a> | <a href="/sitemap.xml" target="blank">Sitemap</a> | <a href="/tags" target="blank">Tags</a> | <a href="/support">Support</a></p>
+            <p>本站由 <a href="https://github.com/nshen/coding-blog" target="blank">CodingBlog</a> 强力构建，最后生成于 2021年12月3日上午10点40分 。</p>
+            <p>免费托管于 coding.net</p>
+            <p><a href="http://coding.net" target="blank"><img src="/image/codingnet2.png" style="width:250px;height:80px;" /></a></p>
+            <p>Learn WebGL from <a href="http://webgl.xyz" target="blank">WebGL.xyz</a></p>
+        </div>
+    
+        <script>
+            var _hmt = _hmt || [];
+            (function() {
+            var hm = document.createElement("script");
+            hm.src = "https://hm.baidu.com/hm.js?e1acab9c095adb812998c18d06d414ea";
+            var s = document.getElementsByTagName("script")[0]; 
+            s.parentNode.insertBefore(hm, s);
+            })();
+        </script>
+    
+        <script>
+        (function(){
+            //百度链接提交
+            var bp = document.createElement('script');
+            var curProtocol = window.location.protocol.split(':')[0];
+            if (curProtocol === 'https') {
+                bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+            }
+            else {
+                bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+            }
+            var s = document.getElementsByTagName("script")[0];
+            s.parentNode.insertBefore(bp, s);
+        })();
+        </script>
+    </footer>  </div>
+
+  <script src="/assets/prism.js"></script>
+  <script src="/assets/social-share.min.js"></script>
+
+</body>
+
+</html>

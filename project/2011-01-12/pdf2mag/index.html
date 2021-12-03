@@ -1,0 +1,216 @@
+<!doctype html>
+<html>
+
+<head>
+    <title> PDF2MAG：一键pdf文档转flash电子杂志 | N神的研究所</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="N神的个人站点，通常发布一些个人笔记和业余项目等。">
+    
+    <meta name="keywords" content="Flash">
+    <meta name="author" content="Nshen <nshen121@gmail.com>">
+
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <link rel="bookmark" href="/favicon.ico" />
+
+    <link rel="stylesheet" href="/assets/css/normalize.css">  
+    <link rel="stylesheet" href="/assets/css/github.css">
+    <link rel="stylesheet" href="/assets/css/prism.css">
+    <link rel="stylesheet" href="/assets/css/site.css">
+    <link rel="stylesheet" href="/assets/css/share.min.css">
+</head>
+
+<body>
+  <div id="container">
+    <header>
+        <div id="header_inner" class="center">
+            <div id="main_logo">
+                <a id="logo" href="/">N神的研究所</a>
+            </div>
+            <nav id="main_nav">
+                <a id="main_nav_link" href="/articles">学习（输入）</a>
+                <a id="main_nav_link" href="/projects">实践（输出）</a>
+                <a id="main_nav_link" href="/about">关于</a>
+                <a id="main_nav_link" href="/links">友情链接</a>
+            </nav>
+        </div>
+    </header>        <main >
+          <div class="contents" >
+            <div class="article_title">
+              <h1>PDF2MAG：一键pdf文档转flash电子杂志</h1>
+            </div>
+ 
+            <div class="article_date">
+              <p>发表于 2011年1月12日 </p>
+            </div>
+     
+            <div class="markdown-body markdown-contents">
+              <p>PDF2MAG 是我基于Adobe Air编写的一款将pdf文档快速转为flash电子杂志的软件。<br>新版本又增加了支持转换为FlexPaper文档。</p>
+<!--more -->
+<p>PDF2MAG 可以快速将PDF文档转换为适合在网页中浏览的Flash电子杂志.</p>
+<h4 id="-">演示:</h4>
+<ul>
+<li><a href="http://riabook.cn/files/pdf2mag/demo/">硬质封面演示</a></li>
+<li><a href="http://riabook.cn/files/pdf2mag/demo13/">软质封面演示</a></li>
+<li><a href="http://riabook.cn/files/pdf2mag/flexpaper/">Flexpaper文档演示</a></li>
+</ul>
+<hr>
+<h3 id="-">下载地址：</h3>
+<p><a href="http://u.115.com/file/c4zvhrqq#DownloadPDF2Mag_1_3.rar">PDF2MAG 1.3下载（115网盘）</a></p>
+<p>注意：此软件<strong>个人网站</strong>与<strong>商业网站</strong>均完全<strong>免费</strong>使用，但请发邮件通知我一下网址。 nshen121[at]gmail.com<br>好让我评估是否投入精力继续开发此软件。</p>
+<hr>
+<h3 id="-">使用方法：</h3>
+<ol>
+<li>解压后点击exe文件进行安装,如安装失败请先 点此安装Adobe Air运行环境。 </li>
+<li>安装成功后，会发现这个图标。 </li>
+</ol>
+<p><img src="/image/pdf2mag_01.png" alt=""></p>
+<ol start="3">
+<li>点击打开，选择生成杂志或是FlexPaper文档，并选取pdf文件和一个空文件夹作为输出目录。 </li>
+</ol>
+<p><img src="/image/pdf2mag02.jpg" alt=""></p>
+<ol start="4">
+<li>转换成功后，将输出目录中的文件通过ftp上传到服务器空间中即可。</li>
+</ol>
+<hr>
+<p>个人精力能力有限,2011年开始停止更新了，如仍有兴趣一起发展此软件的话联系我 nshen121[at]gmail.com</p>
+<hr>
+<h3 id="-">常见问题：</h3>
+<h5 id="-rpc-fault-faultstring-error-2148-faultcode-invokefailed-faultdetail-null-">问:转换后报错[RPC Fault faultString=&quot;Error #2148&quot; faultCode=&quot;InvokeFailed&quot; faultDetail=&quot;null&quot;]</h5>
+<p>答:这是FlashPlayer的本地安全限制,使用FTP上传到服务器应该就好了:)</p>
+<h5 id="-">问:生成的杂志目录不正确，可以修改吗？</h5>
+<p>答:所有的配置信息都在生成的目录下config.xml里,用记事本打开,依照下边格式可以编辑目录,然后保存就可以了.</p>
+<pre><code class="language-xml">&lt;contents&gt; 
+ &lt;node label=&quot;章：&quot; page=&quot;1&quot;&gt; 
+   &lt;node label=&quot;节1&quot; page=&quot;1&quot;/&gt; 
+   &lt;node label=&quot;节2&quot; page=&quot;2&quot;/&gt; 
+   &lt;node label=&quot;节3&quot; page=&quot;3&quot;/&gt; 
+ &lt;/node&gt; &lt;node label=&quot;章2：&quot; page=&quot;1&quot;&gt;
+   &lt;node label=&quot;节1&quot; page=&quot;1&quot;/&gt; 
+ &lt;/node&gt; 
+&lt;/contents&gt;
+</code></pre>
+<h5 id="-flexpaper-error-this-file-is-too-complex-to-renderer-">问:转换FlexPaper后没有显示内容,最后几行输出 Error This file is too complex to renderer.？</h5>
+<p>答:目前发现pdf2swf转换复杂的pdf会有这个问题,建议尝试优化一下pdf再试。暂时还无法解决。</p>
+<hr>
+<h3 id="-">版本历史：</h3>
+<ul>
+<li><p><strong>1.30: 2011-01-12</strong><br>增加生成FlexPaper1.4.1功能(FlexPaper详见: <a href="http://flexpaper.devaldi.com/">http://flexpaper.devaldi.com/</a>)</p>
+</li>
+<li><p><strong>1.21: 2010-09-2</strong><br>更新为Adobe AIR 2正式版</p>
+</li>
+<li><p><strong>1.20: 2010-02-10</strong><br>基于Adobe Air 2 beta 2 loading图缩小 页数显示去掉cover backover,使生成后的页数与原pdf页数显示一致,方便添加目录 解决pdf总页数是奇数时翻到最后一页报错的bug 使用位图优化,翻页速度大幅提升 右键菜单增加版本信息 增加生成杂志默认显示大小的设置 增加软硬质封面设置 放大缩小可用 目录功能可用 右上角植入个小图标打印链接</p>
+</li>
+<li><p><strong>1.10: 2010-01-25</strong><br>在1.0基础上添加了转换过程中的文字提示 基于Adobe Air 2 beta 1</p>
+</li>
+<li><p><strong>1.00: 2010-01-25</strong><br>最初版本,实现基本功能 基于Adobe Air 2 beta 1</p>
+</li>
+</ul>
+<hr>
+<p>代码：<a href="https://github.com/nshen/PDF2Mag">https://github.com/nshen/PDF2Mag</a></p>
+
+
+              本文采用 <a rel="license" style="color:#0366d6;" href="https://creativecommons.org/licenses/by-nd/4.0/deed.zh">署名-禁止演绎 4.0 国际许可协议 (CC BY-ND 4.0)</a> 进行许可（保留链接可任意转载，禁止修改）。
+            </div>
+            <div class="article_row">
+                 <a title="Flash" class="tag_button big_button" href="/tags/#Flash">Flash</a>
+            </div>
+
+            <div class="article_row" >
+              <div class="social-share"></div>
+            </div>
+
+            <div class="article_row">
+             <p>留言系统需要代理访问</p>
+            </div>
+            <div class="article_row">
+              <div>
+                <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+                  <!-- 2017blogarticle -->
+                  <ins class="adsbygoogle"
+                  style="display:block"
+                  data-ad-client="ca-pub-3527087615346771"
+                  data-ad-slot="2049652650"
+                  data-ad-format="auto"></ins>
+                <script>
+                (adsbygoogle = window.adsbygoogle || []).push({});
+                </script>
+              </div>
+            </div>
+
+            <div>
+             <div id="disqus_thread"></div>
+              <script>
+
+              /**
+              *  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+              *  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables*/
+              
+              var disqus_config = function () {
+              this.page.url = "http://nshen.net/project/2011-01-12/pdf2mag"
+              this.page.identifier = "project-pdf2mag"; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+              };
+              
+              (function() { // DON'T EDIT BELOW THIS LINE
+              var d = document, s = d.createElement('script');
+              s.src = 'https://nshen-net.disqus.com/embed.js';
+              s.setAttribute('data-timestamp', +new Date());
+              (d.head || d.body).appendChild(s);
+              })();
+              </script>
+              <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+            </div>
+            <div id="pre_and_next" class="markdown-body" >
+              <div id="pre_link"> 
+                    <a href="/project/2011-07-05/tiny-kingdom" ><span>&laquo;&nbsp;基于AIR的跨平台小游戏《TinyKingdom》</span></a>
+              </div>
+              <div id="next_link"> 
+                    <a href="/project/2010-08-13/the-little-bee"><span>独立小游戏第一次尝试《The Little Bee》&nbsp;&raquo;</span></a>
+              </div>
+            </div>
+
+          </div>
+
+        </main>
+    <footer id="footer">
+        <div class="center">
+            <p>&copy; 2004-2017 Nshen.net | <a href="/atom.xml" target="blank">Feed</a> | <a href="/sitemap.xml" target="blank">Sitemap</a> | <a href="/tags" target="blank">Tags</a> | <a href="/support">Support</a></p>
+            <p>本站由 <a href="https://github.com/nshen/coding-blog" target="blank">CodingBlog</a> 强力构建，最后生成于 2021年12月3日上午10点40分 。</p>
+            <p>免费托管于 coding.net</p>
+            <p><a href="http://coding.net" target="blank"><img src="/image/codingnet2.png" style="width:250px;height:80px;" /></a></p>
+            <p>Learn WebGL from <a href="http://webgl.xyz" target="blank">WebGL.xyz</a></p>
+        </div>
+    
+        <script>
+            var _hmt = _hmt || [];
+            (function() {
+            var hm = document.createElement("script");
+            hm.src = "https://hm.baidu.com/hm.js?e1acab9c095adb812998c18d06d414ea";
+            var s = document.getElementsByTagName("script")[0]; 
+            s.parentNode.insertBefore(hm, s);
+            })();
+        </script>
+    
+        <script>
+        (function(){
+            //百度链接提交
+            var bp = document.createElement('script');
+            var curProtocol = window.location.protocol.split(':')[0];
+            if (curProtocol === 'https') {
+                bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+            }
+            else {
+                bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+            }
+            var s = document.getElementsByTagName("script")[0];
+            s.parentNode.insertBefore(bp, s);
+        })();
+        </script>
+    </footer>  </div>
+
+  <script src="/assets/prism.js"></script>
+  <script src="/assets/social-share.min.js"></script>
+
+</body>
+
+</html>

@@ -1,0 +1,671 @@
+<!doctype html>
+<html>
+
+<head>
+    <title> 从 ActionScript3 到 TypeScript | N神的研究所</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="N神的个人站点，通常发布一些个人笔记和业余项目等。">
+    
+    <meta name="keywords" content="TypeScript,Flash">
+    <meta name="author" content="Nshen <nshen121@gmail.com>">
+
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <link rel="bookmark" href="/favicon.ico" />
+
+    <link rel="stylesheet" href="/assets/css/normalize.css">  
+    <link rel="stylesheet" href="/assets/css/github.css">
+    <link rel="stylesheet" href="/assets/css/prism.css">
+    <link rel="stylesheet" href="/assets/css/site.css">
+    <link rel="stylesheet" href="/assets/css/share.min.css">
+</head>
+
+<body>
+  <div id="container">
+    <header>
+        <div id="header_inner" class="center">
+            <div id="main_logo">
+                <a id="logo" href="/">N神的研究所</a>
+            </div>
+            <nav id="main_nav">
+                <a id="main_nav_link" href="/articles">学习（输入）</a>
+                <a id="main_nav_link" href="/projects">实践（输出）</a>
+                <a id="main_nav_link" href="/about">关于</a>
+                <a id="main_nav_link" href="/links">友情链接</a>
+            </nav>
+        </div>
+    </header>        <main >
+          <div class="contents" >
+            <div class="article_title">
+              <h1>从 ActionScript3 到 TypeScript</h1>
+            </div>
+ 
+            <div class="article_date">
+              <p>发表于 2013年5月18日 </p>
+            </div>
+     
+            <div class="markdown-body markdown-contents">
+              <p>以下是我总结的笔记，只涉及语法部分，有错漏请指正。</p>
+<p>PS.我曾经用正则表达式写过一个AS3转TypeScript的<a href="http://nshen.net/project/2014-11-21/as2ts/">在线转换器</a></p>
+<h2 id="-">基本类型</h2>
+<p>基础类型只有这么几种，与AS3对比</p>
+<table>
+<thead>
+<tr>
+<th>TypeScript</th>
+<th style="text-align:center">ActionScript3</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>number</td>
+<td style="text-align:center">Number</td>
+</tr>
+<tr>
+<td>string</td>
+<td style="text-align:center">String</td>
+</tr>
+<tr>
+<td>boolean(0.8以前为bool)</td>
+<td style="text-align:center">Boolean</td>
+</tr>
+<tr>
+<td>any</td>
+<td style="text-align:center">*</td>
+</tr>
+<tr>
+<td>undefined</td>
+<td style="text-align:center">undefined</td>
+</tr>
+<tr>
+<td>null</td>
+<td style="text-align:center">null</td>
+</tr>
+</tbody>
+</table>
+<!-- more -->
+<!--
+<table >
+  <tr><td><B>TypeScript</B></td><td><B>ActionScript3</B></td></tr>
+  <tr><td>number</td><td>Number</td></tr>
+  <tr><td>string</td><td>String</td></tr>
+  <tr><td>boolean(0.8以前为bool)</td><td>Boolean</td></tr>
+  <tr><td>any</td><td>*</td></tr>
+  <tr><td>undefined</td><td>undefined</td></tr>
+  <tr><td>null</td><td>null</td></tr>
+</table>
+-->
+<h2 id="-">任意类型</h2>
+<p>ActionScript3 ：</p>
+<pre><code class="language-actionscript">var anyType : * = ...;
+</code></pre>
+<p>TypeScript：</p>
+<pre><code class="language-typescript">var anyType : any = ...;
+</code></pre>
+<h2 id="-">变量修饰符</h2>
+<p>TS类似AS3 但不用写&quot;var&quot; ， <del>没有protected (未来也许会添加)</del> <strong>TypeScript 1.3 加入了protected关键字，与AS3用法一致</strong>，默认为public。</p>
+<p>ActionScript3 ：</p>
+<pre><code class="language-actionscript">private var str: String = &quot;abc&quot;;
+public  var num: Number = 123;
+var num2 :Number = 456;
+static var bo: Boolean = true;
+public var createTime: String;
+</code></pre>
+<p>TypeScript:</p>
+<pre><code class="language-typescript">private str: string = &quot;abc&quot;;    // private property
+public  num: number = 123;      // public property
+num2 :number = 456;             // 不写默认也为public
+static bo: boolean = true;         // static
+public createTime: string;      //createTime 类型为string，值为 undefined
+</code></pre>
+<h2 id="-">变量类型转换</h2>
+<p>ActionScript3 ：</p>
+<pre><code class="language-actionscript">var str:String = &quot;abc&quot;;
+var strNum:Number = Number(str);
+var strNum:Number = str as Number;
+</code></pre>
+<p>TypeScript ：</p>
+<pre><code class="language-typescript">var str : string = &quot;abc&quot;;
+var strNum: number = &lt;number&gt; str; //编译报错 Cannot convert &#39;string&#39; to &#39;number&#39;
+</code></pre>
+<p>发现使用any类型会编译通过：</p>
+<pre><code class="language-typescript">var str2 :any = &quot;abc&quot;; //any类型
+var strNum2 :number = &lt;number&gt; str2; //通过
+strNum2 += 5; // abc5
+</code></pre>
+<p>用 instanceof 判断类型</p>
+<pre><code class="language-typescript">// instanceof
+function CalculateArea(shape : Shape) : number {
+    if (shape instanceof Square) {
+        return (&lt;Square&gt;shape).x * (&lt;Square&gt;shape).y;
+    }
+    if (shape instanceof Ellipse) {
+        return (&lt;Ellipse&gt;shape).r1 * (&lt;Ellipse&gt;shape).r2 * Math.PI;
+    }
+    if (shape instanceof Triangle) {
+        return 0.5 * (&lt;Triangle&gt;shape).x * (&lt;Triangle&gt;shape).y;
+    }
+    throw new TypeError(&quot;Unsupported type!&quot;);
+}
+
+</code></pre>
+<h2 id="-">数组</h2>
+<p>Typescript数组的写法比AS3漂亮很多</p>
+<p>ActionScript3 ：</p>
+<pre><code class="language-actionscript">
+var arr:Array = [1,2,3,&quot;a&quot;,&quot;b&quot;,&quot;c&quot;]; // 任意类型数组
+var strArray:Vector.&lt;String&gt; = Vector.&lt;String&gt;([&quot;a&quot;, &quot;b&quot;, &quot;c&quot;]); //固定类型数组
+
+</code></pre>
+<p>TypeScript ：</p>
+<pre><code class="language-typescript">
+var arr: any[] = new Array(); // 任意类型数组
+var strArr: string[] = [&quot;a&quot;, &quot;b&quot;, &quot;c&quot; ]; //固定类型数组
+
+</code></pre>
+<p>二维数组</p>
+<pre><code class="language-typescript">
+var array2d: string[][] = [
+    [&quot;a&quot;, &quot;b&quot;, &quot;c&quot;],
+    [&quot;x&quot;, &quot;y&quot;, &quot;z&quot;]
+];
+
+// or
+
+var array2d: string[][] = new Array();
+array2d.push([&quot;a&quot;, &quot;b&quot;, &quot;c&quot;]);
+array2d.push([&quot;x&quot;, &quot;y&quot;, &quot;z&quot;]);
+
+</code></pre>
+<h3 id="object-types">Object Types</h3>
+<p>当AS3调用这样一个函数时，会有下面一个问题。</p>
+<p>ActionScript3 ：</p>
+<pre><code class="language-actionscript">
+function CalculateArea ( rect : Object ):Number
+{
+    return rect.width * rect.height;
+}
+
+</code></pre>
+<p>此时编译器并不知道rect这个Object里到底有没有width和height，只能等到runtime时才会知道。</p>
+<p>TypeScript 引入<strong>Object Types</strong>解决这一问题，可以指定Object参数的具体内容，相当于让Object参数实现了interface</p>
+<pre><code class="language-typescript">
+function CalculateArea(rect: {width: number; height: number;}): number
+{
+    return rect.width * rect.height;
+}
+
+</code></pre>
+<p>此时如果调用<strong>CalculateArea({w:123,h:456});</strong>  编译器不会通过。</p>
+<p><strong>Object Types</strong> 还支持”?&quot;表示可选参数</p>
+<pre><code class="language-typescript">
+function CalculateArea(rect: {width:number; height:number; depth?:number;}): number
+{
+    if(rect.depth)
+    {
+        return rect.width * rect.height * rect.depth;
+    }
+    return rect.width * rect.height;
+    }
+
+    CalculateArea({w:123,h:456}); //编译器报错
+    CalculateArea({width:123,height:456}); // 通过
+    CalculateArea({width:123,height:456,depth:789}); // 通过
+
+</code></pre>
+<p>可以这样声明一个Object</p>
+<pre><code class="language-typescript">    var example: {
+        name: string;
+        id: number;
+        collection: string[]; 
+    } = {
+        name: &#39;Example&#39;,
+        id: 5,
+        collection: [&#39;a&#39;, &#39;b&#39;, &#39;c&#39;]
+    }
+
+</code></pre>
+<p>ActionScript3 ：</p>
+<pre><code class="language-actionscript">
+    var fun:Function;
+    var fun2:Function = someFunction;
+
+</code></pre>
+<p>TypeScript 可以指定Function需要的参数和返回值类型，叫做函数签名，所以变成了这样</p>
+<pre><code class="language-typescript">
+    var fun : (str: string) =&gt; void;   // fun是输入为string，没有输出的函数
+    var fun2 : (num: number) =&gt; number = someFnction;  //someFnction函数必须输入输出都为number类型
+
+</code></pre>
+<p>eg.指定callback函数为string输入，any输出。</p>
+<pre><code class="language-typescript">
+function vote(candidate: string, callback: (result: string) =&gt; any) {
+// ...
+}
+
+vote(&quot;BigPig&quot;,
+    function(result: string) {
+        if (result === &quot;BigPig&quot;) {
+            // ...
+        }
+    });
+
+</code></pre>
+<p>TypeScript 这样的语法虽然使Function更清晰了，但也带来麻烦，比如一个简单的输入输出都是string的函数就要写好长不易阅读</p>
+<pre><code class="language-typescript">
+var sayHello: (input: string) =&gt; string = function (s: string) {
+    return &quot;Hello &quot; + s;
+}
+
+//保存函数的数组也写很长
+var strArray: { (s: string): string; }[] = [sayHello, function aa(str: string) { return str; }];    //两个输入输出都为string的函数
+
+</code></pre>
+<p>所以引入了 函数接口</p>
+<h2 id="-">函数接口</h2>
+<pre><code class="language-typescript">
+//定义输入输出都是字符串的函数的接口
+interface IStringFunction {
+    (input: string) : string;
+}
+</code></pre>
+<p>上边很长的都可以这么写了</p>
+<pre><code class="language-typescript">
+var sayHello: IStringFunction = function (s: string) {
+    return &quot;Hello &quot; + s;
+}
+var strArray: IStringFunction[];
+strArray.push(sayHello);
+
+</code></pre>
+<h2 id="-">可选参数加&quot;?&quot;</h2>
+<pre><code class="language-typescript">
+//带默认值
+function func (a: number, b?: bool = false): number
+    {
+    if (b) { return a + b };
+    return a;
+}
+
+//不带默认值，要自己判断了
+function func (a: number,b?: bool): number 
+{
+    if ( b !== null &amp;&amp; b !== undefined )
+    {
+    if ( b) { return a + b };
+    }
+    return a;
+}
+
+</code></pre>
+<h2 id="rest-paramname-paramtype-">rest参数 ...paramName[:paramType]</h2>
+<pre><code class="language-typescript">
+function CountDwarvesTallerThan(minHeight: number, ...dwarves: Dwarf[]) : number 
+{
+    var count: number = 0;
+    for (var i = 0; i &lt; dwarves.length; i++) {
+        if (dwarves[i].height &gt; minHeight) {
+            count++;
+        }
+    }
+    return count;
+}
+
+</code></pre>
+<h2 id="arrow-function">Arrow Function</h2>
+<p>关于this作用域的问题，AS1时代经常用到的一个技巧：</p>
+<pre><code class="language-actionscript">
+var _this = this
+
+var messenger = {
+    message: &quot;Hello World&quot;,
+    start: function() {
+    var _this = this;
+    setTimeout(function() { 
+        alert(_this.message); 
+        }, 3000);
+    }
+};
+messenger.start();
+
+</code></pre>
+<p>TypeScript把这个技巧封装到语言里了，叫<strong>Arrow Function</strong></p>
+<p>语法格式为 <code>()=&gt;{}</code>，例子：</p>
+<p>TypeScript：</p>
+<pre><code class="language-typescript">
+var messenger = {
+    message: &quot;Hello World&quot;,
+    start: function() {
+        setTimeout(() =&gt; { alert(this.message); }, 3000);
+    }
+};
+messenger.start();
+
+</code></pre>
+<p>编译后的JavaScript跟上边的一样</p>
+<pre><code class="language-javascript">
+var messenger = {
+    message: &quot;Hello World&quot;,
+    start: function () {
+        var _this = this;
+        setTimeout(function () {
+            alert(_this.message);
+        }, 3000);
+    }
+};
+messenger.start();
+
+</code></pre>
+<p>网上找到的一个例子，</p>
+<pre><code class="language-typescript">
+//declare var 为环境声明，用来告诉编译器已知的变量类型，例如浏览器定义的一些变量类型
+
+declare var menu: HTMLElement;       
+declare var sideBar: HTMLElement;
+
+class UITester {
+    menuTouches: number;
+    sidebarTouches: number;
+
+    beginMenuTest(): void {
+        this.menuTouches = 0;   // Right!!
+        menu.onmouseenter = function (e) {
+            this.menuTouches++;  // Wrong!! 
+        }
+    }
+
+    beginSidebarTest(): void {
+        this.sidebarTouches = 0;  // Right!!
+        sideBar.onmousemove = e =&gt; {  
+            this.sidebarTouches++;  // Still right!!
+        }
+    }
+}
+
+</code></pre>
+<p>语法中用了(e)=&gt;{} ,将e传给后边的函数，并且省略了e的括号，会编译成这样：</p>
+<pre><code class="language-javascript">
+var UITester = (function () {
+    function UITester() { }
+    UITester.prototype.beginMenuTest = function () {
+        this.menuTouches = 0;
+        menu.onmouseenter = function (e) {
+            this.menuTouches++;
+        };
+    };
+    UITester.prototype.beginSidebarTest = function () {
+        var _this = this;
+        this.sidebarTouches = 0;
+        sideBar.onmousemove = function (e) {
+            _this.sidebarTouches++;
+        };
+    };
+    return UITester;
+})();
+
+</code></pre>
+<p>这里有篇教程详细解释了这个语法：</p>
+<blockquote>
+<p><a href="http://www.codebelt.com/typescript/arrow-function-typescript-tutorial/">http://www.codebelt.com/typescript/arrow-function-typescript-tutorial/</a></p>
+</blockquote>
+<h2 id="-">类相关的</h2>
+<p>TypeScript中的module相当于ActionScript3中的Package</p>
+<p>TypeScript中构造函数的函数名用<strong>constructor</strong> ，而不用类名。</p>
+<p>TypeScript:</p>
+<pre><code class="language-typescript">
+module net.nshen { 
+    export class Test1
+    {
+        private str: string = &quot;abc&quot;;    // private property
+        public  num: number = 123;      //public property
+
+        public createTime: string;      //createTime = undefined
+
+        constructor() // constructor
+        {
+            this.createTime = new Date().toUTCString();
+        }
+
+        static traceDate(): void
+        {
+            var currentDate: Date = new Date(); 
+            console.log(currentDate.toUTCString());
+        }
+    }
+}
+
+</code></pre>
+<p>调用Static方法</p>
+<pre><code class="language-typescript">
+net.nshen.Test1.traceDate();
+
+</code></pre>
+<h2 id="module-">module原理</h2>
+<p>module始终是要编译成JS代码的，写一个简单的module看一下原理：</p>
+<pre><code class="language-typescript">
+module M {
+    var s = &quot;hello&quot;;
+    export function f() {
+        return s;
+        }
+}
+
+M.f();
+M.s;  // Error, s is not exported
+
+</code></pre>
+<p>编译后的JS代码</p>
+<pre><code class="language-javascript">
+var M;
+(function(M) {
+    var s = &quot;hello&quot;;
+    function f() {
+    return s;
+    }
+    M.f = f;
+})(M||(M={}));
+
+</code></pre>
+<p>据说这是js界很流行的写法，叫做<strong>JavaScript module pattern</strong></p>
+<h2 id="-">函数重载</h2>
+<p>AS3和JS都是不支持函数重载的，TypeScript以一种鸡肋的方式支持着。</p>
+<p>先写一些同名的函数声明，最后在一个同名函数里写出实现（要自己判断参数类型）：</p>
+<p>TypeScript:</p>
+<pre><code class="language-typescript">
+function attr(name: string): string;
+function attr(name: string, value: string): Accessor;
+function attr(map: any): Accessor;
+
+function attr(nameOrMap: any, value?: string): any {
+    if (nameOrMap &amp;&amp; typeof nameOrMap === &quot;object&quot;) {
+        // handle map case
+    }
+    else {
+        // handle string case
+    }
+}
+
+</code></pre>
+<p>最终会编译成一个JS方法：</p>
+<p>JavaScript：</p>
+<pre><code class="language-javascript">
+function attr(nameOrMap, value) {
+    if (nameOrMap &amp;&amp; typeof nameOrMap === &quot;object&quot;) {
+    } else {
+    }
+}
+
+</code></pre>
+<blockquote>
+<p>2014/12/07 补充 : js判断类型也是个很大的坑,详见 <a href="http://tobyho.com/2011/01/28/checking-types-in-javascript/">http://tobyho.com/2011/01/28/checking-types-in-javascript/</a></p>
+</blockquote>
+<p>TypeScript 允许多个类在同一个文件里，但如果类与类在不同的文件，需要这种写法，相当于AS3 的 import</p>
+<pre><code class="language-typescript">
+/// &lt;reference path=&quot;SimpleWebSocket.ts&quot;/&gt;
+class ComplexWebSocket extends SimpleWebSocket {
+...
+}
+
+</code></pre>
+<p>override方法子类不需要写关键字，直接同名方法即可 ，可调用super.xxx()</p>
+<pre><code class="language-typescript">
+class Base {
+
+    public test():number
+    {
+        return 1;
+    }
+
+    public test2():number
+    {
+        return 2;
+    }
+}
+
+class Derived extends Base {
+
+    public test():number
+    {
+        return 3;
+    }
+
+    public test2():number
+    {
+        return super.test();
+    }
+
+}
+
+var d:Derived = new Derived();
+console.log(d.test()); // 3
+console.log(d.test2());// 1
+
+</code></pre>
+<h2 id="enum">Enum</h2>
+<p>TypeScript支持enum关键字</p>
+<pre><code class="language-typescript">
+enum Color { Red, Green, Blue }
+console.log(Color.Red); // 0
+var c:number = Color.Green;
+console.log(Color[c])  //Green
+
+</code></pre>
+<p>生成对应的js</p>
+<pre><code class="language-javascript">
+var Color;
+(function (Color) {
+    Color[Color[&quot;Red&quot;] = 0] = &quot;Red&quot;;
+    Color[Color[&quot;Green&quot;] = 1] = &quot;Green&quot;;
+    Color[Color[&quot;Blue&quot;] = 2] = &quot;Blue&quot;;
+})(Color || (Color = {}));
+console.log(Color.Red);
+var c = Color.Green;
+console.log(Color[c]);//Green
+
+</code></pre>
+
+
+              本文采用 <a rel="license" style="color:#0366d6;" href="https://creativecommons.org/licenses/by-nd/4.0/deed.zh">署名-禁止演绎 4.0 国际许可协议 (CC BY-ND 4.0)</a> 进行许可（保留链接可任意转载，禁止修改）。
+            </div>
+            <div class="article_row">
+                 <a title="TypeScript" class="tag_button big_button" href="/tags/#TypeScript">TypeScript</a> <a title="Flash" class="tag_button big_button" href="/tags/#Flash">Flash</a>
+            </div>
+
+            <div class="article_row" >
+              <div class="social-share"></div>
+            </div>
+
+            <div class="article_row">
+             <p>留言系统需要代理访问</p>
+            </div>
+            <div class="article_row">
+              <div>
+                <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+                  <!-- 2017blogarticle -->
+                  <ins class="adsbygoogle"
+                  style="display:block"
+                  data-ad-client="ca-pub-3527087615346771"
+                  data-ad-slot="2049652650"
+                  data-ad-format="auto"></ins>
+                <script>
+                (adsbygoogle = window.adsbygoogle || []).push({});
+                </script>
+              </div>
+            </div>
+
+            <div>
+             <div id="disqus_thread"></div>
+              <script>
+
+              /**
+              *  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+              *  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables*/
+              
+              var disqus_config = function () {
+              this.page.url = "http://nshen.net/article/2013-05-18/as3-to-typescript"
+              this.page.identifier = "article-as3-to-typescript"; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+              };
+              
+              (function() { // DON'T EDIT BELOW THIS LINE
+              var d = document, s = d.createElement('script');
+              s.src = 'https://nshen-net.disqus.com/embed.js';
+              s.setAttribute('data-timestamp', +new Date());
+              (d.head || d.body).appendChild(s);
+              })();
+              </script>
+              <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+            </div>
+            <div id="pre_and_next" class="markdown-body" >
+              <div id="pre_link"> 
+                    <a href="/project/2013-06-03/object-socket" ><span>&laquo;&nbsp;ObjectSocket-让Flash与Nodejs更方便的交互</span></a>
+              </div>
+              <div id="next_link"> 
+                    <a href="/article/2012-04-09/how-to-make-money"><span>读书《黑客与画家》如何创造财富&nbsp;&raquo;</span></a>
+              </div>
+            </div>
+
+          </div>
+
+        </main>
+    <footer id="footer">
+        <div class="center">
+            <p>&copy; 2004-2017 Nshen.net | <a href="/atom.xml" target="blank">Feed</a> | <a href="/sitemap.xml" target="blank">Sitemap</a> | <a href="/tags" target="blank">Tags</a> | <a href="/support">Support</a></p>
+            <p>本站由 <a href="https://github.com/nshen/coding-blog" target="blank">CodingBlog</a> 强力构建，最后生成于 2021年12月3日上午10点40分 。</p>
+            <p>免费托管于 coding.net</p>
+            <p><a href="http://coding.net" target="blank"><img src="/image/codingnet2.png" style="width:250px;height:80px;" /></a></p>
+            <p>Learn WebGL from <a href="http://webgl.xyz" target="blank">WebGL.xyz</a></p>
+        </div>
+    
+        <script>
+            var _hmt = _hmt || [];
+            (function() {
+            var hm = document.createElement("script");
+            hm.src = "https://hm.baidu.com/hm.js?e1acab9c095adb812998c18d06d414ea";
+            var s = document.getElementsByTagName("script")[0]; 
+            s.parentNode.insertBefore(hm, s);
+            })();
+        </script>
+    
+        <script>
+        (function(){
+            //百度链接提交
+            var bp = document.createElement('script');
+            var curProtocol = window.location.protocol.split(':')[0];
+            if (curProtocol === 'https') {
+                bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+            }
+            else {
+                bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+            }
+            var s = document.getElementsByTagName("script")[0];
+            s.parentNode.insertBefore(bp, s);
+        })();
+        </script>
+    </footer>  </div>
+
+  <script src="/assets/prism.js"></script>
+  <script src="/assets/social-share.min.js"></script>
+
+</body>
+
+</html>

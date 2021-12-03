@@ -1,0 +1,264 @@
+<!doctype html>
+<html>
+
+<head>
+    <title> ObjectSocket-让Flash与Nodejs更方便的交互 | N神的研究所</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="N神的个人站点，通常发布一些个人笔记和业余项目等。">
+    
+    <meta name="keywords" content="Node,Flash">
+    <meta name="author" content="Nshen <nshen121@gmail.com>">
+
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <link rel="bookmark" href="/favicon.ico" />
+
+    <link rel="stylesheet" href="/assets/css/normalize.css">  
+    <link rel="stylesheet" href="/assets/css/github.css">
+    <link rel="stylesheet" href="/assets/css/prism.css">
+    <link rel="stylesheet" href="/assets/css/site.css">
+    <link rel="stylesheet" href="/assets/css/share.min.css">
+</head>
+
+<body>
+  <div id="container">
+    <header>
+        <div id="header_inner" class="center">
+            <div id="main_logo">
+                <a id="logo" href="/">N神的研究所</a>
+            </div>
+            <nav id="main_nav">
+                <a id="main_nav_link" href="/articles">学习（输入）</a>
+                <a id="main_nav_link" href="/projects">实践（输出）</a>
+                <a id="main_nav_link" href="/about">关于</a>
+                <a id="main_nav_link" href="/links">友情链接</a>
+            </nav>
+        </div>
+    </header>        <main >
+          <div class="contents" >
+            <div class="article_title">
+              <h1>ObjectSocket-让Flash与Nodejs更方便的交互</h1>
+            </div>
+ 
+            <div class="article_date">
+              <p>发表于 2013年6月3日 </p>
+            </div>
+     
+            <div class="markdown-body markdown-contents">
+              <p>flash与nodejs通过socket直接互相发送json object，解决粘包分包等问题。</p>
+<h3 id="-">项目地址</h3>
+<p><a href="https://github.com/nshen/ObjectSocket">https://github.com/nshen/ObjectSocket</a></p>
+<!-- more -->
+<h2 id="-">测试代码</h2>
+<h3 id="flash-">Flash端</h3>
+<pre><code class="language-actionscript">
+/**
+    * @author nshen.net
+    * @date 2013/5/31 15:47
+    */
+
+package  
+{
+    import flash.display.Sprite;
+    import flash.events.Event;
+    import flash.events.ProgressEvent;
+    import flash.net.Socket;
+    import flash.utils.ByteArray;
+    import flash.utils.Endian;
+    import flash.utils.setInterval;
+
+    public class Main extends Sprite
+    {
+        private var _socket:ObjectSocket ;
+        public function Main() 
+        {
+                _socket = new ObjectSocket(onData); //ObjectSocket是Socket的子类
+                _socket.addEventListener(Event.CONNECT,onConnect);//侦听连接事件 
+                _socket.addEventListener(Event.CLOSE, onClose);
+                _socket.connect(&#39;127.0.0.1&#39;,2345);//连接服务端 
+        }
+
+        //收到服务器传来的object会回调到这里
+        private function onData(obj:Object):void 
+        {
+                trace(&quot;receive object: &quot;,obj.num, obj.name, obj.b , obj.arr);
+        }
+
+        private function onClose(e:Event):void 
+        {
+            trace(&quot;onClose&quot;)
+        }
+
+        private static var sendnum:uint = 0;
+        private function onConnect(e:Event):void 
+        {
+            trace(&#39;连接成功&#39;); 
+
+            //开始以每隔5毫秒的速度疯狂向服务器发送Object
+            setInterval(function():void { 
+                var obj:Object = {
+                    num: sendnum++,
+                    name: (&quot;client&quot; + Math.random().toString()),
+                    b: Math.random() &gt; 0.5,
+                    arr: [ 1, 2, 3, &quot;d&quot;, &quot;e&quot;, &quot;f&quot;]
+                    }
+
+                _socket.sendObject(obj); //向服务器发送obj
+
+            } , 3);
+
+        }
+
+    }
+
+}
+
+</code></pre>
+<h3 id="nodejs-typescript-">nodejs端(Typescript)</h3>
+<pre><code class="language-actionscript">
+/// &lt;reference path=&quot;./d/node/node.d.ts&quot; /&gt;
+
+import net = module(&quot;net&quot;);
+import n = module(&quot;./ObjectSocket&quot;);
+
+var objSocket: n.ObjectSocket;
+
+var server: net.Server = net.createServer(function (socket: net.NodeSocket): void {
+    console.log(&quot;connect&quot;);
+    objSocket = new n.ObjectSocket(socket);    
+
+    objSocket.on(&quot;data&quot;, function (obj:any) { //客户端传来了Object
+        console.log(&quot;receive object: &quot;,obj.num, obj.name, obj.b , obj.arr);
+    })
+
+    objSocket.on(&quot;end&quot;, function () {
+        console.log(&quot;on end&quot;)
+    })
+
+    //开始以每隔5毫秒的速度疯狂向客户端发送Object
+    sendPackages(objSocket);
+})
+
+var sendnum:number = 0;
+function sendPackages(socket:n.ObjectSocket): void
+{
+    setInterval(function () {
+        var obj: any = {
+            num: sendnum++,
+            name: (&quot;server&quot; + Math.random().toString()),
+            b: Math.random() &gt; 0.5,
+            arr: [&lt;any&gt; 1, 2, 3, &quot;d&quot;, &quot;e&quot;, &quot;f&quot;]
+        }
+        socket.sendObject(obj); //向客户端发送obj
+    }, 5);
+}
+
+server.listen(2345, &quot;localhost&quot;);
+
+</code></pre>
+
+
+              本文采用 <a rel="license" style="color:#0366d6;" href="https://creativecommons.org/licenses/by-nd/4.0/deed.zh">署名-禁止演绎 4.0 国际许可协议 (CC BY-ND 4.0)</a> 进行许可（保留链接可任意转载，禁止修改）。
+            </div>
+            <div class="article_row">
+                 <a title="Node" class="tag_button big_button" href="/tags/#Node">Node</a> <a title="Flash" class="tag_button big_button" href="/tags/#Flash">Flash</a>
+            </div>
+
+            <div class="article_row" >
+              <div class="social-share"></div>
+            </div>
+
+            <div class="article_row">
+             <p>留言系统需要代理访问</p>
+            </div>
+            <div class="article_row">
+              <div>
+                <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+                  <!-- 2017blogarticle -->
+                  <ins class="adsbygoogle"
+                  style="display:block"
+                  data-ad-client="ca-pub-3527087615346771"
+                  data-ad-slot="2049652650"
+                  data-ad-format="auto"></ins>
+                <script>
+                (adsbygoogle = window.adsbygoogle || []).push({});
+                </script>
+              </div>
+            </div>
+
+            <div>
+             <div id="disqus_thread"></div>
+              <script>
+
+              /**
+              *  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+              *  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables*/
+              
+              var disqus_config = function () {
+              this.page.url = "http://nshen.net/project/2013-06-03/object-socket"
+              this.page.identifier = "project-object-socket"; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+              };
+              
+              (function() { // DON'T EDIT BELOW THIS LINE
+              var d = document, s = d.createElement('script');
+              s.src = 'https://nshen-net.disqus.com/embed.js';
+              s.setAttribute('data-timestamp', +new Date());
+              (d.head || d.body).appendChild(s);
+              })();
+              </script>
+              <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+            </div>
+            <div id="pre_and_next" class="markdown-body" >
+              <div id="pre_link"> 
+                    <a href="/article/2013-07-28/stage3d-game-programming-beginner" ><span>&laquo;&nbsp;读书《Stage3D Game Programming Beginner》</span></a>
+              </div>
+              <div id="next_link"> 
+                    <a href="/article/2013-05-18/as3-to-typescript"><span>从 ActionScript3 到 TypeScript&nbsp;&raquo;</span></a>
+              </div>
+            </div>
+
+          </div>
+
+        </main>
+    <footer id="footer">
+        <div class="center">
+            <p>&copy; 2004-2017 Nshen.net | <a href="/atom.xml" target="blank">Feed</a> | <a href="/sitemap.xml" target="blank">Sitemap</a> | <a href="/tags" target="blank">Tags</a> | <a href="/support">Support</a></p>
+            <p>本站由 <a href="https://github.com/nshen/coding-blog" target="blank">CodingBlog</a> 强力构建，最后生成于 2021年12月3日上午10点40分 。</p>
+            <p>免费托管于 coding.net</p>
+            <p><a href="http://coding.net" target="blank"><img src="/image/codingnet2.png" style="width:250px;height:80px;" /></a></p>
+            <p>Learn WebGL from <a href="http://webgl.xyz" target="blank">WebGL.xyz</a></p>
+        </div>
+    
+        <script>
+            var _hmt = _hmt || [];
+            (function() {
+            var hm = document.createElement("script");
+            hm.src = "https://hm.baidu.com/hm.js?e1acab9c095adb812998c18d06d414ea";
+            var s = document.getElementsByTagName("script")[0]; 
+            s.parentNode.insertBefore(hm, s);
+            })();
+        </script>
+    
+        <script>
+        (function(){
+            //百度链接提交
+            var bp = document.createElement('script');
+            var curProtocol = window.location.protocol.split(':')[0];
+            if (curProtocol === 'https') {
+                bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+            }
+            else {
+                bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+            }
+            var s = document.getElementsByTagName("script")[0];
+            s.parentNode.insertBefore(bp, s);
+        })();
+        </script>
+    </footer>  </div>
+
+  <script src="/assets/prism.js"></script>
+  <script src="/assets/social-share.min.js"></script>
+
+</body>
+
+</html>

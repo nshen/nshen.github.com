@@ -1,0 +1,858 @@
+<!doctype html>
+<html>
+
+<head>
+    <title> 给自学游戏和图形开发者的数学符号指南 | N神的研究所</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="N神的个人站点，通常发布一些个人笔记和业余项目等。">
+    
+    <meta name="keywords" content="Math,翻译">
+    <meta name="author" content="Nshen <nshen121@gmail.com>">
+
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <link rel="bookmark" href="/favicon.ico" />
+
+    <link rel="stylesheet" href="/assets/css/normalize.css">  
+    <link rel="stylesheet" href="/assets/css/github.css">
+    <link rel="stylesheet" href="/assets/css/prism.css">
+    <link rel="stylesheet" href="/assets/css/site.css">
+    <link rel="stylesheet" href="/assets/css/share.min.css">
+</head>
+
+<body>
+  <div id="container">
+    <header>
+        <div id="header_inner" class="center">
+            <div id="main_logo">
+                <a id="logo" href="/">N神的研究所</a>
+            </div>
+            <nav id="main_nav">
+                <a id="main_nav_link" href="/articles">学习（输入）</a>
+                <a id="main_nav_link" href="/projects">实践（输出）</a>
+                <a id="main_nav_link" href="/about">关于</a>
+                <a id="main_nav_link" href="/links">友情链接</a>
+            </nav>
+        </div>
+    </header>        <main >
+          <div class="contents" >
+            <div class="article_title">
+              <h1>给自学游戏和图形开发者的数学符号指南</h1>
+            </div>
+ 
+            <div class="article_date">
+              <p>发表于 2016年3月10日 </p>
+            </div>
+     
+            <div class="markdown-body markdown-contents">
+              <p>之前补数学知识的时候，看到数学符号就头大，前几天在Github上发现了这篇文章，尝试翻译了一下，现在全文贴到这里。</p>
+<p>由于原文会持续更新，可以到我的github上watch这个项目，我会随原文进行更新。</p>
+<blockquote>
+<p><a href="https://github.com/nshen/math-as-code/blob/master/README-zh.md">https://github.com/nshen/math-as-code/blob/master/README-zh.md</a></p>
+</blockquote>
+<p>正文：</p>
+<!--more--> 
+<h1 id="math-as-code">math-as-code</h1>
+<blockquote>
+<p>译注：译者英文与数学水平都非常有限，尝试翻译，如有错误请指正。<a href="./README.md">英文原版</a> 在此。</p>
+</blockquote>
+<p>这是一份通过对比数学符号和JavaScript代码来帮助开发者更容易了解数学符号的参考。</p>
+<p>动机:学术论文可能会吓着自学游戏和图形的程序猿:)</p>
+<p>这个指南还没有完成。如果你发现错误或者想要贡献，请<a href="https://github.com/Jam3/math-as-code/issues">open a ticket</a>或发一个 PR。</p>
+<blockquote>
+<p><strong>注意</strong>： 简洁起见，有些代码示例使用了<a href="https://www.npmjs.com/">npm 包</a>。你可以到他们的GitHub repos来查看实现的详细情况。</p>
+</blockquote>
+<h1 id="-">前言</h1>
+<p>数学符号可以表示不同的意思，这取决于作者，上下文和所学习的领域（线性代数，集合理论，等等）。这份指南也许不会涵盖符号的<em>所有</em>用法。在某些情况，会引用一些真实材料（博客文章,出版物等等）来演示某个符号的实际用法。</p>
+<p>更完整的列表，请看<a href="https://en.wikipedia.org/wiki/List_of_mathematical_symbols">Wikipedia - List of Mathematical Symbols</a>。</p>
+<p>简单起见，这里许多的代码示例都操作浮点数值，并不是数字健壮的（numerically robust）。为什么这会是一个问题的更多细节请看<a href="https://github.com/mikolalysenko/robust-arithmetic-notes">Robust Arithmetic Notes</a> 作者是 Mikola Lysenko。</p>
+<h1 id="-">目录</h1>
+<ul>
+<li><a href="#variable-name-conventions">变量名约定</a></li>
+<li><a href="#equals-symbols">等号 <code>=</code> <code>≈</code> <code>≠</code> <code>:=</code></a></li>
+<li><a href="#square-root-and-complex-numbers">平方根与复数 <code>√</code> <em><code>i</code></em></a></li>
+<li><a href="#dot--cross">点 &amp; 叉 <code>·</code> <code>×</code> <code>∘</code></a><ul>
+<li><a href="#scalar-multiplication">标量乘法</a></li>
+<li><a href="#vector-multiplication">向量乘法</a></li>
+<li><a href="#dot-product">点乘</a></li>
+<li><a href="#cross-product">叉乘</a></li>
+</ul>
+</li>
+<li><a href="#sigma">西格玛 <code>Σ</code></a> - <em>求和</em></li>
+<li><a href="#capital-pi">大写 Pi <code>Π</code></a> - <em>序列的积</em></li>
+<li><a href="#pipes">管道 <code>||</code></a><ul>
+<li><a href="#absolute-value">绝对值</a></li>
+<li><a href="#euclidean-norm">欧几里得模</a></li>
+<li><a href="#determinant">行列式</a></li>
+</ul>
+</li>
+<li><a href="#hat">帽子 <strong><code>â</code></strong></a> - <em>单位向量</em></li>
+<li><a href="#element">&quot;属于&quot; <code>∈</code> <code>∉</code></a></li>
+<li><a href="#common-number-sets">常见数字集 <code>ℝ</code> <code>ℤ</code> <code>ℚ</code> <code>ℕ</code></a></li>
+<li><a href="#function">函数 <code>ƒ</code></a><ul>
+<li><a href="#piecewise-function">分段函数</a></li>
+<li><a href="#common-functions">通用函数</a></li>
+<li><a href="#function-notation">函数符号 <code>↦</code> <code>→</code></a></li>
+</ul>
+</li>
+<li><a href="#prime">撇号 <code>′</code></a></li>
+<li><a href="#floor--ceiling">向下取整和向上取整（floor &amp; ceiling） <code>⌊</code> <code>⌉</code></a></li>
+<li><a href="#arrows">箭头</a><ul>
+<li><a href="#material-implication">实质蕴含（material implication） <code>⇒</code> <code>→</code></a></li>
+<li><a href="#equality">等式 <code>&lt;</code> <code>≥</code> <code>≫</code></a></li>
+<li><a href="#conjunction--disjunction">与 &amp; 或 <code>∧</code> <code>∨</code></a></li>
+</ul>
+</li>
+<li><a href="#logical-negation">逻辑非 <code>¬</code> <code>~</code> <code>!</code></a></li>
+<li><a href="#intervals">区间（intervals）</a></li>
+<li><a href="#more">更多...</a></li>
+</ul>
+<h2 id="-">变量名约定</h2>
+<p>有很多命名约定取决于上下文和所学领域，他们并不太一致。然而在一些文献中你会发现变量名遵循一些模式，例如：</p>
+<ul>
+<li><em>s</em> - 斜体小写字母用做标量 （例如一个数字）</li>
+<li><strong>x</strong> - 粗体小写字母用做向量 （例如一个2D点）</li>
+<li><strong>A</strong> - 粗体大写字母用做矩阵 （例如一个3D变换）</li>
+<li><em>θ</em> - 斜体小写希腊字母用做常量和特殊变量 （例如 <a href="https://en.wikipedia.org/wiki/Spherical_coordinate_system">欧拉角 <em>θ</em>, <em>theta</em></a>)</li>
+</ul>
+<p>本指南也基于这个格式。</p>
+<h2 id="-">等号</h2>
+<p>有很多符号很像等号 <code>=</code> 。这里有些常见的例子：</p>
+<ul>
+<li><code>=</code> 表示相等 （值相同）</li>
+<li><code>≠</code> 表示不相等 （值不同）</li>
+<li><code>≈</code> 表示约等于 （<code>π ≈ 3.14159</code>）</li>
+<li><code>:=</code> 表示定义 （A 被定义为 B）</li>
+</ul>
+<p>在 JavaScript 中:</p>
+<pre><code class="language-js">// 相等
+2 === 3
+
+// 不相等
+2 !== 3
+
+// 约等于
+almostEqual(Math.PI, 3.14159, 1e-5)
+
+function almostEqual(a, b, epsilon) {
+  return Math.abs(a - b) &lt;= epsilon
+}
+</code></pre>
+<p>你也许看过 <code>:=</code>， <code>=:</code> 和 <code>=</code> 符号用来表示 <em>定义</em>。<sup><a href="http://mimosa-pudica.net/improved-oren-nayar.html#images">1</a></sup></p>
+<p>例如，下边定义 <em>x</em> 为 2<em>kj</em> 的别名。</p>
+<p><img src="http://latex.codecogs.com/svg.latex?x%20%3A%3D%202kj" alt="equals1"></p>
+<!-- x := 2kj -->
+<p>在 JavaScript 中，我们用 <code>var</code> 来 <em>定义</em> 变量和提供别名：</p>
+<pre><code class="language-js">var x = 2 * k * j
+</code></pre>
+<p>然而，这里的x值是可变的，仅是当时的一个快照。在某些有预处理器语言中的 <code>#define</code> 语句才比较接近于数学中的 <em>定义</em>。</p>
+<p>在JavaScript (ES6) 中，更精确的 <em>定义</em> ，应该有点类似这样：</p>
+<pre><code class="language-js">const f = (k, j) =&gt; 2 * k * j
+</code></pre>
+<p>与此不同的是，下边这句表示的是相等：</p>
+<p><img src="http://latex.codecogs.com/svg.latex?x%20%3D%202kj" alt="equals2"></p>
+<!-- x = 2kj -->
+<p>上边的等式也可以解释为一个 <a href="https://developer.mozilla.org/en-US/docs/Web/API/console/assert">断言</a>:</p>
+<pre><code class="language-js">console.assert(x === (2 * k * j))
+</code></pre>
+<h2 id="-">平方根与复数</h2>
+<p>一个平方根运算是这种形式:</p>
+<p><img src="http://latex.codecogs.com/svg.latex?%5Cleft%28%5Csqrt%7Bx%7D%5Cright%29%5E2%20%3D%20x" alt="squareroot"></p>
+<!-- \left(\sqrt{x}\right)^2 = x -->
+<p>在编程语言中我们使用 <code>sqrt</code> 函数， 像这样：</p>
+<pre><code class="language-js">var x = 9;
+console.log(Math.sqrt(x));
+//=&gt; 3
+</code></pre>
+<p>复数是 <img src="http://latex.codecogs.com/svg.latex?a&space;&plus;&space;ib" alt="complex"> 形式的表达式， 其中 <img src="http://latex.codecogs.com/svg.latex?a" alt="a"> 是实数部分， <img src="http://latex.codecogs.com/svg.latex?b" alt="b"> 是虚数部分。 虚数 <img src="http://latex.codecogs.com/svg.latex?i" alt="i"> 的定义为：</p>
+<p><img src="http://latex.codecogs.com/svg.latex?i%3D%5Csqrt%7B-1%7D" alt="imaginary">.<br><!-- i=\sqrt{-1} --></p>
+<p>JavaScript没有内置复数的功能，但有一些库支持复数算法。例如， <a href="https://www.npmjs.com/package/mathjs">mathjs</a>:</p>
+<pre><code class="language-js">var math = require(&#39;mathjs&#39;)
+
+var a = math.complex(3, -1)
+//=&gt; { re: 3, im: -1 }
+
+var b = math.sqrt(-1)
+//=&gt; { re: 0, im: -1 }
+
+console.log(math.multiply(a, b).toString())
+//=&gt; &#39;1 + 3i&#39;
+</code></pre>
+<p>这个库还支持字符串表达式求值， 所以上边的可以写为：</p>
+<pre><code class="language-js">console.log(math.eval(&#39;(3 - i) * i&#39;).toString())
+//=&gt; &#39;1 + 3i&#39;
+</code></pre>
+<p>其他实现：</p>
+<ul>
+<li><a href="https://www.npmjs.com/package/immutable-complex">immutable-complex</a></li>
+<li><a href="https://www.npmjs.com/package/complex-js">complex-js</a></li>
+<li><a href="http://www.numericjs.com/">Numeric-js</a></li>
+</ul>
+<h2 id="-">点 &amp; 叉</h2>
+<p>点 <code>·</code> 和叉 <code>×</code> 符号根据上下文的不同有不同的用法。</p>
+<p>他们可能看上去很明显，但在进入下一部分之前，理解他们之间微妙的不同是非常重要的。</p>
+<h4 id="-">标量乘法</h4>
+<p>两个符号都可以表示简单的标量之间的乘法。下边的写法意思相同：</p>
+<p><img src="http://latex.codecogs.com/svg.latex?5%20%5Ccdot%204%20%3D%205%20%5Ctimes%204" alt="dotcross1"></p>
+<!-- 5 \cdot 4 = 5 \times 4 -->
+<p>在编程语言中，我们倾向用星号表示相乘：</p>
+<pre><code class="language-js">var result = 5 * 4
+</code></pre>
+<p>通常，使用乘法符号只是为了避免意义模糊（例如两个数字之间的）。这里，我们可以完全省略：</p>
+<p><img src="http://latex.codecogs.com/svg.latex?3kj" alt="dotcross2"></p>
+<!-- 3kj -->
+<p>如果这些变量表示的是标量，则代码应该这样写:</p>
+<pre><code class="language-js">var result = 3 * k * j
+</code></pre>
+<h4 id="-">向量乘法</h4>
+<p>表示向量和标量之间相乘，或两向量的逐元素相乘（element-wise multiplication），我们不用点 <code>·</code> 或叉 <code>×</code> 符号。 这些符号在线性代数中有不同的意思，后边讨论。</p>
+<p>让我们用之前的例子，但用在向量上。对于向量的逐元素相乘（element-wise vector multiplication）来说，你可能会看到用一个空心点来表示 <a href="https://en.wikipedia.org/wiki/Hadamard_product_%28matrices%29">Hadamard product</a>。<sup><a href="http://buzzard.ups.edu/courses/2007spring/projects/million-paper.pdf">2</a></sup></p>
+<p><img src="http://latex.codecogs.com/svg.latex?3%5Cmathbf%7Bk%7D%5Ccirc%5Cmathbf%7Bj%7D" alt="dotcross3"></p>
+<!-- 3\mathbf{k}\circ\mathbf{j} -->
+<p>某些时候，作者可能会显式定义一个不同的符号，例如圆中点 <code>⊙</code> 或实心圈 <code>●</code> 。<sup><a href="https://www.math.washington.edu/~morrow/464_12/fft.pdf">3</a></sup></p>
+<p>这是对应的代码，使用数组 <code>[x, y]</code> 来表示2D向量。</p>
+<pre><code class="language-js">var s = 3
+var k = [ 1, 2 ]
+var j = [ 2, 3 ]
+
+var tmp = multiply(k, j)
+var result = multiplyScalar(tmp, s)
+//=&gt; [ 6, 18 ]
+</code></pre>
+<p><code>multiply</code> 和 <code>multiplyScalar</code> 函数应该这样:</p>
+<pre><code class="language-js">function multiply(a, b) {
+  return [ a[0] * b[0], a[1] * b[1] ]
+}
+
+function multiplyScalar(a, scalar) {
+  return [ a[0] * scalar, a[1] * scalar ]
+}
+</code></pre>
+<p>同样的，矩阵相乘也不用 <code>·</code> 或 <code>×</code> 符号。 矩阵乘法会在后边章节提到.</p>
+<h4 id="-">点乘</h4>
+<p>点符号 <code>·</code> 可用来表示两向量之间的 <a href="https://en.wikipedia.org/wiki/Dot_product"><em>点乘</em></a> 。 由于其值是一个标量，通常被叫做 <em>标量积（scalar product）</em> 。</p>
+<p><img src="http://latex.codecogs.com/svg.latex?%5Cmathbf%7Bk%7D%5Ccdot%20%5Cmathbf%7Bj%7D" alt="dotcross4"></p>
+<!-- \mathbf{k}\cdot \mathbf{j} -->
+<p>这在线性代数和3D向量中是非常常见的，代码类似这样：</p>
+<pre><code class="language-js">var k = [ 0, 1, 0 ]
+var j = [ 1, 0, 0 ]
+
+var d = dot(k, j)
+//=&gt; 0
+</code></pre>
+<p>结果为 <code>0</code> 告诉我们两向量互相垂直. 这是3元素向量的 <code>点乘</code> 函数:</p>
+<pre><code class="language-js">function dot(a, b) {
+  return a[0] * b[0] + a[1] * b[1] + a[2] * b[2]
+}
+</code></pre>
+<h4 id="-">叉乘</h4>
+<p>叉乘符号 <code>×</code> 可以用来表示两向量的 <a href="https://en.wikipedia.org/wiki/Cross_product"><em>叉乘</em></a>。</p>
+<p><img src="http://latex.codecogs.com/svg.latex?%5Cmathbf%7Bk%7D%5Ctimes%20%5Cmathbf%7Bj%7D" alt="dotcross5"></p>
+<!-- \mathbf{k}\times \mathbf{j} -->
+<p>在代码中，应该是这样:</p>
+<pre><code class="language-js">var k = [ 0, 1, 0 ]
+var j = [ 1, 0, 0 ]
+
+var result = cross(k, j)
+//=&gt; [ 0, 0, -1 ]
+</code></pre>
+<p>这里得到结果为 <code>[ 0, 0, -1 ]</code>，这个向量同时垂直于 <strong>k</strong> 和 <strong>j</strong> 。</p>
+<p>我们的叉乘 <code>cross</code> 函数：</p>
+<pre><code class="language-js">function cross(a, b) {
+  var ax = a[0], ay = a[1], az = a[2],
+    bx = b[0], by = b[1], bz = b[2]
+
+  var rx = ay * bz - az * by
+  var ry = az * bx - ax * bz
+  var rz = ax * by - ay * bx
+  return [ rx, ry, rz ]
+}
+</code></pre>
+<p>向量乘法，叉乘，点乘的其他实现：</p>
+<ul>
+<li><a href="https://github.com/stackgl/gl-vec3">gl-vec3</a></li>
+<li><a href="https://github.com/stackgl/gl-vec2">gl-vec2</a></li>
+<li><a href="https://github.com/hughsk/vectors">vectors</a> - 包含 n维实现</li>
+</ul>
+<h2 id="-sigma-">西格玛（sigma）</h2>
+<p>大写希腊字母 <code>Σ</code> (Sigma) 用来表示 <a href="https://en.wikipedia.org/wiki/Summation">总和 Summation</a>。 换句话说就是对一些数字求和。</p>
+<p><img src="http://latex.codecogs.com/svg.latex?%5Csum_%7Bi%3D1%7D%5E%7B100%7Di" alt="sigma"></p>
+<!-- \sum_{i=1}^{100}i -->
+<p>这里, <code>i=1</code> 是说从 <code>1</code> 西格玛上边的数字<code>100</code>为止。这些分别为上下边界。 &quot;E&quot; 右边的 <em>i</em> 告诉我们求和的是什么。代码：</p>
+<pre><code class="language-js">var sum = 0
+for (var i = 1; i &lt;= 100; i++) {
+  sum += i
+}
+</code></pre>
+<p><code>sum</code> 的结果为 <code>5050</code> 。</p>
+<p><strong>提示：</strong> 对于整数，这个特殊形式可以优化为：</p>
+<pre><code class="language-js">var n = 100 // 上边界
+var sum = (n * (n + 1)) / 2
+</code></pre>
+<p>这里有另一个例子，这里的 <em>i</em> ，或 “想要求和的东西” 是不同的：</p>
+<p><img src="http://latex.codecogs.com/svg.latex?%5Csum_%7Bi%3D1%7D%5E%7B100%7D%282i&plus;1%29" alt="sum2"></p>
+<!-- \sum_{i=1}^{100}(2i+1) -->
+<p>代码：</p>
+<pre><code class="language-js">var sum = 0
+for (var i = 1; i &lt;= 100; i++) {
+  sum += (2 * i + 1)
+}
+</code></pre>
+<p><code>sum</code> 的结果为 <code>10200</code> 。</p>
+<p>这个符号可被嵌套，非常像嵌套一个 <code>for</code> 循环。 你应该先求和最右边的西格玛， 除非作者加入括号改变了顺序。然而下边的例子，由于我们处理有限的和，顺序就不重要了。</p>
+<p><img src="http://latex.codecogs.com/svg.latex?%5Csum_%7Bi%3D1%7D%5E%7B2%7D%5Csum_%7Bj%3D4%7D%5E%7B6%7D%283ij%29" alt="sigma3"></p>
+<!-- \sum_{i=1}^{2}\sum_{j=4}^{6}(3ij) -->
+<p>代码：</p>
+<pre><code class="language-js">var sum = 0
+for (var i = 1; i &lt;= 2; i++) {
+  for (var j = 4; j &lt;= 6; j++) {
+    sum += (3 * i * j)
+  }
+}
+</code></pre>
+<p>这里，<code>sum</code> 值为 <code>135</code>。</p>
+<h2 id="-pi">大写 Pi</h2>
+<p>大写 Pi 或 “大Pi” 与 <a href="#sigma">西格玛</a> 非常接近， 不同的是我们用乘法取得一系列数字的乘积。 </p>
+<p>看下边：</p>
+<p><img src="http://latex.codecogs.com/svg.latex?%5Cprod_%7Bi%3D1%7D%5E%7B6%7Di" alt="capitalPi"></p>
+<!-- \prod_{i=1}^{6}i -->
+<p>代码应该类似这样：</p>
+<pre><code class="language-js">var value = 1
+for (var i = 1; i &lt;= 6; i++) {
+  value *= i
+}
+</code></pre>
+<p><code>value</code> 结果应得到 <code>720</code>。</p>
+<h2 id="-pipes-">管道（pipes）</h2>
+<p>管道符号，就是 <em>竖线（bars）</em>，根据上下文不同，可以表示不同意思。下边的是3种常见用途 <a href="#absolute-value">绝对值</a>, <a href="#euclidean-norm">欧几里得模</a>, 和 <a href="#determinant">行列式</a>。</p>
+<p>这3种特性都是描述对象的 <em>长度（length）</em> 。</p>
+<h4 id="-">绝对值</h4>
+<p><img src="http://latex.codecogs.com/svg.latex?%5Cleft%20%7C%20x%20%5Cright%20%7C" alt="pipes1"></p>
+<!-- \left | x \right | -->
+<p>对于数字 <em>x</em>, <code>|x|</code> 表示 <em>x</em> 的绝对值。代码为：</p>
+<pre><code class="language-js">var x = -5
+var result = Math.abs(x)
+// =&gt; 5
+</code></pre>
+<h4 id="-euclidean-norm-">欧几里得模（Euclidean norm）</h4>
+<p><img src="http://latex.codecogs.com/svg.latex?%5Cleft%20%5C%7C%20%5Cmathbf%7Bv%7D%20%5Cright%20%5C%7C" alt="pipes4"></p>
+<!-- \left \| \mathbf{v} \right \| -->
+<p>对于向量 <strong>v</strong>， <code>‖v‖</code> 是 <strong>v</strong> 的<a href="https://en.wikipedia.org/wiki/Norm_%28mathematics%29#Euclidean_norm">欧几里得模（Euclidean norm）</a> 。也叫做向量的 &quot;量级（magnitude）&quot; 或 &quot;长度（length）&quot; 。</p>
+<p>通常用双竖线表示来避免与<em>绝对值</em> 符号混淆，但有些时候也会看见单竖线。</p>
+<p><img src="http://latex.codecogs.com/svg.latex?%5Cleft%20%7C%20%5Cmathbf%7Bv%7D%20%5Cright%20%7C" alt="pipes2"></p>
+<!-- \left | \mathbf{v} \right | -->
+<p>这里的例子用数组 <code>[x, y, z]</code> 来表示一个3D向量。</p>
+<pre><code class="language-js">var v = [ 0, 4, -3 ]
+length(v)
+//=&gt; 5
+</code></pre>
+<p><code>length</code> 函数：</p>
+<pre><code class="language-js">function length (vec) {
+  var x = vec[0]
+  var y = vec[1]
+  var z = vec[2]
+  return Math.sqrt(x * x + y * y + z * z)
+}
+</code></pre>
+<p>其他实现：</p>
+<ul>
+<li><a href="https://github.com/mattdesl/magnitude/blob/864ff5a7eb763d34bf154ac5f5332d7601192b70/index.js">magnitude</a> - n-dimensional</li>
+<li><a href="https://github.com/stackgl/gl-vec2/blob/21f460a371540258521fd2f720d80f14e87bd400/length.js">gl-vec2/length</a> - 2D vector</li>
+<li><a href="https://github.com/stackgl/gl-vec3/blob/507480fa57ba7c5fb70679cf531175a52c48cf53/length.js">gl-vec3/length</a> - 3D vector</li>
+</ul>
+<h4 id="-">行列式</h4>
+<p><img src="http://latex.codecogs.com/svg.latex?%5Cleft%20%7C%5Cmathbf%7BA%7D%20%5Cright%20%7C" alt="pipes3"></p>
+<!-- \left |\mathbf{A}  \right | -->
+<p>对于一个矩阵 <strong>A</strong>， <code>|A|</code> 表示矩阵 <strong>A</strong> 的<a href="https://en.wikipedia.org/wiki/Determinant">行列式（determinant）</a>。</p>
+<p>这是一个计算 2x2 矩阵行列式的例子，矩阵用一个column-major格式的扁平数数组表示。</p>
+<pre><code class="language-js">var determinant = require(&#39;gl-mat2/determinant&#39;)
+
+var matrix = [ 1, 0, 0, 1 ]
+var det = determinant(matrix)
+//=&gt; 1
+</code></pre>
+<p>实现：</p>
+<ul>
+<li><a href="https://github.com/stackgl/gl-mat4/blob/c2e2de728fe7eba592f74cd02266100cc21ec89a/determinant.js">gl-mat4/determinant</a> - 也可以看 <a href="https://github.com/stackgl/gl-mat3">gl-mat3</a> 和 <a href="https://github.com/stackgl/gl-mat2">gl-mat2</a></li>
+<li><a href="https://www.npmjs.com/package/ndarray-determinant">ndarray-determinant</a></li>
+<li><a href="https://www.npmjs.com/package/glsl-determinant">glsl-determinant</a></li>
+<li><a href="https://www.npmjs.com/package/robust-determinant">robust-determinant</a></li>
+<li><a href="https://www.npmjs.com/package/robust-determinant-2">robust-determinant-2</a> 和 <a href="https://www.npmjs.com/package/robust-determinant-3">robust-determinant-3</a>，专门 2x2 和 3x3 的矩阵</li>
+</ul>
+<h2 id="-">帽子</h2>
+<p>在几何里，字母上的 “帽子” 符号用来表示一个<a href="https://en.wikipedia.org/wiki/Unit_vector">单位向量</a>。例如，这是向量 <strong>a</strong> 的单位向量。</p>
+<p><img src="http://latex.codecogs.com/svg.latex?%5Chat%7B%5Cmathbf%7Ba%7D%7D" alt="hat"></p>
+<!-- \hat{\mathbf{a}} -->
+<p>在笛卡尔空间中，单位向量的长度为1。意思是向量的每个部分都在 -1.0 到 1.0 之间。这里我们 <em>归一化（normalize）</em> 一个3D向量为单位向量。</p>
+<pre><code class="language-js">var a = [ 0, 4, -3 ]
+normalize(a)
+//=&gt; [ 0, 0.8, -0.6 ]
+</code></pre>
+<p>这是 <code>归一化（normalize）</code> 函数，接收一个3D向量参数：</p>
+<pre><code class="language-js">function normalize(vec) {
+  var x = vec[0]
+  var y = vec[1]
+  var z = vec[2]
+  var squaredLength = x * x + y * y + z * z
+
+  if (squaredLength &gt; 0) {
+    var length = Math.sqrt(squaredLength)
+    vec[0] = vec[0] / length
+    vec[1] = vec[1] / length
+    vec[2] = vec[2] / length
+  }
+  return vec
+}
+</code></pre>
+<p>其他实现：</p>
+<ul>
+<li><a href="https://github.com/stackgl/gl-vec3/blob/507480fa57ba7c5fb70679cf531175a52c48cf53/normalize.js">gl-vec3/normalize</a> 和 <a href="https://github.com/stackgl/gl-vec2/blob/21f460a371540258521fd2f720d80f14e87bd400/normalize.js">gl-vec2/normalize</a></li>
+<li><a href="https://github.com/hughsk/vectors/blob/master/normalize-nd.js">vectors/normalize-nd</a> (n-dimensional)</li>
+</ul>
+<h2 id="-">属于</h2>
+<p>集合理论中，“属于”符号 <code>∈</code> 和 <code>∋</code> 可以被用来描述某物是否为集合中的一个元素。例如：</p>
+<p><img src="http://latex.codecogs.com/svg.latex?A%3D%5Cleft%20%5C%7B3%2C9%2C14%7D%7B%20%5Cright%20%5C%7D%2C%203%20%5Cin%20A" alt="element1"></p>
+<!-- A=\left \{3,9,14}{  \right \}, 3 \in A -->
+<p>这里我们有一个数字集 <em>A</em> <code>{ 3, 9, 14 }</code> 而且我们说 <code>3</code> 是“属于”这个集合的。 </p>
+<p>在ES5种一个简单的实现应该这样：</p>
+<pre><code class="language-js">var A = [ 3, 9, 14 ]
+
+A.indexOf(3) &gt;= 0
+//=&gt; true
+</code></pre>
+<p>然而，可以用只能保存唯一值的<code>Set</code>，这样更精确。这是ES6的一个特性。</p>
+<pre><code class="language-js">var A = new Set([ 3, 9, 14 ])
+
+A.has(3)
+//=&gt; true
+</code></pre>
+<p>反向的 <code>∋</code> 意义相同，只是顺序改变：</p>
+<p><img src="http://latex.codecogs.com/svg.latex?A%3D%5Cleft%20%5C%7B3%2C9%2C14%7D%7B%20%5Cright%20%5C%7D%2C%20A%20%5Cni%203" alt="element2"></p>
+<!-- A=\left \{3,9,14}{  \right \}, A \ni 3 -->
+<p>你可以使用 &quot;不属于&quot; 符号 <code>∉</code> 和 <code>∌</code> 像这样：</p>
+<p><img src="http://latex.codecogs.com/svg.latex?A%3D%5Cleft%20%5C%7B3%2C9%2C14%7D%7B%20%5Cright%20%5C%7D%2C%206%20%5Cnotin%20A" alt="element3"></p>
+<!-- A=\left \{3,9,14}{  \right \}, 6 \notin A -->
+<h2 id="-">常见数字集</h2>
+<p>你可能在一些公式中看见一些大<a href="https://en.wikipedia.org/wiki/Blackboard_bold">黑板粗体字</a>。他们一般是用来描述集合的。</p>
+<p>例如，我们可以描述 <em>k</em> 是<a href="#element">属于</a> <code>ℝ</code> 集的一个元素。</p>
+<p><img src="http://latex.codecogs.com/svg.latex?k%20%5Cin%20%5Cmathbb%7BR%7D" alt="real"></p>
+<!-- k \in \mathbb{R} -->
+<p>下边列出一些常见集和他们的符号。</p>
+<h4 id="-real-numbers-"><code>ℝ</code> 实数（real numbers）</h4>
+<p>大 <code>ℝ</code> 描述 <em>实数（real numbers）</em> 的集合。他们包括整数，有理数，无理数。</p>
+<p>JavaScript认为整数和浮点数为相同类型，所以下边将是一个 <em>k</em> ∈ ℝ 的简单测试：</p>
+<pre><code class="language-js">function isReal (k) {
+  return typeof k === &#39;number&#39; &amp;&amp; isFinite(k);
+}
+</code></pre>
+<p><em>注意：</em> 实数也是 <em>有限数（finite）</em>，<em>非无限的（not infinite）</em></p>
+<h4 id="-rational-numbers-"><code>ℚ</code> 有理数（rational numbers）</h4>
+<p>有理数是可以被表示为分数，或 <em>比率</em>（类似<code>⅗</code>）的实数。有理数不能以0作分母。</p>
+<p>这意味着所有的整数都是有理数，因为可以看成分母为1。</p>
+<p>换句话说无理数就是不能表示为比率的数，例如 π (PI)。</p>
+<h4 id="-integers-"><code>ℤ</code> 整数（integers）</h4>
+<p>一个整数，是没有小数部分的实数。可为正也可以为负。</p>
+<p>在JavaScript中的简单测试应该这样：</p>
+<pre><code class="language-js">function isInteger (n) {
+  return typeof n === &#39;number&#39; &amp;&amp; n % 1 === 0
+}
+</code></pre>
+<h4 id="-natural-numbers-"><code>ℕ</code> 自然数（natural numbers）</h4>
+<p>自然数是正整数或非负整数。取决于所学领域和上下文，集合中可能包含也可能不包含0，所以可以是下边任意一种集合。</p>
+<pre><code class="language-js">{ 0, 1, 2, 3, ... }
+{ 1, 2, 3, 4, ... }
+</code></pre>
+<p>前者在计算机科学中更常见，例如：</p>
+<pre><code class="language-js">function isNaturalNumber (n) {
+  return isInteger(n) &amp;&amp; n &gt;= 0
+}
+</code></pre>
+<h4 id="-"><code>ℂ</code> 复数</h4>
+<p>复数是实数域虚数的组合，被视为2D平面上的一个坐标。更详细的信息请看<a href="http://betterexplained.com/articles/a-visual-intuitive-guide-to-imaginary-numbers/">A Visual, Intuitive Guide to Imaginary Numbers</a>。</p>
+<h2 id="-">函数</h2>
+<p><a href="https://en.wikipedia.org/wiki/Function_%28mathematics%29">函数</a> 是数学的基本特性，其概念很容易转换成代码。</p>
+<p>函数把输入输出值联系起来。例如下边是一个函数：</p>
+<p><img src="http://latex.codecogs.com/svg.latex?x%5E%7B2%7D" alt="function1"></p>
+<!-- x^{2} -->
+<p>我们可以给函数一个 <em>名字</em> 。一般来说我们用  <code>ƒ</code> 来描述一个函数，但也可以命名为 <code>A(x)</code> 或其他什么。</p>
+<p><img src="http://latex.codecogs.com/svg.latex?f%5Cleft%20%28x%20%5Cright%20%29%20%3D%20x%5E%7B2%7D" alt="function2"></p>
+<!-- f\left (x  \right ) = x^{2} -->
+<p>在代码中，我们可以给函数命名为 <code>square</code> 写出来应该类似这样：</p>
+<pre><code class="language-js">function square (x) {
+  return Math.pow(x, 2)
+}
+</code></pre>
+<p>有时函数没有名字，而是直接写出输出值。</p>
+<p><img src="http://latex.codecogs.com/svg.latex?y%20%3D%20x%5E%7B2%7D" alt="function3"></p>
+<!-- y = x^{2} -->
+<p>在上边的例子中，<em>x</em> 是输入值，<em>y</em> 是输出值，他们是平方的关系。</p>
+<p>像编程语言一样，函数也可以有多个参数。他们在数学中被称为 <em>arguments</em>，并且函数接受的参数数量被称为函数的 <em>arity</em> 。</p>
+<p><img src="http://latex.codecogs.com/svg.latex?f%28x%2Cy%29%20%3D%20%5Csqrt%7Bx%5E2%20&plus;%20y%5E2%7D" alt="function4"></p>
+<!-- f(x,y) = \sqrt{x^2 + y^2} -->
+<p>代码：</p>
+<pre><code class="language-js">function length (x, y) {
+  return Math.sqrt(x * x + y * y)
+}
+</code></pre>
+<h3 id="-">分段函数</h3>
+<p>有些函数根据输入值 <em>x</em> 的不同会有不同的关系。</p>
+<p>下边的函数 <em>f</em> 根据不同的输入值选择两个不同的“子函数”。</p>
+<p><img src="http://latex.codecogs.com/svg.latex?f%28x%29%3D%20%5Cbegin%7Bcases%7D%20%5Cfrac%7Bx%5E2-x%7D%7Bx%7D%2C%26%20%5Ctext%7Bif%20%7D%20x%5Cgeq%201%5C%5C%200%2C%20%26%20%5Ctext%7Botherwise%7D%20%5Cend%7Bcases%7D" alt="piecewise1"></p>
+<!--    f(x)= 
+\begin{cases}
+    \frac{x^2-x}{x},& \text{if } x\geq 1\\
+    0, & \text{otherwise}
+\end{cases} -->
+<p>这非常接近于代码中的<code>if</code> / <code>else</code>。右边的条件经常被写为<strong>&quot;for x &lt; 0&quot;</strong> 或 <strong>&quot;if x = 0&quot;</strong>。如果条件为true，就使用其左边的函数。</p>
+<p>在分段函数中，<strong>&quot;otherwise&quot;</strong> 和 <strong>&quot;elsewhere&quot;</strong> 类似于代码中的 <code>else</code> 。</p>
+<pre><code class="language-js">function f (x) {
+  if (x &gt;= 1) {
+    return (Math.pow(x, 2) - x) / x
+  } else {
+    return 0
+  }
+}
+</code></pre>
+<h3 id="-">通用函数</h3>
+<p>有些函数名在数学中是普遍存在的。在一个程序员的角度看，这些应该类似于编程语言中的“内置”函数（就像JavaScript中的 <code>parseInt</code> ）。</p>
+<p>一个例子就是 <em>sgn</em> 函数。这是 <em>正负号</em> 函数，或者叫 <em>符号</em> 函数。让我们用<a href="#piecewise-function">分段函数</a>来描述它：</p>
+<p><img src="http://latex.codecogs.com/svg.latex?sgn%28x%29%20%3A%3D%20%5Cbegin%7Bcases%7D%20-1%26%20%5Ctext%7Bif%20%7D%20x%20%3C%200%5C%5C%200%2C%20%26%20%5Ctext%7Bif%20%7D%20%7Bx%20%3D%200%7D%5C%5C%201%2C%20%26%20%5Ctext%7Bif%20%7D%20x%20%3E%200%5C%5C%20%5Cend%7Bcases%7D" alt="sgn"></p>
+<!-- sgn(x) := 
+\begin{cases}
+    -1& \text{if } x < 0\\
+    0, & \text{if } {x = 0}\\
+    1, & \text{if } x > 0\\
+\end{cases} -->
+<p>代码中，应该这样：</p>
+<pre><code class="language-js">function sgn (x) {
+  if (x &lt; 0) return -1
+  if (x &gt; 0) return 1
+  return 0
+}
+</code></pre>
+<p>此函数作为独立的module在这里<a href="https://github.com/scijs/signum">signum</a>。</p>
+<p>其他类似函数的例子还有: <em>sin</em>， <em>cos</em>， <em>tan</em>。</p>
+<h3 id="-">函数符号</h3>
+<p>在某些著作中，函数可以被更明确的符号定义。例如，让我们回到之前提到的 <code>square</code> 函数。</p>
+<p><img src="http://latex.codecogs.com/svg.latex?f%5Cleft%20%28x%20%5Cright%20%29%20%3D%20x%5E%7B2%7D" alt="function2"></p>
+<!-- f\left (x  \right ) = x^{2} -->
+<p>也可以写为以下形式：</p>
+<p><img src="http://latex.codecogs.com/svg.latex?f%20%3A%20x%20%5Cmapsto%20x%5E2" alt="mapsto"></p>
+<!-- f : x \mapsto x^2 -->
+<p>带尾巴的箭头通常意思为“映射到”，如，<em>将x映射到x<sup>2</sup></em></p>
+<p>有时，不是很常见，这个符号也用来描述函数的 <em>domain</em> 和 <em>codomain</em>。对 <em>ƒ</em> 更正式的定义可以写为：</p>
+<p><img src="http://latex.codecogs.com/svg.latex?%5Cbegin%7Balign*%7D%20f%20%3A%26%5Cmathbb%7BR%7D%20%5Crightarrow%20%5Cmathbb%7BR%7D%5C%5C%20%26x%20%5Cmapsto%20x%5E2%20%5Cend%7Balign*%7D" alt="funcnot"></p>
+<!-- \begin{align*}
+f :&\mathbb{R} \rightarrow \mathbb{R}\\
+&x \mapsto x^2 
+\end{align*}
+ -->
+<p>函数的 <em>domain</em> 和 <em>codomain</em> 分别跟他的 <em>input</em> 和 <em>output</em> 类型有点像。这里有另一个例子，使用了我们之前输出整数的 <em>sgn</em> 函数。</p>
+<p><img src="http://latex.codecogs.com/svg.latex?sgn%20%3A%20%5Cmathbb%7BR%7D%20%5Crightarrow%20%5Cmathbb%7BZ%7D" alt="domain2"></p>
+<!-- sgn : \mathbb{R} \rightarrow \mathbb{Z} -->
+<p>这里的箭头（没有尾巴）用来映射一个 <em>集合</em> 到另一个。</p>
+<p>在JavaScript和其他动态类型语言中，你也许会用文档 和/或 运行时检查来解释和验证函数的输入/输出。例子：</p>
+<pre><code class="language-js">/**
+ * Squares a number.
+ * @param  {Number} a real number
+ * @return {Number} a real number
+ */
+function square (a) {
+  if (typeof a !== &#39;number&#39;) {
+    throw new TypeError(&#39;expected a number&#39;)
+  }
+  return Math.pow(a, 2)
+}
+</code></pre>
+<p>有些工具例如<a href="http://flowtype.org/">flowtype</a>尝试将静态类型带入到JavaScript中。</p>
+<p>其他语言，例如Java，允许真正的方法重载（overloading），它们基于函数输入输出的静态类型。这更接近于数学领域：使用不同 <em>domain</em> 的两个函数是不同的。</p>
+<h2 id="-prime-">撇号（prime）</h2>
+<p>撇号 (<code>′</code>) 通常用在变量名上，用来描述某物很类似，而不用另起个名来描述它。也可以描述经过一些变换后的“下一个值”。</p>
+<p>例如，如果我们有一个2D点 <em>(x, y)</em> ，然后旋转它，你会把旋转后的点命名为<em>(x′, y′)</em>。 或者将矩阵 <strong>M</strong> 的 <em>转置矩阵</em> 命名为 <strong>M′</strong>。</p>
+<p>在代码中，我们通常的分配一个描述更详细的变量名，例如<code>transformedPosition</code>。</p>
+<p>作为数学<a href="#function">函数</a>，撇号通常描述为函数的 <em>衍生（derivative）</em> 函数。衍生物会在未来的章节解释。我们来看一个之前的函数：</p>
+<p><img src="http://latex.codecogs.com/svg.latex?f%5Cleft%20%28x%20%5Cright%20%29%20%3D%20x%5E%7B2%7D" alt="function2"></p>
+<!-- f\left (x  \right ) = x^{2} -->
+<p>它的衍生物函数（derivative）可以写为一个带撇号<code>′</code>的函数：</p>
+<p><img src="http://latex.codecogs.com/svg.latex?f%27%28x%29%20%3D%202x" alt="prime1"></p>
+<!-- f'(x) = 2x -->
+<p>代码：</p>
+<pre><code class="language-js">function f (x) {
+  return Math.pow(x, 2)
+}
+
+function fPrime (x) {
+  return 2 * x
+}
+</code></pre>
+<p>多个撇号可以用来表示第二个衍生函数（derivative） <em>ƒ′′</em> 或 第三个衍生函数（derivative）<em>ƒ′′′</em> ，之后更高的数字，一般作者会用罗马数字 <em>ƒ</em><sup>IV</sup> 或上标数字 <em>ƒ</em><sup>(n)</sup> 表示。</p>
+<h2 id="-floor-ceiling-">向下取整和向上取整（floor &amp; ceiling）</h2>
+<p><code>⌊x⌋</code> 和 <code>⌈x⌉</code> 这种特殊的括号分别用来表示<em>floor</em> 和 <em>ceil</em> 函数。 </p>
+<p><img src="http://latex.codecogs.com/svg.latex?floor%28x%29%20%3D%20%5Clfloor%20x%20%5Crfloor" alt="floor"></p>
+<!-- floor(x) =  \lfloor x \rfloor -->
+<p><img src="http://latex.codecogs.com/svg.latex?ceil%28x%29%20%3D%20%5Clceil%20x%20%5Crceil" alt="ceil"></p>
+<!-- ceil(x) =  \lceil x \rceil -->
+<p>代码：</p>
+<pre><code class="language-js">Math.floor(x)
+Math.ceil(x)
+</code></pre>
+<p>当这两个符号混合<code>⌊x⌉</code>，它通常表示一个取整到最近的整数的函数。</p>
+<p><img src="http://latex.codecogs.com/svg.latex?round%28x%29%20%3D%20%5Clfloor%20x%20%5Crceil" alt="round"></p>
+<!-- round(x) =  \lfloor x \rceil -->
+<p>代码：</p>
+<pre><code class="language-js">Math.round(x)
+</code></pre>
+<h2 id="-">箭头</h2>
+<p>箭头通常用来表示<a href="#function-notation">函数符号</a>。这里还有一些在其他领域中的用法可以看看。</p>
+<h4 id="-material-implication-">实质蕴含（material implication）</h4>
+<p><code>⇒</code> 和 <code>→</code> 优势被用作表示实质蕴涵（material implication）的逻辑。意思是如果A是true，那么B也是true。</p>
+<p><img src="http://latex.codecogs.com/svg.latex?A%20%5CRightarrow%20B" alt="material1"></p>
+<!-- A \Rightarrow B -->
+<p>解释为代码应该为：</p>
+<pre><code class="language-js">if (A === true) {
+  console.assert(B === true)
+}
+</code></pre>
+<p>箭头可以是左右任何方向 <code>⇐</code> <code>⇒</code>，也可以双向<code>⇔</code>。当 <em>A ⇒ B</em> 并且 <em>B ⇒ A</em>，就是他们是相等的：</p>
+<p><img src="http://latex.codecogs.com/svg.latex?A%20%5CLeftrightarrow%20B" alt="material-equiv"></p>
+<!-- A \Leftrightarrow B -->
+<h4 id="-equality-">等式（equality）</h4>
+<p>在数学中， <code>&lt;</code> <code>&gt;</code> <code>≤</code> 和 <code>≥</code> 与代码中的使用方法一样：分别为 <em>小于</em>, <em>大于</em>, <em>小于等于</em> 和 <em>大于等于</em>。</p>
+<pre><code class="language-js">50 &gt; 2 === true
+2 &lt; 10 === true
+3 &lt;= 4 === true
+4 &gt;= 4 === true
+</code></pre>
+<p>偶尔会看到在这些符号上加了一条斜线，来表示 <em>不</em>，比如， <em>k</em> 不 &quot;大于&quot; <em>j</em>.</p>
+<p><img src="http://latex.codecogs.com/svg.latex?k%20%5Cngtr%20j" alt="ngt"></p>
+<!-- k \ngtr j -->
+<p> <code>≪</code> 和 <code>≫</code>通常用来表示 <em>明显（significant）</em> 不相等。这是说 <em>k</em> 是有<a href="https://en.wikipedia.org/wiki/Order_of_magnitude">数量级（order of magnitude）</a>的大于 <em>j</em>。</p>
+<p><img src="http://latex.codecogs.com/svg.latex?k%20%5Cgg%20j" alt="orderofmag"></p>
+<!-- k \gg j -->
+<p>在数学中，<em>数量级（order of magnitude）</em> 是相当明确的；不只是“相当大的不同”而已。上边的一个简单例子：</p>
+<pre><code class="language-js">orderOfMagnitude(k) &gt; orderOfMagnitude(j)
+</code></pre>
+<p>下边是我们的 <code>orderOfMagnitude</code> 函数，使用了<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math/trunc">Math.trunc</a> (ES6)。</p>
+<pre><code class="language-js">function log10(n) {
+  // logarithm in base 10
+  return Math.log(n) / Math.LN10
+}
+
+function orderOfMagnitude (n) {
+  return Math.trunc(log10(n))
+}
+</code></pre>
+<p><sup><em>Note:</em> This is not numerically robust.</sup></p>
+<p>这里是在ES5下使用<a href="https://www.npmjs.com/package/math-trunc">math-trunc</a> 的polyfill。</p>
+<h4 id="-conjunction-disjunction-">与（conjunction） &amp; 或（disjunction）</h4>
+<p>另一种箭头在逻辑中的使用是与（conjunction）<code>∧</code> 和 或（disjunction） <code>∨</code>。他们分别类似于程序员的 <code>AND</code> 和 <code>OR</code>操作。</p>
+<p>下边展示了与（conjunction）<code>∧</code>， 逻辑中的<code>AND</code>.</p>
+<p><img src="http://latex.codecogs.com/svg.latex?k%20%3E%202%20%5Cland%20k%20%3C%204%20%5CLeftrightarrow%20k%20%3D%203" alt="and"></p>
+<!-- k > 2 \land k <  4 \Leftrightarrow k = 3   -->
+<p>在JavaScript中，我们使用 <code>&amp;&amp;</code> 假设 <em>k</em> 是一个自然数，那么这个逻辑意味着k等于3：</p>
+<pre><code class="language-js">if (k &gt; 2 &amp;&amp; k &lt; 4) {
+  console.assert(k === 3)
+}
+</code></pre>
+<p>由于双边都相等 <code>⇔</code>，所以也说明下边成立：</p>
+<pre><code class="language-js">if (k === 3) {
+  console.assert(k &gt; 2 &amp;&amp; k &lt; 4)
+}
+</code></pre>
+<p>下箭头 <code>∨</code> 是逻辑或（disjunction），就像 OR 操作符一样。</p>
+<p><img src="http://latex.codecogs.com/svg.latex?A%20%5Clor%20B" alt="logic-or"></p>
+<!-- A \lor B -->
+<p>代码：</p>
+<pre><code class="language-js">A || B
+</code></pre>
+<h2 id="-logical-negation-">逻辑非（logical negation）</h2>
+<p>有时候，<code>¬</code>, <code>~</code> 和 <code>!</code> 符号都用来表示逻辑 <code>NOT</code>。例如，只有在A为false的时候，<em>¬A</em> 为true。</p>
+<p>这里是一个使用 <em>not</em> 符号简单的例子：</p>
+<p><img src="http://latex.codecogs.com/svg.latex?x%20%5Cneq%20y%20%5CLeftrightarrow%20%5Clnot%28x%20%3D%20y%29" alt="negation"></p>
+<!-- x \neq y \Leftrightarrow \lnot(x = y) -->
+<p>翻译成代码的例子：</p>
+<pre><code class="language-js">if (x !== y) {
+  console.assert(!(x === y))
+}
+</code></pre>
+<p><em>注意：</em> 根据上下文的不同，波浪线 <code>~</code> 可以有很多种不同的意思。例如，<em>行等价（row equivalence）</em>（矩阵理论）或<em>相同数量级（same order of magnitude）</em> （在<a href="#equality">等式（equality）</a>章节讨论过）。</p>
+<h2 id="-intervals-">区间（intervals）</h2>
+<p>有时函数会处理被一些值限定范围的实数，这样的约束可以用<em>区间（interval）</em>来表示。</p>
+<p>例如我们可以表示0和1之间的数，让他们包含或不包含0和1：</p>
+<ul>
+<li>不包含0或1： <img src="http://latex.codecogs.com/svg.latex?%280%2C%201%29" alt="interval-opened-left-opened-right"></li>
+</ul>
+<!-- (0, 1) -->
+<ul>
+<li>包含0但不包含1： <img src="http://latex.codecogs.com/svg.latex?%5B0%2C%201%29" alt="interval-closed-left-opened-right"></li>
+</ul>
+<!-- [0, 1) -->
+<ul>
+<li>不包含0但包含1： <img src="http://latex.codecogs.com/svg.latex?%280%2C%201%5D" alt="interval-opened-left-closed-right"></li>
+</ul>
+<!-- (0, 1] -->
+<ul>
+<li>包含0和1： <img src="http://latex.codecogs.com/svg.latex?%5B0%2C%201%5D" alt="interval-closed-left-closed-right"></li>
+</ul>
+<!-- [0, 1] -->
+<p>例如我们指出一个点 <code>x</code> 在3D单位立方体中，我们可以说：</p>
+<p><img src="http://latex.codecogs.com/svg.latex?x%20%5Cin%20%5B0%2C%201%5D%5E3" alt="interval-unit-cube"></p>
+<!-- x \in [0, 1]^3 -->
+<p>在代码中我们可以用两个元素大小的一维数组表示区间：</p>
+<pre><code class="language-js">var nextafter = require(&#39;nextafter&#39;)
+
+var a = [nextafter(0, Infinity), nextafter(1, -Infinity)]     // 开区间
+var b = [nextafter(0, Infinity), 1]                           // 左闭右开区间
+var c = [0, nextafter(1, -Infinity)]                          // 左开右闭区间
+var d = [0, 1]                                                // 闭区间
+</code></pre>
+<p>区间与集合运算结合符使用：</p>
+<ul>
+<li><em>交集（intersection）</em> e.g. <img src="http://latex.codecogs.com/svg.latex?%5B3%2C%205%29%20%5Ccap%20%5B4%2C%206%5D%20%3D%20%5B4%2C%205%29" alt="interval-intersection"></li>
+</ul>
+<!-- [3, 5) \cap [4, 6] = [4, 5) -->
+<ul>
+<li><em>并集（union）</em> e.g. <img src="http://latex.codecogs.com/svg.latex?%5B3%2C%205%29%20%5Ccup%20%5B4%2C%206%5D%20%3D%20%5B3%2C%206%5D" alt="interval-union"></li>
+</ul>
+<!-- [3, 5) \cup [4, 6] = [3, 6] -->
+<ul>
+<li><em>差集（difference）</em> e.g. <img src="http://latex.codecogs.com/svg.latex?%5B3%2C%205%29%20-%20%5B4%2C%206%5D%20%3D%20%5B3%2C%204%29" alt="interval-difference-1"> 还有 <img src="http://latex.codecogs.com/svg.latex?%5B4%2C%206%5D%20-%20%5B3%2C%205%29%20%3D%20%5B5%2C%206%5D" alt="interval-difference-2"></li>
+</ul>
+<!-- [3, 5) - [4, 6] = [3, 4) -->
+<!-- [4, 6] - [3, 5)  = [5, 6] -->
+<p>代码:</p>
+<pre><code class="language-js">var Interval = require(&#39;interval-arithmetic&#39;)
+var nexafter = require(&#39;nextafter&#39;)
+
+var a = Interval(3, nexafter(5, -Infinity))
+var b = Interval(4, 6)
+
+Interval.intersection(a, b)
+// {lo: 4, hi: 4.999999999999999}
+
+Interval.union(a, b)
+// {lo: 3, hi: 6}
+
+Interval.difference(a, b)
+// {lo: 3, hi: 3.9999999999999996}
+
+Interval.difference(b, a)
+// {lo: 5, hi: 6}
+</code></pre>
+<p>见：</p>
+<ul>
+<li><a href="https://github.com/scijs/nextafter">next-after</a> </li>
+<li><a href="https://github.com/maurizzzio/interval-arithmetic">interval-arithmetic</a></li>
+</ul>
+<h2 id="-">更多...</h2>
+<p>喜欢这份指南？提出<a href="https://github.com/Jam3/math-as-code/issues/1">更多的特性</a>的建议或给我们发Pull Request！</p>
+<h2 id="-">贡献</h2>
+<p>关于怎样贡献详见 <a href="./CONTRIBUTING.md">CONTRIBUTING.md</a>。</p>
+<h2 id="license">License</h2>
+<p>MIT, 详见 <a href="http://github.com/Jam3/math-as-code/blob/master/LICENSE.md">LICENSE.md</a>。</p>
+
+
+              本文采用 <a rel="license" style="color:#0366d6;" href="https://creativecommons.org/licenses/by-nd/4.0/deed.zh">署名-禁止演绎 4.0 国际许可协议 (CC BY-ND 4.0)</a> 进行许可（保留链接可任意转载，禁止修改）。
+            </div>
+            <div class="article_row">
+                 <a title="Math" class="tag_button big_button" href="/tags/#Math">Math</a> <a title="翻译" class="tag_button big_button" href="/tags/#翻译">翻译</a>
+            </div>
+
+            <div class="article_row" >
+              <div class="social-share"></div>
+            </div>
+
+            <div class="article_row">
+             <p>留言系统需要代理访问</p>
+            </div>
+            <div class="article_row">
+              <div>
+                <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+                  <!-- 2017blogarticle -->
+                  <ins class="adsbygoogle"
+                  style="display:block"
+                  data-ad-client="ca-pub-3527087615346771"
+                  data-ad-slot="2049652650"
+                  data-ad-format="auto"></ins>
+                <script>
+                (adsbygoogle = window.adsbygoogle || []).push({});
+                </script>
+              </div>
+            </div>
+
+            <div>
+             <div id="disqus_thread"></div>
+              <script>
+
+              /**
+              *  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+              *  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables*/
+              
+              var disqus_config = function () {
+              this.page.url = "http://nshen.net/article/2016-03-10/math-as-code"
+              this.page.identifier = "article-math-as-code"; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+              };
+              
+              (function() { // DON'T EDIT BELOW THIS LINE
+              var d = document, s = d.createElement('script');
+              s.src = 'https://nshen-net.disqus.com/embed.js';
+              s.setAttribute('data-timestamp', +new Date());
+              (d.head || d.body).appendChild(s);
+              })();
+              </script>
+              <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+            </div>
+            <div id="pre_and_next" class="markdown-body" >
+              <div id="pre_link"> 
+                    <a href="/project/2017-09-04/new-blog" ><span>&laquo;&nbsp;CodingBlog：给程序员的私房极简博客系统</span></a>
+              </div>
+              <div id="next_link"> 
+                    <a href="/article/2016-02-16/gao-xue-ya"><span>高血压用药扫盲&nbsp;&raquo;</span></a>
+              </div>
+            </div>
+
+          </div>
+
+        </main>
+    <footer id="footer">
+        <div class="center">
+            <p>&copy; 2004-2017 Nshen.net | <a href="/atom.xml" target="blank">Feed</a> | <a href="/sitemap.xml" target="blank">Sitemap</a> | <a href="/tags" target="blank">Tags</a> | <a href="/support">Support</a></p>
+            <p>本站由 <a href="https://github.com/nshen/coding-blog" target="blank">CodingBlog</a> 强力构建，最后生成于 2021年12月3日上午10点40分 。</p>
+            <p>免费托管于 coding.net</p>
+            <p><a href="http://coding.net" target="blank"><img src="/image/codingnet2.png" style="width:250px;height:80px;" /></a></p>
+            <p>Learn WebGL from <a href="http://webgl.xyz" target="blank">WebGL.xyz</a></p>
+        </div>
+    
+        <script>
+            var _hmt = _hmt || [];
+            (function() {
+            var hm = document.createElement("script");
+            hm.src = "https://hm.baidu.com/hm.js?e1acab9c095adb812998c18d06d414ea";
+            var s = document.getElementsByTagName("script")[0]; 
+            s.parentNode.insertBefore(hm, s);
+            })();
+        </script>
+    
+        <script>
+        (function(){
+            //百度链接提交
+            var bp = document.createElement('script');
+            var curProtocol = window.location.protocol.split(':')[0];
+            if (curProtocol === 'https') {
+                bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+            }
+            else {
+                bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+            }
+            var s = document.getElementsByTagName("script")[0];
+            s.parentNode.insertBefore(bp, s);
+        })();
+        </script>
+    </footer>  </div>
+
+  <script src="/assets/prism.js"></script>
+  <script src="/assets/social-share.min.js"></script>
+
+</body>
+
+</html>

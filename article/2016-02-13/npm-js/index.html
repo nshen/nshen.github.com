@@ -1,0 +1,362 @@
+<!doctype html>
+<html>
+
+<head>
+    <title> npm包管理器学习笔记 | N神的研究所</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="npm是js界的包管理器，这里记录一下它基本的使用方法。">
+    
+    <meta name="keywords" content="Node,JavaScript">
+    <meta name="author" content="Nshen <nshen121@gmail.com>">
+
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <link rel="bookmark" href="/favicon.ico" />
+
+    <link rel="stylesheet" href="/assets/css/normalize.css">  
+    <link rel="stylesheet" href="/assets/css/github.css">
+    <link rel="stylesheet" href="/assets/css/prism.css">
+    <link rel="stylesheet" href="/assets/css/site.css">
+    <link rel="stylesheet" href="/assets/css/share.min.css">
+</head>
+
+<body>
+  <div id="container">
+    <header>
+        <div id="header_inner" class="center">
+            <div id="main_logo">
+                <a id="logo" href="/">N神的研究所</a>
+            </div>
+            <nav id="main_nav">
+                <a id="main_nav_link" href="/articles">学习（输入）</a>
+                <a id="main_nav_link" href="/projects">实践（输出）</a>
+                <a id="main_nav_link" href="/about">关于</a>
+                <a id="main_nav_link" href="/links">友情链接</a>
+            </nav>
+        </div>
+    </header>        <main >
+          <div class="contents" >
+            <div class="article_title">
+              <h1>npm包管理器学习笔记</h1>
+            </div>
+ 
+            <div class="article_date">
+              <p>发表于 2016年2月13日 </p>
+            </div>
+     
+            <div class="markdown-body markdown-contents">
+              <p>npm是js界的包管理器，这里记录一下它基本的使用方法。</p>
+<!--more--> 
+<h2 id="-npm">安装npm</h2>
+<ol>
+<li><p><a href="https://nodejs.org/">https://nodejs.org/</a> 下载安装nodejs<br><code>node -v</code>查看安装版本</p>
+</li>
+<li><p>node自带npm, <code>npm -v</code>查看npm版本</p>
+</li>
+<li><p>更新到最新版本<br><code>npm install npm -g</code></p>
+</li>
+<li><p>如果遇到permission错误到这里看看<br><code>https://docs.npmjs.com/getting-started/fixing-npm-permissions</code></p>
+</li>
+</ol>
+<hr>
+<h2 id="-">安装包</h2>
+<p>分为本地安装和全局安装,本地安装后你可以在的程序中用<code>require(&#39;package&#39;)</code>访问,全局安装通常是用于命令行工具,例如构建工具grunt CLI.</p>
+<h3 id="-">本地安装</h3>
+<p><code>npm install &lt;package_name&gt;</code><br>如果有<code>package.json</code>指明依赖,则不需要输入package_name直接<code>npm install</code> 即可全部安装完成。<br>运行后会当前目录生成一个<code>node_modules</code>目录,package会安装在里边<br>如果当前目录有一个<code>package.json</code> 则会安装里边指定的版本,否则安装最新版.<br>安装完成即可在代码中使用了<br><code>require(&#39;lodash&#39;);</code> //如果没有安装loadash则会报错</p>
+<h3 id="-">全局安装</h3>
+<p><code>npm install -g &lt;package_name&gt;</code></p>
+<p>全局包安装路径:</p>
+<p><code>npm root -g</code> 显示全局包安装路径</p>
+<p>在我的电脑上显示 <code>C:\Users\Administrator\AppData\Roaming\npm\node_modules</code></p>
+<hr>
+<h2 id="package-json">package.json</h2>
+<p>package.json最低要求需要name与version</p>
+<pre><code>{
+  &quot;name&quot;: &quot;my-awesome-package&quot;,
+  &quot;version&quot;: &quot;1.0.0&quot;
+}
+</code></pre><p>自动创建package.json</p>
+<p><code>npm init</code></p>
+<p>然后一路填表就可以了,author部分可以填多一些</p>
+<p><code>Your Name &lt;email@example.com&gt; (http://example.com)</code></p>
+<p>指明包依赖列表</p>
+<ul>
+<li><code>&quot;dependencies&quot;</code>: these packages are required by your application in production</li>
+<li><code>&quot;devDependencies&quot;</code>: these packages are only needed for development and testing</li>
+</ul>
+<p>安装package时自动加入依赖列表</p>
+<p><code>npm install &lt;package_name&gt; --save</code> 加入到dependencies<br><code>npm install &lt;package_name&gt; --save-dev</code> 加入到devDependencies</p>
+<hr>
+<h2 id="-">更新包</h2>
+<h3 id="-">本地包更新</h3>
+<p><code>npm ls</code> 查看已经安装的package<br><code>npm outdated</code> 查看是否有新版本 ，分为 current wanted latest<br><code>npm update</code> 更新到wanted版本，加--save，保存到package.json</p>
+<p>如需更新到latest，建议安装 <a href="https://www.npmjs.com/package/npm-check-updates">npm-check-updates</a> 插件</p>
+<h3 id="-">全局包更新</h3>
+<p><code>npm ls -g --depth=0</code> 查看都安装了哪些全局包<br><code>npm outdated -g --depth=0</code> 查看哪个包需要更新<br><code>npm install -g &lt;package_name&gt;</code> 更新<br><code>npm update -g</code> 更新所有的全局包</p>
+<hr>
+<h2 id="-">删除包</h2>
+<h3 id="-">本地删除</h3>
+<p><code>npm uninstall &lt;package_name&gt;</code></p>
+<p>删除包,但不会清理package.json中的依赖项,下次<code>npm ls</code>时会报错缺少包</p>
+<p><code>npm uninstall --save &lt;package_name&gt;</code> 这样连依赖一起删掉</p>
+<p>如果只删除了依赖,没有删除包,下次<code>npm ls</code>时会报多了包</p>
+<p>这时应该用<code>npm prune</code>把包也删除掉</p>
+<h3 id="-">全局删除</h3>
+<p><code>npm uninstall -g &lt;package_name&gt;</code></p>
+<hr>
+<h2 id="-">发布包</h2>
+<h3 id="-">创建用户</h3>
+<p><code>npm adduser</code></p>
+<p>填入用户名密码邮箱, <code>https://www.npmjs.com/~用户名</code>查看是否创建成功</p>
+<h3 id="-">发布</h3>
+<p>确保package.json填写正确</p>
+<p><code>npm publish</code></p>
+<p>如果报错考虑是否package.json中的name有重复了,修改后再次发布试试.</p>
+<hr>
+<h2 id="-">更新发布的包</h2>
+<p>修改后再次<code>npm publish</code> 后会报错,是因为没有修改version.<br>手动修改package.json或者用下边三条命令来修改版本后,再publish</p>
+<p><code>npm version patch</code> //末位<br><code>npm version minor</code> //中间<br><code>npm version major</code> //首位</p>
+<h3 id="-">关于版本号</h3>
+<p>对于 <strong>发布者</strong> 来说当项目准备公开时,版本号应该为<code>1.0.0</code></p>
+<ul>
+<li><strong>Patch release</strong>:  Bug fixes 或其他 minor changes: , 增加最后一位版本号, e.g. <code>1.0.1</code> 对应命令<code>npm version patch</code></li>
+<li><strong>Minor release</strong>: New features 不会破坏现有的 features, 增加中间位, e.g. <code>1.1.0</code> 对应命令<code>npm version minor</code></li>
+<li><strong>Major release</strong>: 不能向后兼容,增加首位, e.g. <code>2.0.0</code>对应命令 <code>npm version major</code></li>
+</ul>
+<p>对于 <strong>使用者</strong> 来说,可以安装指定的版本</p>
+<p><code>npm install package_name@1.x</code></p>
+<p>版本更多内容:<br><a href="https://docs.npmjs.com/misc/semver">https://docs.npmjs.com/misc/semver</a></p>
+<hr>
+<h2 id="-package-json">更新package.json</h2>
+<p>开发过程中更新包后，需要更新package.json里依赖的版本号到最新。</p>
+<p>最简单的办法是使用 <code>npm-check-updates</code></p>
+<p><strong>安装：</strong></p>
+<pre><code class="language-bash">npm install -g npm-check-updates
+</code></pre>
+<p><strong>显示当前项目所有依赖：</strong></p>
+<pre><code class="language-bash">$ ncu
+
+ express           4.12.x  →   4.13.x
+ multer            ^0.1.8  →   ^1.0.1
+ react-bootstrap  ^0.22.6  →  ^0.24.0
+ react-a11y        ^0.1.1  →   ^0.2.6
+ webpack          ~1.9.10  →  ~1.10.5
+
+Run with -u to upgrade your package.json
+</code></pre>
+<p><strong>更新：</strong></p>
+<pre><code class="language-bash">$ ncu -u
+
+ express           4.12.x  →   4.13.x
+
+package.json upgraded
+</code></pre>
+<p>更新完毕。</p>
+<hr>
+<h2 id="cnpm-">cnpm 镜像加速</h2>
+<p><strong>安装太慢可以使用淘宝镜像</strong></p>
+<p><a href="http://npm.taobao.org/">http://npm.taobao.org/</a></p>
+<p><strong>安装 <code>cnpm</code> </strong></p>
+<p><code>npm install -g cnpm --registry=https://registry.npm.taobao.org</code></p>
+<p>安装后就可以用<code>cnpm</code>代替<code>npm</code>了</p>
+<hr>
+<p>还有暂时用不到的有待研究：</p>
+<p>私有包<br><a href="https://docs.npmjs.com/getting-started/scoped-packages">https://docs.npmjs.com/getting-started/scoped-packages</a><br>tag<br><a href="https://docs.npmjs.com/getting-started/using-tags">https://docs.npmjs.com/getting-started/using-tags</a></p>
+<h2 id="-yarn-">更新：与 yarn 命令对比</h2>
+<p>来自： <a href="https://yarnpkg.com/en/docs/migrating-from-npm#toc-cli-commands-comparison">https://yarnpkg.com/en/docs/migrating-from-npm#toc-cli-commands-comparison</a></p>
+<table>
+<thead>
+<tr>
+<th>npm (v5)</th>
+<th>Yarn</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>npm install</td>
+<td>yarn add</td>
+</tr>
+<tr>
+<td>(N/A)</td>
+<td>yarn add --flat</td>
+</tr>
+<tr>
+<td>(N/A)</td>
+<td>yarn add --har</td>
+</tr>
+<tr>
+<td>npm install --no-package-lock</td>
+<td>yarn add --no-lockfile</td>
+</tr>
+<tr>
+<td>(N/A)</td>
+<td>yarn add --pure-lockfile</td>
+</tr>
+<tr>
+<td>npm install [package] --save</td>
+<td>yarn add [package]</td>
+</tr>
+<tr>
+<td>npm install [package] --save-dev</td>
+<td>yarn add [package] --dev</td>
+</tr>
+<tr>
+<td>(N/A)</td>
+<td>yarn add [package] --peer</td>
+</tr>
+<tr>
+<td>npm install [package] --save-optional</td>
+<td>yarn add [package] --optional</td>
+</tr>
+<tr>
+<td>npm install [package] --save-exact</td>
+<td>yarn add [package] --exact</td>
+</tr>
+<tr>
+<td>(N/A)</td>
+<td>yarn add [package] --tilde</td>
+</tr>
+<tr>
+<td>npm install [package] --global</td>
+<td>yarn global add [package]</td>
+</tr>
+<tr>
+<td>npm update --global</td>
+<td>yarn global upgrade</td>
+</tr>
+<tr>
+<td>npm rebuild</td>
+<td>yarn add --force</td>
+</tr>
+<tr>
+<td>npm uninstall [package]</td>
+<td>yarn remove [package]</td>
+</tr>
+<tr>
+<td>npm cache clean</td>
+<td>yarn cache clean [package]</td>
+</tr>
+<tr>
+<td>rm -rf node_modules &amp;&amp; npm install</td>
+<td>yarn upgrade</td>
+</tr>
+<tr>
+<td>npm version major</td>
+<td>yarn version --major</td>
+</tr>
+<tr>
+<td>npm version minor</td>
+<td>yarn version --minor</td>
+</tr>
+<tr>
+<td>npm version patch</td>
+<td>yarn version --patch</td>
+</tr>
+</tbody>
+</table>
+
+
+              本文采用 <a rel="license" style="color:#0366d6;" href="https://creativecommons.org/licenses/by-nd/4.0/deed.zh">署名-禁止演绎 4.0 国际许可协议 (CC BY-ND 4.0)</a> 进行许可（保留链接可任意转载，禁止修改）。
+            </div>
+            <div class="article_row">
+                 <a title="Node" class="tag_button big_button" href="/tags/#Node">Node</a> <a title="JavaScript" class="tag_button big_button" href="/tags/#JavaScript">JavaScript</a>
+            </div>
+
+            <div class="article_row" >
+              <div class="social-share"></div>
+            </div>
+
+            <div class="article_row">
+             <p>留言系统需要代理访问</p>
+            </div>
+            <div class="article_row">
+              <div>
+                <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+                  <!-- 2017blogarticle -->
+                  <ins class="adsbygoogle"
+                  style="display:block"
+                  data-ad-client="ca-pub-3527087615346771"
+                  data-ad-slot="2049652650"
+                  data-ad-format="auto"></ins>
+                <script>
+                (adsbygoogle = window.adsbygoogle || []).push({});
+                </script>
+              </div>
+            </div>
+
+            <div>
+             <div id="disqus_thread"></div>
+              <script>
+
+              /**
+              *  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+              *  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables*/
+              
+              var disqus_config = function () {
+              this.page.url = "http://nshen.net/article/2016-02-13/npm-js"
+              this.page.identifier = "article-npm-js"; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+              };
+              
+              (function() { // DON'T EDIT BELOW THIS LINE
+              var d = document, s = d.createElement('script');
+              s.src = 'https://nshen-net.disqus.com/embed.js';
+              s.setAttribute('data-timestamp', +new Date());
+              (d.head || d.body).appendChild(s);
+              })();
+              </script>
+              <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+            </div>
+            <div id="pre_and_next" class="markdown-body" >
+              <div id="pre_link"> 
+                    <a href="/article/2016-02-16/gao-xue-ya" ><span>&laquo;&nbsp;高血压用药扫盲</span></a>
+              </div>
+              <div id="next_link"> 
+                    <a href="/article/2015-11-20/vscode"><span>学会用好 Visual Studio Code&nbsp;&raquo;</span></a>
+              </div>
+            </div>
+
+          </div>
+
+        </main>
+    <footer id="footer">
+        <div class="center">
+            <p>&copy; 2004-2017 Nshen.net | <a href="/atom.xml" target="blank">Feed</a> | <a href="/sitemap.xml" target="blank">Sitemap</a> | <a href="/tags" target="blank">Tags</a> | <a href="/support">Support</a></p>
+            <p>本站由 <a href="https://github.com/nshen/coding-blog" target="blank">CodingBlog</a> 强力构建，最后生成于 2021年12月3日上午10点40分 。</p>
+            <p>免费托管于 coding.net</p>
+            <p><a href="http://coding.net" target="blank"><img src="/image/codingnet2.png" style="width:250px;height:80px;" /></a></p>
+            <p>Learn WebGL from <a href="http://webgl.xyz" target="blank">WebGL.xyz</a></p>
+        </div>
+    
+        <script>
+            var _hmt = _hmt || [];
+            (function() {
+            var hm = document.createElement("script");
+            hm.src = "https://hm.baidu.com/hm.js?e1acab9c095adb812998c18d06d414ea";
+            var s = document.getElementsByTagName("script")[0]; 
+            s.parentNode.insertBefore(hm, s);
+            })();
+        </script>
+    
+        <script>
+        (function(){
+            //百度链接提交
+            var bp = document.createElement('script');
+            var curProtocol = window.location.protocol.split(':')[0];
+            if (curProtocol === 'https') {
+                bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+            }
+            else {
+                bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+            }
+            var s = document.getElementsByTagName("script")[0];
+            s.parentNode.insertBefore(bp, s);
+        })();
+        </script>
+    </footer>  </div>
+
+  <script src="/assets/prism.js"></script>
+  <script src="/assets/social-share.min.js"></script>
+
+</body>
+
+</html>

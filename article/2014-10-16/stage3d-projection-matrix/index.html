@@ -1,0 +1,545 @@
+<!doctype html>
+<html>
+
+<head>
+    <title> Stage3D各种投影矩阵的推导 | N神的研究所</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="N神的个人站点，通常发布一些个人笔记和业余项目等。">
+    
+    <meta name="keywords" content="Flash,Math">
+    <meta name="author" content="Nshen <nshen121@gmail.com>">
+
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <link rel="bookmark" href="/favicon.ico" />
+
+    <link rel="stylesheet" href="/assets/css/normalize.css">  
+    <link rel="stylesheet" href="/assets/css/github.css">
+    <link rel="stylesheet" href="/assets/css/prism.css">
+    <link rel="stylesheet" href="/assets/css/site.css">
+    <link rel="stylesheet" href="/assets/css/share.min.css">
+</head>
+
+<body>
+  <div id="container">
+    <header>
+        <div id="header_inner" class="center">
+            <div id="main_logo">
+                <a id="logo" href="/">N神的研究所</a>
+            </div>
+            <nav id="main_nav">
+                <a id="main_nav_link" href="/articles">学习（输入）</a>
+                <a id="main_nav_link" href="/projects">实践（输出）</a>
+                <a id="main_nav_link" href="/about">关于</a>
+                <a id="main_nav_link" href="/links">友情链接</a>
+            </nav>
+        </div>
+    </header>        <main >
+          <div class="contents" >
+            <div class="article_title">
+              <h1>Stage3D各种投影矩阵的推导</h1>
+            </div>
+ 
+            <div class="article_date">
+              <p>发表于 2014年10月16日 </p>
+            </div>
+     
+            <div class="markdown-body markdown-contents">
+              <p>本文将对Stage3D提供的10个投影矩阵逐个推导一遍，能力有限，如有错误请猛喷。</p>
+<!-- more -->
+<h2 id="-">前期准备</h2>
+<p>我的推导原理是基于下边几个教程的，这些是我搜遍全网找到的最好的教程，只不过大都是OpenGL的，而我这里要基于他们的原理推导一遍Stage3D和WebGL的（下一篇再写WebGL的）。</p>
+<blockquote>
+<p><a href="http://blog.csdn.net/popy007/article/details/1797121">深入探索透视投影变换</a><br><a href="http://blog.csdn.net/popy007/article/details/4091967">深入探索透视投影变换(续)</a></p>
+</blockquote>
+<p>最详细的矩阵投影3部曲：</p>
+<blockquote>
+<p><a href="http://scratchapixel.com/lessons/3d-advanced-lessons/perspective-and-orthographic-projection-matrix/perspective-projection-matrix/">1. Perspective Projection Matrix</a><br><a href="http://scratchapixel.com/lessons/3d-advanced-lessons/perspective-and-orthographic-projection-matrix/opengl-perspective-projection-matrix/">2. OpenGL Perspective Projection Matrix</a><br><a href="http://scratchapixel.com/lessons/3d-advanced-lessons/perspective-and-orthographic-projection-matrix/orthographic-projection/">3. Orthographic Projection</a></p>
+</blockquote>
+<p>OpenGL 投影矩阵详细推导过程：</p>
+<blockquote>
+<p><a href="http://www.songho.ca/opengl/gl_projectionmatrix.html">OpenGL Projection Matrix</a></p>
+</blockquote>
+<p>我只写推导过程，不会详细解释原理，因为原理实在太难说清楚了，不过上边这些教程解释的非常清楚，你可能需要先看一遍再来看我的推导。如果不看，至少要知道这些：</p>
+<ul>
+<li>左右手坐标系</li>
+<li>透视投影和正交投影是什么</li>
+<li>相似三角形</li>
+<li>矩阵乘法</li>
+<li>线性插值</li>
+<li>其次坐标转普通坐标</li>
+<li>NDC（Normalized Device Coordinates） </li>
+</ul>
+<h2 id="-stage3d-">观察Stage3D投影矩阵</h2>
+<p>先观察一下Stage3D的<a href="https://github.com/adobe-flash/graphicscorelib/blob/master/src/com/adobe/utils/PerspectiveMatrix3D.as">PerspectiveMatrix3D</a>类提供的投影矩阵。</p>
+<p>左手：</p>
+<pre><code>1. perspectiveOffCenterLH(left:Number, right:Number,bottom:Number,top:Number,zNear:Number, zFar:Number)
+2. perspectiveLH(width:Number, height:Number, zNear:Number, zFar:Number)
+3. perspectiveFieldOfViewLH(fieldOfViewY:Number, aspectRatio:Number, zNear:Number, zFar:Number)
+4. orthoOffCenterLH(left:Number, right:Number,bottom:Number,top:Number,zNear:Number, zFar:Number)
+5. orthoLH(width:Number,height:Number,zNear:Number,zFar:Number)
+</code></pre><p>右手：</p>
+<pre><code>6. perspectiveOffCenterRH(left:Number, right:Number,bottom:Number,top:Number,zNear:Number, zFar:Number)
+7. perspectiveRH(width:Number, height:Number, zNear:Number, zFar:Number)
+8. perspectiveFieldOfViewRH(fieldOfViewY:Number, aspectRatio:Number, zNear:Number, zFar:Number)
+9. orthoOffCenterRH(left:Number, right:Number,bottom:Number,top:Number,zNear:Number, zFar:Number)
+10. orthoRH(width:Number,height:Number,zNear:Number,zFar:Number)
+</code></pre><p>仔细观察后，根据参数不同一共提供了3种透视投影和2种正交投影生成方式，分为左右手两个版本，共10款，总有一款适合你。</p>
+<p>提供左右手两个版本说明在眼空间可以任意使用左右手坐标系，只要在最后投影时选择合适的投影矩阵即可。</p>
+<h2 id="-">开始推导</h2>
+<blockquote>
+<p>免责声明：不会打公式，全手写，字丑勿怪。</p>
+</blockquote>
+<p>先推导左手坐标系的5个矩阵，函数名和参数太长，眼花了，我来用首字母把参数简写一下。<br>例如： <code>right -&gt; r</code>  , <code>width -&gt; w</code> ，<code>zNear -&gt; n</code> , <code>zFar -&gt; f</code></p>
+<p><img src="/image/stage3d-projection-matrix/1.jpg" alt=""></p>
+<p>发现参数都有near和far，区别只在于前几个参数。<br>其实只要推出参数最多的2个典型：</p>
+<pre><code class="language-actionscript">
+1. perspectiveOffCenterLH(left:Number,right:Number,bottom:Number,top:Number,zNear:Number, zFar:Number)    
+4. orthoOffCenterLH(left:Number, right:Number,bottom:Number,top:Number,zNear:Number, zFar:Number)
+
+</code></pre>
+<p>其他的都只是他们的变种而已。<br>从1号典型开始，看最终能否得到<a href="https://github.com/adobe-flash/graphicscorelib/blob/master/src/com/adobe/utils/PerspectiveMatrix3D.as">官方提供的</a>矩阵：</p>
+<pre><code class="language-actionscript">public function perspectiveOffCenterLH(left:Number, right:Number,bottom:Number,top:Number,zNear:Number, zFar:Number):void 
+{
+    this.copyRawDataFrom(Vector.&lt;Number&gt;([
+        2.0*zNear/(right-left), 0.0, 0.0, 0.0,
+        0.0, -2.0*zNear/(bottom-top), 0.0, 0.0,
+        -1.0-2.0*left/(right-left), 1.0+2.0*top/(bottom-top), -zFar/(zNear-zFar), 1.0,
+        0.0, 0.0, (zNear*zFar)/(zNear-zFar), 0.0
+    ]));
+}
+</code></pre>
+<h3 id="-1-perspectiveoffcenterlh">推导 1. perspectiveOffCenterLH</h3>
+<p>点p投影到p&#39;，N为近平面 ，左手坐标系，所以近平面在正z轴方向，画图</p>
+<p><img src="/image/stage3d-projection-matrix/2.jpg" alt=""></p>
+<p>根据大小两个相似三角形，得到</p>
+<p><img src="/image/stage3d-projection-matrix/3.jpg" alt=""></p>
+<p>求出x&#39;为</p>
+<p><img src="/image/stage3d-projection-matrix/4.jpg" alt=""></p>
+<p>同理 y&#39;为</p>
+<p><img src="/image/stage3d-projection-matrix/5.jpg" alt=""></p>
+<p>当点P投影到近平面，z&#39;自然永远等于近平面<strong>N</strong>，所以先不要算他了，后边再说。x&#39; y&#39;已经是投影后的坐标了，但显卡需要的是NDC坐标，所以我们要根据线性插值把x&#39; y&#39;插值到NDC范围内， 结果记为xn yn。</p>
+<blockquote>
+<p><strong>注意：Stage3D的NDC范围在(-1,-1,0)到(1,1,1)</strong></p>
+</blockquote>
+<p>已知 left, right,bottom,top ，简写为 l, r, b, t  ，投影后的点为x&#39;,根据线性插值公式求出缩放后的Xn.</p>
+<p><img src="/image/stage3d-projection-matrix/6.jpg" alt=""></p>
+<p>同理yn等于</p>
+<p><img src="/image/stage3d-projection-matrix/7.jpg" alt=""></p>
+<p>把上边的求得的投影点x&#39;,y&#39;带入xn,yn，整理。</p>
+<p><img src="/image/stage3d-projection-matrix/8.jpg" alt=""></p>
+<p>为啥整理成这种形式呢？因为这是一个巧妙的安排，毕竟我们最终要用<strong>一个矩阵乘法</strong> + <strong>一个其次坐标转普通坐标</strong> 来完成整个转换，把z放到分母可以方便后边做其次坐标转普通坐标，后边会看到两个分子也可以方便的带入矩阵。</p>
+<p>同理yn等于</p>
+<p><img src="/image/stage3d-projection-matrix/9.jpg" alt=""></p>
+<p>好啦，现在改成矩阵形式，投影前的点<strong>[x,y,z,1]</strong>乘以一个矩阵<strong>M</strong>  得到的其次坐标，再除以w转成普通坐标后，应该得到的结果为<strong>[xn，yn，zn,1]</strong>求这个矩阵。</p>
+<blockquote>
+<p><strong>注意：Stage3D使用行向量右乘列矩阵</strong></p>
+</blockquote>
+<p>根据上边我们求得的结果，已经可以猜出矩阵部分元素了</p>
+<p><img src="/image/stage3d-projection-matrix/10.jpg" alt=""></p>
+<p>就差z坐标了，z坐标投影后永远等于近平面n，保存他没有意义了，我们要用z来保存转换之前的深度，并线性插值到NDC范围内提供给设备，<strong>注意Stage3D中zn的NDC范围在0~1之间</strong>，但按照之前xy线性插值的方法，我推不出来 , 需要换种想法了，之前提到的教程里也都是这种方法。</p>
+<p>看上边的图，<strong>[x,y,z,1]</strong>点乘<strong>[?,?,?,?]</strong> 应该等于转换后的其次坐标z ， 由于z与x,y无关，所以把这两个位置都写成0，借助后两个元素A，B来解决线性插值。</p>
+<p><img src="/image/stage3d-projection-matrix/11.jpg" alt=""></p>
+<p>[x,y,z,1] 点乘[?,?,?,?] 就变成了  [x,y,z,1]点乘[0,0,A,B]</p>
+<p>zn其次坐标就等于 x <em> 0 + y </em> 0 + A <em> z + 1 </em> B</p>
+<p>其次转普通坐标</p>
+<p><img src="/image/stage3d-projection-matrix/12.png" alt=""></p>
+<p>zn的NDC范围在 0~1之间，说明在zNear时为0，zFar时为1，so</p>
+<p><img src="/image/stage3d-projection-matrix/13.png" alt=""></p>
+<p>解方程组求A，B</p>
+<p><img src="/image/stage3d-projection-matrix/14.jpg" alt=""></p>
+<p>带入矩阵，最终结果</p>
+<p><img src="/image/stage3d-projection-matrix/15.png" alt=""></p>
+<p>对比一下官方的结果，</p>
+<pre><code class="language-actionscript">
+public function perspectiveOffCenterLH(left:Number, right:Number,bottom:Number,top:Number,zNear:Number, zFar:Number):void 
+{
+    this.copyRawDataFrom(Vector.&lt;Number&gt;([
+        2.0*zNear/(right-left), 0.0, 0.0, 0.0,
+        0.0, -2.0*zNear/(bottom-top), 0.0, 0.0,
+        -1.0-2.0*left/(right-left), 1.0+2.0*top/(bottom-top), -zFar/(zNear-zFar), 1.0,
+        0.0, 0.0, (zNear*zFar)/(zNear-zFar), 0.0
+    ]));
+}
+
+</code></pre>
+<p>好像除了第3行第1列和第2列不一样，其他都一样的。</p>
+<p>仔细看看官方给的第3行，第1列</p>
+<blockquote>
+<p>-1.0-2.0*left/(right-left)</p>
+</blockquote>
+<p><img src="/image/stage3d-projection-matrix/16.jpg" alt=""></p>
+<p>原来跟我们的一样，而且我们的版本更简洁一些：）</p>
+<p>第3行第2列也一样，就不写了。</p>
+<hr>
+<h3 id="-2-perspectivelh">推导 2. perspectiveLH</h3>
+<pre><code class="language-actionscript">
+perspectiveLH(width:Number, height:Number, zNear:Number, zFar:Number)
+
+</code></pre>
+<p>这个是以视口的中心做投影，所以</p>
+<p>left = - right<br>top = - bottom</p>
+<p>也就是说 </p>
+<p>r + l = 0<br>r - l = width</p>
+<p>t + b = 0<br>t - b = height</p>
+<p>直接带入上一个推导的矩阵</p>
+<p><img src="/image/stage3d-projection-matrix/15.png" alt=""></p>
+<p>把上边的矩阵简化，得到</p>
+<p><img src="/image/stage3d-projection-matrix/17.jpg" alt=""></p>
+<p>正好是官方的这个，一模一样：</p>
+<pre><code class="language-actionscript">
+public function perspectiveLH(width:Number, height:Number, zNear:Number, zFar:Number):void 
+{
+    this.copyRawDataFrom(Vector.&lt;Number&gt;([
+        2.0*zNear/width, 0.0, 0.0, 0.0,
+        0.0, 2.0*zNear/height, 0.0, 0.0,
+        0.0, 0.0, zFar/(zFar-zNear), 1.0,
+        0.0, 0.0, zNear*zFar/(zNear-zFar), 0.0
+    ]));
+}
+
+</code></pre>
+<h3 id="-3-perspectivefieldofviewlh">推导 3. perspectiveFieldOfViewLH</h3>
+<pre><code class="language-actionscript">
+perspectiveFieldOfViewLH(fieldOfViewY:Number,aspectRatio:Number,zNear:Number,zFar:Number) 
+
+</code></pre>
+<p>这里有了两个新参数<strong>fov</strong>和<strong>aspect</strong></p>
+<p><img src="/image/stage3d-projection-matrix/18.jpg" alt=""></p>
+<p>经过研究，这里的 fov 如图所示，是指YZ平面，top和bottom之间的夹角。</p>
+<p>看看能不能把这两个参数转成width和height表示，这样就可以直接带入上一个推出的矩阵得到新矩阵了</p>
+<p>fov，aspect 与 w ，h是什么关系？</p>
+<p><img src="/image/stage3d-projection-matrix/19.jpg" alt=""></p>
+<p>这样就可以把h和w求出来了</p>
+<p><img src="/image/stage3d-projection-matrix/20.jpg" alt=""></p>
+<p>带入上一个矩阵</p>
+<p><img src="/image/stage3d-projection-matrix/17.jpg" alt=""></p>
+<p>得到</p>
+<p><img src="/image/stage3d-projection-matrix/21.jpg" alt=""></p>
+<p>仔细看一下正好与官方提供的一样。</p>
+<pre><code class="language-actionscript">
+public function perspectiveFieldOfViewLH(fieldOfViewY:Number,aspectRatio:Number,zNear:Number,zFar:Number):void {
+    var yScale:Number = 1.0/Math.tan(fieldOfViewY/2.0);
+    var xScale:Number = yScale / aspectRatio;
+    this.copyRawDataFrom(Vector.&lt;Number&gt;([
+        xScale, 0.0, 0.0, 0.0,
+        0.0, yScale, 0.0, 0.0,
+        0.0, 0.0, zFar/(zFar-zNear), 1.0,
+        0.0, 0.0, (zNear*zFar)/(zNear-zFar), 0.0
+    ]));
+}
+
+</code></pre>
+<h3 id="-4-orthooffcenterlh">推导 4. orthoOffCenterLH</h3>
+<p>很难想象这么重要的一个类，官方给的orthoOffCenterLH矩阵居然是错的，而且adobe已经停止支持这个库了，<a href="http://github.com/thibaultimbert/graphicscorelib/issues/5">有人提交了错误，也已经没人回应了</a>。</p>
+<p>正确的应该是这样的：</p>
+<pre><code class="language-actionscript">
+public function orthoOffCenterLH(left:Number,right:Number, bottom:Number, top:Number, zNear:Number, zFar:Number):void {
+    this.copyRawDataFrom(Vector.&lt;Number&gt;([
+        2.0/(right-left), 0.0, 0.0, 0.0,
+        0.0, 2.0/(top-bottom), 0.0, 0.0,
+        0.0, 0.0, 1.0/(zFar-zNear), 0.0,
+        (left+right)/(left-right), (bottom+top)/(bottom-top), zNear/(zNear-zFar), 1.0
+]));
+}
+
+</code></pre>
+<p>推导比透视投影简单，因为是正交投影则，所以 </p>
+<pre><code>x = x&#39;
+y = y&#39;
+</code></pre><p>只需要各个方向缩放到NDC范围内就好了，跟之前一样，线性插值</p>
+<p><img src="/image/stage3d-projection-matrix/22.jpg" alt=""></p>
+<p>放到矩阵里</p>
+<p><img src="/image/stage3d-projection-matrix/23.jpg" alt=""></p>
+<p>Az+B 在近裁剪面为0，远裁剪面为1，so</p>
+<pre><code>A n + B = 0 
+A f + B = 1
+</code></pre><p>解得：</p>
+<p><img src="/image/stage3d-projection-matrix/24.jpg" alt=""></p>
+<p>放入矩阵</p>
+<p><img src="/image/stage3d-projection-matrix/25.jpg" alt=""></p>
+<pre><code class="language-actionscript">
+public function orthoOffCenterLH(left:Number,right:Number, bottom:Number, top:Number, zNear:Number, zFar:Number):void {
+    this.copyRawDataFrom(Vector.&lt;Number&gt;([
+        2.0/(right-left), 0.0, 0.0, 0.0,
+        0.0, 2.0/(top-bottom), 0.0, 0.0,
+        0.0, 0.0, 1.0/(zFar-zNear), 0.0,
+        (left+right)/(left-right), (bottom+top)/(bottom-top), zNear/(zNear-zFar), 1.0
+    ]));
+}
+
+</code></pre>
+<h3 id="-5-ortholh">推导 5. orthoLH</h3>
+<pre><code class="language-actionscript">
+orthoLH(width:Number,height:Number,zNear:Number,zFar:Number)
+
+</code></pre>
+<p>由于是以视口为中心的正交投影矩阵，所以：</p>
+<pre><code>left = - right
+top = - bottom
+</code></pre><p>也就是说</p>
+<p>r + l = 0<br>r - l = width</p>
+<p>t + b = 0<br>t - b = height</p>
+<p>带入刚才求得的这个矩阵</p>
+<p><img src="/image/stage3d-projection-matrix/25.jpg" alt=""></p>
+<p>得到：</p>
+<pre><code>2/w, 0, 0, 0,
+0, 2/h, 0, 0,
+0, 0, 1/f-n, 0,
+0, 0, n/n-f, 1 
+</code></pre><p>对比官方的版本，是一样的</p>
+<pre><code class="language-actionscript">
+public function orthoLH(width:Number,height:Number,zNear:Number,zFar:Number):void {
+    this.copyRawDataFrom(Vector.&lt;Number&gt;([
+        2.0/width, 0.0, 0.0, 0.0,
+        0.0, 2.0/height, 0.0, 0.0,
+        0.0, 0.0, 1.0/(zFar-zNear), 0.0,
+        0.0, 0.0, zNear/(zNear-zFar), 1.0
+    ]));
+}
+
+</code></pre>
+<p>至此左手5个已经推导完毕，右手的类似，要加快速度了。</p>
+<h3 id="-6-perspectiveoffcenterrh">推导 6. perspectiveOffCenterRH</h3>
+<p>从参数最多的开始</p>
+<pre><code class="language-actionscript">
+perspectiveOffCenterRH(left:Number, right:Number,bottom:Number,top:Number,zNear:Number, zFar:Number)
+
+</code></pre>
+<p>点p投影到p&#39; ，N为近平面 ，右手坐标系，所以近平面在负z轴方向，这次换个方向画图吧</p>
+<p><img src="/image/stage3d-projection-matrix/26.jpg" alt=""></p>
+<p>先求投影点x&#39; y&#39;,然后插值到NDC范围-1~1之间， 结果记为xn yn。</p>
+<p><img src="/image/stage3d-projection-matrix/27.jpg" alt=""></p>
+<p>分母都是-z 说明在做透视除法时w为-z ，所以猜到矩阵为</p>
+<p><img src="/image/stage3d-projection-matrix/28.jpg" alt=""></p>
+<p>处理z</p>
+<p><img src="/image/stage3d-projection-matrix/29.jpg" alt=""></p>
+<p>AB带入矩阵</p>
+<p><img src="/image/stage3d-projection-matrix/30.jpg" alt=""></p>
+<p>对比官方提供的，稍微整理一下正负号就一模一样了。</p>
+<pre><code class="language-actionscript">
+public function perspectiveOffCenterRH(left:Number,right:Number,bottom:Number,top:Number,zNear:Number, zFar:Number):void {
+    this.copyRawDataFrom(Vector.&lt;Number&gt;([
+        2.0*zNear/(right-left), 0.0, 0.0, 0.0,
+        0.0, -2.0*zNear/(bottom-top), 0.0, 0.0,
+        1.0+2.0*left/(right-left), -1.0-2.0*top/(bottom-top), zFar/(zNear-zFar), -1.0,
+        0.0, 0.0, (zNear*zFar)/(zNear-zFar), 0.0
+    ]));
+}
+
+</code></pre>
+<p>有了这个，后边两个变种就容易了</p>
+<h3 id="-7-perspectiverh">推导 7. perspectiveRH</h3>
+<pre><code class="language-actionscript">
+perspectiveRH(width:Number,height:Number,zNear:Number,zFar:Number)
+
+</code></pre>
+<p>以视口的中心做投影，所以</p>
+<pre><code>left = - right
+top = - bottom
+</code></pre><p>也就是说</p>
+<pre><code>r + l = 0
+r - l = width
+t + b = 0
+t - b = height
+</code></pre><p>直接带入上一个推导的矩阵，得到的结果跟官方一模一样。</p>
+<pre><code class="language-actionscript">
+public function perspectiveRH(width:Number,height:Number,zNear:Number,zFar:Number):void {
+    this.copyRawDataFrom(Vector.&lt;Number&gt;([
+        2.0*zNear/width, 0.0, 0.0, 0.0,
+        0.0, 2.0*zNear/height, 0.0, 0.0,
+        0.0, 0.0, zFar/(zNear-zFar), -1.0,
+        0.0, 0.0, zNear*zFar/(zNear-zFar), 0.0
+    ]));
+}
+
+</code></pre>
+<h3 id="-8-perspectivefieldofviewrh">推导 8. perspectiveFieldOfViewRH</h3>
+<pre><code class="language-actionscript">
+perspectiveFieldOfViewRH(fieldOfViewY:Number,aspectRatio:Number,zNear:Number,zFar:Number)
+
+</code></pre>
+<p>跟左手差不多，z轴相反，就不画图了</p>
+<p><img src="/image/stage3d-projection-matrix/31.jpg" alt=""></p>
+<p>带入上个矩阵</p>
+<p><img src="/image/stage3d-projection-matrix/32.jpg" alt=""></p>
+<p>对比，一模一样：）</p>
+<pre><code class="language-actionscript">
+public function perspectiveFieldOfViewRH(fieldOfViewY:Number,aspectRatio:Number,zNear:Number,zFar:Number):void {
+    var yScale:Number = 1.0/Math.tan(fieldOfViewY/2.0);
+    var xScale:Number = yScale / aspectRatio;
+    this.copyRawDataFrom(Vector.&lt;Number&gt;([
+        xScale, 0.0, 0.0, 0.0,
+        0.0, yScale, 0.0, 0.0,
+        0.0, 0.0, zFar/(zNear-zFar), -1.0,
+        0.0, 0.0, (zNear*zFar)/(zNear-zFar), 0.0
+    ]));
+}
+
+</code></pre>
+<h3 id="-9-orthooffcenterrh">推导 9. orthoOffCenterRH</h3>
+<pre><code class="language-actionscript">
+orthoOffCenterRH(left:Number,right:Number,bottom:Number,top:Number,zNear:Number, zFar:Number)
+
+</code></pre>
+<p>这个官方提供的矩阵也错了，正确的应该这样：</p>
+<pre><code class="language-actionscript">
+public function orthoOffCenterRH(left:Number,right:Number,bottom:Number,top:Number,zNear:Number, zFar:Number):void {
+    this.copyRawDataFrom(Vector.&lt;Number&gt;([
+        2.0/(right-left), 0.0, 0.0, 0.0,
+        0.0, 2.0/(top-bottom), 0.0, 0.0,
+        0.0, 0.0, 1.0/(zNear-zFar), 0.0,
+        (left+right)/(left-right), (bottom+top)/(bottom-top), zNear/(zNear-zFar), 1.0
+    ]));
+}
+
+</code></pre>
+<p>因为正交投影，则</p>
+<pre><code>x = x&#39;
+y = y&#39;
+</code></pre><p>直接线性插值到 -1 ~ 1之间</p>
+<p><img src="/image/stage3d-projection-matrix/33.jpg" alt=""></p>
+<p>推出矩阵</p>
+<p><img src="/image/stage3d-projection-matrix/34.jpg" alt=""></p>
+<p>求变换后的Zn</p>
+<p><img src="/image/stage3d-projection-matrix/35.jpg" alt=""></p>
+<h3 id="-10-orthorh">推导 10. orthoRH</h3>
+<pre><code class="language-actionscript">
+orthoRH(width:Number,height:Number,zNear:Number,zFar:Number)
+
+</code></pre>
+<p>最后一个视口中心投影 ，这个官方提供的矩阵也有一个笔误 @_@，第3行第3列:</p>
+<blockquote>
+<p>1.0/(zNear-zNear)</p>
+</blockquote>
+<p>应该为</p>
+<blockquote>
+<p>1.0/(zNear-zFar)</p>
+</blockquote>
+<p>开始推导：</p>
+<pre><code>r = - l
+b = -t
+</code></pre><p>so</p>
+<pre><code>r - l = w
+r + l = 0
+t - b = h
+t + b = 0
+</code></pre><p>带入上边矩阵，很明显得到</p>
+<pre><code class="language-actionscript">
+public function orthoRH(width:Number,height:Number,zNear:Number,zFar:Number):void {
+    this.copyRawDataFrom(Vector.&lt;Number&gt;([
+        2.0/width, 0.0, 0.0, 0.0,
+        0.0, 2.0/height, 0.0, 0.0,
+        0.0, 0.0, 1.0/(zNear-zFar), 0.0,
+        0.0, 0.0, zNear/(zNear-zFar), 1.0
+    ]));
+}
+
+</code></pre>
+<p>全文完。 </p>
+
+
+              本文采用 <a rel="license" style="color:#0366d6;" href="https://creativecommons.org/licenses/by-nd/4.0/deed.zh">署名-禁止演绎 4.0 国际许可协议 (CC BY-ND 4.0)</a> 进行许可（保留链接可任意转载，禁止修改）。
+            </div>
+            <div class="article_row">
+                 <a title="Flash" class="tag_button big_button" href="/tags/#Flash">Flash</a> <a title="Math" class="tag_button big_button" href="/tags/#Math">Math</a>
+            </div>
+
+            <div class="article_row" >
+              <div class="social-share"></div>
+            </div>
+
+            <div class="article_row">
+             <p>留言系统需要代理访问</p>
+            </div>
+            <div class="article_row">
+              <div>
+                <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+                  <!-- 2017blogarticle -->
+                  <ins class="adsbygoogle"
+                  style="display:block"
+                  data-ad-client="ca-pub-3527087615346771"
+                  data-ad-slot="2049652650"
+                  data-ad-format="auto"></ins>
+                <script>
+                (adsbygoogle = window.adsbygoogle || []).push({});
+                </script>
+              </div>
+            </div>
+
+            <div>
+             <div id="disqus_thread"></div>
+              <script>
+
+              /**
+              *  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+              *  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables*/
+              
+              var disqus_config = function () {
+              this.page.url = "http://nshen.net/article/2014-10-16/stage3d-projection-matrix"
+              this.page.identifier = "article-stage3d-projection-matrix"; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+              };
+              
+              (function() { // DON'T EDIT BELOW THIS LINE
+              var d = document, s = d.createElement('script');
+              s.src = 'https://nshen-net.disqus.com/embed.js';
+              s.setAttribute('data-timestamp', +new Date());
+              (d.head || d.body).appendChild(s);
+              })();
+              </script>
+              <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+            </div>
+            <div id="pre_and_next" class="markdown-body" >
+              <div id="pre_link"> 
+                    <a href="/project/2014-11-21/as2ts" ><span>&laquo;&nbsp;AS2TS：ActionScript3在线转为TypeScript</span></a>
+              </div>
+              <div id="next_link"> 
+                    <a href="/article/2013-07-28/stage3d-game-programming-beginner"><span>读书《Stage3D Game Programming Beginner》&nbsp;&raquo;</span></a>
+              </div>
+            </div>
+
+          </div>
+
+        </main>
+    <footer id="footer">
+        <div class="center">
+            <p>&copy; 2004-2017 Nshen.net | <a href="/atom.xml" target="blank">Feed</a> | <a href="/sitemap.xml" target="blank">Sitemap</a> | <a href="/tags" target="blank">Tags</a> | <a href="/support">Support</a></p>
+            <p>本站由 <a href="https://github.com/nshen/coding-blog" target="blank">CodingBlog</a> 强力构建，最后生成于 2021年12月3日上午10点40分 。</p>
+            <p>免费托管于 coding.net</p>
+            <p><a href="http://coding.net" target="blank"><img src="/image/codingnet2.png" style="width:250px;height:80px;" /></a></p>
+            <p>Learn WebGL from <a href="http://webgl.xyz" target="blank">WebGL.xyz</a></p>
+        </div>
+    
+        <script>
+            var _hmt = _hmt || [];
+            (function() {
+            var hm = document.createElement("script");
+            hm.src = "https://hm.baidu.com/hm.js?e1acab9c095adb812998c18d06d414ea";
+            var s = document.getElementsByTagName("script")[0]; 
+            s.parentNode.insertBefore(hm, s);
+            })();
+        </script>
+    
+        <script>
+        (function(){
+            //百度链接提交
+            var bp = document.createElement('script');
+            var curProtocol = window.location.protocol.split(':')[0];
+            if (curProtocol === 'https') {
+                bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+            }
+            else {
+                bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+            }
+            var s = document.getElementsByTagName("script")[0];
+            s.parentNode.insertBefore(bp, s);
+        })();
+        </script>
+    </footer>  </div>
+
+  <script src="/assets/prism.js"></script>
+  <script src="/assets/social-share.min.js"></script>
+
+</body>
+
+</html>

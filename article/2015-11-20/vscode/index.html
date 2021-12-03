@@ -1,0 +1,404 @@
+<!doctype html>
+<html>
+
+<head>
+    <title> 学会用好 Visual Studio Code | N神的研究所</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Visual Studio Code是个牛逼的编辑器，启动非常快，完全可以用来代替其他文本文件编辑工具。又可以用来做开发，支持各种语言，相比其他IDE，轻量级完全可配置还集成Git感觉非常的适合前端开发，是微软亲生的想必TypeScript会支持的非常好。 所以我仔细研究了一下文档未来可能会作为主力工具使用。">
+    
+    <meta name="keywords" content="TypeScript,VSCode">
+    <meta name="author" content="Nshen <nshen121@gmail.com>">
+
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <link rel="bookmark" href="/favicon.ico" />
+
+    <link rel="stylesheet" href="/assets/css/normalize.css">  
+    <link rel="stylesheet" href="/assets/css/github.css">
+    <link rel="stylesheet" href="/assets/css/prism.css">
+    <link rel="stylesheet" href="/assets/css/site.css">
+    <link rel="stylesheet" href="/assets/css/share.min.css">
+</head>
+
+<body>
+  <div id="container">
+    <header>
+        <div id="header_inner" class="center">
+            <div id="main_logo">
+                <a id="logo" href="/">N神的研究所</a>
+            </div>
+            <nav id="main_nav">
+                <a id="main_nav_link" href="/articles">学习（输入）</a>
+                <a id="main_nav_link" href="/projects">实践（输出）</a>
+                <a id="main_nav_link" href="/about">关于</a>
+                <a id="main_nav_link" href="/links">友情链接</a>
+            </nav>
+        </div>
+    </header>        <main >
+          <div class="contents" >
+            <div class="article_title">
+              <h1>学会用好 Visual Studio Code</h1>
+            </div>
+ 
+            <div class="article_date">
+              <p>发表于 2015年11月21日 </p>
+            </div>
+     
+            <div class="markdown-body markdown-contents">
+              <p>Visual Studio Code是个牛逼的编辑器，启动非常快，完全可以用来代替其他文本文件编辑工具。又可以用来做开发，支持各种语言，相比其他IDE，轻量级完全可配置还集成Git感觉非常的适合前端开发，是微软亲生的想必TypeScript会支持的非常好。 所以我仔细研究了一下文档未来可能会作为主力工具使用。</p>
+<h2 id="-command-palette">主命令框 Command Palette</h2>
+<p>最重要的功能就是 <code>F1</code> 或 <code>Ctrl+Shift+P</code> 打开的命令面板了，在这个命令框里可以执行VSCode的任何一条命令，可以查看每条命令对应的快捷键，甚至可以关闭这个编辑器。</p>
+<p><img src="/image/vscode/20160418095539.png" alt=""></p>
+<p>按一下<code>Backspace</code>会进入到<code>Ctrl+P</code>模式里</p>
+<h1 id="ctrl-p-">Ctrl+P 模式</h1>
+<p>在<code>Ctrl+P</code>下输入<code>&gt;</code>又可以回到<strong>主命令框</strong> <code>Ctrl+Shift+P</code>模式。</p>
+<p>在<code>Ctrl+P</code>窗口下还可以</p>
+<ul>
+<li>直接输入文件名，快速打开文件</li>
+<li><code>?</code> 列出当前可执行的动作</li>
+<li><code>!</code> 显示Errors或Warnings，也可以<code>Ctrl+Shift+M</code></li>
+<li><code>:</code> 跳转到行数，也可以<code>Ctrl+G</code>直接进入</li>
+<li><code>@</code> 跳转到symbol（搜索变量或者函数），也可以<code>Ctrl+Shift+O</code>直接进入</li>
+<li><code>@:</code>根据分类跳转symbol，查找属性或函数，也可以<code>Ctrl+Shift+O</code>后输入<code>:</code>进入</li>
+<li><code>#</code> 根据名字查找symbol，也可以<code>Ctrl+T</code></li>
+</ul>
+<h1 id="-">常用快捷键</h1>
+<hr>
+<h2 id="-">编辑器与窗口管理</h2>
+<h3 id="-">同时打开多个窗口（查看多个项目）</h3>
+<ul>
+<li>打开一个新窗口： <code>Ctrl+Shift+N</code></li>
+<li>关闭窗口： <code>Ctrl+Shift+W</code></li>
+</ul>
+<h3 id="-">同时打开多个编辑器（查看多个文件）</h3>
+<ul>
+<li>新建文件 <code>Ctrl+N</code> </li>
+<li>历史打开文件之间切换 <code>Ctrl+Tab</code>，<code>Alt+Left</code>，<code>Alt+Right</code> </li>
+<li>切出一个新的编辑器（最多3个）<code>Ctrl+\</code>，也可以按住Ctrl鼠标点击Explorer里的文件名</li>
+<li>左中右3个编辑器的快捷键<code>Ctrl+1</code> <code>Ctrl+2</code> <code>Ctrl+3</code></li>
+<li>3个编辑器之间循环切换 Ctrl+` </li>
+<li>编辑器换位置，<code>Ctrl+k</code>然后按<code>Left</code>或<code>Right</code></li>
+</ul>
+<h2 id="-">代码编辑</h2>
+<h3 id="-">格式调整</h3>
+<ul>
+<li>代码行缩进<code>Ctrl+[</code>， <code>Ctrl+]</code></li>
+<li>折叠打开代码块 <code>Ctrl+Shift+[</code>， <code>Ctrl+Shift+]</code></li>
+<li><code>Ctrl+C</code> <code>Ctrl+V</code>如果不选中，默认复制或剪切一整行</li>
+<li>代码格式化：<code>Shift+Alt+F</code>，或<code>Ctrl+Shift+P</code>后输入<code>format code</code></li>
+<li>修剪空格<code>Ctrl+Shift+X</code></li>
+<li>上下移动一行： <code>Alt+Up</code> 或 <code>Alt+Down</code></li>
+<li>向上向下复制一行： <code>Shift+Alt+Up</code>或<code>Shift+Alt+Down</code></li>
+<li>在当前行下边插入一行<code>Ctrl+Enter</code> </li>
+<li>在当前行上方插入一行<code>Ctrl+Shift+Enter</code> </li>
+</ul>
+<h3 id="-">光标相关</h3>
+<ul>
+<li>移动到行首：<code>Home</code></li>
+<li>移动到行尾：<code>End</code></li>
+<li>移动到文件结尾：<code>Ctrl+End</code></li>
+<li>移动到文件开头：<code>Ctrl+Home</code></li>
+<li>移动到后半个括号 <code>Ctrl+Shift+]</code> </li>
+<li>选中当前行<code>Ctrl+i</code></li>
+<li>选择从光标到行尾<code>Shift+End</code> </li>
+<li>选择从行首到光标处<code>Shift+Home</code></li>
+<li>删除光标右侧的所有字<code>Ctrl+Delete</code></li>
+<li>Shrink/expand selection： <code>Shift+Alt+Left</code>和<code>Shift+Alt+Right</code></li>
+<li>Multi-Cursor：可以连续选择多处，然后一起修改，<code>Alt+Click</code>添加cursor或者<code>Ctrl+Alt+Down</code> 或 <code>Ctrl+Alt+Up</code></li>
+<li>同时选中所有匹配的<code>Ctrl+Shift+L</code></li>
+<li><code>Ctrl+D</code>下一个匹配的也被选中(被我自定义成删除当前行了，见下边<code>Ctrl+Shift+K</code>)    </li>
+<li>回退上一个光标操作<code>Ctrl+U</code></li>
+</ul>
+<h3 id="-">重构代码</h3>
+<ul>
+<li>跳转到定义处：<code>F12</code></li>
+<li>定义处缩略图：只看一眼而不跳转过去<code>Alt+F12</code></li>
+<li>列出所有的引用：<code>Shift+F12</code></li>
+<li>同时修改本文件中所有匹配的：<code>Ctrl+F12</code></li>
+<li>重命名：比如要修改一个方法名，可以选中后按<code>F2</code>，输入新的名字，回车，会发现所有的文件都修改过了。</li>
+<li>跳转到下一个Error或Warning：当有多个错误时可以按<code>F8</code>逐个跳转</li>
+<li>查看diff 在explorer里选择文件右键 <code>Set file to compare</code>，然后需要对比的文件上右键选择<code>Compare with &#39;file_name_you_chose&#39;</code>.</li>
+</ul>
+<h3 id="-">查找替换</h3>
+<ul>
+<li>查找 <code>Ctrl+F</code></li>
+<li>查找替换 <code>Ctrl+H</code></li>
+<li>整个文件夹中查找 <code>Ctrl+Shift+F</code><br>匹配符：</li>
+<li><code>*</code> to match one or more characters in a path segment</li>
+<li><code>?</code> to match on one character in a path segment</li>
+<li><code>**</code> to match any number of path segments ,including none</li>
+<li><code>{}</code> to group conditions (e.g. <code>{**/*.html,**/*.txt}</code> matches all html and txt files)</li>
+<li><code>[]</code> to declare a range of characters to match (e.g., <code>example.[0-9]</code> to match on <code>example.0</code>,<code>example.1</code>, …</li>
+</ul>
+<h2 id="-">显示相关</h2>
+<ul>
+<li>全屏：<code>F11</code></li>
+<li>zoomIn/zoomOut：<code>Ctrl + =</code>/<code>Ctrl + -</code></li>
+<li>侧边栏显/隐：<code>Ctrl+B</code></li>
+<li>侧边栏4大功能显示：<ul>
+<li>Show Explorer <code>Ctrl+Shift+E</code> </li>
+<li>Show Search<code>Ctrl+Shift+F</code> </li>
+<li>Show Git<code>Ctrl+Shift+G</code> </li>
+<li>Show Debug<code>Ctrl+Shift+D</code> </li>
+</ul>
+</li>
+<li>Show Output<code>Ctrl+Shift+U</code></li>
+<li>预览markdown<code>Ctrl+Shift+V</code></li>
+</ul>
+<h2 id="-">其他</h2>
+<ul>
+<li>自动保存：File -&gt; AutoSave ，或者<code>Ctrl+Shift+P</code>，输入 auto </li>
+</ul>
+<h1 id="-">皮肤预览</h1>
+<p><code>f1</code>后输入 <code>theme</code> 回车，然后上下键即可预览</p>
+<p><img src="/image/vscode/preview_themes.gif" alt=""></p>
+<h1 id="-settings-json">自定义settings.json</h1>
+<p><img src="/image/vscode/20160418105531.png" alt=""></p>
+<h2 id="user-settings-vs-code-"><code>User settings</code> 是全局设置，任何vs Code打开的项目都会依此配置。</h2>
+<p> 默认存储在:</p>
+<p>Windows: <code>%APPDATA%\Code\User\settings.json</code><br>Mac: <code>$HOME/Library/Application Support/Code/User/settings.json</code><br>Linux: <code>$HOME/.config/Code/User/settings.json</code></p>
+<h2 id="workspace-settings-"><code>Workspace settings</code> 是本工作区的设置，会覆盖上边的配置</h2>
+<p>存储在工作区的<code>.vocode</code>文件夹下。</p>
+<p>几乎所有设定都在<code>settings.json</code>里，包括</p>
+<blockquote>
+<ul>
+<li>Editor Configuration - font, word wrapping, tab size, line numbers, indentation, ...</li>
+<li>Window Configuration - restore folders, zoom level, ...</li>
+<li>Files Configuration - excluded file filters, default encoding, trim trailing whitespace, ...</li>
+<li>File Explorer Configuration - encoding, WORKING FILES behavior, ...</li>
+<li>HTTP Configuration - proxy settings</li>
+<li>Search Configuration - file exclude filters</li>
+<li>Git Configuration - disable Git integration, auto fetch behavior</li>
+<li>Telemetry Configuration - disable telemetry reporting, crash reporting</li>
+<li>HTML Configuration - HTML format configuration</li>
+<li>CSS Configuration - CSS linting configuration</li>
+<li>JavaScript Configuration - Language specific settings</li>
+<li>JSON Configuration - Schemas associated with certain JSON files</li>
+<li>Markdown Preview Configuration - Add a custom CSS to the Markdown preview</li>
+<li>Less Configuration - Control linting for Less</li>
+<li>Sass Configuration - Control linting for Sass</li>
+<li>TypeScript Configuration - Language specific settings</li>
+<li>PHP Configuration - PHP linter configuration</li>
+</ul>
+</blockquote>
+<p>例如可以修改让vscode认识<code>.glsl</code>扩展名</p>
+<pre><code>{
+
+    // Configure file associations to languages (e.g. &quot;*.extension&quot;: &quot;html&quot;). These have precedence over the default associations of the languages installed.
+    &quot;files.associations&quot;: {
+        &quot;*.glsl&quot;: &quot;shaderlab&quot;
+    }
+}
+</code></pre><h2 id="-">修改默认快捷键</h2>
+<hr>
+<p>File -&gt; Preferences -&gt; Keyboard Shortcuts</p>
+<p>修改<code>keybindings.json</code>，我的显示在这里<code>C:\Users\Administrator\AppData\Roaming\Code\User\keybindings.json</code></p>
+<pre><code>// Place your key bindings in this file to overwrite the defaults
+[
+    //ctrl+space被切换输入法快捷键占用
+    {
+        &quot;key&quot;: &quot;ctrl+alt+space&quot;,
+        &quot;command&quot;: &quot;editor.action.triggerSuggest&quot;,
+        &quot;when&quot;: &quot;editorTextFocus&quot;
+    },
+    // ctrl+d删除一行
+    {
+        &quot;key&quot;: &quot;ctrl+d&quot;,
+        &quot;command&quot;: &quot;editor.action.deleteLines&quot;,
+        &quot;when&quot;: &quot;editorTextFocus&quot;
+    },
+    {
+        &quot;key&quot;: &quot;ctrl+shift+k&quot;, //与删除一行的快捷键互换了：）
+        &quot;command&quot;: &quot;editor.action.addSelectionToNextFindMatch&quot;,
+        &quot;when&quot;: &quot;editorFocus&quot;
+    },
+    //ctrl+shift+/多行注释
+    {
+        &quot;key&quot;:&quot;ctrl+shift+/&quot;,
+        &quot;command&quot;: &quot;editor.action.blockComment&quot;,
+        &quot;when&quot;: &quot;editorTextFocus&quot;
+    }
+]
+</code></pre><h1 id="-">自定义代码段</h1>
+<hr>
+<p><img src="/image/vscode/20160401113811.png" alt=""></p>
+<p>然后输入语言,例如我这里输入 <code>typescript</code></p>
+<p>由于每次输入箭头函数<code>() =&gt; {}</code>太烦了，我这里加入一段加入一段</p>
+<pre><code> &quot;arrow function&quot;: {
+        &quot;prefix&quot;: &quot;func&quot;,
+        &quot;body&quot;: [
+            &quot;(${e}) =&gt; {$1}&quot;
+        ],
+        &quot;description&quot;: &quot;arrow function&quot;
+    }
+</code></pre><p>保存后，下次输入<code>func</code>的时候就会自动出来箭头函数了</p>
+<p><img src="/image/vscode/20160401114330.png" alt=""></p>
+<h1 id="-typescript-">配置TypeScript环境</h1>
+<hr>
+<ol>
+<li>首先覆盖默认ctrl + space快捷键，因为这个快捷键被输入法切换占用了<br><code>C:\Users\Administrator\AppData\Roaming\Code\User\keybindings.json</code><br>加入 <pre><code>// Place your key bindings in this file to overwrite the defaults
+[
+{ &quot;key&quot;: &quot;ctrl+alt+space&quot;,            &quot;command&quot;: &quot;editor.action.triggerSuggest&quot;,
+                                  &quot;when&quot;: &quot;editorTextFocus&quot; }
+]
+</code></pre></li>
+<li>File - Open Folder 打开项目的目录</li>
+<li>创建 <code>tsconfig.json</code></li>
+<li>输入<code>{}</code> ,在大括号中间 <code>ctrl + alt + space</code> （上边的自定义键盘）</li>
+</ol>
+<p><img src="/image/vscode/11979441.png" alt=""></p>
+<ol start="5">
+<li>输入<pre><code>{
+ &quot;compilerOptions&quot;: {
+     &quot;target&quot;: &quot;ES5&quot;,
+     &quot;module&quot;: &quot;amd&quot;,
+     &quot;sourceMap&quot;: true
+ }
+}
+</code></pre></li>
+<li>可以创建<code>.ts</code>文件了</li>
+<li>配置TaskRunner <code>Ctrl+Shift+P</code> 输入 <code>Configure Task Runner</code></li>
+<li>Run Task <code>Ctrl+Shift+B</code></li>
+</ol>
+<h1 id="-typings">安装typings</h1>
+<p>Install typings to bring in the .d.ts files which power javascript intellisense.</p>
+<pre><code>npm install typings --global
+
+# Search for definitions.
+typings search tape
+
+# Find an available definition (by name).
+typings search --name react
+
+# Install typings (DT is &quot;ambient&quot;, make sure to enable the flag and persist the selection in `typings.json`).
+typings install react --ambient --save
+</code></pre><p>install will create a typings folder. VS Code will reference the .d.ts files for intellisense.</p>
+<h1 id="-">插件</h1>
+<hr>
+<p>新版本支持插件安装了</p>
+<p>插件市场 <a href="https://marketplace.visualstudio.com/#VSCode">https://marketplace.visualstudio.com/#VSCode</a></p>
+<h2 id="-">安装插件</h2>
+<p><code>F1</code> 输入 <code>extensions</code></p>
+<p><img src="/image/vscode/29945359.png" alt=""></p>
+<p>点击第一个开始安装或升级，或者也可以  <code>Ctrl+P</code> 输入 <code>ext install</code>进入<br>点击第二个会列出已经安装的扩展，可以从中卸载</p>
+<p>ext install </p>
+<h3 id="-">我在用的插件(期待更新...)</h3>
+<h4 id="docthis-jsdoc-">docthis 插件可以自动添加JSDoc注释。</h4>
+<p><code>ctrl + p</code> 后 输入<code>ext install docthis</code> 可直接安装。</p>
+<p>安装后连续两次 <code>Ctrl+Alt+D</code> 即可在光标处插入注释。</p>
+<p>详细： <a href="https://marketplace.visualstudio.com/items?itemName=joelday.docthis">https://marketplace.visualstudio.com/items?itemName=joelday.docthis</a></p>
+<h4 id="vscode-todo-todo-">vscode-todo 显示todo列表</h4>
+<p><code>ctrl + p</code> 后 输入<code>ext install vscode-todo</code> 可直接安装。</p>
+<p>详细: <a href="https://marketplace.visualstudio.com/items?itemName=MattiasPernhult.vscode-todo">https://marketplace.visualstudio.com/items?itemName=MattiasPernhult.vscode-todo</a></p>
+<p><strong>参考：</strong></p>
+<ul>
+<li><a href="http://www.johnpapa.net/learning-visual-studio-code/" title="Learning Visual Studio Code">Learning Visual Studio Code</a></li>
+<li><a href="https://code.visualstudio.com/docs/customization/keybindings" title="Key Bindings for Visual Studio Code">Key Bindings for Visual Studio Code</a></li>
+<li><a href="https://github.com/Microsoft/vscode-tips-and-tricks" title="VS Code Tips and Tricks">VS Code Tips and Tricks</a></li>
+</ul>
+
+
+              本文采用 <a rel="license" style="color:#0366d6;" href="https://creativecommons.org/licenses/by-nd/4.0/deed.zh">署名-禁止演绎 4.0 国际许可协议 (CC BY-ND 4.0)</a> 进行许可（保留链接可任意转载，禁止修改）。
+            </div>
+            <div class="article_row">
+                 <a title="TypeScript" class="tag_button big_button" href="/tags/#TypeScript">TypeScript</a> <a title="VSCode" class="tag_button big_button" href="/tags/#VSCode">VSCode</a>
+            </div>
+
+            <div class="article_row" >
+              <div class="social-share"></div>
+            </div>
+
+            <div class="article_row">
+             <p>留言系统需要代理访问</p>
+            </div>
+            <div class="article_row">
+              <div>
+                <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+                  <!-- 2017blogarticle -->
+                  <ins class="adsbygoogle"
+                  style="display:block"
+                  data-ad-client="ca-pub-3527087615346771"
+                  data-ad-slot="2049652650"
+                  data-ad-format="auto"></ins>
+                <script>
+                (adsbygoogle = window.adsbygoogle || []).push({});
+                </script>
+              </div>
+            </div>
+
+            <div>
+             <div id="disqus_thread"></div>
+              <script>
+
+              /**
+              *  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+              *  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables*/
+              
+              var disqus_config = function () {
+              this.page.url = "http://nshen.net/article/2015-11-20/vscode"
+              this.page.identifier = "article-vscode"; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+              };
+              
+              (function() { // DON'T EDIT BELOW THIS LINE
+              var d = document, s = d.createElement('script');
+              s.src = 'https://nshen-net.disqus.com/embed.js';
+              s.setAttribute('data-timestamp', +new Date());
+              (d.head || d.body).appendChild(s);
+              })();
+              </script>
+              <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+            </div>
+            <div id="pre_and_next" class="markdown-body" >
+              <div id="pre_link"> 
+                    <a href="/article/2016-02-13/npm-js" ><span>&laquo;&nbsp;npm包管理器学习笔记</span></a>
+              </div>
+              <div id="next_link"> 
+                    <a href="/article/2015-11-03/learn-more-study-less"><span>读书《Learn More Study Less》整体性学习法&nbsp;&raquo;</span></a>
+              </div>
+            </div>
+
+          </div>
+
+        </main>
+    <footer id="footer">
+        <div class="center">
+            <p>&copy; 2004-2017 Nshen.net | <a href="/atom.xml" target="blank">Feed</a> | <a href="/sitemap.xml" target="blank">Sitemap</a> | <a href="/tags" target="blank">Tags</a> | <a href="/support">Support</a></p>
+            <p>本站由 <a href="https://github.com/nshen/coding-blog" target="blank">CodingBlog</a> 强力构建，最后生成于 2021年12月3日上午10点40分 。</p>
+            <p>免费托管于 coding.net</p>
+            <p><a href="http://coding.net" target="blank"><img src="/image/codingnet2.png" style="width:250px;height:80px;" /></a></p>
+            <p>Learn WebGL from <a href="http://webgl.xyz" target="blank">WebGL.xyz</a></p>
+        </div>
+    
+        <script>
+            var _hmt = _hmt || [];
+            (function() {
+            var hm = document.createElement("script");
+            hm.src = "https://hm.baidu.com/hm.js?e1acab9c095adb812998c18d06d414ea";
+            var s = document.getElementsByTagName("script")[0]; 
+            s.parentNode.insertBefore(hm, s);
+            })();
+        </script>
+    
+        <script>
+        (function(){
+            //百度链接提交
+            var bp = document.createElement('script');
+            var curProtocol = window.location.protocol.split(':')[0];
+            if (curProtocol === 'https') {
+                bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+            }
+            else {
+                bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+            }
+            var s = document.getElementsByTagName("script")[0];
+            s.parentNode.insertBefore(bp, s);
+        })();
+        </script>
+    </footer>  </div>
+
+  <script src="/assets/prism.js"></script>
+  <script src="/assets/social-share.min.js"></script>
+
+</body>
+
+</html>
